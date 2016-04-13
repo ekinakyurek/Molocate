@@ -91,7 +91,7 @@ public class MolocatePlace {
                 if  exist != nil{
                     place.name = "notExist"
                 } else{
-                    print(item)
+                    
                     place.id = placeid
                     place.name = item["name"] as! String
                     place.city = item["city"] as! String

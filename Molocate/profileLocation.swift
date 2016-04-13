@@ -47,12 +47,14 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
             MolocatePlace.followAPlace(thePlace.id) { (data, response, error) in
                 MoleCurrentUser.following_count += 1
             }
+            self.followerCount.setTitle("\(thePlace.follower_count+1)", forState: .Normal)
         }else{
             followButton.image = UIImage(named: "follow");
             thePlace.is_following = 0
             MolocatePlace.unfollowAPlace(thePlace.id) { (data, response, error) in
                 MoleCurrentUser.following_count -= 1
             }
+            self.followerCount.setTitle("\(thePlace.follower_count-1)", forState: .Normal)
         }
         
     }
@@ -107,10 +109,9 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
         self.toolBar.clipsToBounds = true
         self.toolBar.translucent = false
         self.toolBar.barTintColor = swiftColor
-        self.followerCount.setTitle("\(thePlace.following_count)", forState: UIControlState.Normal)
+        self.followerCount.setTitle("\(thePlace.follower_count)", forState: UIControlState.Normal)
         self.locationName.text = thePlace.name
         self.LocationTitle.text = thePlace.name
-        self.followerCount.setTitle("\(thePlace.video_count)", forState: .Normal)
         self.address.text = thePlace.address
         self.videoCount.text = "Videos(\(thePlace.video_count))"
         self.videoArray = thePlace.videoArray
@@ -465,6 +466,8 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
         MolocateAccount.follow(videoArray[buttonRow].username){ (data, response, error) -> () in
             MoleCurrentUser.following_count += 1
         }
+        
+        
         pressedFollow = false
     }
     
