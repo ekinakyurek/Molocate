@@ -19,6 +19,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
     var direction = 0
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     var refreshControl:UIRefreshControl!
+    var player1Turn = false
     @IBOutlet var LocationTitle: UILabel!
 
     @IBOutlet var map: MKMapView!
@@ -252,6 +253,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
                     }
                 }
             }
+                 if !cell.hasPlayer {
             
             if indexPath.row % 2 == 1 {
                 
@@ -267,6 +269,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
                 cell.contentView.addSubview(self.player2.view)
                 cell.hasPlayer = true
             }
+                }
             
             }
 //            }
@@ -371,19 +374,34 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
         
     }
     
-//    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-//        isScrollingFast = false
-//        var ipArray = [NSIndexPath]()
-//        for item in self.tableView.indexPathsForVisibleRows!{
-//            let cell = self.tableView.cellForRowAtIndexPath(item) as! videoCell
-//            if !cell.hasPlayer {
-//                ipArray.append(item)
-//            }
-//        }
-//        if ipArray.count != 0 {
-//            self.tableView.reloadRowsAtIndexPaths(ipArray, withRowAnimation: .None)
-//        }
-//    }
+    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if !decelerate {
+            if self.player1.playbackState.description != "Playing" || self.player2.playbackState.description != "Playing" {
+                isScrollingFast = false
+                var ipArray = [NSIndexPath]()
+                for item in self.tableView.indexPathsForVisibleRows!{
+                    let cell = self.tableView.cellForRowAtIndexPath(item) as! videoCell
+                    if !cell.hasPlayer {
+                        ipArray.append(item)
+                    }
+                }
+                if ipArray.count != 0 {
+                    self.tableView.reloadRowsAtIndexPaths(ipArray, withRowAnimation: .None)
+                }
+                if player1Turn {
+                    if self.player1.playbackState.description != "Playing" {
+                        player1.playFromBeginning()
+                    }
+                } else {
+                    if self.player2.playbackState.description != "Playing" {
+                        player2.playFromBeginning()
+                    }
+                }
+            }
+        }
+    }
+    
+
 
     
 
@@ -654,7 +672,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
         }
         
         if (scrollView.contentOffset.y > 10) && (scrollView.contentOffset.y+scrollView.frame.height < scrollView.contentSize.height
-            ) && !isScrollingFast
+            )
         {
             
             if self.tableView.visibleCells.count > 2 {
@@ -673,14 +691,20 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
                         //self.tableView.visibleCells[1].reloadInputViews()
                         if self.player1.playbackState.description != "Playing" {
                             self.player2.stop()
+                            if !isScrollingFast {
                             self.player1.playFromBeginning()
+                            }
+                            player1Turn = true
                             //print(self.tableView.indexPathsForVisibleRows![0].row)
                             //////print("player1")
                         }
                     }else{
                         if self.player2.playbackState.description != "Playing"{
                             self.player1.stop()
+                            if !isScrollingFast {
                             self.player2.playFromBeginning()
+                            }
+                            player1Turn = false
                             //////print("player2")
                         }
                     }
@@ -700,13 +724,19 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
                         
                         if self.player1.playbackState.description != "Playing" {
                             self.player2.stop()
+                            if !isScrollingFast {
                             self.player1.playFromBeginning()
+                            }
+                            player1Turn = true
                             //////print("player1")
                         }
                     }else{
                         if self.player2.playbackState.description != "Playing"{
                             self.player1.stop()
+                            if !isScrollingFast {
                             self.player2.playFromBeginning()
+                            }
+                            player1Turn = false
                             //////print("player2")
                         }
                     }

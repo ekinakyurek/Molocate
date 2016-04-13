@@ -44,6 +44,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     var currentTask: Task?
     var pressedLike: Bool = false
     var pressedFollow: Bool = false
+    var player1Turn = false
     //var dictionary = NSMutableDictionary()
     var on = true
     @IBOutlet var tableView: UITableView!
@@ -153,6 +154,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
             UIApplication.sharedApplication().endIgnoringInteractionEvents()
             
         }
+        tableView.allowsSelection = false
 
         
     }
@@ -278,7 +280,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
             }
             
             if (scrollView.contentOffset.y > 10) && (scrollView.contentOffset.y+scrollView.frame.height < scrollView.contentSize.height
-                ) && !isScrollingFast
+                )
             {
                 if self.tableView.visibleCells.count > 2 {
                     (self.tableView.visibleCells[0] as! videoCell).hasPlayer = false
@@ -296,14 +298,20 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                             //self.tableView.visibleCells[1].reloadInputViews()
                             if self.player1.playbackState.description != "Playing" {
                                 self.player2.stop()
+                                if !isScrollingFast {
                                 self.player1.playFromBeginning()
+                                }
+                                player1Turn = true
                                 //print(self.tableView.indexPathsForVisibleRows![0].row)
                                 //////print("player1")
                             }
                         }else{
                             if self.player2.playbackState.description != "Playing"{
                                 self.player1.stop()
+                                if !isScrollingFast {
                                 self.player2.playFromBeginning()
+                                }
+                                player1Turn = false
                                 //////print("player2")
                             }
                         }
@@ -323,13 +331,20 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                             
                             if self.player1.playbackState.description != "Playing" {
                                 self.player2.stop()
+                                if !isScrollingFast {
                                 self.player1.playFromBeginning()
+                                }
+                                player1Turn = true
                                 //////print("player1")
                             }
                         }else{
                             if self.player2.playbackState.description != "Playing"{
                                 self.player1.stop()
+                                if !isScrollingFast {
                                 self.player2.playFromBeginning()
+                                }
+                                player1Turn = false
+                                
                                 //////print("player2")
                             }
                         }
@@ -475,7 +490,8 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                         }
                     }
                 }
-                
+                 if !cell.hasPlayer {
+                    
                 if indexPath.row % 2 == 1 {
                     
                     self.player1.setUrl(trueURL)
@@ -490,6 +506,8 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                     cell.contentView.addSubview(self.player2.view)
                     cell.hasPlayer = true
                 }
+                    
+                    }
                 if indexPath.row == 0 && on {
                     self.player2.playFromBeginning()
                     on = false
@@ -517,13 +535,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                 }
                 return cell
             }
-            //        if(!cell.player.isSet()){
-            //            cell.player = Videos(url: videoArray[indexPath.row].urlSta.absoluteString)
-            //            cell.player.layer.frame = cell.newRect
-            //            cell.layer.addSublayer(cell.player.layer)
-            //            cell.player.Play()
-            //        }
-            
+
             
         } else {
             
@@ -942,19 +954,32 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         
     }
 //    
-//    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-//        isScrollingFast = false
-//        var ipArray = [NSIndexPath]()
-//        for item in self.tableView.indexPathsForVisibleRows!{
-//            let cell = self.tableView.cellForRowAtIndexPath(item) as! videoCell
-//            if !cell.hasPlayer {
-//                ipArray.append(item)
-//            }
-//        }
-//        if ipArray.count != 0 {
-//            self.tableView.reloadRowsAtIndexPaths(ipArray, withRowAnimation: .None)
-//        }
-//    }
+    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if !decelerate {
+            if self.player1.playbackState.description != "Playing" || self.player2.playbackState.description != "Playing" {
+                isScrollingFast = false
+                var ipArray = [NSIndexPath]()
+                for item in self.tableView.indexPathsForVisibleRows!{
+                    let cell = self.tableView.cellForRowAtIndexPath(item) as! videoCell
+                    if !cell.hasPlayer {
+                        ipArray.append(item)
+                    }
+                }
+                if ipArray.count != 0 {
+                    self.tableView.reloadRowsAtIndexPaths(ipArray, withRowAnimation: .None)
+                }
+                if player1Turn {
+                    if self.player1.playbackState.description != "Playing" {
+                        player1.playFromBeginning()
+                    }
+                } else {
+                    if self.player2.playbackState.description != "Playing" {
+                        player2.playFromBeginning()
+                    }
+                }
+            }
+        }
+    }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         return  CGSize.init(width: 75 , height: 44)

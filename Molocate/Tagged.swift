@@ -23,6 +23,7 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     var tableView = UITableView()
     var likeHeart = UIImageView()
+    var player1Turn = false
     override func viewDidLoad() {
         super.viewDidLoad()
           try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
@@ -209,6 +210,7 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
                 }
             }
             
+                if !cell.hasPlayer {
             if indexPath.row % 2 == 1 {
                 
                 self.player1.setUrl(trueURL)
@@ -223,6 +225,7 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
                 cell.contentView.addSubview(self.player2.view)
                 cell.hasPlayer = true
             }
+                }
             }
             return cell
         }else{
@@ -298,7 +301,7 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
         }
         
         if (scrollView.contentOffset.y > 10) && (scrollView.contentOffset.y+scrollView.frame.height < scrollView.contentSize.height
-            ) && !isScrollingFast
+            )
         {
             
             if self.tableView.visibleCells.count > 2 {
@@ -317,14 +320,20 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
                         //self.tableView.visibleCells[1].reloadInputViews()
                         if self.player1.playbackState.description != "Playing" {
                             self.player2.stop()
+                            if !isScrollingFast {
                             self.player1.playFromBeginning()
-                            print(self.tableView.indexPathsForVisibleRows![0].row)
+                            }
+                            player1Turn = true
+                            //print(self.tableView.indexPathsForVisibleRows![0].row)
                             ////print("player1")
                         }
                     }else{
                         if self.player2.playbackState.description != "Playing"{
                             self.player1.stop()
+                            if !isScrollingFast {
                             self.player2.playFromBeginning()
+                            }
+                            player1Turn = false
                             ////print("player2")
                         }
                     }
@@ -344,13 +353,19 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
                         
                         if self.player1.playbackState.description != "Playing" {
                             self.player2.stop()
+                            if !isScrollingFast {
                             self.player1.playFromBeginning()
+                            }
+                            player1Turn = true
                             ////print("player1")
                         }
                     }else{
                         if self.player2.playbackState.description != "Playing"{
                             self.player1.stop()
+                            if !isScrollingFast {
                             self.player2.playFromBeginning()
+                            }
+                            player1Turn = false
                             ////print("player2")
                         }
                     }
@@ -364,19 +379,33 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
         
     }
     
-//    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-//        isScrollingFast = false
-//        var ipArray = [NSIndexPath]()
-//        for item in self.tableView.indexPathsForVisibleRows!{
-//            let cell = self.tableView.cellForRowAtIndexPath(item) as! videoCell
-//            if !cell.hasPlayer {
-//                ipArray.append(item)
-//            }
-//        }
-//        if ipArray.count != 0 {
-//            self.tableView.reloadRowsAtIndexPaths(ipArray, withRowAnimation: .None)
-//        }
-//    }
+    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if !decelerate {
+            if self.player1.playbackState.description != "Playing" || self.player2.playbackState.description != "Playing" {
+                isScrollingFast = false
+                var ipArray = [NSIndexPath]()
+                for item in self.tableView.indexPathsForVisibleRows!{
+                    let cell = self.tableView.cellForRowAtIndexPath(item) as! videoCell
+                    if !cell.hasPlayer {
+                        ipArray.append(item)
+                    }
+                }
+                if ipArray.count != 0 {
+                    self.tableView.reloadRowsAtIndexPaths(ipArray, withRowAnimation: .None)
+                }
+                if player1Turn {
+                    if self.player1.playbackState.description != "Playing" {
+                        player1.playFromBeginning()
+                    }
+                } else {
+                    if self.player2.playbackState.description != "Playing" {
+                        player2.playFromBeginning()
+                    }
+                }
+            }
+        }
+    }
+    
 
     
     func tableView(atableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {

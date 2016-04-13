@@ -24,6 +24,7 @@ class Added: UIViewController, UITableViewDelegate, UITableViewDataSource,Player
     var tableView = UITableView()
     var on = true
     var likeHeart = UIImageView()
+    var player1Turn = false
     override func viewDidLoad() {
         super.viewDidLoad()
           try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
@@ -213,6 +214,8 @@ class Added: UIViewController, UITableViewDelegate, UITableViewDataSource,Player
                     }
                 }
             }
+                
+                if !cell.hasPlayer {
             
             if indexPath.row % 2 == 1 {
                 
@@ -228,6 +231,7 @@ class Added: UIViewController, UITableViewDelegate, UITableViewDataSource,Player
                 cell.contentView.addSubview(self.player2.view)
                 cell.hasPlayer = true
             }
+                }
             if indexPath.row == 0 && on {
                 self.player2.playFromBeginning()
             }
@@ -306,7 +310,7 @@ class Added: UIViewController, UITableViewDelegate, UITableViewDataSource,Player
             }
             
             if (scrollView.contentOffset.y > 10) && (scrollView.contentOffset.y+scrollView.frame.height < scrollView.contentSize.height
-                ) && !isScrollingFast
+                )
             {
                 
                 if self.tableView.visibleCells.count > 2 {
@@ -325,14 +329,20 @@ class Added: UIViewController, UITableViewDelegate, UITableViewDataSource,Player
                             //self.tableView.visibleCells[1].reloadInputViews()
                             if self.player1.playbackState.description != "Playing" {
                                 self.player2.stop()
+                                if !isScrollingFast {
                                 self.player1.playFromBeginning()
-                                print(self.tableView.indexPathsForVisibleRows![0].row)
+                                }
+                                //print(self.tableView.indexPathsForVisibleRows![0].row)
                                 ////print("player1")
+                                player1Turn = true
                             }
                         }else{
                             if self.player2.playbackState.description != "Playing"{
                                 self.player1.stop()
+                                if !isScrollingFast {
                                 self.player2.playFromBeginning()
+                                }
+                                player1Turn = false
                                 ////print("player2")
                             }
                         }
@@ -352,13 +362,19 @@ class Added: UIViewController, UITableViewDelegate, UITableViewDataSource,Player
                             
                             if self.player1.playbackState.description != "Playing" {
                                 self.player2.stop()
+                                if !isScrollingFast {
                                 self.player1.playFromBeginning()
+                                }
+                                player1Turn = true
                                 ////print("player1")
                             }
                         }else{
                             if self.player2.playbackState.description != "Playing"{
                                 self.player1.stop()
+                                if !isScrollingFast {
                                 self.player2.playFromBeginning()
+                                }
+                                player1Turn = false
                                 ////print("player2")
                             }
                         }
@@ -372,20 +388,34 @@ class Added: UIViewController, UITableViewDelegate, UITableViewDataSource,Player
         
     }
     
-//    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-//        isScrollingFast = false
-//        var ipArray = [NSIndexPath]()
-//        for item in self.tableView.indexPathsForVisibleRows!{
-//            let cell = self.tableView.cellForRowAtIndexPath(item) as! videoCell
-//            if !cell.hasPlayer {
-//                ipArray.append(item)
-//            }
-//        }
-//        if ipArray.count != 0 {
-//            self.tableView.reloadRowsAtIndexPaths(ipArray, withRowAnimation: .None)
-//        }
-//    }
-//    
+    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if !decelerate {
+            if self.player1.playbackState.description != "Playing" || self.player2.playbackState.description != "Playing" {
+                isScrollingFast = false
+                var ipArray = [NSIndexPath]()
+                for item in self.tableView.indexPathsForVisibleRows!{
+                    let cell = self.tableView.cellForRowAtIndexPath(item) as! videoCell
+                    if !cell.hasPlayer {
+                        ipArray.append(item)
+                    }
+                }
+                if ipArray.count != 0 {
+                    self.tableView.reloadRowsAtIndexPaths(ipArray, withRowAnimation: .None)
+                }
+                if player1Turn {
+                    if self.player1.playbackState.description != "Playing" {
+                        player1.playFromBeginning()
+                    }
+                } else {
+                    if self.player2.playbackState.description != "Playing" {
+                        player2.playFromBeginning()
+                    }
+                }
+            }
+        }
+    }
+    
+
     func tableView(atableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         if atableView == tableView{
             

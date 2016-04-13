@@ -207,13 +207,17 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
     }
     
     func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        if velocity.y < 0.5 {
-            if player1Turn {
-                player1.playFromBeginning()
-            } else {
-                player2.playFromBeginning()
-            }
-        }
+//        if velocity.y < 0.5 {
+//            if player1Turn {
+//                if self.player1.playbackState.description != "Playing" {
+//                player1.playFromBeginning()
+//                }
+//            } else {
+//                if self.player2.playbackState.description != "Playing" {
+//                player2.playFromBeginning()
+//                }
+//            }
+//        }
         
 
     }
@@ -238,19 +242,32 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
 
     }
     
-//    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-//        isScrollingFast = false
-//        var ipArray = [NSIndexPath]()
-//        for item in self.tableView.indexPathsForVisibleRows!{
-//            let cell = self.tableView.cellForRowAtIndexPath(item) as! videoCell
-//            if !cell.hasPlayer {
-//                ipArray.append(item)
-//            }
-//        }
-//        if ipArray.count != 0 {
-//            self.tableView.reloadRowsAtIndexPaths(ipArray, withRowAnimation: .None)
-//        }
-//    }
+    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if !decelerate {
+            if self.player1.playbackState.description != "Playing" || self.player2.playbackState.description != "Playing" {
+        isScrollingFast = false
+        var ipArray = [NSIndexPath]()
+        for item in self.tableView.indexPathsForVisibleRows!{
+            let cell = self.tableView.cellForRowAtIndexPath(item) as! videoCell
+            if !cell.hasPlayer {
+                ipArray.append(item)
+            }
+        }
+        if ipArray.count != 0 {
+            self.tableView.reloadRowsAtIndexPaths(ipArray, withRowAnimation: .None)
+        }
+            if player1Turn {
+                if self.player1.playbackState.description != "Playing" {
+                    player1.playFromBeginning()
+                }
+            } else {
+                if self.player2.playbackState.description != "Playing" {
+                    player2.playFromBeginning()
+                }
+            }
+        }
+        }
+    }
     
 
     func scrollViewDidScroll(scrollView: UIScrollView) {
@@ -275,9 +292,9 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
                 if (scrollSpeed > 0.1
                     ) {
                     isScrollingFast = true
-
-                    //print("hızlı")
-                    
+//                    player1.stop()
+//                    player2.stop()
+                                    
                 } else {
                     isScrollingFast = false
                     var ipArray = [NSIndexPath]()
@@ -299,7 +316,7 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
             }
             if is4s{
                 if (scrollView.contentOffset.y > 10) && (scrollView.contentOffset.y+scrollView.frame.height < scrollView.contentSize.height
-                    ) && !isScrollingFast
+                    )
                 {
                     let longest = scrollView.contentOffset.y + scrollView.frame.height
                     if direction == 1 {
@@ -313,14 +330,20 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
                                 //self.tableView.visibleCells[1].reloadInputViews()
                                 if self.player1.playbackState.description != "Playing" {
                                     self.player2.stop()
+                                    if !isScrollingFast {
                                     self.player1.playFromBeginning()
+                                    }
+                                    player1Turn = true
                                     //print(self.tableView.indexPathsForVisibleRows![0].row)
                                     //////print("player1")
                                 }
                             }else{
                                 if self.player2.playbackState.description != "Playing"{
                                     self.player1.stop()
+                                    if !isScrollingFast {
                                     self.player2.playFromBeginning()
+                                    }
+                                    player1Turn = false
                                     //////print("player2")
                                 }
                             }
@@ -340,13 +363,19 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
                                 
                                 if self.player1.playbackState.description != "Playing" {
                                     self.player2.stop()
+                                    if !isScrollingFast {
                                     self.player1.playFromBeginning()
+                                    }
+                                    player1Turn = true
                                     //////print("player1")
                                 }
                             }else{
                                 if self.player2.playbackState.description != "Playing"{
                                     self.player1.stop()
+                                    if !isScrollingFast {
                                     self.player2.playFromBeginning()
+                                    }
+                                    player1Turn = false
                                     //////print("player2")
                                 }
                             }
@@ -357,7 +386,7 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
                 
             } else {
             if (scrollView.contentOffset.y > 10) && (scrollView.contentOffset.y+scrollView.frame.height < scrollView.contentSize.height
-            ) && !isScrollingFast
+            )
             {
                 
                 if self.tableView.visibleCells.count > 2 {
@@ -377,7 +406,10 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
                         //self.tableView.visibleCells[1].reloadInputViews()
                     if self.player1.playbackState.description != "Playing" {
                        self.player2.stop()
+                        if !isScrollingFast {
                        self.player1.playFromBeginning()
+                        
+                        }
                         player1Turn = true
                         //print(self.tableView.indexPathsForVisibleRows![0].row)
                                                                 //////print("player1")
@@ -385,7 +417,10 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
                             }else{
                     if self.player2.playbackState.description != "Playing"{
                         self.player1.stop()
+                        if !isScrollingFast {
                         self.player2.playFromBeginning()
+                
+                        }
                         player1Turn = false
                                                                 //////print("player2")
                                                             }
@@ -406,14 +441,18 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
                             
                             if self.player1.playbackState.description != "Playing" {
                                 self.player2.stop()
+                                if !isScrollingFast {
                                 self.player1.playFromBeginning()
-                                //////print("player1")
+                                }
+                                player1Turn = true
                             }
                         }else{
                             if self.player2.playbackState.description != "Playing"{
                                 self.player1.stop()
+                                if !isScrollingFast {
                                 self.player2.playFromBeginning()
-                                //////print("player2")
+                                }
+                                player1Turn = false
                             }
                         }
                     }
@@ -583,7 +622,7 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
                     cell.likeButton.setBackgroundImage(UIImage(named: "likefilled"), forState: UIControlState.Normal)
                     cell.likeButton.tintColor = UIColor.whiteColor()
                 }
-            }else if pressedFollow{
+            }else if pressedFollow {
                 pressedFollow = true
                 
                 cell.followButton.hidden = videoArray[indexPath.row].isFollowing == 1 ? true:false
