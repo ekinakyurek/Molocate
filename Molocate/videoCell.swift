@@ -29,7 +29,7 @@ class videoCell: UITableViewCell {
     var label2 : UILabel!
     var label3 : UILabel!
     var myLabel3: UILabel!
-    
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     var tableVideoURL: NSURL!
     var y:CGFloat!
     var newRect:CGRect!
@@ -192,6 +192,8 @@ class videoCell: UITableViewCell {
         contentView.layer.addSublayer(cellthumbnail.layer)
         
 
+        
+
     }
     
     func getStringHeight(mytext: String, fontSize: CGFloat, width: CGFloat)->CGFloat {
@@ -257,7 +259,16 @@ class videoCell: UITableViewCell {
             self.profilePhoto.sd_setImageWithURL(videoInfo.userpic, forState: UIControlState.Normal)
 
         }
-       
+        activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
+        
+        activityIndicator.center = CGPoint(x: newRect.midX, y: newRect.midY)
+        activityIndicator.transform = CGAffineTransformMakeScale(1.2, 1.2)
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.White
+        contentView.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+
+    
     }
     
     
@@ -281,7 +292,7 @@ class videoCell: UITableViewCell {
              tableVideoURL = nil
              y = nil
             newRect = nil
-        //print("deinit")
+        
     }
     
     

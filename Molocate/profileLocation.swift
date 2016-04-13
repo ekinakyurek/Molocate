@@ -128,6 +128,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
         self.refreshControl.addTarget(self, action: #selector(profileLocation.refresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
         self.tableView.addSubview(refreshControl)
         
+        self.address.sizeToFit()
         
         if(thePlace.is_following==0 ){
             
