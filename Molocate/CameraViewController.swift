@@ -38,24 +38,24 @@ var thumbnail = UIImage()
 typealias JSONParameters = [String: AnyObject]
 
 class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptureFileOutputRecordingDelegate{
-    var recordButton : RecordButton!
-    var progressTimer : NSTimer!
-    var progress : CGFloat! = 0
-    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
-    var rootLayer = CALayer()
-    var camera = true
-    var videoURL = NSURL()
-    var sessionQueue: dispatch_queue_t?
-    var vurl: NSURL?
-    var topLayer = CALayer()
-    var flashLayer = CALayer()
-    var bottomLayer = CALayer()
-    var firstAsset:AVAsset!
-    var secondAsset:AVAsset!
-    var isFlashMode = false
-    var deviceLat: CLLocationDegrees?
-    var deviceLon: CLLocationDegrees?
-    var brightness:CGFloat = 0.0
+    private var recordButton : RecordButton!
+    private var progressTimer : NSTimer!
+    private var progress : CGFloat! = 0
+    private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    private var rootLayer = CALayer()
+    private var camera = true
+    private var videoURL = NSURL()
+    private var sessionQueue: dispatch_queue_t?
+    private var vurl: NSURL?
+    private var topLayer = CALayer()
+    private var flashLayer = CALayer()
+    private var bottomLayer = CALayer()
+    private var firstAsset:AVAsset!
+    private var secondAsset:AVAsset!
+    private var isFlashMode = false
+    private var deviceLat: CLLocationDegrees?
+    private var deviceLon: CLLocationDegrees?
+    private var brightness:CGFloat = 0.0
     @IBOutlet var toolbarYancı: UILabel!
     
     @IBOutlet var bottomToolbar: UIToolbar!
@@ -75,7 +75,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
     var location:CLLocation!
     var locationManager:CLLocationManager!
     var firstFront = false
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         toolbar.barTintColor = swiftColor
@@ -91,15 +91,34 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         bottomToolbar.clipsToBounds = true
         
         locationDict = [[String:locations]]()
+        dispatch_async(dispatch_get_main_queue()) {
+        self.locationManager = CLLocationManager()
+        self.locationManager.delegate = self
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        self.locationManager.startUpdatingLocation()
         
-        locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-        locationManager.startUpdatingLocation()
-        
-        location = locationManager.location
-        deviceLat = locationManager.location?.coordinate.latitude
-        deviceLon = locationManager.location?.coordinate.longitude
+        self.location = self.locationManager.location
+        self.deviceLat = self.locationManager.location?.coordinate.latitude
+        self.deviceLon = self.locationManager.location?.coordinate.longitude
+       
+                let cleanup: dispatch_block_t = {
+                    do {
+                        
+                        try NSFileManager.defaultManager().removeItemAtURL(fakeoutputFileURL!)
+                        //try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
+                        
+                    } catch _ {}
+                    
+                }
+                if(fakeoutputFileURL != nil){
+                    cleanup()
+                    print("siliniyor")
+                    
+                }
+
+            
+            
+        }
         let width = self.view.frame.width
         let height = (self.view.frame.height-self.view.frame.width-2*self.toolbar.frame.height-self.toolbarYancı.frame.height)
         let topRect = CGRect(x: 0, y: self.view.frame.width+self.toolbar.frame.height+self.toolbarYancı.frame.height, width: width, height: height)
@@ -275,13 +294,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
     
     override func viewDidAppear(animated: Bool) {
       
-        self.locationManager = CLLocationManager()
-        self.locationManager.delegate = self
-        self.locationManager.requestWhenInUseAuthorization()
-        self.locationManager.startUpdatingLocation()
-        self.location = self.locationManager.location
-        self.locationManager.stopUpdatingLocation()
-        
+
     }
     
     
@@ -325,16 +338,28 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
             }
         }
         
+        self.locationManager = CLLocationManager()
+        self.locationManager.delegate = self
+        self.locationManager.requestWhenInUseAuthorization()
+        self.locationManager.startUpdatingLocation()
+        self.location = self.locationManager.location
+        self.locationManager.stopUpdatingLocation()
+        self.location = self.locationManager.location
+        self.deviceLat = self.locationManager.location?.coordinate.latitude
+        self.deviceLon = self.locationManager.location?.coordinate.longitude
+        
         let session = Session.sharedSession()
         
         
         //var parameters = [Parameter.query:"moda sahil"]
         let parameters = location!.parameters()
+    
         
         let searchTask = session.venues.search(parameters) {
             (result) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
             if let response = result.response {
+                
                
                 let venues = response["venues"] as! [JSONParameters]?
                 for (var i = 0; i < venues?.count ; i+=1){
@@ -346,8 +371,8 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                     let distance = itemlocation["distance"] as! NSInteger
                     let isVerified = item["verified"] as! Bool
                     let checkinsCount = itemstats["checkinsCount"] as! NSInteger
-                    let enoughCheckin:Bool = (checkinsCount > 700)
-                    if (distance < 400){
+                    let enoughCheckin:Bool = (checkinsCount > 500)
+                    if (distance < 200){
                         if(isVerified||enoughCheckin){
                             //let order = [(item["name"] as! String):placesArray.count]
                             placeOrder.setObject(placesArray.count , forKey: (item["name"] as! String))
@@ -366,12 +391,12 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                             for item in address {
                                 loc.adress = loc.adress + item
                             }
-                            
+                            print(venues?.count)
                             if item.indexForKey("photo") != nil {
-                                print("foto var")
+                                //print("foto var")
                             } else {
                                 
-                                print("foto yok")
+                                //print("foto yok")
                             }
 
                         let locationDictitem = [name:loc]
@@ -743,7 +768,169 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                 
             }
            // print(thumbnail.description)
-            self.performSegueWithIdentifier("capturePreview", sender: self)
+            
+            
+            //isUploaded = false
+            var videodata = NSData()
+            self.progress = 0.0
+            do {
+                videodata = try NSData(contentsOfURL: contentURL, options: NSDataReadingOptions.DataReadingUncached)
+            } catch _{
+                print("error")
+                self.activityIndicator.stopAnimating()
+                UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                self.displayAlert("Hata", message: "Videonuz yüklenemedi. Lütfen tekrar deneyiniz.")
+                tempAssetURL = nil
+                self.firstAsset = nil
+                self.secondAsset = nil
+                
+                dispatch_async(dispatch_get_main_queue()) {
+                    let cleanup: dispatch_block_t = {
+                        do {
+                            
+                            try NSFileManager.defaultManager().removeItemAtURL(fakeoutputFileURL!)
+                            //try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
+                            
+                        } catch _ {}
+                        
+                    }
+                    if(fakeoutputFileURL != nil){
+                        cleanup()
+                        print("siliniyor")
+                        
+                    }
+                    
+                    
+                    let cleanuppath: dispatch_block_t = {
+                        do {
+                            
+                            try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
+                            
+                        } catch _ {}
+                        
+                    }
+                    cleanuppath()
+                }
+
+            
+            }
+            //let videodata = NSData(contentsOfURL: videoURL!)
+            let headers = [
+                "authorization": "Token \(MoleUserToken!)",
+                "content-type": "/*/",
+                "content-disposition": "attachment;filename=deneme.mp4",
+                "cache-control": "no-cache"
+            ]
+            let request = NSMutableURLRequest(URL: NSURL(string: MolocateBaseUrl + "video/upload/")!,
+                cachePolicy: NSURLRequestCachePolicy.ReloadIgnoringCacheData,
+                timeoutInterval: 10.0)
+            request.HTTPMethod = "POST"
+            request.allHTTPHeaderFields = headers
+            request.HTTPBody = videodata
+            
+            let session = NSURLSession.sharedSession()
+            let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
+                if (error != nil) {
+                    print(error)
+                } else {
+                    print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+                    do {
+                        let result = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers)
+                        
+                        print("Result -> \(result)")
+                        let statue = result["result"] as! String
+                        if(statue == "success"){
+                            
+                            videoId = result["video_id"] as! String
+                            videoUrl = result["video_url"] as! String
+                            self.activityIndicator.stopAnimating()
+                            UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                            self.performSegueWithIdentifier("capturePreview", sender: self)
+                            
+                            
+                        }  else{
+                            self.activityIndicator.stopAnimating()
+                            UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                            self.displayAlert("Hata", message: "Videonuz yüklenemedi. Lütfen tekrar deneyiniz.")
+                            tempAssetURL = nil
+                            self.firstAsset = nil
+                            self.secondAsset = nil
+                            
+                            dispatch_async(dispatch_get_main_queue()) {
+                                let cleanup: dispatch_block_t = {
+                                    do {
+                                        
+                                        try NSFileManager.defaultManager().removeItemAtURL(fakeoutputFileURL!)
+                                        //try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
+                                        
+                                    } catch _ {}
+                                    
+                                }
+                                if(fakeoutputFileURL != nil){
+                                    cleanup()
+                                    print("siliniyor")
+                                    
+                                }
+                                
+                                
+                                let cleanuppath: dispatch_block_t = {
+                                    do {
+                                        
+                                        try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
+                                        
+                                    } catch _ {}
+                                    
+                                }
+                                cleanuppath()
+                            }
+                            
+                            }
+                            
+                            
+                            
+                            
+                        } catch {
+                            print("Error -> \(error)")
+                            self.activityIndicator.stopAnimating()
+                            UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                            self.displayAlert("Hata", message: "Videonuz yüklenemedi. Lütfen tekrar deneyiniz.")
+                            tempAssetURL = nil
+                            self.firstAsset = nil
+                            self.secondAsset = nil
+                            
+                            dispatch_async(dispatch_get_main_queue()) {
+                                let cleanup: dispatch_block_t = {
+                                    do {
+                                        
+                                        try NSFileManager.defaultManager().removeItemAtURL(fakeoutputFileURL!)
+                                        //try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
+                                        
+                                    } catch _ {}
+                                    
+                                }
+                                if(fakeoutputFileURL != nil){
+                                    cleanup()
+                                    print("siliniyor")
+                                    
+                                }
+                                
+                                
+                                let cleanuppath: dispatch_block_t = {
+                                    do {
+                                        
+                                        try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
+                                        
+                                    } catch _ {}
+                                    
+                                }
+                                cleanuppath()
+                            }
+                    
+                        }
+                    }
+                })
+                
+                dataTask.resume()
             
           
             
@@ -1046,6 +1233,14 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
     }
     
     override func viewDidDisappear(animated: Bool) {
+        dispatch_async(self.sessionQueue!) {
+            if self.setupResult == AVCamSetupResult.Success {
+                self.captureSession!.stopRunning()
+            }
+        }
+        
+        super.viewDidDisappear(animated)
+
     
     }
 }

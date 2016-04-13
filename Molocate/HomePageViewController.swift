@@ -26,6 +26,7 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
     var pressedLike: Bool = false
     var pressedFollow: Bool = false
     var refreshing: Bool = false
+    var player1Turn = false
     
     @IBOutlet var nofollowings: UILabel!
     var direction = 0 // 0 is down and 1 is up
@@ -41,10 +42,13 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     var Ekran : CGFloat = 0.0
     var categories = ["Hepsi","Eğlence","Yemek","Gezinti","Moda" , "Güzellik", "Spor","Etkinlik","Kampüs"]
-    
+    var likeHeart = UIImageView()
     override func viewDidLoad() {
         super.viewDidLoad()
-          try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
+        likeHeart.image = UIImage(named: "favorite")
+        likeHeart.alpha = 1.0
+    
+        try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
         self.nofollowings.hidden = true
         activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
         activityIndicator.center = self.view.center
@@ -115,6 +119,10 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
         UIApplication.sharedApplication().endIgnoringInteractionEvents()
         //self.tableView.scrollsToTop = true
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HomePageViewController.scrollToTop), name: "scrollToTop", object: nil)
+        if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
+        UIApplication.sharedApplication().endIgnoringInteractionEvents()
+            
+        }
     }
     
     func refresh(sender:AnyObject){
@@ -157,11 +165,12 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
             
             
         })
-        
+
     }
     
     func playerReady(player: Player) {
-        ////print("ready")
+        ////print("ready"
+       
     }
     
     func playerPlaybackStateDidChange(player: Player) {
@@ -198,7 +207,14 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
     }
     
     func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-         
+        if velocity.y < 0.5 {
+            if player1Turn {
+                player1.playFromBeginning()
+            } else {
+                player2.playFromBeginning()
+            }
+        }
+        
 
     }
     
@@ -256,8 +272,10 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
                 let scrollSpeedNotAbs = (distance * 10) / 1000 //in pixels per millisecond
                 
                 let scrollSpeed = fabsf(Float(scrollSpeedNotAbs));
-                if (scrollSpeed > 0.5) {
+                if (scrollSpeed > 0.1
+                    ) {
                     isScrollingFast = true
+
                     //print("hızlı")
                     
                 } else {
@@ -360,6 +378,7 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
                     if self.player1.playbackState.description != "Playing" {
                        self.player2.stop()
                        self.player1.playFromBeginning()
+                        player1Turn = true
                         //print(self.tableView.indexPathsForVisibleRows![0].row)
                                                                 //////print("player1")
                                     }
@@ -367,6 +386,7 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
                     if self.player2.playbackState.description != "Playing"{
                         self.player1.stop()
                         self.player2.playFromBeginning()
+                        player1Turn = false
                                                                 //////print("player2")
                                                             }
             }
@@ -493,6 +513,10 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
             playtap.numberOfTapsRequired = 1
             cell.contentView.addGestureRecognizer(playtap)
             
+            
+            playtap.requireGestureRecognizerToFail(tap)
+            
+            
             let thumbnailURL = self.videoArray[indexPath.row].thumbnailURL
             if(thumbnailURL.absoluteString != ""){
                 cell.cellthumbnail.sd_setImageWithURL(thumbnailURL)
@@ -503,35 +527,44 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
 
             
             if !isScrollingFast {
-                cell.hasPlayer = true
+                
                 var trueURL = NSURL()
             if dictionary.objectForKey(self.videoArray[indexPath.row].id) != nil {
                 trueURL = dictionary.objectForKey(self.videoArray[indexPath.row].id) as! NSURL
             } else {
+                
                 trueURL = self.videoArray[indexPath.row].urlSta
                 dispatch_async(dispatch_get_main_queue()) {
                 myCache.fetch(URL:self.videoArray[indexPath.row].urlSta ).onSuccess{ NSData in
+                   print("hop")
                     let url = self.videoArray[indexPath.row].urlSta.absoluteString
                     let path = NSURL(string: DiskCache.basePath())!.URLByAppendingPathComponent("shared-data/original")
                     let cached = DiskCache(path: path.absoluteString).pathForKey(url)
                     let file = NSURL(fileURLWithPath: cached)
                     dictionary.setObject(file, forKey: self.videoArray[indexPath.row].id)
+                    
                 }
                 }
             }
-            
+                if !cell.hasPlayer {
+                
+                    
                     if indexPath.row % 2 == 1 {
                         
                         self.player1.setUrl(trueURL)
                         self.player1.view.frame = cell.newRect
                         cell.contentView.addSubview(self.player1.view)
+                        cell.hasPlayer = true
                         
                     }else{
                         
                         self.player2.setUrl(trueURL)
                         self.player2.view.frame = cell.newRect
                         cell.contentView.addSubview(self.player2.view)
+                        cell.hasPlayer = true
                     }
+                    
+                }
 
                 //}
             
@@ -545,9 +578,9 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
                 cell.likeCount.setTitle("\(videoArray[indexPath.row].likeCount)", forState: .Normal)
                 
                 if(videoArray[indexPath.row].isLiked == 0) {
-                    cell.likeButton.setBackgroundImage(UIImage(named: "Like.png"), forState: UIControlState.Normal)
+                    cell.likeButton.setBackgroundImage(UIImage(named: "likeunfilled"), forState: UIControlState.Normal)
                 }else{
-                    cell.likeButton.setBackgroundImage(UIImage(named: "LikeFilled.png"), forState: UIControlState.Normal)
+                    cell.likeButton.setBackgroundImage(UIImage(named: "likefilled"), forState: UIControlState.Normal)
                     cell.likeButton.tintColor = UIColor.whiteColor()
                 }
             }else if pressedFollow{
@@ -700,7 +733,13 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
         let indexpath = NSIndexPath(forRow: buttonRow, inSection: 0)
         var indexes = [NSIndexPath]()
         indexes.append(indexpath)
-        
+        let  cell = tableView.cellForRowAtIndexPath(indexpath)
+        likeHeart.center = (cell?.contentView.center)!
+        likeHeart.layer.zPosition = 100
+        let imageSize = likeHeart.image?.size.height
+        likeHeart.frame = CGRectMake(likeHeart.center.x-imageSize!/2 , likeHeart.center.y-imageSize!/2, imageSize!, imageSize!)
+        cell?.addSubview(likeHeart)
+        MolocateUtility.animateLikeButton(&likeHeart)
         if(videoArray[buttonRow].isLiked == 0){
             
             self.videoArray[buttonRow].isLiked=1
@@ -709,13 +748,14 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
             
             self.tableView.reloadRowsAtIndexPaths(indexes, withRowAnimation: UITableViewRowAnimation.None)
             
+      
+            
             MolocateVideo.likeAVideo(videoArray[buttonRow].id) { (data, response, error) -> () in
                 dispatch_async(dispatch_get_main_queue()){
                     //////print(data)
                 }
             }
         }else{
-              pressedLike = false
             
 //            self.videoArray[buttonRow].isLiked=0
 //            self.videoArray[buttonRow].likeCount-=1
@@ -728,6 +768,29 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
 //                }
 //            }
         }
+        
+        pressedLike = false
+    }
+    
+    
+    func animateLikeButton(){
+        
+        UIView.animateWithDuration(0.3, delay: 0, options: .AllowUserInteraction, animations: {
+            self.likeHeart.transform = CGAffineTransformMakeScale(1.3, 1.3);
+            self.likeHeart.alpha = 1.0;
+        }) { (finished1) in
+            UIView.animateWithDuration(0.1, delay: 0, options: .AllowUserInteraction, animations: {
+                self.likeHeart.transform = CGAffineTransformMakeScale(1.0, 1.0);
+                }, completion: { (finished2) in
+                    UIView.animateWithDuration(0.3, delay: 0, options: .AllowUserInteraction, animations: {
+                        self.likeHeart.transform = CGAffineTransformMakeScale(1.3, 1.3);
+                        self.likeHeart.alpha = 0.0;
+                        }, completion: { (finished3) in
+                            self.likeHeart.transform = CGAffineTransformMakeScale(1.0, 1.0);
+                    })
+            })
+        }
+        
     }
     func pressedLike(sender: UIButton) {
         let buttonRow = sender.tag

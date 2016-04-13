@@ -45,7 +45,7 @@ class TableViewCellFollowerFollowing: UITableViewCell {
         myButton1.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
         contentView.addSubview(myButton1)
         
-        let tick = UIImage(named: "shapes.png")! as UIImage
+        let tick = UIImage(named: "follow")! as UIImage
         myLabel1 = UIButton()
         
         myLabel1.frame = CGRect(x:UIScreen.mainScreen().bounds.width - 40 , y: gap + 5, width: 30, height: 30)

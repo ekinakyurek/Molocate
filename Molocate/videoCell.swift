@@ -124,8 +124,8 @@ class videoCell: UITableViewCell {
         contentView.addSubview(followButton)
         
         likeButton = UIButton()
-        likeButton.frame = CGRectMake( 5 , 106 + screenSize.width , 36, 36)
-        let likeImage = UIImage(named: "Like.png")! as UIImage
+        likeButton.frame = CGRectMake( 5 , 108 + screenSize.width , 36, 36)
+        let likeImage = UIImage(named: "likeunfilled")! as UIImage
         likeButton.setBackgroundImage(likeImage, forState: UIControlState.Normal)
         contentView.addSubview(likeButton)
         
@@ -151,8 +151,9 @@ class videoCell: UITableViewCell {
         
         
         commentButton = UIButton()
-        commentButton.frame = CGRectMake( 93 , 110 + screenSize.width , 36 , 36)
-        let commentImage = UIImage(named: "Comments.png")! as UIImage
+        commentButton.frame = CGRectMake( 93 , 108 + screenSize.width , 36 , 36)
+        let commentImage = UIImage(named: "comment")! as UIImage
+    
         commentButton.setBackgroundImage(commentImage, forState: UIControlState.Normal)
         contentView.addSubview(commentButton)
         
@@ -225,7 +226,7 @@ class videoCell: UITableViewCell {
      
         self.videoTime.text = videoInfo.dateStr
         if(videoInfo.isLiked==1){
-            self.likeButton.setBackgroundImage(UIImage(named: "LikeFilled.png"), forState: UIControlState.Normal)
+            self.likeButton.setBackgroundImage(UIImage(named: "likefilled"), forState: UIControlState.Normal)
         }
         
         var textstring = " "
@@ -280,7 +281,7 @@ class videoCell: UITableViewCell {
              tableVideoURL = nil
              y = nil
             newRect = nil
-        print("deinit")
+        //print("deinit")
     }
     
     

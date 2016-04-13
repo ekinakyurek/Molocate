@@ -35,7 +35,6 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
         comments.append(mycomment)
         tableView.reloadData()
         
-        tableView.allowsSelection = false
         tableView.tableFooterView = UIView()
         MolocateVideo.commentAVideo(video_id, comment: newComment.text) { (data, response, error) -> () in
             dispatch_async(dispatch_get_main_queue()){
@@ -94,13 +93,14 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
         super.viewDidLoad()
      
         newComment.text = "Yorumunu buradan yazabilirsin"
+        
         newComment.textColor = UIColor.lightGrayColor()
         tableView.separatorColor = UIColor.clearColor()
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(commentController.dismissKeyboard))
         view.addGestureRecognizer(tap)
         self.sendImage.layer.zPosition = 3
         self.sendButton.layer.zPosition = 2
-
+        
        
         tableView.estimatedRowHeight = 68
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -123,8 +123,8 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
 //        self.newComment.layer.zPosition = 2
 //        self.tableView.layer.zPosition = 1
         self.newComment.returnKeyType = .Done
-        
-        tableView.allowsSelection = false
+    
+       // tableView.allowsSelection = false
         tableView.tableFooterView = UIView()
         
         UIApplication.sharedApplication().endIgnoringInteractionEvents()
@@ -185,9 +185,11 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
         NSNotificationCenter.defaultCenter().removeObserver(self);
     }
     
-
+   
     
-
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
     
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         
@@ -245,6 +247,8 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
         cell.profilePhoto.clipsToBounds = true
         cell.profilePhoto.tag = indexPath.row
         
+        cell.comment.numberOfLines = 0
+        cell.comment.lineBreakMode = NSLineBreakMode.ByWordWrapping
         if(comments[indexPath.row].photo.absoluteString != ""){
             cell.profilePhoto.setBackgroundImage(UIImage(named: "profilepic.png")!, forState:
                 UIControlState.Normal)
@@ -256,6 +260,17 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
                 UIControlState.Normal)
         }
         return cell
+    }
+    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.Delete{
+     
+            MolocateVideo.deleteAComment(comments[indexPath.row].id, completionHandler: { (data, response, error) in
+              print(data)
+            })
+            comments.removeAtIndex(indexPath.row)
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+        }
     }
     
     func pressedUsername(sender: UIButton) {
@@ -279,6 +294,8 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
         }
         
     }
+  
+
     
     override func viewWillDisappear(animated: Bool) {
         comments.removeAll()

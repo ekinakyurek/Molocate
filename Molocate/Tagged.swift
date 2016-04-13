@@ -22,11 +22,13 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
     var username = ""
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     var tableView = UITableView()
+    var likeHeart = UIImageView()
     override func viewDidLoad() {
         super.viewDidLoad()
           try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
         view.frame = CGRectMake(0, 0, screenSize.width, screenSize.height-190)
-        
+        likeHeart.image = UIImage(named: "favorite")
+        likeHeart.alpha = 1.0
         self.player1 = Player()
         self.player1.delegate = self
         self.player1.playbackLoops = true
@@ -179,6 +181,8 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
             playtap.numberOfTapsRequired = 1
             cell.contentView.addGestureRecognizer(playtap)
             
+            playtap.requireGestureRecognizerToFail(tap)
+
             let thumbnailURL = self.videoArray[indexPath.row].thumbnailURL
             if(thumbnailURL.absoluteString != ""){
                 cell.cellthumbnail.sd_setImageWithURL(thumbnailURL)
@@ -189,7 +193,7 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
             
             var trueURL = NSURL()
             if !isScrollingFast {
-                cell.hasPlayer = true
+                
             if dictionary.objectForKey(self.videoArray[indexPath.row].id) != nil {
                 trueURL = dictionary.objectForKey(self.videoArray[indexPath.row].id) as! NSURL
             } else {
@@ -210,12 +214,14 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
                 self.player1.setUrl(trueURL)
                 self.player1.view.frame = cell.newRect
                 cell.contentView.addSubview(self.player1.view)
+                cell.hasPlayer = true
                 
             }else{
                 
                 self.player2.setUrl(trueURL)
                 self.player2.view.frame = cell.newRect
                 cell.contentView.addSubview(self.player2.view)
+                cell.hasPlayer = true
             }
             }
             return cell
@@ -267,7 +273,7 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
             let scrollSpeedNotAbs = (distance * 10) / 1000 //in pixels per millisecond
             
             let scrollSpeed = fabsf(Float(scrollSpeedNotAbs));
-            if (scrollSpeed > 0.5) {
+            if (scrollSpeed > 0.1) {
                 isScrollingFast = true
                 print("hızlı")
                 
@@ -358,19 +364,19 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
         
     }
     
-    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        isScrollingFast = false
-        var ipArray = [NSIndexPath]()
-        for item in self.tableView.indexPathsForVisibleRows!{
-            let cell = self.tableView.cellForRowAtIndexPath(item) as! videoCell
-            if !cell.hasPlayer {
-                ipArray.append(item)
-            }
-        }
-        if ipArray.count != 0 {
-            self.tableView.reloadRowsAtIndexPaths(ipArray, withRowAnimation: .None)
-        }
-    }
+//    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+//        isScrollingFast = false
+//        var ipArray = [NSIndexPath]()
+//        for item in self.tableView.indexPathsForVisibleRows!{
+//            let cell = self.tableView.cellForRowAtIndexPath(item) as! videoCell
+//            if !cell.hasPlayer {
+//                ipArray.append(item)
+//            }
+//        }
+//        if ipArray.count != 0 {
+//            self.tableView.reloadRowsAtIndexPaths(ipArray, withRowAnimation: .None)
+//        }
+//    }
 
     
     func tableView(atableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
@@ -525,6 +531,13 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
         print("like a basıldı at index path: \(buttonRow) ")
         pressedLike = true
         let indexpath = NSIndexPath(forRow: buttonRow, inSection: 0)
+        let  cell = tableView.cellForRowAtIndexPath(indexpath)
+        likeHeart.center = (cell?.contentView.center)!
+        likeHeart.layer.zPosition = 100
+        let imageSize = likeHeart.image?.size.height
+        likeHeart.frame = CGRectMake(likeHeart.center.x-imageSize!/2 , likeHeart.center.y-imageSize!/2, imageSize!, imageSize!)
+        cell?.addSubview(likeHeart)
+        MolocateUtility.animateLikeButton(&likeHeart)
         var indexes = [NSIndexPath]()
         indexes.append(indexpath)
         
@@ -543,7 +556,7 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
             }
         }else{
             
-              pressedLike = false
+          
 //            self.videoArray[buttonRow].isLiked=0
 //            self.videoArray[buttonRow].likeCount-=1
 //            self.tableView.reloadRowsAtIndexPaths(indexes, withRowAnimation: UITableViewRowAnimation.None)
@@ -555,6 +568,7 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
 //                }
 //            }
         }
+            pressedLike = false
     }
     
     func pressedComment(sender: UIButton) {

@@ -17,8 +17,12 @@ class oneVideo: UIViewController,PlayerDelegate {
     }
     @IBOutlet var toolBar: UIToolbar!
     @IBOutlet var tableView: UITableView!
+    var likeHeart = UIImageView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        likeHeart.image = UIImage(named: "favorite")
+        likeHeart.alpha = 1.0
         UIApplication.sharedApplication().endIgnoringInteractionEvents()
         self.toolBar.clipsToBounds = true
         self.toolBar.translucent = false
@@ -61,7 +65,7 @@ class oneVideo: UIViewController,PlayerDelegate {
         return 1
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
+        if !pressedLike && !pressedFollow {
         
         let cell = videoCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "cell")
         
@@ -84,11 +88,15 @@ class oneVideo: UIViewController,PlayerDelegate {
         cell.commentButton.addTarget(self, action: #selector(oneVideo.pressedComment(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         cell.reportButton.addTarget(self, action: #selector(oneVideo.pressedReport(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         cell.likeCount.addTarget(self, action: #selector(oneVideo.pressedLikeCount(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-        let tap = UITapGestureRecognizer(target: self, action:#selector(oneVideo.doubleTapped(_:) ));
-        tap.numberOfTapsRequired = 2
-        cell.contentView.addGestureRecognizer(tap)
-        cell.contentView.tag = indexPath.row
-        
+     
+            let tap = UITapGestureRecognizer(target: self, action:#selector(MainController.doubleTapped(_:) ));
+            tap.numberOfTapsRequired = 2
+            cell.contentView.addGestureRecognizer(tap)
+            let playtap = UITapGestureRecognizer(target: self, action:#selector(MainController.playTapped(_:) ));
+            playtap.numberOfTapsRequired = 1
+            cell.contentView.addGestureRecognizer(playtap)
+            
+            playtap.requireGestureRecognizerToFail(tap)
         
         
         self.player.setUrl(MoleGlobalVideo.urlSta)
@@ -99,7 +107,28 @@ class oneVideo: UIViewController,PlayerDelegate {
 
         self.player.playFromBeginning()
         
-        return cell
+            return cell
+        }else{
+            let cell = tableView.cellForRowAtIndexPath(indexPath) as! videoCell
+            if pressedLike {
+                pressedLike = false
+                cell.likeCount.setTitle("\(MoleGlobalVideo.likeCount)", forState: .Normal)
+                
+                if(MoleGlobalVideo.isLiked == 0) {
+                    cell.likeButton.setBackgroundImage(UIImage(named: "likeunfilled"), forState: UIControlState.Normal)
+                }else{
+                    cell.likeButton.setBackgroundImage(UIImage(named: "likefilled"), forState: UIControlState.Normal)
+                    cell.likeButton.tintColor = UIColor.whiteColor()
+                }
+            }else if pressedFollow{
+                pressedFollow = true
+                
+                cell.followButton.hidden = MoleGlobalVideo.isFollowing == 1 ? true:false
+                
+            }
+            return cell
+
+        }
     }
     
     func pressedUsername(sender: UIButton) {
@@ -145,6 +174,16 @@ class oneVideo: UIViewController,PlayerDelegate {
         }
         
     }
+    
+    func playTapped(sender: UITapGestureRecognizer) {
+        if player.playbackState.description == "Playing"{
+            player.stop()
+        }else if player.playbackState.description == "Stopped"{
+            player.playFromCurrentTime()
+        }
+        
+    }
+    
     func pressedFollow(sender: UIButton) {
         let buttonRow = sender.tag
         pressedFollow = true
@@ -180,6 +219,14 @@ class oneVideo: UIViewController,PlayerDelegate {
         print("like a basıldı at index path: \(buttonRow) ")
         pressedLike = true
         let indexpath = NSIndexPath(forRow: buttonRow, inSection: 0)
+        let  cell = tableView.cellForRowAtIndexPath(indexpath)
+        likeHeart.center = (cell?.contentView.center)!
+        likeHeart.layer.zPosition = 100
+        let imageSize = likeHeart.image?.size.height
+        likeHeart.frame = CGRectMake(likeHeart.center.x-imageSize!/2 , likeHeart.center.y-imageSize!/2, imageSize!, imageSize!)
+        cell?.addSubview(likeHeart)
+        MolocateUtility.animateLikeButton(&likeHeart)
+        
         var indexes = [NSIndexPath]()
         indexes.append(indexpath)
         
@@ -210,6 +257,7 @@ class oneVideo: UIViewController,PlayerDelegate {
                 }
             }
         }
+        pressedLike = false
     }
     func pressedLike(sender: UIButton) {
         let buttonRow = sender.tag
@@ -219,7 +267,7 @@ class oneVideo: UIViewController,PlayerDelegate {
         var indexes = [NSIndexPath]()
         indexes.append(indexpath)
         
-        if(MoleGlobalVideo.isLiked == 0){
+              if(MoleGlobalVideo.isLiked == 0){
             sender.highlighted = true
             
             MoleGlobalVideo.isLiked=1
@@ -245,6 +293,7 @@ class oneVideo: UIViewController,PlayerDelegate {
                 }
             }
         }
+        pressedLike = false
     }
     func pressedComment(sender: UIButton) {
         let buttonRow = sender.tag

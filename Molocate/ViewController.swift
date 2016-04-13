@@ -51,7 +51,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDe
         
         if(textField==username){
             let maxLength = 20
-            let aSet = NSCharacterSet(charactersInString:"ABCDEFGHIJKLMNOPRSTUVYZXWQabcdefghijklmnoprstuvyzxwq_-.").invertedSet
+            let aSet = NSCharacterSet(charactersInString:"abcdefghijklmnoprstuvyzxwq_-.").invertedSet
             let compSepByCharInSet = string.componentsSeparatedByCharactersInSet(aSet)
             let numberFiltered = compSepByCharInSet.joinWithSeparator("")
             let currentString: NSString = textField.text!
@@ -105,7 +105,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDe
                     
                 }else {
                     
-                    
+                    if username.text?.characters.count > 3{
                     let mail: String = email.text!.lowercaseString
                     
                     MolocateAccount.SignUp(uname, password: pwd, email: mail, completionHandler: { (data, response, error) in
@@ -126,8 +126,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDe
                     })
                     
                     
-                    
+                    }
+                    else {
+                     self.displayAlert("Hata", message: "Lütfen kullanıcı adınız için 3 karakterden fazlasını giriniz.")
+                    }
                 }
+                
             }
         }else{
             self.displayAlert("Hata", message: "İnternet bağlantınızı kontrol ediniz.")

@@ -7,6 +7,8 @@ import UIKit
 import SDWebImage
 import Haneke
 import AVFoundation
+import MapKit
+
 class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSource , UICollectionViewDelegateFlowLayout,NSURLConnectionDataDelegate,PlayerDelegate {
     
     var lastOffset:CGPoint!
@@ -19,6 +21,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
     var refreshControl:UIRefreshControl!
     @IBOutlet var LocationTitle: UILabel!
 
+    @IBOutlet var map: MKMapView!
     @IBOutlet var videosTitle: UILabel!
     @IBOutlet var address: UILabel!
     @IBOutlet var locationName: UILabel!
@@ -32,6 +35,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
         self.removeFromParentViewController()
     }
     @IBOutlet var followButton: UIBarButtonItem!
+   
    
     @IBOutlet var toolBar: UIToolbar!
     @IBAction func followButton(sender: AnyObject) {
@@ -51,6 +55,30 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
         }
         
     }
+    @IBAction func launchMap(sender: AnyObject) {
+        
+        let actionSheetController: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        
+        
+        let cancelAction: UIAlertAction = UIAlertAction(title: "Vazgeç", style: .Cancel) { action -> Void in
+            //Just dismiss the action sheet
+        }
+        actionSheetController.addAction(cancelAction)
+        //Create and add first option action
+        let takePictureAction: UIAlertAction = UIAlertAction(title: "Haritaya Yönlendir", style: .Default)
+        { action -> Void in
+            
+            self.openMapForPlace()
+            
+        }
+        actionSheetController.addAction(takePictureAction)
+        //We need to provide a popover sourceView when using it on iPad
+        actionSheetController.popoverPresentationController?.sourceView = sender as? UIView
+        
+        //Present the AlertController
+        self.presentViewController(actionSheetController, animated: true, completion: nil)
+        
+    }
     @IBOutlet var followerCount: UIButton!
     
     @IBAction func followersButton(sender: AnyObject) {
@@ -68,9 +96,11 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     
     @IBOutlet var profilePhoto: UIImageView!
-    
+    var likeHeart = UIImageView()
     override func viewDidLoad() {
         super.viewDidLoad()
+        likeHeart.image = UIImage(named: "favorite")
+        likeHeart.alpha = 1.0
          try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
         self.view.backgroundColor = swiftColor3
         self.toolBar.clipsToBounds = true
@@ -117,6 +147,35 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
         UIApplication.sharedApplication().endIgnoringInteractionEvents()
         lastOffset = CGPoint(x: 0, y: 0)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(profileLocation.scrollToTop), name: "scrollToTop", object: nil)
+        //mekanın koordinatları eklenecek
+        let longitude :CLLocationDegrees = 28.984503
+        let latitude :CLLocationDegrees = 41.038488
+        let span = MKCoordinateSpanMake(0.005, 0.005)
+        var location:CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        var region:MKCoordinateRegion = MKCoordinateRegion(center: location, span: span)
+        map.setRegion(region, animated: false)
+        
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = location
+        map.addAnnotation(annotation)
+    }
+   
+    func openMapForPlace() {
+        let regionDistance: CLLocationDistance = 10000
+        //mekanın koordinatları eklenecek
+        let coordinates = CLLocationCoordinate2DMake(41.038488 , 28.984503)
+        let regionSpan = MKCoordinateRegionMakeWithDistance(coordinates, regionDistance, regionDistance)
+        let options = [
+            MKLaunchOptionsMapCenterKey: NSValue(MKCoordinate: regionSpan.center),
+            MKLaunchOptionsMapSpanKey: NSValue(MKCoordinateSpan: regionSpan.span)
+        ]
+        
+        let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
+        let mapItem = MKMapItem(placemark: placemark)
+        //mekanın adı eklenecek
+        mapItem.name = "mekanın adı"
+        
+        MKMapItem.openMapsWithItems([mapItem], launchOptions: options)
     }
 
     override func didReceiveMemoryWarning() {
@@ -166,6 +225,8 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
             playtap.numberOfTapsRequired = 1
             cell.contentView.addGestureRecognizer(playtap)
             
+            playtap.requireGestureRecognizerToFail(tap)
+
             let thumbnailURL = self.videoArray[indexPath.row].thumbnailURL
             if(thumbnailURL.absoluteString != ""){
                 cell.cellthumbnail.sd_setImageWithURL(thumbnailURL)
@@ -176,7 +237,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
             
             var trueURL = NSURL()
             if !isScrollingFast {
-                cell.hasPlayer = true
+                
             if dictionary.objectForKey(self.videoArray[indexPath.row].id) != nil {
                 trueURL = dictionary.objectForKey(self.videoArray[indexPath.row].id) as! NSURL
             } else {
@@ -197,12 +258,14 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
                 self.player1.setUrl(trueURL)
                 self.player1.view.frame = cell.newRect
                 cell.contentView.addSubview(self.player1.view)
+                cell.hasPlayer = true
                 
             }else{
                 
                 self.player2.setUrl(trueURL)
                 self.player2.view.frame = cell.newRect
                 cell.contentView.addSubview(self.player2.view)
+                cell.hasPlayer = true
             }
             
             }
@@ -308,19 +371,19 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
         
     }
     
-    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        isScrollingFast = false
-        var ipArray = [NSIndexPath]()
-        for item in self.tableView.indexPathsForVisibleRows!{
-            let cell = self.tableView.cellForRowAtIndexPath(item) as! videoCell
-            if !cell.hasPlayer {
-                ipArray.append(item)
-            }
-        }
-        if ipArray.count != 0 {
-            self.tableView.reloadRowsAtIndexPaths(ipArray, withRowAnimation: .None)
-        }
-    }
+//    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+//        isScrollingFast = false
+//        var ipArray = [NSIndexPath]()
+//        for item in self.tableView.indexPathsForVisibleRows!{
+//            let cell = self.tableView.cellForRowAtIndexPath(item) as! videoCell
+//            if !cell.hasPlayer {
+//                ipArray.append(item)
+//            }
+//        }
+//        if ipArray.count != 0 {
+//            self.tableView.reloadRowsAtIndexPaths(ipArray, withRowAnimation: .None)
+//        }
+//    }
 
     
 
@@ -566,7 +629,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
             let scrollSpeedNotAbs = (distance * 10) / 1000 //in pixels per millisecond
             
             let scrollSpeed = fabsf(Float(scrollSpeedNotAbs));
-            if (scrollSpeed > 0.5) {
+            if (scrollSpeed > 0.1) {
                 isScrollingFast = true
                 //print("hızlı")
                 
@@ -662,6 +725,13 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
         //print("like a basıldı at index path: \(buttonRow) ")
         pressedLike = true
         let indexpath = NSIndexPath(forRow: buttonRow, inSection: 0)
+        let  cell = tableView.cellForRowAtIndexPath(indexpath)
+        likeHeart.center = (cell?.contentView.center)!
+        likeHeart.layer.zPosition = 100
+        let imageSize = likeHeart.image?.size.height
+        likeHeart.frame = CGRectMake(likeHeart.center.x-imageSize!/2 , likeHeart.center.y-imageSize!/2, imageSize!, imageSize!)
+        cell?.addSubview(likeHeart)
+        MolocateUtility.animateLikeButton(&likeHeart)
         var indexes = [NSIndexPath]()
         indexes.append(indexpath)
         
@@ -680,7 +750,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
             }
         }else{
             
-              pressedLike = false
+            
 //            self.videoArray[buttonRow].isLiked=0
 //            self.videoArray[buttonRow].likeCount-=1
 //            self.tableView.reloadRowsAtIndexPaths(indexes, withRowAnimation: UITableViewRowAnimation.None)
@@ -692,6 +762,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
 //                }
 //            }
         }
+          pressedLike = false
     }
 
     func tableView(atableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {

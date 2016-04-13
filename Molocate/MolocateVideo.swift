@@ -24,6 +24,7 @@ struct MoleVideoInformation{
 }
 
 struct MoleVideoComment{
+    var id: String = ""
     var text: String = ""
     var username: String = ""
     var photo: NSURL = NSURL()
@@ -60,9 +61,11 @@ public class MolocateVideo {
                     for (var i = 0 ; i < commentdata.count ; i+=1){
                         var thecomment = MoleVideoComment()
                         let thing = commentdata[i] as! [String:AnyObject]
+                        print(thing)
                         thecomment.username = thing["username"] as! String
                         thecomment.photo = thing["picture_url"] is NSNull ? NSURL():NSURL(string: thing["picture_url"] as! String)!
                         thecomment.text = thing["comment"] as! String
+                        thecomment.id = thing["comment_id"] as! String
                         comments.append(thecomment)
                     }
                 }
@@ -472,17 +475,15 @@ public class MolocateVideo {
     }
     
     
-    class func deleteAComment(id: String,comment: String, completionHandler: (data: String! , response: NSURLResponse!, error: NSError!) -> ()){
+    class func deleteAComment(id: String, completionHandler: (data: String! , response: NSURLResponse!, error: NSError!) -> ()){
         
         do{
             
-            let Body = ["comment_id": id,"comment": comment]
-            let jsonData = try NSJSONSerialization.dataWithJSONObject(Body, options: NSJSONWritingOptions())
             let url = NSURL(string: MolocateBaseUrl + "video/api/delete_comment/?comment_id=" + (id as String))!
             let request = NSMutableURLRequest(URL: url)
             request.HTTPMethod = "POST"
             request.addValue("Token "+MoleUserToken!, forHTTPHeaderField: "Authorization")
-            request.HTTPBody = jsonData
+           // request.HTTPBody = jsonData
             
             let task = NSURLSession.sharedSession().dataTaskWithRequest(request){ data, response, error in
                 //print(NSString(data: data!, encoding: NSUTF8StringEncoding))

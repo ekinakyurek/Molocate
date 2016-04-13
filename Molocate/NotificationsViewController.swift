@@ -46,6 +46,10 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
         location = locationManager.location
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NotificationsViewController.scrollToTop), name: "scrollToTop", object: nil)
+        if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
+            UIApplication.sharedApplication().endIgnoringInteractionEvents()
+            
+        }
     }
     
     func scrollToTop() {

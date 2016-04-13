@@ -301,10 +301,10 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
     }
     
     
-    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        //print(scrollView.contentOffset.x)
-        
-    }
+//    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+//        //print(scrollView.contentOffset.x)
+//        
+//    }
 
     
     override func viewDidDisappear(animated: Bool) {

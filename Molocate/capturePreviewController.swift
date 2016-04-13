@@ -48,43 +48,10 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
             displayAlert("Dikkat", message: "Lütfen Kategori ve Konum seçiniz.")
         }
         else {
-        isUploaded = false
-        player?.pause()
-        var videodata = NSData()
-        do {
-        videodata = try NSData(contentsOfURL: videoURL!, options: NSDataReadingOptions.DataReadingUncached)
-        } catch _{
-            print("error")
-        }
-            //let videodata = NSData(contentsOfURL: videoURL!)
-        let headers = [
-            "authorization": "Token \(MoleUserToken!)",
-            "content-type": "/*/",
-            "content-disposition": "attachment;filename=deneme.mp4",
-            "cache-control": "no-cache"
-        ]
-        let request = NSMutableURLRequest(URL: NSURL(string: MolocateBaseUrl + "video/upload/")!,
-            cachePolicy: NSURLRequestCachePolicy.ReloadIgnoringCacheData,
-            timeoutInterval: 10.0)
-        request.HTTPMethod = "POST"
-        request.allHTTPHeaderFields = headers
-        request.HTTPBody = videodata
-        
-        let session = NSURLSession.sharedSession()
-        let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
-            if (error != nil) {
-                print(error)
-            } else {
-                print(NSString(data: data!, encoding: NSUTF8StringEncoding))
-                do {
-                    let result = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers)
-                    
-                    print("Result -> \(result)")
-                    let statue = result["result"] as! String
-                    if(statue == "success"){
+
                         
-                        let videoId = result["video_id"] as! String
-                        let videoUrl = result["video_url"] as! String
+//                        let videoId2 = videoId
+//                        let videoUrl2 = videoUrl
                         //print(self.videoLocation)
                         
                         CaptionText = CaptionText.componentsSeparatedByString("@")[0]
@@ -196,24 +163,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
                         
                         
                         
-                    } else{
-                        //                        self.displayAlert("Hata", message: result["result"] as! String)
-                        //                        UIApplication.sharedApplication().endIgnoringInteractionEvents()
-                        //                        self.activityIndicator.stopAnimating()
-                        //                        self.activityIndicator.hidesWhenStopped = true
                     }
-                    
-                    
-                    
-                    
-                } catch {
-                    print("Error -> \(error)")
-                    
-                }
-            }
-        })
-        
-        dataTask.resume()
         
         
         
@@ -230,7 +180,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
         } catch _ {
             
         }
-        }
+        
         
    
     }
