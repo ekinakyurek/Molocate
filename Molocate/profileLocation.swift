@@ -149,13 +149,13 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
         lastOffset = CGPoint(x: 0, y: 0)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(profileLocation.scrollToTop), name: "scrollToTop", object: nil)
         //mekanın koordinatları eklenecek
-        let longitude :CLLocationDegrees = 28.984503
-        let latitude :CLLocationDegrees = 41.038488
+        let longitude :CLLocationDegrees = thePlace.lon
+        let latitude :CLLocationDegrees = thePlace.lat
         let span = MKCoordinateSpanMake(0.005, 0.005)
         var location:CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         var region:MKCoordinateRegion = MKCoordinateRegion(center: location, span: span)
         map.setRegion(region, animated: false)
-        
+        map.userInteractionEnabled = false
         let annotation = MKPointAnnotation()
         annotation.coordinate = location
         map.addAnnotation(annotation)
@@ -163,8 +163,9 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
    
     func openMapForPlace() {
         let regionDistance: CLLocationDistance = 10000
-        //mekanın koordinatları eklenecek
-        let coordinates = CLLocationCoordinate2DMake(41.038488 , 28.984503)
+        //mekanın koordinatları eklenecek 
+        
+        let coordinates = CLLocationCoordinate2DMake(thePlace.lat , thePlace.lon)
         let regionSpan = MKCoordinateRegionMakeWithDistance(coordinates, regionDistance, regionDistance)
         let options = [
             MKLaunchOptionsMapCenterKey: NSValue(MKCoordinate: regionSpan.center),
@@ -174,7 +175,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
         let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
         let mapItem = MKMapItem(placemark: placemark)
         //mekanın adı eklenecek
-        mapItem.name = "mekanın adı"
+        mapItem.name = thePlace.name
         
         MKMapItem.openMapsWithItems([mapItem], launchOptions: options)
     }

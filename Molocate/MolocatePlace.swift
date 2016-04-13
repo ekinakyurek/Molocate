@@ -19,6 +19,8 @@ struct MolePlace{
     var video_count = 0
     var phone = ""
     var videoArray = [MoleVideoInformation]()
+    var lat = 0.0
+    var lon = 0.0
 }
 
 
@@ -89,7 +91,7 @@ public class MolocatePlace {
                 if  exist != nil{
                     place.name = "notExist"
                 } else{
-                    
+                    print(item)
                     place.id = placeid
                     place.name = item["name"] as! String
                     place.city = item["city"] as! String
@@ -101,7 +103,10 @@ public class MolocatePlace {
                     place.picture_url = item["picture_url"] is NSNull ? NSURL():NSURL(string: item["picture_url"] as! String)!
                     place.phone = item["phone"] as! String
                     place.web_site = item["web_site"] as! String
-                    
+                    let lon = item["longitude"] as! String
+                    let lat = item["latitude"] as! String
+                    place.lon = CFStringGetDoubleValue(lon)
+                    place.lat = CFStringGetDoubleValue(lat)
                     if (item.indexForKey("next_place_videos") != nil){
                         if item["next_place_videos"] is NSNull {
                             print("next is null")
