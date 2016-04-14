@@ -130,7 +130,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
     
     func pressedUsername(sender: UIButton) {
         let buttonRow = sender.tag
-        print("username e basıldı at index path: \(buttonRow)")
+        //print("username e basıldı at index path: \(buttonRow)")
         activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
         activityIndicator.center = self.view.center
         activityIndicator.hidesWhenStopped = true

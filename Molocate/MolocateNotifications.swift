@@ -24,7 +24,7 @@ public class MolocateNotifications{
         request.addValue("Token " + MoleUserToken!, forHTTPHeaderField: "Authorization")
         
         let task = NSURLSession.sharedSession().dataTaskWithRequest(request){ (data, response, error) -> Void in
-            print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+            //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
             let nsError = error
             do {
                 let result = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers) as! NSArray

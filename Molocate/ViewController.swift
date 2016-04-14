@@ -92,13 +92,17 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDe
                         dispatch_async(dispatch_get_main_queue(), {
                             if( data == "success" ){
                                 self.performSegueWithIdentifier("login", sender: self)
+                                if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
                                 UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                                }
                                 self.activityIndicator.stopAnimating()
                             }else{
                                 self.displayAlert("Hata", message: "Kullanıcı Adı ya da Parola Yanlış!")
                                 self.activityIndicator.stopAnimating()
+                                if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
                                 UIApplication.sharedApplication().endIgnoringInteractionEvents()
-                            }
+                                }
+                                }
                         })
                     })
                     
@@ -112,11 +116,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDe
                         dispatch_async(dispatch_get_main_queue(), {
                             if(data == "success"){
                                 self.performSegueWithIdentifier("login", sender: self)
+                                if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
                                 UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                                }
                                 
                             } else{
                                 self.displayAlert("Hata", message: data)
+                                if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
                                 UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                                }
                                 self.activityIndicator.stopAnimating()
                                 self.activityIndicator.hidesWhenStopped = true
                             }

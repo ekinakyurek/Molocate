@@ -18,7 +18,7 @@ struct locations{
     var lon:Float!
     var adress = ""
 }
-
+private var SessionRunningContext = UnsafeMutablePointer<Void>.alloc(1)
 private enum AVCamSetupResult: Int {
     case Success
     case CameraNotAuthorized
@@ -231,12 +231,17 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                     self.view.layer.addSublayer(self.flashButton.layer)
 
                     //self.view.layer.addSublayer(self.videoDoneOutlet.layer)
-                    
+                    let statusBarOrientation = UIApplication.sharedApplication().statusBarOrientation
+                    var initialVideoOrientation = AVCaptureVideoOrientation.Portrait
+                    if statusBarOrientation != UIInterfaceOrientation.Unknown {
+                        initialVideoOrientation = AVCaptureVideoOrientation(rawValue: statusBarOrientation.rawValue)!
+                    }
+                    self.previewLayer?.connection.videoOrientation
                     
                 }
             } else {
                 NSLog("Could not add video device input to the session")
-           //     self.setupResult = AVCamSetupResult.SessionConfigurationFailed
+                self.setupResult = AVCamSetupResult.SessionConfigurationFailed
             }
             
             let audioDevice = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeAudio)
@@ -277,9 +282,9 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
             
             
             self.captureSession!.commitConfiguration()
-            self.captureSession?.startRunning()
-            
+            if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
             UIApplication.sharedApplication().endIgnoringInteractionEvents()
+            }
         }
         
 
@@ -304,17 +309,20 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
 
     
     override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         dispatch_async(self.sessionQueue!) {
             switch self.setupResult {
             case .Success:
                 // Only setup observers and start the session running if setup succeeded.
-              
+                self.addObservers()
                 self.captureSession!.startRunning()
                 self.sessionRunning = self.captureSession!.running
                 
             case .CameraNotAuthorized:
                 dispatch_async(dispatch_get_main_queue()){
+                    if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
                     UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                    }
                     let message = NSLocalizedString("Molocate'in kamera kullanmasına izin vermediniz. Lütfen ayarları değiştiriniz.", comment: "" )
                     let alertController = UIAlertController(title: "Molocate Kamera", message: message, preferredStyle: UIAlertControllerStyle.Alert)
                     let cancelAction = UIAlertAction(title: NSLocalizedString("OK", comment: "Alert OK button"), style: UIAlertActionStyle.Cancel, handler: nil)
@@ -415,11 +423,30 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         searchTask.start()
         
     }
+    
+
+    
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        return UIInterfaceOrientationMask.All
+    }
+    
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+        
+        // Note that the app delegate controls the device orientation notifications required to use the device orientation.
+        let deviceOrientation = UIDevice.currentDevice().orientation
+        if UIDeviceOrientationIsPortrait(deviceOrientation) || UIDeviceOrientationIsLandscape(deviceOrientation) {
+            let previewLayer = self.previewLayer
+            previewLayer!.connection.videoOrientation = AVCaptureVideoOrientation(rawValue: deviceOrientation.rawValue)!
+        }
+    }
     @IBAction func focusTap(gestureRecognizer: UIGestureRecognizer) {
         let devicePoint = (self.previewLayer! as AVCaptureVideoPreviewLayer).captureDevicePointOfInterestForPoint(gestureRecognizer.locationInView(gestureRecognizer.view))
         self.focusWithMode(AVCaptureFocusMode.AutoFocus, exposeWithMode: AVCaptureExposureMode.AutoExpose, atDevicePoint: devicePoint, monitorSubjectAreaChange: true)
         
     }
+    
+    
     
     @IBOutlet var topView: UIView!
     @IBOutlet var bottomView: UIView!
@@ -583,8 +610,12 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                                     do {
                                         try NSFileManager.defaultManager().removeItemAtURL(fakeoutputFileURL!)
                                         try NSFileManager.defaultManager().removeItemAtURL(outputFileURL)
+
                                         
                                     } catch _ {}
+                                    if currentBackgroundRecordingID != UIBackgroundTaskInvalid {
+                                        UIApplication.sharedApplication().endBackgroundTask(currentBackgroundRecordingID)
+                                    }
                                     
                                 }
                                 cleanup()
@@ -778,7 +809,9 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
             } catch _{
                 print("error")
                 self.activityIndicator.stopAnimating()
+                if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
                 UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                }
                 self.displayAlert("Hata", message: "Videonuz yüklenemedi. Lütfen tekrar deneyiniz.")
                 tempAssetURL = nil
                 self.firstAsset = nil
@@ -985,6 +1018,8 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         }
         
         }
+    
+    
 
     func holdDown(){
         self.videoDone.enabled = false
@@ -1233,16 +1268,131 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
     }
     
     override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
         dispatch_async(self.sessionQueue!) {
             if self.setupResult == AVCamSetupResult.Success {
+                for item in (self.captureSession?.inputs)! {
+                self.captureSession?.removeInput((item as! AVCaptureInput))
+                }
+                for item in (self.captureSession?.outputs)!{
+                self.captureSession?.removeOutput((item as! AVCaptureOutput))
+                }
                 self.captureSession!.stopRunning()
-            }
+                self.removeObservers()
+           }
+            self.videoDeviceInput = nil
+            self.captureSession = nil
+            self.videoOutput = nil
+            self.previewLayer = nil
+            
         }
+
         
-        super.viewDidDisappear(animated)
+        
 
     
     }
+    
+    
+    
+    private func addObservers() {
+        self.captureSession!.addObserver(self, forKeyPath: "running", options: NSKeyValueObservingOptions.New, context: SessionRunningContext)
+ 
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CameraViewController.subjectAreaDidChange(_:) as (CameraViewController) -> (NSNotification) -> ()), name: AVCaptureDeviceSubjectAreaDidChangeNotification, object: self.videoDeviceInput.device)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CameraViewController.sessionRuntimeError(_:)), name: AVCaptureSessionRuntimeErrorNotification, object: self.captureSession)
+        // A session can only run when the app is full screen. It will be interrupted in a multi-app layout, introduced in iOS 9,
+        // see also the documentation of AVCaptureSessionInterruptionReason. Add observers to handle these session interruptions
+        // and show a preview is paused message. See the documentation of AVCaptureSessionWasInterruptedNotification for other
+        // interruption reasons.
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CameraViewController.sessionWasInterrupted(_:)), name: AVCaptureSessionWasInterruptedNotification, object: self.captureSession)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CameraViewController.sessionInterruptionEnded(_:)), name: AVCaptureSessionInterruptionEndedNotification, object: self.captureSession)
+    }
+    
+    private func removeObservers() {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+        
+        self.captureSession!.removeObserver(self, forKeyPath: "running", context: SessionRunningContext)
+    }
+    
+    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+        switch context {
+
+        case SessionRunningContext:
+            let isSessionRunning = change![NSKeyValueChangeNewKey]! as! Bool
+            
+            dispatch_async(dispatch_get_main_queue()) {
+                // Only enable the ability to change camera if the device has more than one camera.
+                
+                self.cameraChange.enabled = isSessionRunning && (AVCaptureDevice.devicesWithMediaType(AVMediaTypeVideo).count > 1)
+                self.recordButton.enabled = isSessionRunning
+                
+            }
+        default:
+            super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
+        }
+    }
+    
+
+    
+    func sessionRuntimeError(notification: NSNotification) {
+        let error = notification.userInfo![AVCaptureSessionErrorKey]! as! NSError
+        NSLog("Capture session runtime error: %@", error)
+        
+        // Automatically try to restart the session running if media services were reset and the last start running succeeded.
+        // Otherwise, enable the user to try to resume the session running.
+        if error.code == AVError.MediaServicesWereReset.rawValue {
+            dispatch_async(self.sessionQueue!) {
+                if self.sessionRunning {
+                    self.captureSession!.startRunning()
+                    self.sessionRunning = self.captureSession!.running
+                } else {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.recordButton.hidden = false
+                    }
+                }
+            }
+        } else {
+            self.recordButton.hidden = false
+        }
+    }
+    
+    func sessionWasInterrupted(notification: NSNotification) {
+        // In some scenarios we want to enable the user to resume the session running.
+        // For example, if music playback is initiated via control center while using AVCam,
+        // then the user can let AVCam resume the session running, which will stop music playback.
+        // Note that stopping music playback in control center will not automatically resume the session running.
+        // Also note that it is not always possible to resume, see -[resumeInterruptedSession:].
+        var showResumeButton = false
+        
+        // In iOS 9 and later, the userInfo dictionary contains information on why the session was interrupted.
+        if #available(iOS 9.0, *) {
+            let reason = notification.userInfo![AVCaptureSessionInterruptionReasonKey]! as! Int
+            NSLog("Capture session was interrupted with reason %ld", reason)
+            
+            if reason == AVCaptureSessionInterruptionReason.AudioDeviceInUseByAnotherClient.rawValue ||
+                reason == AVCaptureSessionInterruptionReason.VideoDeviceInUseByAnotherClient.rawValue {
+                showResumeButton = true
+            } else if reason == AVCaptureSessionInterruptionReason.VideoDeviceNotAvailableWithMultipleForegroundApps.rawValue {
+                // Simply fade-in a label to inform the user that the camera is unavailable.
+                
+            }
+        } else {
+            NSLog("Capture session was interrupted")
+            showResumeButton = (UIApplication.sharedApplication().applicationState == UIApplicationState.Inactive)
+        }
+        
+        if showResumeButton {
+            // Simply fade-in a button to enable the user to try to resume the session running.
+
+        }
+    }
+    func sessionInterruptionEnded(notification: NSNotification) {
+        NSLog("Capture session interruption ended")
+        
+    }
+    
+
 }
 
 extension CLLocation {

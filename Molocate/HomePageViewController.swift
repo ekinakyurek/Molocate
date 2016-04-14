@@ -103,7 +103,9 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
                     self.nofollowings.hidden = false
                 }
                 self.activityIndicator.stopAnimating()
+                if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
                 UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                }
             }
         })
         //////print("refresh")
@@ -116,7 +118,6 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
         location = locationManager.location
-        UIApplication.sharedApplication().endIgnoringInteractionEvents()
         //self.tableView.scrollsToTop = true
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HomePageViewController.scrollToTop), name: "scrollToTop", object: nil)
         if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
@@ -150,7 +151,9 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
                 self.videoArray = data!
                 self.tableView.reloadData()
                 self.refreshControl.endRefreshing()
+                if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
                 UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                }
                 self.tableView.hidden = false
                 self.activityIndicator.removeFromSuperview()
                 self.refreshing = false
@@ -1028,7 +1031,6 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
         
     }
     override func viewDidDisappear(animated: Bool) {
-    
         SDImageCache.sharedImageCache().clearMemory()
         player1.stop()
         player1.removeFromParentViewController()
