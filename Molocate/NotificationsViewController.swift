@@ -16,11 +16,14 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
     
     var notificationArray = [MoleUserNotifications]()
     let screenSize: CGRect = UIScreen.mainScreen().bounds
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.allowsSelection = false
         tableView.tableFooterView = UIView()
-        tableView.separatorColor = UIColor.blackColor()
+        tableView.estimatedRowHeight = 50
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.separatorColor = UIColor.grayColor()
         MolocateNotifications.getNotifications(NSURL()) { (data, response, error) -> () in
           
             dispatch_async(dispatch_get_main_queue()){
@@ -59,7 +62,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
-        return 54
+        return UITableViewAutomaticDimension
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -69,33 +72,123 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell = notificationCell(style: UITableViewCellStyle.Default, reuseIdentifier: "myIdentifier")
-        cell.myButton.addTarget(self, action: #selector(NotificationsViewController.pressedUsername(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+         let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! molocateNotificationCell
+      //  cell.myButton.addTarget(self, action: #selector(NotificationsViewController.pressedUsername(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         cell.fotoButton.addTarget(self, action: #selector(NotificationsViewController.pressedUsername(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-        cell.myButton.tag = indexPath.row
-        cell.fotoButton.tag = indexPath.row
-        cell.myButton.setTitle(notificationArray[indexPath.row].actor, forState: UIControlState.Normal)
-        let buttonWidth = cell.myButton.intrinsicContentSize().width
-        cell.myButton.frame = CGRectMake(44 , 10 , buttonWidth + 5  , 34)
-        cell.myButton.setTitleColor(UIColor.blueColor(), forState: .Normal)
-        cell.myButton.contentHorizontalAlignment = .Left
-        cell.myButton.setTitleColor(swiftColor, forState: UIControlState.Normal)
+        cell.fotoButton.layer.borderWidth = 0.1
+        cell.fotoButton.layer.masksToBounds = false
+        cell.fotoButton.layer.borderColor = UIColor.whiteColor().CGColor
+        cell.fotoButton.layer.cornerRadius = cell.fotoButton.frame.height/2
+        cell.fotoButton.clipsToBounds = true
+//        cell.myButton.tag = indexPath.row
+//        cell.fotoButton.tag = indexPath.row
+//        cell.myButton.setTitle(notificationArray[indexPath.row].actor, forState: UIControlState.Normal)
+//        let buttonWidth = cell.myButton.intrinsicContentSize().width
+//        cell.myButton.frame = CGRectMake(44 , 10 , buttonWidth + 5  , 34)
+//        cell.myButton.setTitleColor(UIColor.blueColor(), forState: .Normal)
+//        cell.myButton.contentHorizontalAlignment = .Left
+//        cell.myButton.setTitleColor(swiftColor, forState: UIControlState.Normal)
         if(notificationArray[indexPath.row].picture_url.absoluteString != ""){
+            
         cell.fotoButton.sd_setImageWithURL(notificationArray[indexPath.row].picture_url, forState: UIControlState.Normal)
         }
-        cell.contentView.addSubview(cell.myButton)
+       // cell.contentView.addSubview(cell.myButton)
         
-        cell.myLabel = UILabel()
-        cell.myLabel.font = UIFont(name: "AvenirNext-Regular", size: 12)
-        cell.myLabel.text = notificationArray[indexPath.row].sentence // sample label text
+        var multipleAttributes = [String : NSObject]()
+        multipleAttributes[NSForegroundColorAttributeName] = swiftColor2
+        multipleAttributes[NSFontAttributeName] =  UIFont(name: "AvenirNext-Medium", size: 14.0)
+        
+        let username = notificationArray[indexPath.row].actor
+        let usernameAttributedString =  NSMutableAttributedString(string: username , attributes: multipleAttributes)
+        
+       
+       
+        
+        var multipleAttributes2 = [String : NSObject]()
+        multipleAttributes2[NSFontAttributeName] =  UIFont(name: "AvenirNext-Medium", size: 14.0)
+        multipleAttributes2[NSForegroundColorAttributeName] = UIColor.blackColor()
+        
+        let notif = notificationArray[indexPath.row].sentence
+        
+        let notificationAttributedString = NSAttributedString(string: notif, attributes:  multipleAttributes2)
+        //print(videoInfo.caption+"--------------")
+        usernameAttributedString.appendAttributedString(notificationAttributedString)
+    
         cell.myLabel.textAlignment = .Left
-        cell.myLabel.frame = CGRectMake(buttonWidth + 44 , 10 , screenSize.width - buttonWidth - 52 , 34)
-        cell.myLabel.numberOfLines = 1
-        cell.contentView.addSubview(cell.myLabel)
+        
+        cell.myLabel.attributedText = usernameAttributedString
+        
+        cell.myLabel.tag = indexPath.row
+        let labeltap = UITapGestureRecognizer(target: self, action:#selector(NotificationsViewController.labelTapped(_:) ));
+        labeltap.numberOfTapsRequired = 1
+        cell.myLabel.addGestureRecognizer(labeltap)
+        
+       // cell.myLabel.frame = CGRectMake(buttonWidth + 44 , 10 , screenSize.width - buttonWidth - 52 , 34)
+        
+        
+        //cell.contentView.addSubview(cell.myLabel)
         
         //tableView.allowsSelection = false
-        tableView.tableFooterView = UIView()
+     
         return cell
+    }
+    
+    func labelTapped(sender: UITapGestureRecognizer){
+        print("play")
+        let buttonRow = sender.view!.tag
+        
+        var multipleAttributes2 = [String : NSObject]()
+        multipleAttributes2[NSFontAttributeName] =  UIFont(name: "AvenirNext-Medium", size: 14.0)
+        
+        let sizeLabel = UILabel()
+        let text=notificationArray[buttonRow].actor
+        
+        sizeLabel.attributedText = NSAttributedString(string: text , attributes: multipleAttributes2)
+        
+        let touchPoint = sender.locationInView(sender.view)
+        
+        
+        print(touchPoint)
+        
+        let validFrame = CGRectMake(0, 0, sizeLabel.intrinsicContentSize().width, 25);
+ 
+        if  true == CGRectContainsPoint(validFrame, touchPoint)
+        {
+            pressedUsername(sender)
+        }else{
+           pressedCell(sender)
+        }
+
+    }
+    
+    func pressedCell(sender: UITapGestureRecognizer){
+        let buttonRow = sender.view?.tag
+        if notificationArray[buttonRow!].action == "like" || notificationArray[buttonRow!].action == "comment" {
+            activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
+            activityIndicator.center = self.view.center
+            activityIndicator.hidesWhenStopped = true
+            activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+            view.addSubview(activityIndicator)
+            activityIndicator.startAnimating()
+            UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+            
+            MolocateVideo.getVideo(notificationArray[buttonRow!].target, completionHandler: { (data, response, error) in
+                dispatch_async(dispatch_get_main_queue()){
+                    MoleGlobalVideo = data
+                    let controller:oneVideo = self.storyboard!.instantiateViewControllerWithIdentifier("oneVideo") as! oneVideo
+                    controller.view.frame = self.view.bounds
+                    controller.willMoveToParentViewController(self)
+                    self.view.addSubview(controller.view)
+                    self.addChildViewController(controller)
+                    controller.didMoveToParentViewController(self)
+                    self.activityIndicator.stopAnimating()
+                }
+            })
+            
+        } else {
+            pressedUsername(sender)
+        }
+
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
@@ -123,13 +216,13 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
             })
 
         } else {
-            pressedUsername((tableView.cellForRowAtIndexPath(indexPath) as! notificationCell).myButton)
+            //pressedUsername((tableView.cellForRowAtIndexPath(indexPath) as! molocateNotificationCell).)
         }
     }
     
     
-    func pressedUsername(sender: UIButton) {
-        let buttonRow = sender.tag
+    func pressedUsername(sender: UITapGestureRecognizer) {
+        let buttonRow = sender.view!.tag
         //print("username e basıldı at index path: \(buttonRow)")
         activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
         activityIndicator.center = self.view.center

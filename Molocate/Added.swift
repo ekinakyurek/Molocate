@@ -667,7 +667,7 @@ class Added: UIViewController, UITableViewDelegate, UITableViewDataSource,Player
         
         actionSheetController.addAction(cancelAction)
         
-        let reportVideo: UIAlertAction = UIAlertAction(title: "Report the Video", style: .Default) { action -> Void in
+        let reportVideo: UIAlertAction = UIAlertAction(title: "Rapor Et", style: .Default) { action -> Void in
             
             ////print("reported")
         }

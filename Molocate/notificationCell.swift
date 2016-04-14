@@ -31,9 +31,11 @@ class notificationCell: UITableViewCell {
         
         myButton = UIButton()
         myButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 12)
-        myButton.titleLabel?.numberOfLines = 1
+        myButton.titleLabel?.numberOfLines = 0
         
         myLabel = UILabel()
+        myLabel.numberOfLines = 0
+        myLabel.lineBreakMode = NSLineBreakMode.ByWordWrapping
         
     }
     

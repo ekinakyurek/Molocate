@@ -259,6 +259,9 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
         cell.profilePhoto.addTarget(self, action: #selector(commentController.pressedUsername(_:)), forControlEvents: UIControlEvents.TouchUpInside )
         cell.username.tag = indexPath.row
         
+        cell.deleteSupport.tag = indexPath.row
+        cell.deleteSupport.addTarget(self, action: #selector(commentController.pressedReport(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        
         cell.profilePhoto.layer.borderWidth = 0.1
         cell.profilePhoto.layer.masksToBounds = false
         cell.profilePhoto.layer.borderColor = UIColor.whiteColor().CGColor
@@ -295,6 +298,51 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
         }
         
     }
+    
+    func pressedReport(sender: UIButton) {
+        let buttonRow = sender.tag
+
+        ////print("pressedReport at index path: \(buttonRow)")
+        let actionSheetController: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        
+        if(comments[buttonRow].username == MoleCurrentUser.username){
+            
+            let deleteVideo: UIAlertAction = UIAlertAction(title: "Yorumu Sil", style: .Default) { action -> Void in
+                let index = NSIndexPath(forRow: buttonRow, inSection: 0)
+                
+                MolocateVideo.deleteAComment(comments[buttonRow].id, completionHandler: { (data, response, error) in
+                    
+                    print(data)
+                    
+                })
+                
+                comments.removeAtIndex(index.row)
+                self.tableView.deleteRowsAtIndexPaths([index], withRowAnimation: UITableViewRowAnimation.Automatic)
+                self.tableView.reloadData()
+            }
+            
+            actionSheetController.addAction(deleteVideo)
+        }
+        
+        
+        let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .Cancel) { action -> Void in
+            
+        }
+        
+        actionSheetController.addAction(cancelAction)
+        
+        let reportVideo: UIAlertAction = UIAlertAction(title: "Rapor Et", style: .Default) { action -> Void in
+            
+            ////print("reported")
+        }
+        actionSheetController.addAction(reportVideo)
+        
+        self.presentViewController(actionSheetController, animated: true, completion: nil)
+        
+    }
+
+    
+    
     
     func pressedUsername(sender: UIButton) {
         let buttonRow = sender.tag

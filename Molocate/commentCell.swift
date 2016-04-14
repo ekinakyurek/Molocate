@@ -9,6 +9,7 @@ class commentCell: UITableViewCell {
     @IBOutlet var username: UIButton!
     @IBOutlet var profilePhoto: UIButton!
     
+    @IBOutlet var deleteSupport: UIButton!
     var screenSize = UIScreen.mainScreen().bounds
    
    
