@@ -165,7 +165,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
                         
                         
                         
-                    }
+            
         
         
         
@@ -183,7 +183,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
             
         }
         
-        
+        }
    
     }
     
