@@ -113,11 +113,7 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
         self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         self.refreshControl.addTarget(self, action: #selector(HomePageViewController.refresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
         self.tableView.addSubview(refreshControl)
-        locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
-        location = locationManager.location
+
         //self.tableView.scrollsToTop = true
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HomePageViewController.scrollToTop), name: "scrollToTop", object: nil)
         if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
@@ -948,6 +944,11 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
     @IBOutlet var cameraButton: UIBarButtonItem!
     
     @IBAction func openCamera(sender: AnyObject) {
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        location = locationManager.location
         if (location != nil) {
         player1.stop()
         player2.stop()
@@ -1027,6 +1028,11 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
     }
     
     override func viewWillAppear(animated: Bool) {
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        location = locationManager.location
         
         
     }

@@ -1271,15 +1271,17 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         super.viewDidDisappear(animated)
         dispatch_async(self.sessionQueue!) {
             if self.setupResult == AVCamSetupResult.Success {
+                self.captureSession!.stopRunning()
                 for item in (self.captureSession?.inputs)! {
                 self.captureSession?.removeInput((item as! AVCaptureInput))
                 }
                 for item in (self.captureSession?.outputs)!{
                 self.captureSession?.removeOutput((item as! AVCaptureOutput))
                 }
-                self.captureSession!.stopRunning()
+                
                 self.removeObservers()
            }
+            self.previewLayer?.removeFromSuperlayer()
             self.videoDeviceInput = nil
             self.captureSession = nil
             self.videoOutput = nil
