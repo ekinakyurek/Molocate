@@ -902,6 +902,24 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
         ////print("pressedReport at index path: \(buttonRow)")
         let actionSheetController: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         
+        if(videoArray[buttonRow].username == MoleCurrentUser.username){
+            
+            let deleteVideo: UIAlertAction = UIAlertAction(title: "Videoyu Sil", style: .Default) { action -> Void in
+                let index = NSIndexPath(forRow: buttonRow, inSection: 0)
+                
+                
+                MolocateVideo.deleteAVideo(self.videoArray[buttonRow].id, completionHandler: { (data, response, error) in
+                    
+                })
+                
+                self.videoArray.removeAtIndex(index.row)
+                self.tableView.deleteRowsAtIndexPaths([index], withRowAnimation: UITableViewRowAnimation.Automatic)
+            }
+            
+            actionSheetController.addAction(deleteVideo)
+        }
+        
+        
         let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .Cancel) { action -> Void in
             
         }
@@ -917,8 +935,6 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
         self.presentViewController(actionSheetController, animated: true, completion: nil)
         
     }
-    
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         SDImageCache.sharedImageCache().clearMemory()

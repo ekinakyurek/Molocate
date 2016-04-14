@@ -361,6 +361,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
         
     }
     
+
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.row == 0{

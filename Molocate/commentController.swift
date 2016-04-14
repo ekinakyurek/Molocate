@@ -8,7 +8,7 @@
 
 import UIKit
 
-class commentController: UIViewController,UITableViewDelegate , UITableViewDataSource, UITextViewDelegate{
+class commentController: UIViewController,UITableViewDelegate , UITableViewDataSource, UITextViewDelegate, UIGestureRecognizerDelegate{
 
     
     //bu viewda commentin yazısı arttıkça büyümesi düzenlenicek
@@ -25,62 +25,62 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
     @IBOutlet var sendImage: UIImageView!
     @IBOutlet var sendButton: UIButton!
     @IBOutlet var tableView: UITableView!
-    
     @IBAction func sendButton(sender: AnyObject) {
         if(newComment.text.characters.count >= 3 && newComment.text != "Yorumunu buradan yazabilirsin" ){
-        var mycomment = MoleVideoComment()
-        mycomment.text = newComment.text
-        mycomment.photo = MoleCurrentUser.profilePic
-        mycomment.username = MoleCurrentUser.username
-        comments.append(mycomment)
-        tableView.reloadData()
-        
-        tableView.tableFooterView = UIView()
-        MolocateVideo.commentAVideo(video_id, comment: newComment.text) { (data, response, error) -> () in
-            dispatch_async(dispatch_get_main_queue()){
-                 self.newComment.text = ""
-             if(myViewController == "MainController"){
-                (self.parentViewController as! MainController).videoArray[videoIndex].commentCount += 1
-                (self.parentViewController as! MainController).tableView.reloadRowsAtIndexPaths(
-                    [NSIndexPath(forRow: videoIndex, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Left)
-               
-                
-                }else if myViewController == "HomeController"{
-                    (self.parentViewController as! HomePageViewController).videoArray[videoIndex].commentCount += 1
-                    (self.parentViewController as! HomePageViewController).tableView.reloadRowsAtIndexPaths(
-                        [NSIndexPath(forRow: videoIndex, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Left)
-                (self.parentViewController as! HomePageViewController).player1.stop()
-                     (self.parentViewController as! HomePageViewController).player2.stop()
-                //(self.parentViewController as! profileOther).AVc.player2.stop()
-                }else if myViewController == "Added"{
-                    (self.parentViewController as! profileOther).AVc.videoArray[videoIndex].commentCount += 1
-                  (self.parentViewController as! profileOther).AVc.tableView.reloadRowsAtIndexPaths(
-                    [NSIndexPath(forRow: videoIndex, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Left)
-                (self.parentViewController as! profileOther).AVc.player1.stop()
-                (self.parentViewController as! profileOther).AVc.player2.stop()
-                }else if myViewController == "Tagged"{
-                    (self.parentViewController as! profileOther).BVc.videoArray[videoIndex].commentCount += 1
-                    (self.parentViewController as! profileOther).BVc.tableView.reloadRowsAtIndexPaths(
-                    [NSIndexPath(forRow: videoIndex, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Left)
-                (self.parentViewController as! profileOther).BVc.player1.stop()
-                (self.parentViewController as! profileOther).BVc.player2.stop()
-                
-
-                
-                }else if myViewController == "profileLocation"{
-                    (self.parentViewController as! profileLocation).videoArray[videoIndex].commentCount += 1
-                    (self.parentViewController as! profileLocation).tableView.reloadRowsAtIndexPaths(
-                        [NSIndexPath(forRow: videoIndex, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Left)
-                    (self.parentViewController as! profileLocation).player1.stop()
-                 (self.parentViewController as! profileLocation).player2.stop()
-               }else if myViewController == "oneVideo"{
-                 MoleGlobalVideo.commentCount += 1
-                (self.parentViewController as! oneVideo).tableView.reloadRowsAtIndexPaths(
-                    [NSIndexPath(forRow: videoIndex, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Left)
-                (self.parentViewController as! oneVideo).player.stop()
+            var mycomment = MoleVideoComment()
+            
+            mycomment.text = newComment.text
+            newComment.text = ""
+            mycomment.photo = MoleCurrentUser.profilePic
+            mycomment.username = MoleCurrentUser.username
+            comments.append(mycomment)
+            tableView.reloadData()
+            
+            tableView.tableFooterView = UIView()
+            MolocateVideo.commentAVideo(video_id, comment: mycomment.text) { (data, response, error) -> () in
+                dispatch_async(dispatch_get_main_queue()){
+                    if(myViewController == "MainController"){
+                        (self.parentViewController as! MainController).videoArray[videoIndex].commentCount += 1
+                        (self.parentViewController as! MainController).tableView.reloadRowsAtIndexPaths(
+                            [NSIndexPath(forRow: videoIndex, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Left)
+                        
+                        
+                    }else if myViewController == "HomeController"{
+                        (self.parentViewController as! HomePageViewController).videoArray[videoIndex].commentCount += 1
+                        (self.parentViewController as! HomePageViewController).tableView.reloadRowsAtIndexPaths(
+                            [NSIndexPath(forRow: videoIndex, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Left)
+                        (self.parentViewController as! HomePageViewController).player1.stop()
+                        (self.parentViewController as! HomePageViewController).player2.stop()
+                        //(self.parentViewController as! profileOther).AVc.player2.stop()
+                    }else if myViewController == "Added"{
+                        (self.parentViewController as! profileOther).AVc.videoArray[videoIndex].commentCount += 1
+                        (self.parentViewController as! profileOther).AVc.tableView.reloadRowsAtIndexPaths(
+                            [NSIndexPath(forRow: videoIndex, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Left)
+                        (self.parentViewController as! profileOther).AVc.player1.stop()
+                        (self.parentViewController as! profileOther).AVc.player2.stop()
+                    }else if myViewController == "Tagged"{
+                        (self.parentViewController as! profileOther).BVc.videoArray[videoIndex].commentCount += 1
+                        (self.parentViewController as! profileOther).BVc.tableView.reloadRowsAtIndexPaths(
+                            [NSIndexPath(forRow: videoIndex, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Left)
+                        (self.parentViewController as! profileOther).BVc.player1.stop()
+                        (self.parentViewController as! profileOther).BVc.player2.stop()
+                        
+                        
+                        
+                    }else if myViewController == "profileLocation"{
+                        (self.parentViewController as! profileLocation).videoArray[videoIndex].commentCount += 1
+                        (self.parentViewController as! profileLocation).tableView.reloadRowsAtIndexPaths(
+                            [NSIndexPath(forRow: videoIndex, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Left)
+                        (self.parentViewController as! profileLocation).player1.stop()
+                        (self.parentViewController as! profileLocation).player2.stop()
+                    }else if myViewController == "oneVideo"{
+                        MoleGlobalVideo.commentCount += 1
+                        (self.parentViewController as! oneVideo).tableView.reloadRowsAtIndexPaths(
+                            [NSIndexPath(forRow: videoIndex, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Left)
+                        (self.parentViewController as! oneVideo).player.stop()
+                    }
+                }
             }
-            }
-        }
         }else{
             
         }
@@ -91,6 +91,7 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
      
         newComment.text = "Yorumunu buradan yazabilirsin"
         
@@ -124,7 +125,7 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
 //        self.tableView.layer.zPosition = 1
         self.newComment.returnKeyType = .Done
     
-       // tableView.allowsSelection = false
+        tableView.allowsSelection = false
         tableView.tableFooterView = UIView()
         
         UIApplication.sharedApplication().endIgnoringInteractionEvents()
@@ -185,12 +186,17 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
         NSNotificationCenter.defaultCenter().removeObserver(self);
     }
     
-   
-    
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
+        let username = MoleCurrentUser.username
+        let commentusername = comments[indexPath.row].username
+        if(commentusername == username){
+            return true
+        }else{
+            return false
+        }
     }
-    
+
+ 
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         
         let currentText:NSString = textView.text
@@ -210,6 +216,19 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
         
         return true
     }
+    
+
+
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+    
+
+    
+    func tableView(tableView: UITableView, titleForDeleteConfirmationButtonForRowAtIndexPath indexPath: NSIndexPath) -> String? {
+        return "Sil"
+    }
+    
 
     func textViewDidBeginEditing(textView: UITextView) {
         if self.newComment.text == "Yorumunu buradan yazabilirsin"{
@@ -231,12 +250,12 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cellIdentifier = "Cell"
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! commentCell
-    
+        cell.username.enabled = false
         cell.username.setTitle(comments[indexPath.row].username, forState: .Normal)
         cell.username.tintColor = swiftColor
         cell.comment.text = comments[indexPath.row].text
         cell.username.contentHorizontalAlignment = .Left
-        cell.username.addTarget(self, action: #selector(commentController.pressedUsername(_:)), forControlEvents: UIControlEvents.TouchUpInside )
+        //cell.username.addTarget(self, action: #selector(commentController.pressedUsername(_:)), forControlEvents: UIControlEvents.TouchUpInside )
         cell.profilePhoto.addTarget(self, action: #selector(commentController.pressedUsername(_:)), forControlEvents: UIControlEvents.TouchUpInside )
         cell.username.tag = indexPath.row
         
@@ -263,14 +282,18 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
     }
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+       
         if editingStyle == UITableViewCellEditingStyle.Delete{
      
             MolocateVideo.deleteAComment(comments[indexPath.row].id, completionHandler: { (data, response, error) in
-              print(data)
+             
             })
+
             comments.removeAtIndex(indexPath.row)
+            
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
         }
+        
     }
     
     func pressedUsername(sender: UIButton) {

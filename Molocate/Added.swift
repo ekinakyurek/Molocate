@@ -634,14 +634,32 @@ class Added: UIViewController, UITableViewDelegate, UITableViewDataSource,Player
     
     
     func pressedReport(sender: UIButton) {
+        let buttonRow = sender.tag
         player1.stop()
         player2.stop()
-        let buttonRow = sender.tag
         MolocateVideo.reportAVideo(videoArray[buttonRow].id) { (data, response, error) -> () in
-            print(data)
+            ////print(data)
         }
-        print("pressedReport at index path: \(buttonRow)")
+        ////print("pressedReport at index path: \(buttonRow)")
         let actionSheetController: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        
+        if(videoArray[buttonRow].username == MoleCurrentUser.username){
+            
+            let deleteVideo: UIAlertAction = UIAlertAction(title: "Videoyu Sil", style: .Default) { action -> Void in
+                let index = NSIndexPath(forRow: buttonRow, inSection: 0)
+                
+                
+                MolocateVideo.deleteAVideo(self.videoArray[buttonRow].id, completionHandler: { (data, response, error) in
+                    
+                })
+                
+                self.videoArray.removeAtIndex(index.row)
+                self.tableView.deleteRowsAtIndexPaths([index], withRowAnimation: UITableViewRowAnimation.Automatic)
+            }
+            
+            actionSheetController.addAction(deleteVideo)
+        }
+        
         
         let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .Cancel) { action -> Void in
             
@@ -651,14 +669,13 @@ class Added: UIViewController, UITableViewDelegate, UITableViewDataSource,Player
         
         let reportVideo: UIAlertAction = UIAlertAction(title: "Report the Video", style: .Default) { action -> Void in
             
-            print("reported")
+            ////print("reported")
         }
         actionSheetController.addAction(reportVideo)
         
         self.presentViewController(actionSheetController, animated: true, completion: nil)
         
     }
-    
     func pressedUsername(sender: UIButton) {
         let buttonRow = sender.tag
         print("username e basıldı at index path: \(buttonRow)")
