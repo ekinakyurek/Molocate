@@ -878,8 +878,8 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                             videoUrl = result["video_url"] as! String
                             self.activityIndicator.stopAnimating()
                             UIApplication.sharedApplication().endIgnoringInteractionEvents()
-                            self.performSegueWithIdentifier("capturePreview", sender: self)
-                            
+
+                            NSNotificationCenter.defaultCenter().postNotificationName("buttonEnable", object: nil)
                             
                         }  else{
                             self.activityIndicator.stopAnimating()
@@ -965,6 +965,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                 
                 dataTask.resume()
             
+            self.performSegueWithIdentifier("capturePreview", sender: self)
           
             
         })
@@ -1119,7 +1120,9 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         
         progress = progress + (CGFloat(0.05) / maxDuration)
         recordButton.setProgress(progress)
-        
+        if progress > 0.999999 {
+            self.holdRelease()
+        }
         if progress >= 1 {
             progressTimer.invalidate()
             if self.isFlashMode {
@@ -1143,6 +1146,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                 } catch _ {}
                 
             }
+        
             
         }
         

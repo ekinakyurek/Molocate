@@ -2272,6 +2272,7 @@ bir video bulunmamaktadır :(</string>
                         <outlet property="bottomToolbar" destination="3Qm-0t-BEd" id="LAb-bN-EKQ"/>
                         <outlet property="collectionView" destination="y2r-Lc-d5x" id="M96-Aw-duF"/>
                         <outlet property="placeTable" destination="uXp-wN-ZT7" id="Mya-ms-jJO"/>
+                        <outlet property="postO" destination="k4Z-6M-DOq" id="TDd-ed-JQB"/>
                         <outlet property="share4s" destination="kex-er-Gz6" id="r1A-68-DEU"/>
                         <outlet property="textField" destination="Yzx-Ur-Ne1" id="LLy-0Y-uMx"/>
                         <outlet property="toolBar" destination="A0W-5J-K2r" id="o1w-8H-rlu"/>
@@ -2438,7 +2439,7 @@ bir video bulunmamaktadır :(</string>
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Mg2-PE-dEV">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Mg2-PE-dEV">
                                 <rect key="frame" x="16" y="104" width="343" height="563"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
@@ -2446,7 +2447,7 @@ bir video bulunmamaktadır :(</string>
                                     <outlet property="delegate" destination="pEW-a6-bHt" id="hie-Gu-0wl"/>
                                 </connections>
                             </tableView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="S2W-SU-W1a" userLabel="venueTable">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="S2W-SU-W1a" userLabel="venueTable">
                                 <rect key="frame" x="16" y="104" width="343" height="563"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -2464,7 +2465,7 @@ bir video bulunmamaktadır :(</string>
                                     <outlet property="delegate" destination="pEW-a6-bHt" id="XBq-5W-1t8"/>
                                 </connections>
                             </tableView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gsm-my-ylM">
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gsm-my-ylM">
                                 <rect key="frame" x="16" y="16" width="343" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="5hd-Eb-tTh"/>
@@ -2499,7 +2500,7 @@ bir video bulunmamaktadır :(</string>
                                 </items>
                                 <color key="tintColor" red="1" green="0.97129626969710259" blue="0.99007940477584833" alpha="1" colorSpace="calibratedRGB"/>
                             </toolbar>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="9X1-BS-kZi">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="9X1-BS-kZi">
                                 <rect key="frame" x="16" y="60" width="343" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="NbP-YK-Hee"/>
@@ -2644,8 +2645,8 @@ bir video bulunmamaktadır :(</string>
         <image name="switch" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="iVR-Yc-KKO"/>
+        <segue reference="iX5-7U-zGl"/>
         <segue reference="Vlr-i7-pN8"/>
-        <segue reference="REJ-1c-sKv"/>
-        <segue reference="t1e-tq-FhG"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -43,8 +43,10 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
     var videoLocation:locations!
     @IBOutlet var placeTable: UITableView!
     var taggedUsers = [String]()
+    @IBOutlet var postO: UIButton!
     @IBAction func post(sender: AnyObject) {
         if (!isLocationSelected || !isCategorySelected){
+            self.postO.enabled = false
             displayAlert("Dikkat", message: "Lütfen Kategori ve Konum seçiniz.")
         }
         else {
@@ -254,9 +256,10 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
         caption.addTarget(self, action: #selector(capturePreviewController.pressedCaption(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         caption.contentHorizontalAlignment = .Left
         self.view.addSubview(caption)
-
         
+        self.postO.enabled = false
         
+         NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(capturePreviewController.buttonEnable) , name: "buttonEnable", object: nil)
     }
     
     func playerReady(player: Player) {
@@ -274,7 +277,9 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
     func playerPlaybackDidEnd(player: Player) {
     }
     
-
+    func buttonEnable(){
+        self.postO.enabled = true
+    }
     
     func pressedCaption(sender: UIButton) {
         
@@ -474,6 +479,9 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction((UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
             //self.dismissViewControllerAnimated(true, completion: nil)
+            if !self.postO.enabled {
+                self.postO.enabled = true
+            }
         })))
         self.presentViewController(alert, animated: true, completion: nil)
     }
