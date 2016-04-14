@@ -1022,6 +1022,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
     
 
     func holdDown(){
+        if self.progress<1 {
         self.videoDone.enabled = false
         self.progressTimer = NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: #selector(CameraViewController.updateProgress), userInfo: nil, repeats: true)
         self.cameraChange.enabled = false
@@ -1106,10 +1107,11 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         
         
         
-        
+        }
         
 
     }
+
     
     func updateProgress() {
         
@@ -1120,12 +1122,35 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         
         if progress >= 1 {
             progressTimer.invalidate()
+            if self.isFlashMode {
+                let device = self.videoDeviceInput.device
+                do {
+                    try device.lockForConfiguration()
+                    defer {device.unlockForConfiguration()}
+                    if (device.position == AVCaptureDevicePosition.Back){
+                        device.torchMode = .Off
+                    }else {
+                        dispatch_async(dispatch_get_main_queue()) {
+                            self.flashLayer.removeFromSuperlayer()
+                            UIScreen.mainScreen().brightness = self.brightness
+                        }
+                        
+                    }
+                    
+                    
+                } catch let error as NSError {
+                    NSLog("Could not lock device for configuration: %@", error)
+                } catch _ {}
+                
+            }
+            
         }
         
     }
 
 
     func holdRelease(){
+        if self.progress < 1 {
         self.progressTimer.invalidate()
 
         if self.isFlashMode {
@@ -1152,6 +1177,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         
         if self.videoOutput!.recording {
         self.videoOutput?.stopRecording()
+        }
         }
         
     }

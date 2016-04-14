@@ -168,7 +168,7 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
     }
     
     func playerReady(player: Player) {
-        ////print("ready"
+       
        
     }
     
