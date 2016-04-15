@@ -138,6 +138,9 @@ class SignUpAdvance: UIViewController , UITextFieldDelegate {
             alertController.addAction(UIAlertAction(title: "Tamam", style: UIAlertActionStyle.Default,handler: nil))
             
             self.presentViewController(alertController, animated: true, completion: nil)
+        }else if !MolocateUtility.isValidEmail(email.text!){
+            displayAlert("Tamam", message: "Lütfen geçerli bir mail adresi giriniz")
+            
         }
         else{
             

@@ -369,7 +369,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDe
     func displayAlert(title: String, message: String) {
         UIApplication.sharedApplication().endIgnoringInteractionEvents()
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction((UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
+        alert.addAction((UIAlertAction(title: "Tamam", style: .Default, handler: { (action) -> Void in
           self.activityIndicator.stopAnimating()
         })))
         self.presentViewController(alert, animated: true, completion: nil)
