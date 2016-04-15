@@ -2320,8 +2320,8 @@ bir video bulunmamaktadır :(</string>
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="90.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ILq-mB-5vY">
-                                            <rect key="frame" x="8" y="48" width="122" height="34"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ILq-mB-5vY">
+                                            <rect key="frame" x="8" y="48" width="584" height="34"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="34" id="6fw-b0-nm3"/>
                                             </constraints>
@@ -2329,8 +2329,8 @@ bir video bulunmamaktadır :(</string>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XQN-J4-aRX">
-                                            <rect key="frame" x="49" y="8" width="40" height="40"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XQN-J4-aRX">
+                                            <rect key="frame" x="280" y="8" width="40" height="40"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="ORw-e1-j5o"/>
                                                 <constraint firstAttribute="height" constant="45" id="erd-xB-Nts"/>
@@ -2531,7 +2531,7 @@ bir video bulunmamaktadır :(</string>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Piz-ZH-HgR"/>
                                     <barButtonItem style="plain" id="bsC-2W-JFR">
-                                        <textField key="customView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Ara" textAlignment="natural" minimumFontSize="17" id="eLl-tY-Kjx">
+                                        <textField key="customView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Konum Ara" textAlignment="natural" minimumFontSize="17" id="eLl-tY-Kjx">
                                             <rect key="frame" x="86" y="7" width="171" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="backgroundColor" red="0.92156862750000001" green="0.1764705882" blue="0.36470588240000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -2686,13 +2686,13 @@ bir video bulunmamaktadır :(</string>
         <image name="backButton.png" width="40" height="40"/>
         <image name="closedflash.png" width="44" height="44"/>
         <image name="elmander.jpg" width="360" height="240"/>
-        <image name="follow" width="45" height="45"/>
+        <image name="follow" width="32" height="32"/>
         <image name="leftArrow" width="33" height="33"/>
         <image name="pin" width="100" height="100"/>
         <image name="points" width="42" height="42"/>
         <image name="profilepic.png" width="256" height="256"/>
         <image name="shapes.png" width="32" height="32"/>
-        <image name="sideMenu" width="33" height="24"/>
+        <image name="sideMenu" width="31" height="22"/>
         <image name="switch" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>

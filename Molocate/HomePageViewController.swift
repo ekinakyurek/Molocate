@@ -47,7 +47,7 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
         super.viewDidLoad()
         likeHeart.image = UIImage(named: "favorite")
         likeHeart.alpha = 1.0
-    
+        
         try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
         self.nofollowings.hidden = true
         activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))

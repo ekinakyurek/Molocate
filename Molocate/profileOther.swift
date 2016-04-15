@@ -238,7 +238,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
             self.username.text = user.username
             self.followingsCount.setTitle("\(user.following_count)", forState: .Normal)
             self.followersCount.setTitle("\(user.follower_count)", forState: .Normal)
-            self.FollowButton.image = UIImage(named: "options")
+            self.FollowButton.image = UIImage(named: "settings")
             choosedIndex = 4
             self.back.image = UIImage(named:"sideMenu")         
             }

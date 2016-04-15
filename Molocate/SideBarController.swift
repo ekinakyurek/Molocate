@@ -9,7 +9,7 @@ var choosedIndex = 100
 class SideBarController: UITableViewController {
 
     var menuArray = ["HABER KAYNAĞI","KEŞFET","BİLDİRİM MERKEZİ","PROFİL"]
-   var tableData: [String] = ["home.png", "explore.png", "sound.png","people.png"]
+   var tableData: [String] = ["home", "explore", "sound","avatar"]
     let cellIdentifier = "cell"
     var attractionImages = [String]()
     override func viewDidLoad() {
