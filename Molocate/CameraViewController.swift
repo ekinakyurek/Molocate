@@ -100,8 +100,8 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         self.location = self.locationManager.location
         self.deviceLat = self.locationManager.location?.coordinate.latitude
         self.deviceLon = self.locationManager.location?.coordinate.longitude
-       
-                let cleanup: dispatch_block_t = {
+            dispatch_async(dispatch_get_main_queue()){
+            let cleanup: dispatch_block_t = {
                     do {
                         
                         try NSFileManager.defaultManager().removeItemAtURL(fakeoutputFileURL!)
@@ -110,11 +110,30 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                     } catch _ {}
                     
                 }
-                if(fakeoutputFileURL != nil){
+
+            
+                if(fakeoutputFileURL?.absoluteString != ""){
                     cleanup()
                     //print("siliniyor")
                     
                 }
+            
+            let cleanuppath: dispatch_block_t = {
+                do {
+                    
+                    try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
+                    
+                } catch _ {}
+                
+            }
+            if(videoPath != ""){
+                cleanuppath()
+                //print("siliniyor")
+                
+            }
+            videoPath = ""
+            fakeoutputFileURL = NSURL()
+            }
 
             
             
@@ -762,7 +781,9 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         instruction.layerInstructions = NSArray(object: transformer) as! [AVVideoCompositionLayerInstruction]
         videoComposition.instructions = NSArray(object: instruction) as! [AVVideoCompositionInstructionProtocol]
         let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory,.UserDomainMask,true)[0]
-        let exportPath = documentsPath.stringByAppendingFormat("/CroppedVideo.mp4", documentsPath)
+        let random = arc4random()
+        print(arc4random())
+        let exportPath = documentsPath.stringByAppendingFormat("/CroppedVideo\(random).mp4", documentsPath)
         
         let exportURl = NSURL(fileURLWithPath: exportPath)
         
