@@ -79,6 +79,8 @@ class ContainerController: UIViewController,UIScrollViewDelegate {
     
     override func viewWillAppear(animated: Bool) {
         
+        adjustViewLayout(UIScreen.mainScreen().bounds.size)
+        
     }
     
     
@@ -100,6 +102,31 @@ class ContainerController: UIViewController,UIScrollViewDelegate {
     
     func deneme() {
         print("hadi dedeler")
+    }
+    
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        adjustViewLayout(size)
+    }
+
+    func adjustViewLayout(size: CGSize) {
+        
+        
+        switch(size.width, size.height) {
+        case (480, 320):
+            break                        // iPhone 4S in landscape
+            
+        case (320, 480):
+            is4s = true                    // iPhone 4s pportrait
+            break
+        case (414, 736):                        // iPhone 6 Plus in portrait
+            
+            break
+        case (736, 414):                        // iphone 6 Plus in landscape
+            
+            break
+        default:
+            break
+        }
     }
 
 

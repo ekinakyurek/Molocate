@@ -984,6 +984,10 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Unc-Ad-csa"/>
+                                    <barButtonItem image="molocate" id="r8w-mu-dda">
+                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="25M-xQ-fVr"/>
                                     <barButtonItem image="Camera" id="Vsj-ns-J5L">
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
@@ -2688,6 +2692,7 @@ bir video bulunmamaktadır :(</string>
         <image name="elmander.jpg" width="360" height="240"/>
         <image name="follow" width="32" height="32"/>
         <image name="leftArrow" width="28" height="20"/>
+        <image name="molocate" width="36" height="36"/>
         <image name="pin" width="100" height="100"/>
         <image name="points" width="42" height="42"/>
         <image name="profilepic.png" width="256" height="256"/>
