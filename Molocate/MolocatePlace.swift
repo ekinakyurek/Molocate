@@ -39,7 +39,7 @@ public class MolocatePlace {
                 let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String:AnyObject]
                 completionHandler(data: result["result"] as! String , response: response , error: nsError  )
             } catch{
-                completionHandler(data: "" , response: nil , error: nsError  )
+                completionHandler(data: "fail" , response: nil , error: nsError  )
                 print("Error:: in mole.followAPlace()")
             }
             
@@ -62,7 +62,7 @@ public class MolocatePlace {
                 let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String:AnyObject]
                 completionHandler(data: result["result"] as! String , response: response , error: nsError  )
             } catch{
-                completionHandler(data: "" , response: nil , error: nsError  )
+                completionHandler(data: "fail" , response: nil , error: nsError  )
                 print("Error:: in mole.unfollowAPlace()")
             }
             

@@ -139,7 +139,7 @@ public class MolocateVideo {
                 }
                 completionHandler(data: videoArray, response: response, error: nsError)
             }catch{
-                completionHandler(data: nil, response: NSURLResponse(), error: nsError)
+                completionHandler(data: [MoleVideoInformation](), response: NSURLResponse(), error: nsError)
                 print("Error: in mole.getExploreVideos")
             }
         }
@@ -281,7 +281,7 @@ public class MolocateVideo {
                 }
                 completionHandler(data: videoArray, response: response, error: nsError)
             }catch{
-                completionHandler(data: nil, response: NSURLResponse(), error: nsError)
+                completionHandler(data: [MoleVideoInformation](), response: NSURLResponse(), error: nsError)
                 print("Error: in mole.getExploreVideos")
             }
         }
@@ -328,7 +328,7 @@ public class MolocateVideo {
                 
                 completionHandler(data: videoStr, response: response, error: nsError)
             }catch{
-                completionHandler(data: nil, response: NSURLResponse(), error: nsError)
+                completionHandler(data: MoleVideoInformation, response: NSURLResponse(), error: nsError)
                 print("Error: in mole.getExploreVideos")
             }
         }
@@ -354,7 +354,7 @@ public class MolocateVideo {
                 let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String: AnyObject]
                 completionHandler(data: result["result"] as! String , response: response , error: nsError  )
             } catch{
-                completionHandler(data: "" , response: nil , error: nsError  )
+                completionHandler(data: "fail" , response: nil , error: nsError  )
                 print("Error:: in mole.like()")
             }
             
@@ -378,7 +378,7 @@ public class MolocateVideo {
                 let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String:AnyObject]
                 completionHandler(data: result["result"] as! String , response: response , error: nsError  )
             } catch{
-                completionHandler(data: "" , response: nil , error: nsError  )
+                completionHandler(data: "fail" , response: nil , error: nsError  )
                 print("Error:: in mole.unlike()")
             }
             
@@ -403,7 +403,7 @@ public class MolocateVideo {
                 let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String:AnyObject]
                 completionHandler(data: result["result"] as! String , response: response , error: nsError  )
             } catch{
-                completionHandler(data: "" , response: nil , error: nsError  )
+                completionHandler(data: "fail" , response: nil , error: nsError  )
                 print("Error:: in mole.unlike()")
             }
             
@@ -428,7 +428,7 @@ public class MolocateVideo {
                 let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String:AnyObject]
                 completionHandler(data: result["result"] as! String , response: response , error: nsError  )
             } catch{
-                completionHandler(data: "" , response: nil , error: nsError  )
+                completionHandler(data: "fail" , response: nil , error: nsError  )
                 print("Error:: in mole.deleteAVideo()")
             }
             
@@ -461,7 +461,7 @@ public class MolocateVideo {
                     let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String:AnyObject]
                     completionHandler(data: result["result"] as! String , response: response , error: nsError  )
                 } catch{
-                    completionHandler(data: "" , response: nil , error: nsError  )
+                    completionHandler(data: "fail" , response: nil , error: nsError  )
                     print("Error:: in mole.commentAVideo()")
                 }
                 
@@ -469,7 +469,7 @@ public class MolocateVideo {
             
             task.resume()
         }catch{
-            completionHandler(data: "" , response: nil , error: nil )
+            completionHandler(data: "fail" , response: nil , error: nil )
             print("Error:: in mole.commentAVideo()")
         }
     }
@@ -495,7 +495,7 @@ public class MolocateVideo {
                     let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String:AnyObject]
                     completionHandler(data: result["result"] as! String , response: response , error: nsError  )
                 } catch{
-                    completionHandler(data: "" , response: nil , error: nsError  )
+                    completionHandler(data: "fail" , response: nil , error: nsError  )
                     print("Error:: in mole.deleteComment()")
                 }
                 
@@ -503,7 +503,7 @@ public class MolocateVideo {
             
             task.resume()
         }catch{
-            completionHandler(data: "" , response: nil , error: nil )
+            completionHandler(data: "fail" , response: nil , error: nil )
             print("Error:: in mole.deleteComment()")
         }
     }
