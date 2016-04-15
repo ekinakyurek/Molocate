@@ -58,18 +58,21 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     var videoArray = [MoleVideoInformation]()
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     
-    var categories = ["HEPSİ","EĞLENCE","YEMEK","GEZİ","MODA" , "GÜZELLİK", "SPOR","ETKİNLİK","KAMPÜS"]
-    var realCateg = ["HEPSİ":"Hepsi","EĞLENCE":"Eğlence","YEMEK":"Yemek","GEZİ":"Gezi","MODA":"Moda" , "GÜZELLİK":"Güzellik", "SPOR":"Spor","ETKİNLİK":"Etkinlik","KAMPÜS":"Kampüs"]
+    var categories = ["Hepsi","Eğlence","Yemek","Gezi","Moda" , "Güzellik", "Spor","Etkinlik","Kampüs"]
+
     var likeHeart = UIImageView()
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        venueTable.separatorColor = UIColor.lightGrayColor()
+        venueTable.tableFooterView = UIView()
         try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
         session = Session.sharedSession()
         session.logger = ConsoleLogger()
         likeHeart.image = UIImage(named: "favorite")
         likeHeart.alpha = 1.0
         tableView.separatorColor = UIColor.clearColor()
-        
+
         venueTable.hidden = true
         searchText.delegate = self
         
@@ -1033,7 +1036,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         //seçilmiş cell in labelının rengi değişsin
         on = true
         refreshing = true
-        let url = NSURL(string: MolocateBaseUrl  + "video/api/explore/?category=" + MoleCategoriesDictionary [realCateg[categories[indexPath.row]]!]!)
+        let url = NSURL(string: MolocateBaseUrl  + "video/api/explore/?category=" + MoleCategoriesDictionary [categories[indexPath.row]]!)
         SDImageCache.sharedImageCache().clearMemory()
         activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
         activityIndicator.center = self.view.center

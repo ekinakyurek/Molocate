@@ -23,7 +23,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
         tableView.tableFooterView = UIView()
         tableView.estimatedRowHeight = 50
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.separatorColor = UIColor.grayColor()
+        tableView.separatorColor = UIColor.lightGrayColor()
         MolocateNotifications.getNotifications(NSURL()) { (data, response, error) -> () in
           
             dispatch_async(dispatch_get_main_queue()){
