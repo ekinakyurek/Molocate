@@ -112,7 +112,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                 }
                 if(fakeoutputFileURL != nil){
                     cleanup()
-                    print("siliniyor")
+                    //print("siliniyor")
                     
                 }
 
@@ -399,12 +399,12 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                             for item in address {
                                 loc.adress = loc.adress + item
                             }
-                            print(venues?.count)
+                            //print(venues?.count)
                             if item.indexForKey("photo") != nil {
-                                //print("foto var")
+                                ////print("foto var")
                             } else {
                                 
-                                //print("foto yok")
+                                ////print("foto yok")
                             }
 
                         let locationDictitem = [name:loc]
@@ -552,7 +552,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
             success = error!.userInfo[AVErrorRecordingSuccessfullyFinishedKey] as! Bool? ?? false
         }
         if success {
-            //print(outputFileURL)
+            ////print(outputFileURL)
             if firstAsset == nil {
                 firstAsset = AVAsset(URL: outputFileURL)
                 tempAssetURL = outputFileURL
@@ -595,7 +595,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                     
                         let outputFileName = NSProcessInfo.processInfo().globallyUniqueString as NSString
                         let exportPath = (NSTemporaryDirectory() as NSString).stringByAppendingPathComponent(outputFileName.stringByAppendingPathExtension("mov")!)
-                        print(exportPath)
+                        //print(exportPath)
                         let exportURL = NSURL(fileURLWithPath: exportPath)
                         let exporter = AVAssetExportSession(asset: merge, presetName: AVAssetExportPresetHighestQuality)
                         exporter?.outputURL = exportURL
@@ -635,7 +635,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                     
                 }
                 catch let error {
-                    print(error)
+                    //print(error)
                 }
             }
             
@@ -792,13 +792,12 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
             let time = CMTime(seconds: 0, preferredTimescale: 1)
             
             do {
-                let imageRef = try imageGenerator.copyCGImageAtTime(time, actualTime: nil)
-                thumbnail = UIImage(CGImage: imageRef)
+
             } catch {
-                print(error)
+                //print(error)
                 
             }
-           // print(thumbnail.description)
+           // //print(thumbnail.description)
             
             
             //isUploaded = false
@@ -806,8 +805,9 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
             self.progress = 0.0
             do {
                 videodata = try NSData(contentsOfURL: contentURL, options: NSDataReadingOptions.DataReadingUncached)
+                
             } catch _{
-                print("error")
+                //print("error")
                 self.activityIndicator.stopAnimating()
                 if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
                 UIApplication.sharedApplication().endIgnoringInteractionEvents()
@@ -823,13 +823,15 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                             
                             try NSFileManager.defaultManager().removeItemAtURL(fakeoutputFileURL!)
                             //try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
+                            let imageRef = try imageGenerator.copyCGImageAtTime(time, actualTime: nil)
+                            thumbnail = UIImage(CGImage: imageRef)
                             
                         } catch _ {}
                         
                     }
                     if(fakeoutputFileURL != nil){
                         cleanup()
-                        print("siliniyor")
+                        //print("siliniyor")
                         
                     }
                     
@@ -864,13 +866,13 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
             let session = NSURLSession.sharedSession()
             let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
                 if (error != nil) {
-                    print(error)
+                    //print(error)
                 } else {
-                    print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+                    //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
                     do {
                         let result = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers)
                         
-                        print("Result -> \(result)")
+                        //print("Result -> \(result)")
                         let statue = result["result"] as! String
                         if(statue == "success"){
                             
@@ -901,7 +903,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                                 }
                                 if(fakeoutputFileURL != nil){
                                     cleanup()
-                                    print("siliniyor")
+                                    //print("siliniyor")
                                     
                                 }
                                 
@@ -923,7 +925,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                             
                             
                         } catch {
-                            print("Error -> \(error)")
+                            //print("Error -> \(error)")
                             self.activityIndicator.stopAnimating()
                             UIApplication.sharedApplication().endIgnoringInteractionEvents()
                             self.displayAlert("Hata", message: "Videonuz yüklenemedi. Lütfen tekrar deneyiniz.")
@@ -943,7 +945,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                                 }
                                 if(fakeoutputFileURL != nil){
                                     cleanup()
-                                    print("siliniyor")
+                                    //print("siliniyor")
                                     
                                 }
                                 
@@ -997,7 +999,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
             }
             if(fakeoutputFileURL != nil){
             cleanup()
-                print("siliniyor")
+                //print("siliniyor")
                 
             }
         
@@ -1012,7 +1014,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         }
         if(videoPath != ""){
             cleanuppath()
-            print("siliniyor")
+            //print("siliniyor")
             
         }
         self.performSegueWithIdentifier("backToCont", sender: self)
@@ -1036,8 +1038,8 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
             do {
                 try device.lockForConfiguration()
                 defer {device.unlockForConfiguration()}
-                print(device.description)
-                print(device.isFlashModeSupported(AVCaptureFlashMode.On))
+                //print(device.description)
+                //print(device.isFlashModeSupported(AVCaptureFlashMode.On))
                 
                 if (device.position == AVCaptureDevicePosition.Back){
                     device.torchMode = .On
@@ -1083,7 +1085,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                 
                 // Start recording to a temporary file.
                 let outputFileName = NSProcessInfo.processInfo().globallyUniqueString as NSString
-                //print(outputFileName)
+                ////print(outputFileName)
 
                 let outputFilePath: String = (NSTemporaryDirectory() as NSString).stringByAppendingPathComponent(outputFileName.stringByAppendingPathExtension("mov")!)
                 
@@ -1154,7 +1156,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
 
 
     func holdRelease(){
-        if self.progress < 1 {
+        if self.progress < 0.999999 {
         self.progressTimer.invalidate()
 
         if self.isFlashMode {
@@ -1195,12 +1197,12 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                 try device.lockForConfiguration()
                 device.flashMode = flashMode
                 device.torchMode = AVCaptureTorchMode.On
-                print(device.torchLevel)
+                //print(device.torchLevel)
                 device.unlockForConfiguration()
                 
             } catch let error1 as NSError {
                 error = error1
-                print(error)
+                //print(error)
             }
         }
         
@@ -1237,10 +1239,10 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         let transform = assetTrack.preferredTransform
         let assetInfo = orientationFromTransform(transform)
         var scaleToFitRatio = UIScreen.mainScreen().bounds.width / assetTrack.naturalSize.width
-        print(assetInfo.orientation)
+        //print(assetInfo.orientation)
         if assetInfo.isPortrait {
             // 4
-            print("ppppp")
+            //print("ppppp")
             scaleToFitRatio = UIScreen.mainScreen().bounds.width / assetTrack.naturalSize.height
             let scaleFactor = CGAffineTransformMakeScale(scaleToFitRatio, scaleToFitRatio)
 
@@ -1258,7 +1260,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
             let scaleFactor = CGAffineTransformMakeScale(scaleToFitRatio, scaleToFitRatio)
             var concat = CGAffineTransformConcat(CGAffineTransformConcat(assetTrack.preferredTransform, scaleFactor), CGAffineTransformMakeTranslation(0, UIScreen.mainScreen().bounds.width / 2))
             if assetInfo.orientation == .Down {
-                print("down")
+                //print("down")
                 let fixUpsideDown = CGAffineTransformMakeRotation(CGFloat(M_PI))
                 let windowBounds = UIScreen.mainScreen().bounds
                 let yFix = assetTrack.naturalSize.height + windowBounds.height

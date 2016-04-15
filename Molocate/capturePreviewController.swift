@@ -112,12 +112,12 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
                                         let result = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)
                                         
                                                 CaptionText = ""
-                                        print("Result -> \(result)")
+                                        //print("Result -> \(result)")
                                         
                                         
                                         
                                     } catch {
-                                        print("Error -> \(error)")
+                                       // print("Error -> \(error)")
                                     }
                                     
                                 })
@@ -125,35 +125,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
                             
                             task.resume()
                             
-                            let headers2 = ["content-type": "/*/", "content-disposition":"attachment;filename=molocate.png" ]
-                            
-                            let thumbnailRequest = NSMutableURLRequest(URL: NSURL(string: MolocateBaseUrl + "/video/api/upload_thumbnail/?video_id="+videoId)!, cachePolicy:.UseProtocolCachePolicy, timeoutInterval: 10.0)
-                            
-                            thumbnailRequest.HTTPMethod = "POST"
-                            thumbnailRequest.allHTTPHeaderFields = headers2
-                            let image = UIImageJPEGRepresentation(thumbnail, 0.5)
-                            thumbnailRequest.addValue("Token " + MoleUserToken!, forHTTPHeaderField: "Authorization")
-                            thumbnailRequest.HTTPBody = image
-                            let thumbnailTask = NSURLSession.sharedSession().dataTaskWithRequest(thumbnailRequest){data, response, error  in
-                                //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
-                                
-                                let nsError = error;
-                                
-                                
-                                do {
-                                    let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! NSDictionary
-                                    print(result)
 
-                                    
-                                } catch{
-                                   
-                                    
-                                    print(nsError)
-                                }
-                                
-                            }
-                            
-                            thumbnailTask.resume();
 
                             
                             
@@ -163,8 +135,36 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
                             
                         }
                         
-                        
-                        
+            let headers2 = ["content-type": "/*/", "content-disposition":"attachment;filename=molocate.png" ]
+            
+            let thumbnailRequest = NSMutableURLRequest(URL: NSURL(string: MolocateBaseUrl + "/video/api/upload_thumbnail/?video_id="+videoId)!, cachePolicy:.UseProtocolCachePolicy, timeoutInterval: 10.0)
+            
+            thumbnailRequest.HTTPMethod = "POST"
+            thumbnailRequest.allHTTPHeaderFields = headers2
+            let image = UIImageJPEGRepresentation(thumbnail, 0.5)
+            thumbnailRequest.addValue("Token " + MoleUserToken!, forHTTPHeaderField: "Authorization")
+            thumbnailRequest.HTTPBody = image
+            let thumbnailTask = NSURLSession.sharedSession().dataTaskWithRequest(thumbnailRequest){data, response, error  in
+                print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+                
+                let nsError = error;
+                
+                
+                do {
+                    let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! NSDictionary
+                    print(result)
+                    
+                    
+                } catch{
+                    
+                    
+                    print(nsError)
+                }
+                
+            }
+            
+            thumbnailTask.resume();
+            
             
         
         
