@@ -792,12 +792,14 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
             let time = CMTime(seconds: 0, preferredTimescale: 1)
             
             do {
-
+                let imageRef = try imageGenerator.copyCGImageAtTime(time, actualTime: nil)
+                thumbnail = UIImage(CGImage: imageRef)
+                
             } catch {
                 //print(error)
                 
             }
-           // //print(thumbnail.description)
+           print(thumbnail.description)
             
             
             //isUploaded = false
@@ -823,9 +825,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                             
                             try NSFileManager.defaultManager().removeItemAtURL(fakeoutputFileURL!)
                             //try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
-                            let imageRef = try imageGenerator.copyCGImageAtTime(time, actualTime: nil)
-                            thumbnail = UIImage(CGImage: imageRef)
-                            
+
                         } catch _ {}
                         
                     }
