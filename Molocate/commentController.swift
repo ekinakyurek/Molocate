@@ -250,7 +250,7 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cellIdentifier = "Cell"
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! commentCell
-        cell.username.enabled = false
+      //  cell.username.enabled = false
         cell.username.setTitle(comments[indexPath.row].username, forState: .Normal)
         cell.username.tintColor = swiftColor
         cell.comment.text = comments[indexPath.row].text

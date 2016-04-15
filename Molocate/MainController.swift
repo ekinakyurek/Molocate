@@ -1102,8 +1102,8 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     }
     override func viewDidDisappear(animated: Bool) {
         //self.tableView.removeFromSuperview()
-        SDImageCache.sharedImageCache().cleanDisk()
-        SDImageCache.sharedImageCache().clearMemory()
+        //SDImageCache.sharedImageCache().cleanDisk()
+         SDImageCache.sharedImageCache().clearMemory()
         player1.stop()
         player1.removeFromParentViewController()
         player2.stop()

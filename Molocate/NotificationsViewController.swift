@@ -88,7 +88,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
 //        cell.myButton.setTitleColor(UIColor.blueColor(), forState: .Normal)
 //        cell.myButton.contentHorizontalAlignment = .Left
 //        cell.myButton.setTitleColor(swiftColor, forState: UIControlState.Normal)
-        if(notificationArray[indexPath.row].picture_url.absoluteString != ""){
+        if( notificationArray.count > indexPath.row && notificationArray[indexPath.row].picture_url.absoluteString != ""){
             
         cell.fotoButton.sd_setImageWithURL(notificationArray[indexPath.row].picture_url, forState: UIControlState.Normal)
         }
@@ -96,7 +96,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
         
         var multipleAttributes = [String : NSObject]()
         multipleAttributes[NSForegroundColorAttributeName] = swiftColor2
-        multipleAttributes[NSFontAttributeName] =  UIFont(name: "AvenirNext-Medium", size: 14.0)
+        multipleAttributes[NSFontAttributeName] =  UIFont(name: "AvenirNext-Regular", size: 14.0)
         
         let username = notificationArray[indexPath.row].actor
         let usernameAttributedString =  NSMutableAttributedString(string: username , attributes: multipleAttributes)
@@ -105,7 +105,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
        
         
         var multipleAttributes2 = [String : NSObject]()
-        multipleAttributes2[NSFontAttributeName] =  UIFont(name: "AvenirNext-Medium", size: 14.0)
+        multipleAttributes2[NSFontAttributeName] =  UIFont(name: "AvenirNext-Regular", size: 14.0)
         multipleAttributes2[NSForegroundColorAttributeName] = UIColor.blackColor()
         
         let notif = notificationArray[indexPath.row].sentence

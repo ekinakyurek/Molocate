@@ -30,6 +30,9 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
     
     @IBAction func FollowButton(sender: AnyObject) {
         
+        if(classUser.post_count != 0 || classUser.tag_count != 0 ) {
+            errorMessage.hidden = true
+        }
         if(user.username == MoleCurrentUser.username){
             showTable()
             scrollView.userInteractionEnabled = false
@@ -281,7 +284,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
             addedButton.titleLabel?.textColor = UIColor.whiteColor()
             taggedButton.titleLabel?.textColor = UIColor.blackColor()
             print(classUser.post_count)
-            if(classUser.post_count != 0 ) {
+            if(classUser.post_count != 0 || classUser.tag_count != 0 ) {
                 errorMessage.hidden = true
             }
         }
@@ -289,7 +292,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
             
             AVc.player1.stop()
             AVc.player2.stop()
-            if(classUser.tag_count != 0 ) {
+            if(classUser.tag_count != 0  && classUser.post_count != 0) {
                 errorMessage.hidden = true
             }
             addedButton.backgroundColor = swiftColor3
