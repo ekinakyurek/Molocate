@@ -9,6 +9,7 @@ class tagComment: UIViewController, UITextViewDelegate {
     @IBOutlet var tableView: UITableView!
     @IBOutlet var textField: UITextView!
     @IBOutlet var toolBar: UIToolbar!
+    var relationNextUrl = ""
     var userRelations = MoleUserRelations()
     //done da verileri yolla backde vazgeçsin yollama
     @IBAction func done(sender: AnyObject) {
@@ -62,7 +63,8 @@ class tagComment: UIViewController, UITextViewDelegate {
         textField.textColor = UIColor.lightGrayColor()
         textField.returnKeyType = .Done
         
-        MolocateAccount.getFollowers(MoleCurrentUser.username) { (data, response, error, count, next, previous) -> () in
+        MolocateAccount.getFollowers(username:MoleCurrentUser.username) { (data, response, error, count, next, previous) -> () in
+                 self.relationNextUrl = next!
              dispatch_async(dispatch_get_main_queue()){
                 self.userRelations = data
                 self.tableView.reloadData()
@@ -121,6 +123,31 @@ class tagComment: UIViewController, UITextViewDelegate {
     
     
     }
+    
+    
+    func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        
+        if((indexPath.row%50 == 35)&&(relationNextUrl != "")){
+            MolocateAccount.getFollowers(relationNextUrl, username: MoleCurrentUser.username, completionHandler: { (data, response, error, count, next, previous) in
+                    self.relationNextUrl = next!
+                    dispatch_async(dispatch_get_main_queue()){
+                        
+                        for item in data.relations{
+                            self.userRelations.relations.append(item)
+                            let newIndexPath = NSIndexPath(forRow: self.userRelations.relations.count-1, inSection: 0)
+                            tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Bottom)
+                            
+                        }
+                        
+                        
+                    }
+                })
+       
+        }
+        
+    }
+
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         // get the cell and text of the tapped row

@@ -51,7 +51,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
                    MoleCurrentUser.following_count -= 1
                     if let parentVC = self.parentViewController {
                         if let parentVC = parentVC as? Followers{
-                            MolocateAccount.getFollowings(MoleCurrentUser.username, completionHandler: { (data, response, error, count, next, previous) in
+                            MolocateAccount.getFollowings(username: MoleCurrentUser.username, completionHandler: { (data, response, error, count, next, previous) in
                                 //print("Sucess")
                                 dispatch_async(dispatch_get_main_queue()) {
                                     parentVC.userRelations = data

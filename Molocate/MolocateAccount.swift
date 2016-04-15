@@ -67,9 +67,13 @@ public class MolocateAccount {
     
 
     
-    class func getFollowers(username: String, completionHandler: (data: MoleUserRelations, response: NSURLResponse!, error: NSError!, count: Int, next: String?, previous: String? ) -> ()) {
-        
-        let url = NSURL(string: MolocateBaseUrl + "relation/api/followers/?username=" + (username as String) )!
+    class func getFollowers(nextUrl: String = "", username: String, completionHandler: (data: MoleUserRelations, response: NSURLResponse!, error: NSError!, count: Int, next: String?, previous: String? ) -> ()) {
+        var url  = NSURL()
+        if(nextUrl == ""){
+            url = NSURL(string: MolocateBaseUrl + "relation/api/followers/?username=" + (username as String) )!
+        }else{
+            url = NSURL(string:nextUrl)!
+        }
         let request = NSMutableURLRequest(URL: url)
         request.HTTPMethod = "GET"
         request.addValue("Token " + MoleUserToken!, forHTTPHeaderField: "Authorization")
@@ -84,8 +88,8 @@ public class MolocateAccount {
                 let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String: AnyObject]
                 // print(result)
                 let count: Int = result["count"] as! Int
-                let next =  result["next"] is NSNull ? nil:result["next"] as? String
-                let previous =  result["previous"] is NSNull ? nil:result["previous"] as? String
+                let next =  result["next"] is NSNull ? "":result["next"] as? String
+                let previous =  result["previous"] is NSNull ? "":result["previous"] as? String
                 let results = result["results"] as! NSArray
                 var followers = MoleUserRelations()
                 followers.totalCount = count
@@ -119,10 +123,15 @@ public class MolocateAccount {
     }
     
     
-    class func getFollowings(username: String, completionHandler: (data: MoleUserRelations, response: NSURLResponse!, error: NSError!, count: Int!, next: String?, previous: String?) -> ()){
-        
-        let url = NSURL(string: MolocateBaseUrl + "relation/api/followings/?username=" + (username as String));
-        let request = NSMutableURLRequest(URL: url!)
+    class func getFollowings(nextUrl: String = "",username: String, completionHandler: (data: MoleUserRelations, response: NSURLResponse!, error: NSError!, count: Int!, next: String?, previous: String?) -> ()){
+        var url  = NSURL()
+        if(nextUrl == ""){
+            url = NSURL(string: MolocateBaseUrl + "relation/api/followings/?username=" + (username as String))!
+        }else{
+            url = NSURL(string:nextUrl)!
+        }
+ 
+        let request = NSMutableURLRequest(URL: url)
         request.HTTPMethod = "GET"
         request.addValue("Token " + MoleUserToken! , forHTTPHeaderField: "Authorization")
         
@@ -137,8 +146,8 @@ public class MolocateAccount {
                 // print(result)
                 print(result)
                 let count: Int = result["count"] as! Int
-                let next =  result["next"] is NSNull ? nil:result["next"] as? String
-                let previous =  result["previous"] is NSNull ? nil:result["previous"] as? String
+                let next =  result["next"] is NSNull ? "":result["next"] as? String
+                let previous =  result["previous"] is NSNull ? "":result["previous"] as? String
                 let results = result["results"] as! NSArray
                 var followings = MoleUserRelations()
                 followings.totalCount = count
@@ -170,7 +179,7 @@ public class MolocateAccount {
                 
                 completionHandler(data: followings , response: response , error: nsError, count: count, next: next, previous: previous  )
             } catch{
-                completionHandler(data:  MoleUserRelations() , response: nil , error: nsError, count: 0, next: nil, previous: nil  )
+                completionHandler(data:  MoleUserRelations() , response: nil , error: nsError, count: 0, next: "", previous: ""  )
                 print("Error:: in mole.getFollowings()")
             }
             

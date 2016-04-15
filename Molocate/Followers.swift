@@ -27,6 +27,7 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     var myTable: UITableView!
     var follower = true
+    var relationNextUrl = ""
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -49,7 +50,8 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
             self.TitleLabel.text = "Takipçi"
             self.TitleLabel.textColor = UIColor.whiteColor()
             self.TitleLabel.font = UIFont(name: "AvenirNext-Regular", size: (self.TitleLabel.font?.pointSize)!)
-            MolocateAccount.getFollowers(classUser.username) { (data, response, error, count, next, previous) -> () in
+            MolocateAccount.getFollowers(username: classUser.username) { (data, response, error, count, next, previous) -> () in
+                self.relationNextUrl = next!
                 self.userRelations = data
                 dispatch_async(dispatch_get_main_queue()){
                     self.myTable.reloadData()
@@ -61,8 +63,8 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
                 self.TitleLabel.text = "Takip"
                 self.TitleLabel.textColor = UIColor.whiteColor()
                 self.TitleLabel.font = UIFont(name: "AvenirNext-Regular", size: (self.TitleLabel.font?.pointSize)!)
-            MolocateAccount.getFollowings(classUser.username) { (data, response, error, count, next, previous) -> () in
-                
+            MolocateAccount.getFollowings(username: classUser.username) { (data, response, error, count, next, previous) -> () in
+                  self.relationNextUrl = next!
                 self.userRelations = data
                 dispatch_async(dispatch_get_main_queue()){
                     self.myTable.reloadData()
@@ -179,6 +181,49 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
         self.activityIndicator.removeFromSuperview()
             }
     }
+    }
+    
+    
+    func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        
+        if((indexPath.row%50 == 35)&&(relationNextUrl != "")){
+            
+            if(follewersclicked){
+            
+            MolocateAccount.getFollowers(relationNextUrl, username: classUser.username, completionHandler: { (data, response, error, count, next, previous) in
+                self.relationNextUrl = next!
+                dispatch_async(dispatch_get_main_queue()){
+                    
+                    for item in data.relations{
+                        self.userRelations.relations.append(item)
+                        let newIndexPath = NSIndexPath(forRow: self.userRelations.relations.count-1, inSection: 0)
+                        tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Bottom)
+                        
+                    }
+                    
+                    
+                }
+            })
+            }else{
+                MolocateAccount.getFollowings(relationNextUrl, username: classUser.username, completionHandler: { (data, response, error, count, next, previous) in
+                    self.relationNextUrl = next!
+                    dispatch_async(dispatch_get_main_queue()){
+                        
+                        for item in data.relations{
+                            self.userRelations.relations.append(item)
+                            let newIndexPath = NSIndexPath(forRow: self.userRelations.relations.count-1, inSection: 0)
+                            tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Bottom)
+                            
+                        }
+                        
+                    
+                    }
+                })
+                
+            }
+        }
+        
     }
     
     func pressedPlace(sender: UIButton) {
