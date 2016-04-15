@@ -165,12 +165,9 @@ class Added: UIViewController, UITableViewDelegate, UITableViewDataSource,Player
             cell.profilePhoto.addTarget(self, action: #selector(Added.pressedUsername(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             cell.commentCount.addTarget(self, action: #selector(Added.pressedComment(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             cell.commentCount.setTitle("\(videoArray[indexPath.row].commentCount)", forState: .Normal)
-            
-            if(videoArray[indexPath.row].isFollowing==0 && videoArray[indexPath.row].username != MoleCurrentUser.username){
-                cell.followButton.addTarget(self, action: #selector(Added.pressedFollow(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-            }else{
-                cell.followButton.hidden = true
-            }
+         
+            cell.followButton.hidden = true
+            cell.followButton.enabled = false
             
             cell.likeButton.addTarget(self, action: #selector(Added.pressedLike(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             
@@ -250,11 +247,6 @@ class Added: UIViewController, UITableViewDelegate, UITableViewDataSource,Player
                     cell.likeButton.setBackgroundImage(UIImage(named: "likefilled"), forState: UIControlState.Normal)
                     cell.likeButton.tintColor = UIColor.whiteColor()
                 }
-            }else if pressedFollow{
-                pressedFollow = true
-                
-                cell.followButton.hidden = videoArray[indexPath.row].isFollowing == 1 ? true:false
-                
             }
             return cell
         }

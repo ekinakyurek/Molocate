@@ -301,6 +301,32 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GcO-iI-XjY">
+                                <rect key="frame" x="16" y="16" width="343" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="SzF-pi-deb"/>
+                                </constraints>
+                                <items>
+                                    <barButtonItem image="leftArrow" id="4TH-nI-po5">
+                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="backButton:" destination="WSP-Gy-4X3" id="jL0-cP-5OR"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BEĞENİLER" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EWG-Ql-GYK">
+                                <rect key="frame" x="136" y="28" width="102" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="Bua-bM-66x"/>
+                                    <constraint firstAttribute="width" constant="102" id="MZh-De-K7j"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="itW-Vv-Qyp"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="102" id="nTZ-7b-HNh"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="lDK-ip-h0n">
                                 <rect key="frame" x="16" y="60" width="343" height="607"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -327,13 +353,13 @@
                                                     </constraints>
                                                     <state key="normal" backgroundImage="elmander.jpg"/>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7QM-Vp-Ha1">
-                                                    <rect key="frame" x="296" y="5" width="34" height="34"/>
+                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7QM-Vp-Ha1">
+                                                    <rect key="frame" x="296" y="5" width="32" height="32"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="34" id="4mD-YA-PJR"/>
-                                                        <constraint firstAttribute="width" constant="34" id="6Gu-PC-ZMw"/>
+                                                        <constraint firstAttribute="height" constant="32" id="4mD-YA-PJR"/>
+                                                        <constraint firstAttribute="width" constant="32" id="6Gu-PC-ZMw"/>
                                                     </constraints>
-                                                    <state key="normal" backgroundImage="shapes.png"/>
+                                                    <state key="normal" backgroundImage="follow"/>
                                                 </button>
                                             </subviews>
                                             <constraints>
@@ -364,32 +390,6 @@
                                     <outlet property="delegate" destination="WSP-Gy-4X3" id="JXj-Vw-bQW"/>
                                 </connections>
                             </tableView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GcO-iI-XjY">
-                                <rect key="frame" x="16" y="16" width="343" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="SzF-pi-deb"/>
-                                </constraints>
-                                <items>
-                                    <barButtonItem image="leftArrow" id="4TH-nI-po5">
-                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <connections>
-                                            <action selector="backButton:" destination="WSP-Gy-4X3" id="jL0-cP-5OR"/>
-                                        </connections>
-                                    </barButtonItem>
-                                </items>
-                            </toolbar>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BEĞENİLER" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EWG-Ql-GYK">
-                                <rect key="frame" x="136" y="28" width="102" height="20"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="20" id="Bua-bM-66x"/>
-                                    <constraint firstAttribute="width" constant="102" id="MZh-De-K7j"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="itW-Vv-Qyp"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="102" id="nTZ-7b-HNh"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.92156862745098034" green="0.16862745098039217" blue="0.36470588235294116" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -2687,7 +2687,7 @@ bir video bulunmamaktadır :(</string>
         <image name="closedflash.png" width="44" height="44"/>
         <image name="elmander.jpg" width="360" height="240"/>
         <image name="follow" width="32" height="32"/>
-        <image name="leftArrow" width="33" height="33"/>
+        <image name="leftArrow" width="28" height="20"/>
         <image name="pin" width="100" height="100"/>
         <image name="points" width="42" height="42"/>
         <image name="profilepic.png" width="256" height="256"/>
