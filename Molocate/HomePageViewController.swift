@@ -485,7 +485,7 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
     func tableView(atableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         if atableView == tableView{
 
-            if((!refreshing)&&(indexPath.row%8 == 0)&&(nextU != nil)&&(!IsExploreInProcess)){
+            if((!refreshing)&&(indexPath.row%10 == 8)&&(nextU != nil)&&(!IsExploreInProcess)){
                 self.isRequested.setObject(false, forKey: nextU)
                 IsExploreInProcess = true
                 MolocateVideo.getExploreVideos(nextU, completionHandler: { (data, response, error) -> () in

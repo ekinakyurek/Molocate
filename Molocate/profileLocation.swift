@@ -821,7 +821,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
         if atableView == tableView{
             
             
-            if((indexPath.row%8 == 0)&&(nextU != nil)&&(!IsExploreInProcess)){
+            if((indexPath.row%10 == 8)&&(nextU != nil)&&(!IsExploreInProcess)){
                 IsExploreInProcess = true
                 MolocateVideo.getExploreVideos(nextU, completionHandler: { (data, response, error) -> () in
                    

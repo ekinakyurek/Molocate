@@ -27,7 +27,7 @@ class oneVideo: UIViewController,PlayerDelegate {
         self.toolBar.clipsToBounds = true
         self.toolBar.translucent = false
         self.toolBar.barTintColor = swiftColor
-        
+        tableView.allowsSelection = false
         self.player = Player()
         self.player.delegate = self
         self.player.playbackLoops = true
