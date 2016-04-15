@@ -109,7 +109,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDe
                     
                 }else {
                     
-                    if username.text?.characters.count > 3 && MolocateUtility.isValidEmail(email.text!.lowercaseString){
+                    let emailValidation = MolocateUtility.isValidEmail(email.text!)
+                    print(emailValidation)
+                    if username.text?.characters.count > 3 && emailValidation{
                     let mail: String = email.text!.lowercaseString
                     
                     MolocateAccount.SignUp(uname, password: pwd, email: mail, completionHandler: { (data, response, error) in
@@ -134,11 +136,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDe
                     })
                     
                     
-                    }
-                    else if username.text?.characters.count <= 3 {
+                    }else if username.text?.characters.count < 4 {
                      self.displayAlert("Hata", message: "Lütfen kullanıcı adınız için 3 karakterden fazlasını giriniz.")
-                    }else{
-                    self.displayAlert("Hata", message: "Lütfen geçerli bir mail adresi giriniz.")
+                    }else if !emailValidation{
+                    //self.displayAlert("Hata", message: "Lütfen geçerli bir mail adresi giriniz.")
                     }
                 }
                 

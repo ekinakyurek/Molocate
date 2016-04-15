@@ -361,16 +361,20 @@ public class MolocateAccount {
                         
                     } else{
                         let error = result["result"] as! String
-                        
+                        print(error)
                         switch (error){
                         case "user_exist":
-                            completionHandler(data: "Lütfen daha önce kullanılmamış bir email seçiniz." , response: response , error: nsError  )
+                            completionHandler(data: "Lütfen daha önce kullanılmamış bir kullanıcı adı seçiniz." , response: response , error: nsError  )
                             break
                         case "not_valid":
                             completionHandler(data: "Lütfen geçerli bir email adresi giriniz." , response: response , error: nsError  )
                             break
+                        case "email_exists":
+                            completionHandler(data: "Lütfen daha önce kullanılmamış bir mail seçiniz." , response: response , error: nsError  )
+                            break
+                            
                         default:
-                            completionHandler(data: "Lütfen geçerli bir email adresi giriniz." , response: response , error: nsError  )
+                            completionHandler(data: "Lütfen daha önce kullanılmamış bir kullanıcı adı seçiniz." , response: response , error: nsError  )
                             break
                             
                         }
