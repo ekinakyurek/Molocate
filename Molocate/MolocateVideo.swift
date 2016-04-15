@@ -328,7 +328,7 @@ public class MolocateVideo {
                 
                 completionHandler(data: videoStr, response: response, error: nsError)
             }catch{
-                completionHandler(data: MoleVideoInformation, response: NSURLResponse(), error: nsError)
+                completionHandler(data: MoleVideoInformation(), response: NSURLResponse(), error: nsError)
                 print("Error: in mole.getExploreVideos")
             }
         }
