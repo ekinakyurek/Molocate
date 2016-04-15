@@ -89,6 +89,25 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         toolBar.translucent = false
         toolBar.clipsToBounds = true
         
+        searchText.font = UIFont(name: "AvenirNext-Regular", size: 14)
+//        searchText.textColor = UIColor.whiteColor()
+        //searchText.layer.borderColor = swiftColor.CGColor
+        //searchText.layer.borderWidth = 0.5
+        searchText.backgroundColor = swiftColor2
+        //searchText.layer.masksToBounds = true
+        searchText.borderStyle = UITextBorderStyle.None
+        searchText.layer.borderWidth = 0
+        searchText.layer.cornerRadius = 5
+        let str = NSAttributedString(string: "Konum Ara", attributes: [NSForegroundColorAttributeName:UIColor.whiteColor()])
+        searchText.attributedPlaceholder = str
+        searchText.textAlignment = .Center
+//        let border2 = CALayer()
+//        border2.frame = searchText.frame
+//        border2.borderColor = UIColor.whiteColor().CGColor
+//        border2.borderWidth = 2
+//        searchText.layer.addSublayer(border2)
+
+        
         let index = NSIndexPath(forRow: 0, inSection: 0)
         self.collectionView.selectItemAtIndexPath(index, animated: false, scrollPosition: UICollectionViewScrollPosition.None)
         collectionView.contentSize.width = 75 * 9
