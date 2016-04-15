@@ -74,14 +74,14 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
         
          let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! molocateNotificationCell
       //  cell.myButton.addTarget(self, action: #selector(NotificationsViewController.pressedUsername(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-        cell.fotoButton.addTarget(self, action: #selector(NotificationsViewController.pressedUsername(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        cell.fotoButton.addTarget(self, action: #selector(NotificationsViewController.pressedProfilePhoto(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         cell.fotoButton.layer.borderWidth = 0.1
         cell.fotoButton.layer.masksToBounds = false
         cell.fotoButton.layer.borderColor = UIColor.whiteColor().CGColor
         cell.fotoButton.layer.cornerRadius = cell.fotoButton.frame.height/2
         cell.fotoButton.clipsToBounds = true
 //        cell.myButton.tag = indexPath.row
-//        cell.fotoButton.tag = indexPath.row
+        cell.fotoButton.tag = indexPath.row
 //        cell.myButton.setTitle(notificationArray[indexPath.row].actor, forState: UIControlState.Normal)
 //        let buttonWidth = cell.myButton.intrinsicContentSize().width
 //        cell.myButton.frame = CGRectMake(44 , 10 , buttonWidth + 5  , 34)
@@ -219,6 +219,39 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
             //pressedUsername((tableView.cellForRowAtIndexPath(indexPath) as! molocateNotificationCell).)
         }
     }
+    
+    func pressedProfilePhoto(sender: UIButton) {
+        let buttonRow = sender.tag
+        ////////print("username e basıldı at index path: \(buttonRow)")
+
+        activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+        view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+        MolocateAccount.getUser(notificationArray[buttonRow].actor) { (data, response, error) -> () in
+            dispatch_async(dispatch_get_main_queue()){
+                user = data
+                let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
+                controller.view.frame = self.view.bounds;
+                controller.willMoveToParentViewController(self)
+                self.view.addSubview(controller.view)
+                self.addChildViewController(controller)
+                controller.didMoveToParentViewController(self)
+                controller.username.text = user.username
+                controller.followingsCount.setTitle("\(data.following_count)", forState: .Normal)
+                controller.followersCount.setTitle("\(data.follower_count)", forState: .Normal)
+                controller.AVc.username = user.username
+                controller.BVc.username = user.username
+                choosedIndex = 2
+                self.activityIndicator.removeFromSuperview()
+            }
+        }
+        
+    }
+
     
     
     func pressedUsername(sender: UITapGestureRecognizer) {
