@@ -47,8 +47,8 @@ struct MoleUser{
     func printUser() -> Void {
         print("username: " + username)
         print("email: " + email)
-        //print("profile_pic: " + profilePic.absoluteString)
-        //print("token: "+ token)
+        print("profile_pic: " + profilePic.absoluteString)
+        print("token: " + token)
         print("first_name: "+first_name)
         print("last_name: "+last_name)
         print("post_count:  \(post_count)");
@@ -144,7 +144,7 @@ public class MolocateAccount {
                 //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
                 let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String: AnyObject]
                 // print(result)
-                print(result)
+                //print(result)
                 let count: Int = result["count"] as! Int
                 let next =  result["next"] is NSNull ? "":result["next"] as? String
                 let previous =  result["previous"] is NSNull ? "":result["previous"] as? String
@@ -268,7 +268,7 @@ public class MolocateAccount {
                     } else {
                         FaceMail = resultJson["email_validation"] as! String
                         FaceUsername = resultJson["suggested_username"] as! String
-                        print(resultJson)
+                        //print(resultJson)
                         completionHandler(data: "signup", response:  response, error: error)
                     }
                     

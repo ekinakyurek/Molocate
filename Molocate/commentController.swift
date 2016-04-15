@@ -39,7 +39,7 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
             tableView.tableFooterView = UIView()
             MolocateVideo.commentAVideo(video_id, comment: mycomment.text) { (data, response, error) -> () in
                 
-                print(data)
+                //print(data)
                 dispatch_async(dispatch_get_main_queue()){
                     if(myViewController == "MainController"){
                         (self.parentViewController as! MainController).videoArray[videoIndex].commentCount += 1
@@ -304,17 +304,17 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
     func pressedReport(sender: UIButton) {
         let buttonRow = sender.tag
 
-        ////print("pressedReport at index path: \(buttonRow)")
+        //////print("pressedReport at index path: \(buttonRow)")
         let actionSheetController: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
     
         if( (buttonRow < comments.count) && comments[buttonRow].username == MoleCurrentUser.username){
             
             let deleteVideo: UIAlertAction = UIAlertAction(title: "Yorumu Sil", style: .Default) { action -> Void in
                 let index = NSIndexPath(forRow: buttonRow, inSection: 0)
-                //print(comments[buttonRow].id)
+                ////print(comments[buttonRow].id)
                 MolocateVideo.deleteAComment(comments[buttonRow].id, completionHandler: { (data, response, error) in
                     
-                    print(data)
+                    //print(data)
                     
                 })
                 
@@ -337,7 +337,7 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
         
         let reportVideo: UIAlertAction = UIAlertAction(title: "Rapor Et", style: .Default) { action -> Void in
             
-            ////print("reported")
+            //////print("reported")
         }
         actionSheetController.addAction(reportVideo)
         
@@ -350,7 +350,7 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
     
     func pressedUsername(sender: UIButton) {
         let buttonRow = sender.tag
-        print("username e basıldı at index path: \(buttonRow)")
+        //print("username e basıldı at index path: \(buttonRow)")
         
         MolocateAccount.getUser(comments[buttonRow].username) { (data, response, error) -> () in
             dispatch_async(dispatch_get_main_queue()){

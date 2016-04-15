@@ -279,7 +279,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                 let scrollSpeed = fabsf(Float(scrollSpeedNotAbs));
                 if (scrollSpeed > 0.1) {
                     isScrollingFast = true
-                    //print("hızlı")
+                    ////print("hızlı")
                     
                 } else {
                     isScrollingFast = false
@@ -310,9 +310,9 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                 }
                 let longest = scrollView.contentOffset.y + scrollView.frame.height
                 if direction == 1 {
-                    //////print("down")
+                    ////////print("down")
                     let cellap = scrollView.contentOffset.y - self.tableView.visibleCells[0].center.y
-                    //////print(cellap)
+                    ////////print(cellap)
                     let row = self.tableView.indexPathsForVisibleRows![0].row+1
                     if cellap > 0 {
                         
@@ -324,8 +324,8 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                                 self.player1.playFromBeginning()
                                 }
                                 player1Turn = true
-                                //print(self.tableView.indexPathsForVisibleRows![0].row)
-                                //////print("player1")
+                                ////print(self.tableView.indexPathsForVisibleRows![0].row)
+                                ////////print("player1")
                             }
                         }else{
                             if self.player2.playbackState.description != "Playing"{
@@ -334,7 +334,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                                 self.player2.playFromBeginning()
                                 }
                                 player1Turn = false
-                                //////print("player2")
+                                ////////print("player2")
                             }
                         }
                     }
@@ -342,10 +342,10 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                     
                     
                 else {
-                    //////print("up")
+                    ////////print("up")
                     
                     let cellap = longest - self.tableView.visibleCells[0].center.y-150-self.view.frame.width
-                    ////print(cellap)
+                    //////print(cellap)
                     let row = self.tableView.indexPathsForVisibleRows![0].row
                     if cellap < 0 {
                         
@@ -357,7 +357,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                                 self.player1.playFromBeginning()
                                 }
                                 player1Turn = true
-                                //////print("player1")
+                                ////////print("player1")
                             }
                         }else{
                             if self.player2.playbackState.description != "Playing"{
@@ -367,7 +367,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                                 }
                                 player1Turn = false
                                 
-                                //////print("player2")
+                                ////////print("player2")
                             }
                         }
                     }
@@ -490,7 +490,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                 let thumbnailURL = self.videoArray[indexPath.row].thumbnailURL
                 if(thumbnailURL.absoluteString != ""){
                     cell.cellthumbnail.sd_setImageWithURL(thumbnailURL)
-                    //print("burda")
+                    ////print("burda")
                 }else{
                     cell.cellthumbnail.image = UIImage(named: "Mole")!
                 }
@@ -580,7 +580,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     
     func pressedUsername(sender: UIButton) {
         let buttonRow = sender.tag
-        //print("username e basıldı at index path: \(buttonRow)")
+        ////print("username e basıldı at index path: \(buttonRow)")
         player1.stop()
         player2.stop()
         activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
@@ -652,8 +652,8 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     }
     func pressedPlace(sender: UIButton) {
         let buttonRow = sender.tag
-//        //print("place e basıldı at index path: \(buttonRow) ")
-//        //print("================================" )
+//        ////print("place e basıldı at index path: \(buttonRow) ")
+//        ////print("================================" )
         player1.stop()
         player2.stop()
         activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
@@ -680,7 +680,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     func pressedFollow(sender: UIButton) {
         let buttonRow = sender.tag
         pressedFollow = true
-        //print("followa basıldı at index path: \(buttonRow) ")
+        ////print("followa basıldı at index path: \(buttonRow) ")
         self.videoArray[buttonRow].isFollowing = 1
         var indexes = [NSIndexPath]()
         let index = NSIndexPath(forRow: buttonRow, inSection: 0)
@@ -695,8 +695,8 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     }
     
     func pressedLikeCount(sender: UIButton) {
-        ////print("____________________________--------------")
-        ////print(sender.tag)
+        //////print("____________________________--------------")
+        //////print(sender.tag)
         player1.stop()
         player2.stop()
         video_id = videoArray[sender.tag].id
@@ -711,7 +711,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     
     func playTapped(sender: UITapGestureRecognizer) {
         let row = sender.view!.tag
-        //print("like a basıldı at index path: \(row) ")
+        ////print("like a basıldı at index path: \(row) ")
         if self.tableView.visibleCells.count < 3 {
             if (row) % 2 == 1{
                 
@@ -753,7 +753,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     
     func doubleTapped(sender: UITapGestureRecognizer) {
         let buttonRow = sender.view!.tag
-        //print("like a basıldı at index path: \(buttonRow) ")
+        ////print("like a basıldı at index path: \(buttonRow) ")
         pressedLike = true
         
         
@@ -781,7 +781,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
             
             MolocateVideo.likeAVideo(videoArray[buttonRow].id) { (data, response, error) -> () in
                 dispatch_async(dispatch_get_main_queue()){
-                    //print(data)
+                    ////print(data)
                 }
             }
         }else{
@@ -794,7 +794,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     
     func pressedLike(sender: UIButton) {
         let buttonRow = sender.tag
-        //print("like a basıldı at index path: \(buttonRow) ")
+        ////print("like a basıldı at index path: \(buttonRow) ")
         pressedLike = true
         let indexpath = NSIndexPath(forRow: buttonRow, inSection: 0)
         var indexes = [NSIndexPath]()
@@ -811,7 +811,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
             
             MolocateVideo.likeAVideo(videoArray[buttonRow].id) { (data, response, error) -> () in
                 dispatch_async(dispatch_get_main_queue()){
-                    //print(data)
+                    ////print(data)
                 }
             }
 
@@ -825,7 +825,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
             
             MolocateVideo.unLikeAVideo(videoArray[buttonRow].id){ (data, response, error) -> () in
                 dispatch_async(dispatch_get_main_queue()){
-                    //print(data)
+                    ////print(data)
                 }
             }
         }
@@ -856,7 +856,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                 self.addChildViewController(controller)
                 controller.didMoveToParentViewController(self)
                 self.activityIndicator.removeFromSuperview()
-                //print("MoleVideoComment e basıldı at index path: \(buttonRow)")
+                ////print("MoleVideoComment e basıldı at index path: \(buttonRow)")
             }
         }
         
@@ -870,9 +870,9 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         player1.stop()
         player2.stop()
         MolocateVideo.reportAVideo(videoArray[buttonRow].id) { (data, response, error) -> () in
-            ////print(data)
+            //////print(data)
         }
-        ////print("pressedReport at index path: \(buttonRow)")
+        //////print("pressedReport at index path: \(buttonRow)")
         let actionSheetController: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         
         if(videoArray[buttonRow].username == MoleCurrentUser.username){
@@ -902,7 +902,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         
         let reportVideo: UIAlertAction = UIAlertAction(title: "Raporla", style: .Default) { action -> Void in
             
-            ////print("reported")
+            //////print("reported")
         }
         actionSheetController.addAction(reportVideo)
         
@@ -916,7 +916,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     }
     
     override func viewDidAppear(animated: Bool) {
-        ////print("bom")
+        //////print("bom")
         player2.playFromBeginning()
         NSNotificationCenter.defaultCenter().postNotificationName("closeSideBar", object: nil)
         

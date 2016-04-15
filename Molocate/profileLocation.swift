@@ -234,7 +234,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
             let thumbnailURL = self.videoArray[indexPath.row].thumbnailURL
             if(thumbnailURL.absoluteString != ""){
                 cell.cellthumbnail.sd_setImageWithURL(thumbnailURL)
-                //print("burda")
+                ////print("burda")
             }else{
                 cell.cellthumbnail.image = UIImage(named: "Mole")!
             }
@@ -303,7 +303,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
     
     func playTapped(sender: UITapGestureRecognizer) {
         let row = sender.view!.tag
-        //print("like a basıldı at index path: \(row) ")
+        ////print("like a basıldı at index path: \(row) ")
         if self.tableView.visibleCells.count < 3 {
             if (row) % 2 == 1{
                 
@@ -411,7 +411,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
     
     func pressedUsername(sender: UIButton) {
         let buttonRow = sender.tag
-        //print("username e basıldı at index path: \(buttonRow)")
+        ////print("username e basıldı at index path: \(buttonRow)")
         player1.stop()
         player2.stop()
         MolocateAccount.getUser(videoArray[buttonRow].username) { (data, response, error) -> () in
@@ -438,8 +438,8 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
         let buttonRow = sender.tag
         player1.stop()
         player2.stop()
-        //print("place e basıldı at index path: \(buttonRow) ")
-        //print("================================" )
+        ////print("place e basıldı at index path: \(buttonRow) ")
+        ////print("================================" )
         MolocatePlace.getPlace(videoArray[buttonRow].locationID) { (data, response, error) -> () in
             dispatch_async(dispatch_get_main_queue()){
                 thePlace = data
@@ -457,7 +457,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
     func pressedFollow(sender: UIButton) {
         let buttonRow = sender.tag
         pressedFollow = true
-        //print("followa basıldı at index path: \(buttonRow) ")
+        ////print("followa basıldı at index path: \(buttonRow) ")
         self.videoArray[buttonRow].isFollowing = 1
         var indexes = [NSIndexPath]()
         let index = NSIndexPath(forRow: buttonRow, inSection: 0)
@@ -487,7 +487,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
     }
     func pressedLike(sender: UIButton) {
         let buttonRow = sender.tag
-        //print("like a basıldı at index path: \(buttonRow) ")
+        ////print("like a basıldı at index path: \(buttonRow) ")
         pressedLike = true
         let indexpath = NSIndexPath(forRow: buttonRow, inSection: 0)
         var indexes = [NSIndexPath]()
@@ -502,7 +502,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
             
             MolocateVideo.likeAVideo(videoArray[buttonRow].id) { (data, response, error) -> () in
                 dispatch_async(dispatch_get_main_queue()){
-                    //print(data)
+                    ////print(data)
                 }
             }
         }else{
@@ -515,7 +515,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
             
             MolocateVideo.unLikeAVideo(videoArray[buttonRow].id){ (data, response, error) -> () in
                 dispatch_async(dispatch_get_main_queue()){
-                    //print(data)
+                    ////print(data)
                 }
             }
         }
@@ -538,7 +538,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
                 self.addChildViewController(controller)
                 controller.didMoveToParentViewController(self)
                 
-                //print("comment e basıldı at index path: \(buttonRow)")
+                ////print("comment e basıldı at index path: \(buttonRow)")
             }
         }
         
@@ -552,9 +552,9 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
         player1.stop()
         player2.stop()
         MolocateVideo.reportAVideo(videoArray[buttonRow].id) { (data, response, error) -> () in
-            ////print(data)
+            //////print(data)
         }
-        ////print("pressedReport at index path: \(buttonRow)")
+        //////print("pressedReport at index path: \(buttonRow)")
         let actionSheetController: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         
         if(videoArray[buttonRow].username == MoleCurrentUser.username){
@@ -584,7 +584,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
         
         let reportVideo: UIAlertAction = UIAlertAction(title: "Raporla", style: .Default) { action -> Void in
             
-            ////print("reported")
+            //////print("reported")
         }
         actionSheetController.addAction(reportVideo)
         
@@ -672,7 +672,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
             let scrollSpeed = fabsf(Float(scrollSpeedNotAbs));
             if (scrollSpeed > 0.1) {
                 isScrollingFast = true
-                //print("hızlı")
+                ////print("hızlı")
                 
             } else {
                 isScrollingFast = false
@@ -704,9 +704,9 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
             }
             let longest = scrollView.contentOffset.y + scrollView.frame.height
             if direction == 1 {
-                //////print("down")
+                ////////print("down")
                 let cellap = scrollView.contentOffset.y - self.tableView.visibleCells[0].center.y
-                //////print(cellap)
+                ////////print(cellap)
                 let row = self.tableView.indexPathsForVisibleRows![0].row+1
                 if cellap > 0 {
                     
@@ -718,8 +718,8 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
                             self.player1.playFromBeginning()
                             }
                             player1Turn = true
-                            //print(self.tableView.indexPathsForVisibleRows![0].row)
-                            //////print("player1")
+                            ////print(self.tableView.indexPathsForVisibleRows![0].row)
+                            ////////print("player1")
                         }
                     }else{
                         if self.player2.playbackState.description != "Playing"{
@@ -728,7 +728,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
                             self.player2.playFromBeginning()
                             }
                             player1Turn = false
-                            //////print("player2")
+                            ////////print("player2")
                         }
                     }
                 }
@@ -736,10 +736,10 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
                 
                 
             else {
-                //////print("up")
+                ////////print("up")
                 
                 let cellap = longest - self.tableView.visibleCells[0].center.y-150-self.view.frame.width
-                ////print(cellap)
+                //////print(cellap)
                 let row = self.tableView.indexPathsForVisibleRows![0].row
                 if cellap < 0 {
                     
@@ -751,7 +751,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
                             self.player1.playFromBeginning()
                             }
                             player1Turn = true
-                            //////print("player1")
+                            ////////print("player1")
                         }
                     }else{
                         if self.player2.playbackState.description != "Playing"{
@@ -760,7 +760,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
                             self.player2.playFromBeginning()
                             }
                             player1Turn = false
-                            //////print("player2")
+                            ////////print("player2")
                         }
                     }
                 }
@@ -775,7 +775,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
     
     func doubleTapped(sender: UITapGestureRecognizer) {
         let buttonRow = sender.view!.tag
-        //print("like a basıldı at index path: \(buttonRow) ")
+        ////print("like a basıldı at index path: \(buttonRow) ")
         pressedLike = true
         let indexpath = NSIndexPath(forRow: buttonRow, inSection: 0)
         let  cell = tableView.cellForRowAtIndexPath(indexpath)
@@ -798,7 +798,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
             
             MolocateVideo.likeAVideo(videoArray[buttonRow].id) { (data, response, error) -> () in
                 dispatch_async(dispatch_get_main_queue()){
-                    //print(data)
+                    ////print(data)
                 }
             }
         }else{
@@ -811,7 +811,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
 //            
 //            MolocateVideo.unLikeAVideo(videoArray[buttonRow].id){ (data, response, error) -> () in
 //                dispatch_async(dispatch_get_main_queue()){
-//                    //print(data)
+//                    ////print(data)
 //                }
 //            }
         }

@@ -48,7 +48,7 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
         self.view.addSubview(tableView)
         // Do any additional setup after loading the view.
         
-        print(self.username)
+        //print(self.username)
         MolocateVideo.getUserVideos(user.username, type: "tagged", completionHandler: { (data, response, error) in
             dispatch_async(dispatch_get_main_queue()) {
                 self.videoArray = data!
@@ -103,7 +103,7 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
     
     func playTapped(sender: UITapGestureRecognizer) {
         let row = sender.view!.tag
-        //print("like a basıldı at index path: \(row) ")
+        ////print("like a basıldı at index path: \(row) ")
         if self.tableView.visibleCells.count < 3 {
             if (row) % 2 == 1{
                 
@@ -187,7 +187,7 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
             let thumbnailURL = self.videoArray[indexPath.row].thumbnailURL
             if(thumbnailURL.absoluteString != ""){
                 cell.cellthumbnail.sd_setImageWithURL(thumbnailURL)
-                print("burda")
+                //print("burda")
             }else{
                 cell.cellthumbnail.image = UIImage(named: "Mole")!
             }
@@ -278,7 +278,7 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
             let scrollSpeed = fabsf(Float(scrollSpeedNotAbs));
             if (scrollSpeed > 0.1) {
                 isScrollingFast = true
-                print("hızlı")
+                //print("hızlı")
                 
             } else {
                 isScrollingFast = false
@@ -310,9 +310,9 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
             }
             let longest = scrollView.contentOffset.y + scrollView.frame.height
             if direction == 1 {
-                ////print("down")
+                //////print("down")
                 let cellap = scrollView.contentOffset.y - self.tableView.visibleCells[0].center.y
-                ////print(cellap)
+                //////print(cellap)
                 let row = self.tableView.indexPathsForVisibleRows![0].row+1
                 if cellap > 0 {
                     
@@ -324,8 +324,8 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
                             self.player1.playFromBeginning()
                             }
                             player1Turn = true
-                            //print(self.tableView.indexPathsForVisibleRows![0].row)
-                            ////print("player1")
+                            ////print(self.tableView.indexPathsForVisibleRows![0].row)
+                            //////print("player1")
                         }
                     }else{
                         if self.player2.playbackState.description != "Playing"{
@@ -334,7 +334,7 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
                             self.player2.playFromBeginning()
                             }
                             player1Turn = false
-                            ////print("player2")
+                            //////print("player2")
                         }
                     }
                 }
@@ -342,10 +342,10 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
                 
                 
             else {
-                ////print("up")
+                //////print("up")
                 
                 let cellap = longest - self.tableView.visibleCells[0].center.y-150-self.view.frame.width
-                //print(cellap)
+                ////print(cellap)
                 let row = self.tableView.indexPathsForVisibleRows![0].row
                 if cellap < 0 {
                     
@@ -357,7 +357,7 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
                             self.player1.playFromBeginning()
                             }
                             player1Turn = true
-                            ////print("player1")
+                            //////print("player1")
                         }
                     }else{
                         if self.player2.playbackState.description != "Playing"{
@@ -366,7 +366,7 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
                             self.player2.playFromBeginning()
                             }
                             player1Turn = false
-                            ////print("player2")
+                            //////print("player2")
                         }
                     }
                 }
@@ -454,8 +454,8 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
         let buttonRow = sender.tag
         player1.stop()
         player2.stop()
-        print("place e basıldı at index path: \(buttonRow) ")
-        print("================================" )
+        //print("place e basıldı at index path: \(buttonRow) ")
+        //print("================================" )
         MolocatePlace.getPlace(videoArray[buttonRow].locationID) { (data, response, error) -> () in
             dispatch_async(dispatch_get_main_queue()){
                 thePlace = data
@@ -472,7 +472,7 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
     func pressedFollow(sender: UIButton) {
         let buttonRow = sender.tag
         pressedFollow = true
-        print("followa basıldı at index path: \(buttonRow) ")
+        //print("followa basıldı at index path: \(buttonRow) ")
         self.videoArray[buttonRow].isFollowing = 1
         var indexes = [NSIndexPath]()
         let index = NSIndexPath(forRow: buttonRow, inSection: 0)
@@ -487,8 +487,8 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
     
     
     func pressedLikeCount(sender: UIButton) {
-        //print("____________________________--------------")
-        //print(sender.tag)
+        ////print("____________________________--------------")
+        ////print(sender.tag)
         player1.stop()
         player2.stop()
         video_id = videoArray[sender.tag].id
@@ -502,7 +502,7 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
     }
     func pressedLike(sender: UIButton) {
         let buttonRow = sender.tag
-        print("like a basıldı at index path: \(buttonRow) ")
+        //print("like a basıldı at index path: \(buttonRow) ")
         pressedLike = true
         let indexpath = NSIndexPath(forRow: buttonRow, inSection: 0)
         var indexes = [NSIndexPath]()
@@ -519,7 +519,7 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
             
             MolocateVideo.likeAVideo(videoArray[buttonRow].id) { (data, response, error) -> () in
                 dispatch_async(dispatch_get_main_queue()){
-                    print(data)
+                    //print(data)
                 }
             }
         }else{
@@ -532,7 +532,7 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
             
             MolocateVideo.unLikeAVideo(videoArray[buttonRow].id){ (data, response, error) -> () in
                 dispatch_async(dispatch_get_main_queue()){
-                    print(data)
+                    //print(data)
                 }
             }
         }
@@ -557,7 +557,7 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
     
     func doubleTapped(sender: UITapGestureRecognizer) {
         let buttonRow = sender.view!.tag
-        print("like a basıldı at index path: \(buttonRow) ")
+        //print("like a basıldı at index path: \(buttonRow) ")
         pressedLike = true
         let indexpath = NSIndexPath(forRow: buttonRow, inSection: 0)
         let  cell = tableView.cellForRowAtIndexPath(indexpath)
@@ -580,7 +580,7 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
             
             MolocateVideo.likeAVideo(videoArray[buttonRow].id) { (data, response, error) -> () in
                 dispatch_async(dispatch_get_main_queue()){
-                    print(data)
+                    //print(data)
                 }
             }
         }else{
@@ -593,7 +593,7 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
 //            
 //            Molocate.unLikeAVideo(videoArray[buttonRow].id){ (data, response, error) -> () in
 //                dispatch_async(dispatch_get_main_queue()){
-//                    print(data)
+//                    //print(data)
 //                }
 //            }
         }
@@ -618,7 +618,7 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
                 self.parentViewController!.addChildViewController(controller)
                 controller.didMoveToParentViewController(self.parentViewController!)
                 
-                print("comment e basıldı at index path: \(buttonRow)")
+                //print("comment e basıldı at index path: \(buttonRow)")
             }
         }
         
@@ -632,9 +632,9 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
         player1.stop()
         player2.stop()
         MolocateVideo.reportAVideo(videoArray[buttonRow].id) { (data, response, error) -> () in
-            ////print(data)
+            //////print(data)
         }
-        ////print("pressedReport at index path: \(buttonRow)")
+        //////print("pressedReport at index path: \(buttonRow)")
         let actionSheetController: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         
         if(videoArray[buttonRow].username == MoleCurrentUser.username){
@@ -664,7 +664,7 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
         
         let reportVideo: UIAlertAction = UIAlertAction(title: "Raporla", style: .Default) { action -> Void in
             
-            ////print("reported")
+            //////print("reported")
         }
         actionSheetController.addAction(reportVideo)
         
@@ -673,7 +673,7 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
     }
     func pressedUsername(sender: UIButton) {
         let buttonRow = sender.tag
-        print("username e basıldı at index path: \(buttonRow)")
+        //print("username e basıldı at index path: \(buttonRow)")
         player1.stop()
         player2.stop()
         MolocateAccount.getUser(videoArray[buttonRow].username) { (data, response, error) -> () in
