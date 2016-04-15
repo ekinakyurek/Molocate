@@ -887,6 +887,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                 
                 self.videoArray.removeAtIndex(index.row)
                 self.tableView.deleteRowsAtIndexPaths([index], withRowAnimation: UITableViewRowAnimation.Automatic)
+                self.tableView.reloadData()
             }
             
             actionSheetController.addAction(deleteVideo)
@@ -899,7 +900,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         
         actionSheetController.addAction(cancelAction)
         
-        let reportVideo: UIAlertAction = UIAlertAction(title: "Rapor Et", style: .Default) { action -> Void in
+        let reportVideo: UIAlertAction = UIAlertAction(title: "Raporla", style: .Default) { action -> Void in
             
             ////print("reported")
         }

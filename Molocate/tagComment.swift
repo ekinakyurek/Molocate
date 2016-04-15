@@ -118,7 +118,7 @@ class tagComment: UIViewController, UITextViewDelegate {
        // cell.textLabel?.frame.origin.x = 200
         
         // Configure the cell...insert the special characters using edit > emoji on the menu
-        cell.textLabel?.text = "◻️         " + userRelations.relations[indexPath.row].username
+        cell.textLabel?.text = "⚪         " + userRelations.relations[indexPath.row].username
         return cell
     
     
@@ -166,15 +166,15 @@ class tagComment: UIViewController, UITextViewDelegate {
         
         // insert the special characters using edit > emoji on the menu
         // this is where the toggle magic happens!
-        if firstChar == "◻️" {
-            newChar = "✅         "
+        if firstChar == "⚪" {
+            newChar = "⚫         "
             checkedSymptom = true
             numbers.append(indexPath.row)
             print(numbers)
            
            
         } else {
-            newChar = "◻️         "
+            newChar = "⚪         "
             checkedSymptom = false
             var xAppears = false
             

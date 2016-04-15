@@ -100,41 +100,6 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         self.location = self.locationManager.location
         self.deviceLat = self.locationManager.location?.coordinate.latitude
         self.deviceLon = self.locationManager.location?.coordinate.longitude
-            dispatch_async(dispatch_get_main_queue()){
-            let cleanup: dispatch_block_t = {
-                    do {
-                        
-                        try NSFileManager.defaultManager().removeItemAtURL(fakeoutputFileURL!)
-                        //try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
-                        
-                    } catch _ {}
-                    
-                }
-
-            
-                if(fakeoutputFileURL?.absoluteString != ""){
-                    cleanup()
-                    //print("siliniyor")
-                    
-                }
-            
-            let cleanuppath: dispatch_block_t = {
-                do {
-                    
-                    try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
-                    
-                } catch _ {}
-                
-            }
-            if(videoPath != ""){
-                cleanuppath()
-                //print("siliniyor")
-                
-            }
-            videoPath = ""
-            fakeoutputFileURL = NSURL()
-            }
-
             
             
         }

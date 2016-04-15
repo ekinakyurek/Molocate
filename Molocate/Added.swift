@@ -647,6 +647,7 @@ class Added: UIViewController, UITableViewDelegate, UITableViewDataSource,Player
                 
                 self.videoArray.removeAtIndex(index.row)
                 self.tableView.deleteRowsAtIndexPaths([index], withRowAnimation: UITableViewRowAnimation.Automatic)
+                self.tableView.reloadData()
             }
             
             actionSheetController.addAction(deleteVideo)
@@ -659,7 +660,7 @@ class Added: UIViewController, UITableViewDelegate, UITableViewDataSource,Player
         
         actionSheetController.addAction(cancelAction)
         
-        let reportVideo: UIAlertAction = UIAlertAction(title: "Rapor Et", style: .Default) { action -> Void in
+        let reportVideo: UIAlertAction = UIAlertAction(title: "Raporla", style: .Default) { action -> Void in
             
             ////print("reported")
         }

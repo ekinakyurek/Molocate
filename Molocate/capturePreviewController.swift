@@ -193,7 +193,8 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-              try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
+        
+               try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
         UIApplication.sharedApplication().endIgnoringInteractionEvents()
         toolBar.barTintColor = swiftColor
         toolBar.translucent = false
@@ -245,14 +246,20 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
             caption.frame.origin.y = newRect.origin.y + screenSize.width
         }
         
-        caption.titleLabel!.textColor = UIColor.blackColor()
+        //caption.titleLabel!.textColor = UIColor.blackColor()
         caption.backgroundColor = UIColor.whiteColor()
         if CaptionText == "" {
             caption.setTitle("Yorum ve arkadaş ekle", forState: .Normal)
+            caption.setTitleColor(UIColor.blackColor(), forState: .Normal)
+            caption.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 15.5)
+
         }else{
             caption.setTitle(CaptionText, forState: .Normal)
+              caption.setTitleColor(UIColor.blackColor(), forState: .Normal)
+            caption.titleLabel?.font =  UIFont(name: "AvenirNext-Regular", size: 15.5)
+
         }
-        caption.setTitleColor(UIColor.blackColor(), forState: .Normal)
+       // caption.setTitleColor(UIColor.blackColor(), forState: .Normal)
         caption.addTarget(self, action: #selector(capturePreviewController.pressedCaption(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         caption.contentHorizontalAlignment = .Left
         self.view.addSubview(caption)
@@ -414,6 +421,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        textField.text = ""
         let selectedCell : UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
         textField.text = selectedCell.textLabel!.text
         placeTable.hidden = true

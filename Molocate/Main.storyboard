@@ -2701,8 +2701,8 @@ bir video bulunmamaktadır :(</string>
         <image name="switch" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Vlr-i7-pN8"/>
-        <segue reference="RSN-Ei-cwL"/>
+        <segue reference="iVR-Yc-KKO"/>
         <segue reference="iX5-7U-zGl"/>
+        <segue reference="Vlr-i7-pN8"/>
     </inferredMetricsTieBreakers>
 </document>

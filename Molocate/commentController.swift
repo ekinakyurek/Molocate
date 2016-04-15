@@ -26,7 +26,7 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
     @IBOutlet var sendButton: UIButton!
     @IBOutlet var tableView: UITableView!
     @IBAction func sendButton(sender: AnyObject) {
-        if(newComment.text.characters.count >= 3 && newComment.text != "Yorumunu buradan yazabilirsin" ){
+        if(newComment.text.characters.count >= 1 && newComment.text != "Yorumunu buradan yazabilirsin" ){
             var mycomment = MoleVideoComment()
             
             mycomment.text = newComment.text
@@ -38,6 +38,8 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
             
             tableView.tableFooterView = UIView()
             MolocateVideo.commentAVideo(video_id, comment: mycomment.text) { (data, response, error) -> () in
+                
+                print(data)
                 dispatch_async(dispatch_get_main_queue()){
                     if(myViewController == "MainController"){
                         (self.parentViewController as! MainController).videoArray[videoIndex].commentCount += 1
@@ -304,17 +306,19 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
 
         ////print("pressedReport at index path: \(buttonRow)")
         let actionSheetController: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-        
-        if(comments[buttonRow].username == MoleCurrentUser.username){
+    
+        if( (buttonRow < comments.count) && comments[buttonRow].username == MoleCurrentUser.username){
             
             let deleteVideo: UIAlertAction = UIAlertAction(title: "Yorumu Sil", style: .Default) { action -> Void in
                 let index = NSIndexPath(forRow: buttonRow, inSection: 0)
-                
+                //print(comments[buttonRow].id)
                 MolocateVideo.deleteAComment(comments[buttonRow].id, completionHandler: { (data, response, error) in
                     
                     print(data)
                     
                 })
+                
+        
                 
                 comments.removeAtIndex(index.row)
                 self.tableView.deleteRowsAtIndexPaths([index], withRowAnimation: UITableViewRowAnimation.Automatic)

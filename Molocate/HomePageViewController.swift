@@ -914,6 +914,7 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
                 
                 self.videoArray.removeAtIndex(index.row)
                 self.tableView.deleteRowsAtIndexPaths([index], withRowAnimation: UITableViewRowAnimation.Automatic)
+                self.tableView.reloadData()
             }
             
             actionSheetController.addAction(deleteVideo)
@@ -926,7 +927,7 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
         
         actionSheetController.addAction(cancelAction)
         
-        let reportVideo: UIAlertAction = UIAlertAction(title: "Rapor Et", style: .Default) { action -> Void in 
+        let reportVideo: UIAlertAction = UIAlertAction(title: "Raporla", style: .Default) { action -> Void in 
             
             ////print("reported")
         }
