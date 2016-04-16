@@ -459,7 +459,12 @@ public class MolocateVideo {
                 do {
                     
                     let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String:AnyObject]
-                    completionHandler(data: result["result"] as! String , response: response , error: nsError  )
+                    print(result)
+                    if result["result"] as! String == "success" {
+                    completionHandler(data: result["comment_id"] as! String , response: response , error: nsError  )
+                    } else {
+                    completionHandler(data: "fail" , response: nil , error: nsError  )
+                    }
                 } catch{
                     completionHandler(data: "fail" , response: nil , error: nsError  )
                     print("Error:: in mole.commentAVideo()")

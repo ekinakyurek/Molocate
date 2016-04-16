@@ -33,9 +33,6 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
             newComment.text = ""
             mycomment.photo = MoleCurrentUser.profilePic
             mycomment.username = MoleCurrentUser.username
-            comments.append(mycomment)
-            tableView.reloadData()
-            
             tableView.tableFooterView = UIView()
             MolocateVideo.commentAVideo(video_id, comment: mycomment.text) { (data, response, error) -> () in
                 
@@ -81,8 +78,18 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
                             [NSIndexPath(forRow: videoIndex, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Left)
                         (self.parentViewController as! oneVideo).player.stop()
                     }
+                    if data != "fail" {
+                        mycomment.id = data
+                        comments.append(mycomment)
+                        self.tableView.reloadData()
+                    } else {
+                        
+                    }
+                
                 }
             }
+            
+
         }else{
             
         }
