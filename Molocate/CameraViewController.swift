@@ -350,6 +350,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         let searchTask = session.venues.search(parameters) {
             (result) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
+                print(result)
             if let response = result.response {
                 
                
