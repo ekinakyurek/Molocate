@@ -97,7 +97,6 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
     var pressedFollow: Bool = false
     var refreshing: Bool = false
     let screenSize: CGRect = UIScreen.mainScreen().bounds
-    
     @IBOutlet var profilePhoto: UIImageView!
     var likeHeart = UIImageView()
     override func viewDidLoad() {
@@ -822,10 +821,10 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
         if atableView == tableView{
             
             
-            if((indexPath.row%10 == 8)&&(nextU != nil)&&(!IsExploreInProcess)){
+            if((indexPath.row%10 == 7)&&(MoleNextPlaceVideos != nil)&&(!IsExploreInProcess)){
                 IsExploreInProcess = true
-                MolocateVideo.getExploreVideos(nextU, completionHandler: { (data, response, error) -> () in
-                   
+                MolocateVideo.getExploreVideos(MoleNextPlaceVideos, completionHandler: { (data, response, error,next) -> () in
+                    MoleNextPlaceVideos = next
                     dispatch_async(dispatch_get_main_queue()){
                         
                         for item in data!{

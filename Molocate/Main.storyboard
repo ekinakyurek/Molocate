@@ -351,7 +351,7 @@
                                                         <constraint firstAttribute="width" constant="34" id="JZ8-gh-tRk"/>
                                                         <constraint firstAttribute="height" constant="34" id="pht-Nw-Xul"/>
                                                     </constraints>
-                                                    <state key="normal" backgroundImage="elmander.jpg"/>
+                                                    <state key="normal" backgroundImage="profilepic.png"/>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7QM-Vp-Ha1">
                                                     <rect key="frame" x="296" y="5" width="32" height="32"/>
@@ -1765,7 +1765,7 @@
                                 </constraints>
                                 <items>
                                     <navigationItem id="YI2-ao-ogD">
-                                        <barButtonItem key="leftBarButtonItem" image="backButton.png" id="Yma-8m-rDo">
+                                        <barButtonItem key="leftBarButtonItem" image="leftArrow" id="Yma-8m-rDo">
                                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <connections>
                                                 <action selector="back:" destination="WLi-Jz-qDR" id="aBJ-is-kdo"/>
@@ -1825,7 +1825,7 @@
                                 </constraints>
                                 <items>
                                     <navigationItem title="Followings" id="1PY-PT-j3j">
-                                        <barButtonItem key="leftBarButtonItem" image="Untitled2" id="d6Z-Ro-LR7">
+                                        <barButtonItem key="leftBarButtonItem" image="profilepic.png" id="d6Z-Ro-LR7">
                                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <connections>
                                                 <action selector="backButton:" destination="7RQ-q3-OTP" id="3b6-36-v1e"/>
@@ -1861,7 +1861,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="elmander.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="Pyr-4L-yJz">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profilepic.png" translatesAutoresizingMaskIntoConstraints="NO" id="Pyr-4L-yJz">
                                 <rect key="frame" x="16" y="80" width="80" height="80"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="CW9-ce-nNO"/>
@@ -2690,11 +2690,9 @@ bir video bulunmamaktadır :(</string>
         <image name="Camera" width="32" height="32"/>
         <image name="FacebookButton.png" width="730" height="167"/>
         <image name="Sent-96.png" width="96" height="96"/>
-        <image name="Untitled2" width="32" height="32"/>
         <image name="appstore1024-1024.png" width="1024" height="1024"/>
         <image name="backButton.png" width="40" height="40"/>
         <image name="closeFlash" width="35" height="35"/>
-        <image name="elmander.jpg" width="360" height="240"/>
         <image name="follow" width="32" height="32"/>
         <image name="leftArrow" width="28" height="20"/>
         <image name="molocate" width="36" height="36"/>

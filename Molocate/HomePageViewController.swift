@@ -27,7 +27,7 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
     var pressedFollow: Bool = false
     var refreshing: Bool = false
     var player1Turn = false
-    
+    var nextUrl: NSURL?
     @IBOutlet var nofollowings: UILabel!
     var direction = 0 // 0 is down and 1 is up
     @IBOutlet var tableView: UITableView!
@@ -95,8 +95,10 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
         videoArray.removeAll()
         let url = NSURL(string: MolocateBaseUrl + "video/api/news_feed/?category=all")!
         self.videoArray.removeAll()
-        MolocateVideo.getExploreVideos(url, completionHandler: { (data, response, error) -> () in
+        MolocateVideo.getExploreVideos(url, completionHandler: { (data, response, error,next) -> () in
+            self.nextUrl  = next
             dispatch_async(dispatch_get_main_queue()){
+            
                 self.videoArray = data!
                 self.tableView.reloadData()
                 if self.videoArray.count == 0 {
@@ -140,8 +142,10 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
         activityIndicator.startAnimating()
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
         
-        MolocateVideo.getExploreVideos(url, completionHandler: { (data, response, error) -> () in
+        MolocateVideo.getExploreVideos(url, completionHandler: { (data, response, error,next) -> () in
+                self.nextUrl = next
             dispatch_async(dispatch_get_main_queue()){
+            
                 self.tableView.hidden = true
                 self.videoArray.removeAll()
                 self.videoArray = data!
@@ -485,12 +489,12 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
     func tableView(atableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         if atableView == tableView{
 
-            if((!refreshing)&&(indexPath.row%10 == 8)&&(nextU != nil)&&(!IsExploreInProcess)){
-                self.isRequested.setObject(false, forKey: nextU)
+            if((!refreshing)&&(indexPath.row%10 == 7)&&(nextUrl != nil)&&(!IsExploreInProcess)){
+                self.isRequested.setObject(false, forKey: nextUrl!)
                 IsExploreInProcess = true
-                MolocateVideo.getExploreVideos(nextU, completionHandler: { (data, response, error) -> () in
+                MolocateVideo.getExploreVideos(nextUrl, completionHandler: { (data, response, error, next) -> () in
                     
-                    
+                    self.nextUrl = next
                     dispatch_async(dispatch_get_main_queue()){
                         
                         for item in data!{

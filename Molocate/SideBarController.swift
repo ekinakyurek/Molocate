@@ -9,7 +9,7 @@ var choosedIndex = 100
 class SideBarController: UITableViewController {
 
     var menuArray = ["HABER KAYNAĞI","KEŞFET","BİLDİRİM MERKEZİ","PROFİL"]
-   var tableData: [String] = ["home", "explore", "sound","avatar"]
+   var tableData: [String] = ["home", "explore", "notifications","avatar"]
     let cellIdentifier = "cell"
     var attractionImages = [String]()
     override func viewDidLoad() {
@@ -52,7 +52,7 @@ class SideBarController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
+      
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) as! sideCell
         let bgColorView = UIView()
         
@@ -64,7 +64,10 @@ class SideBarController: UITableViewController {
         cell.imageFrame.image = UIImage(named: tableData[indexPath.row])
         cell.label.textColor = UIColor.whiteColor()
         cell.backgroundColor = swiftColor2
-  
+        
+        if choosedIndex == indexPath.row {
+        cell.backgroundColor = swiftColor
+        }
         return cell
     }
     

@@ -21,9 +21,8 @@ struct MoleUserRelations{
 
 
 
-var nextT:NSURL!
+//var nextT:NSURL!
 
-var nextU:NSURL!
 
 var MoleUserToken: String?
 

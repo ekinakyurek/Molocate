@@ -412,9 +412,10 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
         if atableView == tableView{
             
             
-            if((indexPath.row%10 == 8)&&(nextU != nil)&&(!IsExploreInProcess)){
+            if((indexPath.row%10 == 8)&&(TaggedNextUserVideos != nil)&&(!IsExploreInProcess)){
                 IsExploreInProcess = true
-                MolocateVideo.getExploreVideos(nextU, completionHandler: { (data, response, error) -> () in
+                MolocateVideo.getExploreVideos(TaggedNextUserVideos, completionHandler: { (data, response, error,next) -> () in
+                    TaggedNextUserVideos = next
           
                     dispatch_async(dispatch_get_main_queue()){
                         

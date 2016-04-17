@@ -31,7 +31,8 @@ struct MoleVideoComment{
 }
 
 var MoleGlobalVideo:MoleVideoInformation!
-
+var AddedNextUserVideos: NSURL?
+var TaggedNextUserVideos: NSURL?
 
 public class MolocateVideo {
     
@@ -82,7 +83,7 @@ public class MolocateVideo {
     }
     
     
-    class func getExploreVideos(nextURL: NSURL?, completionHandler: (data: [MoleVideoInformation]?, response: NSURLResponse!, error: NSError!) -> ()){
+    class func getExploreVideos(nextURL: NSURL?, completionHandler: (data: [MoleVideoInformation]?, response: NSURLResponse!, error: NSError!, next: NSURL?) -> ()){
         
         print("getExplore")
         let request = NSMutableURLRequest(URL: nextURL!)
@@ -97,15 +98,16 @@ public class MolocateVideo {
                 let result = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers ) as! [String: AnyObject]
                 
                 let videos = result["results"] as! NSArray
+                var nexturl: NSURL?
                 
                 if (result["next"] != nil){
                     if result["next"] is NSNull {
                         print("next is null")
-                        nextU = nil
+                        nexturl = nil
                     }else {
                         let nextStr = result["next"] as! String
                         //print(nextStr)
-                        nextU = NSURL(string: nextStr)!
+                        nexturl = NSURL(string: nextStr)!
                     }
                 }
                 
@@ -137,9 +139,9 @@ public class MolocateVideo {
                     videoArray.append(videoStr)
                     
                 }
-                completionHandler(data: videoArray, response: response, error: nsError)
+                completionHandler(data: videoArray, response: response, error: nsError, next: nexturl)
             }catch{
-                completionHandler(data: [MoleVideoInformation](), response: NSURLResponse(), error: nsError)
+                completionHandler(data: [MoleVideoInformation](), response: NSURLResponse(), error: nsError, next: nil)
                 print("Error: in mole.getExploreVideos")
             }
         }
@@ -226,11 +228,11 @@ public class MolocateVideo {
                     if (result["next"] != nil){
                         if result["next"] is NSNull {
                             print("next is null")
-                            nextU = nil
+                            AddedNextUserVideos = nil
                         }else {
                             let nextStr = result["next"] as! String
                             //print(nextStr)
-                            nextU = NSURL(string: nextStr)!
+                            AddedNextUserVideos = NSURL(string: nextStr)!
                         }
                     }
                     break
@@ -238,11 +240,11 @@ public class MolocateVideo {
                     if (result["next"] != nil){
                         if result["next"] is NSNull {
                             print("next is null")
-                            nextT = nil
+                            TaggedNextUserVideos = nil
                         }else {
                             let nextStr = result["next"] as! String
                             //print(nextStr)
-                            nextT = NSURL(string: nextStr)!
+                            TaggedNextUserVideos = NSURL(string: nextStr)!
                         }
                     }
                     break

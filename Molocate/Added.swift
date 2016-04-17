@@ -411,10 +411,10 @@ class Added: UIViewController, UITableViewDelegate, UITableViewDataSource,Player
     func tableView(atableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         if atableView == tableView{
             
-            if((indexPath.row%10 == 8)&&(nextU != nil)&&(!IsExploreInProcess)){
+            if((indexPath.row%10 == 7)&&(AddedNextUserVideos != nil)&&(!IsExploreInProcess)){
                 IsExploreInProcess = true
-                MolocateVideo.getExploreVideos(nextU, completionHandler: { (data, response, error) -> () in
-                    
+                MolocateVideo.getExploreVideos(AddedNextUserVideos, completionHandler: { (data, response, error,next) -> () in
+                    AddedNextUserVideos = next
                     dispatch_async(dispatch_get_main_queue()){
                         
                         for item in data!{

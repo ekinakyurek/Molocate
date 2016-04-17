@@ -11,7 +11,6 @@ class ContainerController: UIViewController,UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         dispatch_async(dispatch_get_main_queue()) {
             self.scrollView.setContentOffset(CGPoint(x: self.view.frame.width*0.23, y: 0), animated: false)
             self.childViewControllers[1].viewDidLoad()

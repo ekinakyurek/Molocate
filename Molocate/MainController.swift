@@ -45,6 +45,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     var pressedLike: Bool = false
     var pressedFollow: Bool = false
     var player1Turn = false
+    var nextUrl: NSURL?
     //var dictionary = NSMutableDictionary()
     var on = true
     @IBOutlet var tableView: UITableView!
@@ -139,7 +140,8 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
             videoArray.removeAll()
             let url = NSURL(string: "http://molocate-py3.hm5xmcabvz.eu-central-1.elasticbeanstalk.com/video/api/explore/?category=all")!
             self.videoArray.removeAll()
-            MolocateVideo.getExploreVideos(url, completionHandler: { (data, response, error) -> () in
+            MolocateVideo.getExploreVideos(url, completionHandler: { (data, response, error,next) -> () in
+                self.nextUrl = next
                 dispatch_async(dispatch_get_main_queue()){
                     self.videoArray = data!
                     self.tableView.reloadData()
@@ -217,7 +219,8 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         activityIndicator.startAnimating()
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
         //tableView.hidden = true
-        MolocateVideo.getExploreVideos(url, completionHandler: { (data, response, error) -> () in
+        MolocateVideo.getExploreVideos(url, completionHandler: { (data, response, error, next) -> () in
+            self.nextUrl = next
             dispatch_async(dispatch_get_main_queue()){
                 self.tableView.hidden = true
                 self.videoArray.removeAll()
@@ -412,10 +415,10 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     func tableView(atableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         if atableView == tableView{
             
-            if((!refreshing)&&(indexPath.row%10 == 8)&&(nextU != nil)&&(!IsExploreInProcess)){
+            if((!refreshing)&&(indexPath.row%10 == 7)&&(nextUrl != nil)&&(!IsExploreInProcess)){
                 IsExploreInProcess = true
-                MolocateVideo.getExploreVideos(nextU, completionHandler: { (data, response, error) -> () in
-                    
+                MolocateVideo.getExploreVideos(nextUrl, completionHandler: { (data, response, error, next) -> () in
+                    self.nextUrl = next
                     dispatch_async(dispatch_get_main_queue()){
                         
                         for item in data!{
@@ -1066,7 +1069,8 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         activityIndicator.startAnimating()
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
         refreshURL = url
-        MolocateVideo.getExploreVideos(url, completionHandler: { (data, response, error) -> () in
+        MolocateVideo.getExploreVideos(url, completionHandler: { (data, response, error, next) -> () in
+            self.nextUrl = next
             dispatch_async(dispatch_get_main_queue()){
                 self.player1.stop()
                 self.player2.stop()

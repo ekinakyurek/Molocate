@@ -23,6 +23,7 @@ struct MolePlace{
     var lon = 0.0
 }
 
+var MoleNextPlaceVideos: NSURL?
 
 public class MolocatePlace {
     class func followAPlace(place_id: String, completionHandler: (data: String! , response: NSURLResponse!, error: NSError!) -> ()){
@@ -110,10 +111,10 @@ public class MolocatePlace {
                     if (item.indexForKey("next_place_videos") != nil){
                         if item["next_place_videos"] is NSNull {
                             print("next is null")
-                            nextU = nil
+                            MoleNextPlaceVideos = nil
                         }else {
                             let nextStr = item["next_place_videos"] as! String
-                            nextU = NSURL(string: nextStr)!
+                            MoleNextPlaceVideos = NSURL(string: nextStr)!
                         }
                     }
                     
