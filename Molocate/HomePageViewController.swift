@@ -571,6 +571,7 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
             if !isScrollingFast {
                 
                 var trueURL = NSURL()
+            
             if dictionary.objectForKey(self.videoArray[indexPath.row].id) != nil {
                 trueURL = dictionary.objectForKey(self.videoArray[indexPath.row].id) as! NSURL
             } else {

@@ -46,9 +46,14 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     var pressedFollow: Bool = false
     var player1Turn = false
     var nextUrl: NSURL?
+    var venueoruser: Bool = true
+    //true konum seçili demek
     //var dictionary = NSMutableDictionary()
+    @IBOutlet var usernameButton: UIButton!
+    @IBOutlet var venueButton: UIButton!
     var on = true
     @IBOutlet var tableView: UITableView!
+    @IBOutlet var rightArrow: UIImageView!
     @IBOutlet var toolBar: UIToolbar!
     @IBOutlet var searchText: UITextField!
     var refreshing = false
@@ -89,6 +94,13 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         toolBar.barTintColor = swiftColor
         toolBar.translucent = false
         toolBar.clipsToBounds = true
+        
+        venueButton.backgroundColor = swiftColor2
+        venueButton.hidden = true
+        usernameButton.backgroundColor = swiftColor3
+        usernameButton.hidden = true
+        
+        
         
         searchText.font = UIFont(name: "AvenirNext-Regular", size: 14)
 //        searchText.textColor = UIColor.whiteColor()
@@ -183,6 +195,28 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         
     }
     
+    @IBAction func venueButton(sender: AnyObject) {
+        venueoruser = true
+        self.venueButton.backgroundColor = swiftColor2
+        self.usernameButton.backgroundColor = swiftColor3
+        self.venueButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        self.usernameButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+        if self.venueTable.numberOfRowsInSection(0) > 0 {
+            self.venueTable.reloadData()  }
+        
+        
+    }
+    
+    @IBAction func usernameButton(sender: AnyObject) {
+        venueoruser = false
+        self.venueButton.backgroundColor = swiftColor3
+        self.venueButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+        self.usernameButton.backgroundColor = swiftColor2
+        self.usernameButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        if self.venueTable.numberOfRowsInSection(0) > 0 {
+            self.venueTable.reloadData()  }
+    }
+    
     func playerReady(player: Player) {
     }
     
@@ -251,13 +285,25 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         if ipArray.count != 0 {
             self.tableView.reloadRowsAtIndexPaths(ipArray, withRowAnimation: .None)
         }
-        
+        if collectionView.contentOffset.x == 300 {
+            rightArrow.hidden = true
+        }
+        else{
+            rightArrow.hidden = false
+        }
 
     }
     
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+    
         pointNow = scrollView.contentOffset.y
         lastOffsetCapture = NSDate().timeIntervalSinceReferenceDate
+        print(collectionView.contentOffset.x)
+        
+        if scrollView == collectionView{
+            rightArrow.hidden = true
+        }
+        
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
@@ -381,6 +427,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
             
         }
         
+        
     }
     
     func tableView(atableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -446,8 +493,12 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         if atableView == tableView {
             return videoArray.count
         } else {
+            if venueoruser == true{
             if let venues = self.venues {
-                return venues.count
+                return venues.count}
+            }
+            else {
+            return 1
             }
             return 0
         }
@@ -499,7 +550,11 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                 }
                 
                 var trueURL = NSURL()
-                if !isScrollingFast {
+                
+                print(videoArray[indexPath.row].location)
+                print(videoArray[indexPath.row].urlSta )
+                    
+                   if !isScrollingFast {
                     
                 if dictionary.objectForKey(self.videoArray[indexPath.row].id) != nil {
                     trueURL = dictionary.objectForKey(self.videoArray[indexPath.row].id) as! NSURL
@@ -578,6 +633,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
             }
             cell.textLabel?.text = venue["name"] as? String
             return cell
+        
         }
     }
     
@@ -618,7 +674,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         if atableView == tableView {
         atableView.deselectRowAtIndexPath(indexPath, animated: false)
         } else {
-            
+           
             activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
             activityIndicator.center = self.view.center
             activityIndicator.hidesWhenStopped = true
@@ -959,6 +1015,8 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                 self.cameraButton.image = UIImage(named: "Camera")
                 self.cameraButton.title = nil
                 self.isSearching = false
+                self.venueButton.hidden = true
+                self.usernameButton.hidden = true
                 self.venueTable.hidden = true
                 self.searchText.resignFirstResponder()
             }
@@ -1022,6 +1080,9 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                 }
             }
         }
+        if scrollView == collectionView {
+        rightArrow.hidden = false
+        }
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
@@ -1054,6 +1115,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         
         return myCell
     }
+    
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath){
         
         //seçilmiş cell in labelının rengi değişsin
@@ -1118,6 +1180,9 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
             self.cameraButton.title = nil
             self.isSearching = false
             self.venueTable.hidden = true
+            self.venueButton.hidden = true
+            self.usernameButton.hidden = true
+            
             self.searchText.resignFirstResponder()
         }
         //myCache.removeAll()
@@ -1131,15 +1196,23 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         player2.stop()
         isSearching = true
         cameraButton.image = nil
-        cameraButton.title = "Cancel"
+        cameraButton.title = "Vazgeç"
         venueTable.hidden = false
+        venueButton.hidden = false
+        usernameButton.hidden = false
+
         self.view.layer.addSublayer(venueTable.layer)
+        self.view.layer.addSublayer(venueButton.layer)
+        self.view.layer.addSublayer(usernameButton.layer)
         
     }
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
     {
         venueTable.hidden = false
+        self.venueButton.hidden = false
+        self.usernameButton.hidden = false
+
         let whitespaceCharacterSet = NSCharacterSet.symbolCharacterSet()
         let strippedString = searchText.text!.stringByTrimmingCharactersInSet(whitespaceCharacterSet)
         

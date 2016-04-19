@@ -12,6 +12,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
     var categ:String!
     @IBOutlet var toolBar: UIToolbar!
     
+    //@IBOutlet var downArrow: UIImageView!
         var caption: UIButton!
         var player:Player!
         var newRect:CGRect!
@@ -22,6 +23,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
         var latitude: Float!
         var longitude: Float!
         var rating: Float!
+            
        
         
     }
@@ -223,11 +225,20 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
             self.collectionView.backgroundColor = swiftColor3
         }
         
+        
+        
         textField.delegate = self
         placeTable.delegate = self
         placeTable.dataSource = self
         placeTable.scrollEnabled = true
         placeTable.hidden = true
+        //var downArrow = UIImageView()
+//        let imageName = "downarrows"
+//        let image = UIImage(named: imageName)
+//        downArrow = UIImageView(image: image!)
+//        downArrow.frame = CGRect(x: screenSize.width / 2 - 10 , y: 216 , width: 20, height: 20)
+//        view.addSubview(downArrow)
+//        downArrow.hidden = true
         
         putVideo()
   
@@ -235,6 +246,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
 
         view.layer.addSublayer(placeTable.layer)
         view.layer.addSublayer(textField.layer)
+        //view.layer.addSublayer(downArrow.layer)
         
         caption = UIButton()
         caption.frame.size.width = screenSize.width
@@ -267,7 +279,10 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
         self.postO.enabled = false
         
          NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(capturePreviewController.buttonEnable) , name: "buttonEnable", object: nil)
+        
+     
     }
+    
     
     func playerReady(player: Player) {
     }
@@ -343,6 +358,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
         if isLocationSelected {
          self.bottomToolbar.barTintColor = swiftColor
         }
+        
         //}
         //  cell.backgroundColor = UIColor.purpleColor()
         
@@ -364,6 +380,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
     {
         
         placeTable.hidden = false
+        //self.downArrow.hidden = false
         let substring = (self.textField.text! as NSString).stringByReplacingCharactersInRange(range, withString: string)
         
         searchAutocompleteEntriesWithSubstring(substring)
@@ -371,6 +388,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
     }
     func textFieldDidBeginEditing(textField: UITextField) {
         placeTable.hidden = false
+       // downArrow.hidden = false
         autocompleteUrls = placesArray
         placeTable.reloadData()
         dispatch_async(dispatch_get_main_queue()){
@@ -425,6 +443,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
         let selectedCell : UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
         textField.text = selectedCell.textLabel!.text
         placeTable.hidden = true
+        //downArrow.hidden = true
         self.view.endEditing(true)
         let correctedRow = placeOrder.objectForKey((selectedCell.textLabel?.text!)!) as! Int
         videoLocation = locationDict[correctedRow][placesArray[correctedRow]]
@@ -441,6 +460,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
         if let _ = touches.first {
             self.view.endEditing(true)
             placeTable.hidden = true
+            //downArrow.hidden = true
             // ...
         }
         super.touchesBegan(touches, withEvent:event)
