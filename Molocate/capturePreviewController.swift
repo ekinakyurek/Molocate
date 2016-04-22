@@ -8,10 +8,11 @@ import AVKit
 
 var CaptionText = ""
 
-class capturePreviewController: UIViewController, UITextFieldDelegate, UITableViewDelegate ,UITableViewDataSource,UICollectionViewDelegate ,UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,PlayerDelegate {
+class capturePreviewController: UIViewController, UITextFieldDelegate, UITableViewDelegate ,UITableViewDataSource,UICollectionViewDelegate ,UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,PlayerDelegate, UIScrollViewDelegate {
     var categ:String!
     @IBOutlet var toolBar: UIToolbar!
     
+    @IBOutlet var downArrow: UIImageView!
     //@IBOutlet var downArrow: UIImageView!
         var caption: UIButton!
         var player:Player!
@@ -232,7 +233,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
         placeTable.dataSource = self
         placeTable.scrollEnabled = true
         placeTable.hidden = true
-        //var downArrow = UIImageView()
+        downArrow.hidden = true
 //        let imageName = "downarrows"
 //        let image = UIImage(named: imageName)
 //        downArrow = UIImageView(image: image!)
@@ -281,7 +282,27 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
          NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(capturePreviewController.buttonEnable) , name: "buttonEnable", object: nil)
         
      
+       self.downArrow.layer.zPosition = 1
     }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        
+        let verticalIndicator: UIImageView = (scrollView.subviews[(scrollView.subviews.count - 1)] as! UIImageView)
+        if verticalIndicator.subviews.count > 0 {
+            for subView in verticalIndicator.subviews as! [UIView] {
+                subView.removeFromSuperview()
+            }
+        }
+        let newVerticalIndicator:UIView = UIView()
+        newVerticalIndicator.backgroundColor = swiftColor
+        newVerticalIndicator.frame = CGRectMake(-7.0, -5.0, verticalIndicator.frame.size.width + 7 , verticalIndicator.frame.size.height + 10 )
+        newVerticalIndicator.layer.cornerRadius = 4.0
+        newVerticalIndicator.clipsToBounds = true
+        verticalIndicator.addSubview(newVerticalIndicator)
+        
+    }
+    
+
     
     
     func playerReady(player: Player) {
@@ -380,15 +401,21 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
     {
         
         placeTable.hidden = false
-        //self.downArrow.hidden = false
+        downArrow.hidden = false
         let substring = (self.textField.text! as NSString).stringByReplacingCharactersInRange(range, withString: string)
         
         searchAutocompleteEntriesWithSubstring(substring)
         return true
     }
+    func textFieldDidEndEditing(textField: UITextField) {
+        if textField.text == "" {
+            textField.attributedPlaceholder = NSAttributedString(string:"Bulunduğun yeri seç", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])
+       
+        }
+    }
     func textFieldDidBeginEditing(textField: UITextField) {
         placeTable.hidden = false
-       // downArrow.hidden = false
+        downArrow.hidden = false
         autocompleteUrls = placesArray
         placeTable.reloadData()
         dispatch_async(dispatch_get_main_queue()){
@@ -441,9 +468,9 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         textField.text = ""
         let selectedCell : UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
-        textField.text = selectedCell.textLabel!.text
+        textField.text = "📌" + selectedCell.textLabel!.text!
         placeTable.hidden = true
-        //downArrow.hidden = true
+        downArrow.hidden = true
         self.view.endEditing(true)
         let correctedRow = placeOrder.objectForKey((selectedCell.textLabel?.text!)!) as! Int
         videoLocation = locationDict[correctedRow][placesArray[correctedRow]]
@@ -460,8 +487,8 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
         if let _ = touches.first {
             self.view.endEditing(true)
             placeTable.hidden = true
-            //downArrow.hidden = true
-            // ...
+            downArrow.hidden = true
+            
         }
         super.touchesBegan(touches, withEvent:event)
     }

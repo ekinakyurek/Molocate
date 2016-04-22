@@ -41,10 +41,10 @@ class SideBarController: UITableViewController {
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let screenSize: CGRect = UIScreen.mainScreen().bounds
         var rowHeight:CGFloat = 0
-        if !is4s {
-        rowHeight = screenSize.height / 8 + 20
+        if is4s {
+        rowHeight = screenSize.height / 6
         } else {
-            rowHeight = screenSize.height/6
+        rowHeight = screenSize.height / 7
         }
             return rowHeight
     
@@ -64,6 +64,7 @@ class SideBarController: UITableViewController {
         cell.imageFrame.image = UIImage(named: tableData[indexPath.row])
         cell.label.textColor = UIColor.whiteColor()
         cell.backgroundColor = swiftColor2
+       
         
         if choosedIndex == indexPath.row {
         cell.backgroundColor = swiftColor
