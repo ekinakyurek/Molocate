@@ -645,6 +645,10 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                 if(searchedUsers[indexPath.row].profilePic.absoluteString != ""){
                     cell.fotoButton.sd_setImageWithURL(searchedUsers[indexPath.row].profilePic, forState: UIControlState.Normal)
                 }
+                cell.myButton1.addTarget(self, action: #selector(MainController.pressedProfileSearch(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+                cell.fotoButton.addTarget(self, action: #selector(MainController.pressedProfileSearch(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+                cell.fotoButton.tag = indexPath.row
+                cell.myButton1.tag = indexPath.row
                 //cell.detailTextLabel?.text = "\(searchedUsers[indexPath.row].first_name) \(searchedUsers[indexPath.row].last_name)"
                 return cell
             }
@@ -752,6 +756,37 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                 
             }
         }
+    }
+    
+    func pressedProfileSearch(sender:UIButton){
+        let buttonRow = sender.tag
+        activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+        view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+        MolocateAccount.getUser(self.searchedUsers[buttonRow].username) { (data, response, error) -> () in
+            dispatch_async(dispatch_get_main_queue()){
+                user = data
+                let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
+                controller.view.frame = self.view.bounds;
+                controller.willMoveToParentViewController(self)
+                self.view.addSubview(controller.view)
+                self.addChildViewController(controller)
+                controller.didMoveToParentViewController(self)
+                controller.username.text = user.username
+                controller.followingsCount.setTitle("\(user.following_count)", forState: .Normal)
+                controller.followersCount.setTitle("\(user.follower_count)", forState: .Normal)
+                controller.AVc.username = user.username
+                controller.BVc.username = user.username
+                choosedIndex = 1
+                self.activityIndicator.removeFromSuperview()
+            }
+            
+        }
+        self.searchText.resignFirstResponder()
     }
     func pressedPlace(sender: UIButton) {
         let buttonRow = sender.tag
