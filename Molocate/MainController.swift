@@ -40,6 +40,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     var session: Session!
     var location: CLLocation!
     var venues: [JSONParameters]!
+    var searchedUsers:[MoleUser]!
     let distanceFormatter = MKDistanceFormatter()
     var currentTask: Task?
     var pressedLike: Bool = false
@@ -433,7 +434,6 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     func tableView(atableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if atableView == tableView {
             var rowHeight:CGFloat = 0
-            
             switch(choosedIndex)
             {
             case 0:
@@ -454,6 +454,10 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                 return rowHeight
             }
         } else {
+            if !venueoruser {
+                let rowHeight : CGFloat = 60
+                return rowHeight
+            }
             return 44
         }
     }
@@ -493,12 +497,14 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         if atableView == tableView {
             return videoArray.count
         } else {
-            if venueoruser == true{
+            if venueoruser {
             if let venues = self.venues {
                 return venues.count}
             }
             else {
-            return 1
+                if let searchedUsers = self.searchedUsers {
+                    return searchedUsers.count
+                }
             }
             return 0
         }
@@ -618,7 +624,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
 
             
         } else {
-            
+            if venueoruser {
             let cell = venueTable.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
             let venue = venues[indexPath.row]
             if let venueLocation = venue["location"] as? JSONParameters {
@@ -633,6 +639,15 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
             }
             cell.textLabel?.text = venue["name"] as? String
             return cell
+            } else {
+               let cell = TableViewCellFollowerFollowing(style: UITableViewCellStyle.Default, reuseIdentifier: "myIdentifier2")
+                cell.myButton1.setTitle("\(searchedUsers[indexPath.row].username)", forState: .Normal)
+                if(searchedUsers[indexPath.row].profilePic.absoluteString != ""){
+                    cell.fotoButton.sd_setImageWithURL(searchedUsers[indexPath.row].profilePic, forState: UIControlState.Normal)
+                }
+                //cell.detailTextLabel?.text = "\(searchedUsers[indexPath.row].first_name) \(searchedUsers[indexPath.row].last_name)"
+                return cell
+            }
         
         }
     }
@@ -674,7 +689,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         if atableView == tableView {
         atableView.deselectRowAtIndexPath(indexPath, animated: false)
         } else {
-           
+            if venueoruser {
             activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
             activityIndicator.center = self.view.center
             activityIndicator.hidesWhenStopped = true
@@ -706,7 +721,36 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
             }
             
             self.searchText.resignFirstResponder()
-            
+            } else {
+                activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
+                activityIndicator.center = self.view.center
+                activityIndicator.hidesWhenStopped = true
+                activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+                view.addSubview(activityIndicator)
+                activityIndicator.startAnimating()
+                UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+                MolocateAccount.getUser(self.searchedUsers[indexPath.row].username) { (data, response, error) -> () in
+                    dispatch_async(dispatch_get_main_queue()){
+                        user = data
+                        let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
+                        controller.view.frame = self.view.bounds;
+                        controller.willMoveToParentViewController(self)
+                        self.view.addSubview(controller.view)
+                        self.addChildViewController(controller)
+                        controller.didMoveToParentViewController(self)
+                        controller.username.text = user.username
+                        controller.followingsCount.setTitle("\(user.following_count)", forState: .Normal)
+                        controller.followersCount.setTitle("\(user.follower_count)", forState: .Normal)
+                        controller.AVc.username = user.username
+                        controller.BVc.username = user.username
+                        choosedIndex = 1
+                        self.activityIndicator.removeFromSuperview()
+                    }
+                    
+                }
+                self.searchText.resignFirstResponder()
+                
+            }
         }
     }
     func pressedPlace(sender: UIButton) {
@@ -1206,6 +1250,8 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         self.view.layer.addSublayer(usernameButton.layer)
         
     }
+
+    
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
     {
@@ -1219,7 +1265,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         if self.location == nil {
             return true
         }
-        
+        if venueoruser {
         currentTask?.cancel()
         var parameters = [Parameter.query:strippedString]
         parameters += self.location.parameters()
@@ -1236,13 +1282,26 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                         tempVenues.append(item)
                         
                     }
+                    
+                    
                 }
                 self.venues = tempVenues
                 self.venueTable.reloadData()
             }
         }
         currentTask?.start()
-        
+        } else {
+            
+            if searchText.text?.characters.count > 1 {
+            MolocateAccount.searchUser(strippedString, completionHandler: { (data, response, error) in
+                dispatch_async(dispatch_get_main_queue()){
+                 self.searchedUsers = data
+                 self.venueTable.reloadData()
+                }
+                
+            })
+            }
+        }
         
         return true
     }

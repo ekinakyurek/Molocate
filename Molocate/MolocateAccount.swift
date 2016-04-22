@@ -556,7 +556,39 @@ public class MolocateAccount {
 //        task.resume()
 //        
 //    }
-    
+    class func searchUser(username: String, completionHandler: (data: [MoleUser], response: NSURLResponse!, error: NSError!) -> ()) {
+        let url = NSURL(string: MolocateBaseUrl + "/account/api/search_user/?username=" + (username as String))!
+        let request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "GET"
+        request.addValue("Token " + MoleUserToken!, forHTTPHeaderField: "Authorization")
+        
+        let task = NSURLSession.sharedSession().dataTaskWithRequest(request){ data, response, error in
+            
+            let nsError = error;
+            
+            do {
+//                print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+                let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [[String:AnyObject]]
+                var userArray = [MoleUser]()
+                for item in result {
+                    //print(item)
+                    var user = MoleUser()
+                    user.username = item["username"] as! String
+                    user.profilePic = item["picture_url"] is NSNull ? NSURL():NSURL(string: item["picture_url"] as! String)!
+                    user.first_name = item["first_name"] as! String
+                    user.last_name = item["last_name"] as! String
+                    userArray.append(user)
+                    
+                }
+                completionHandler(data: userArray , response: nil , error: nsError  )
+            
+            } catch {
+                completionHandler(data: [MoleUser]() , response: nil , error: nsError  )
+            }
+        }
+        task.resume()
+        return
+    }
     class func getUser(username: String, completionHandler: (data: MoleUser, response: NSURLResponse!, error: NSError!) -> ()) {
         
         let url = NSURL(string: MolocateBaseUrl + "account/api/get_user/?username=" + (username as String))!
@@ -571,7 +603,7 @@ public class MolocateAccount {
             do {
                 //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
                 let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String: AnyObject]
-                //print(result)
+                print(result)
                 
                 var user = MoleUser()
                 user.email = result["email"] as! String
