@@ -94,9 +94,9 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         dispatch_async(dispatch_get_main_queue()) {
         self.locationManager = CLLocationManager()
         self.locationManager.delegate = self
-        self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-        self.locationManager.startUpdatingLocation()
         
+        self.locationManager.startUpdatingLocation()
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         self.location = self.locationManager.location
         self.deviceLat = self.locationManager.location?.coordinate.latitude
         self.deviceLon = self.locationManager.location?.coordinate.longitude
@@ -333,8 +333,8 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         self.locationManager = CLLocationManager()
         self.locationManager.delegate = self
         self.locationManager.requestWhenInUseAuthorization()
-        self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         self.locationManager.startUpdatingLocation()
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         self.location = self.locationManager.location
         self.locationManager.stopUpdatingLocation()
         self.location = self.locationManager.location
@@ -372,7 +372,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                     let isVerified = item["verified"] as! Bool
                     let checkinsCount = itemstats["checkinsCount"] as! NSInteger
                     let enoughCheckin:Bool = (checkinsCount > 500)
-                    if (distancen < 200){
+                    if (distance < 200){
                         if(isVerified||enoughCheckin){
                             //let order = [(item["name"] as! String):placesArray.count]
                             placeOrder.setObject(placesArray.count , forKey: (item["name"] as! String))
@@ -437,6 +437,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         self.focusWithMode(AVCaptureFocusMode.AutoFocus, exposeWithMode: AVCaptureExposureMode.AutoExpose, atDevicePoint: devicePoint, monitorSubjectAreaChange: true)
         
     }
+    
     
     
     
@@ -1263,11 +1264,11 @@ extension CLLocation {
         let myaltAcc = Parameter.altAcc
         
         let valuell = "\(self.coordinate.latitude),\(self.coordinate.longitude)"
-        let valuellacc = "\(self.horizontalAccuracy)"
+        let valuellacc = "\(10)"
         let valuealt = "\(self.altitude)"
         let valuealtacc = "\(self.verticalAccuracy)"
-        print(self.verticalAccuracy)
-        print(self.horizontalAccuracy)
+//        print(self.verticalAccuracy)
+//        print(self.horizontalAccuracy)
         return [ myll:valuell , myllacc:valuellacc , myalt:valuealt, myaltAcc: valuealtacc]
     }
     

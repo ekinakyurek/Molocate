@@ -557,7 +557,6 @@ public class MolocateAccount {
 //        
 //    }
     class func searchUser(username: String, completionHandler: (data: [MoleUser], response: NSURLResponse!, error: NSError!) -> ()) {
-   // print((username as NSString).UTF8String)
 
         let url = NSURLComponents(string: MolocateBaseUrl + "/account/api/search_user/")
         url?.queryItems = [NSURLQueryItem(name: "username", value: username)]
