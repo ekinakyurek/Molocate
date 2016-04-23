@@ -1077,8 +1077,6 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         player2.stop()
         if(location != nil){
         
-        
-
         if (isUploaded) {
             CaptionText = ""
             if isSearching != true {
@@ -1188,10 +1186,6 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         myCell.frame.size.width = 75
         myCell.myLabel.textAlignment = .Center
         myCell.myLabel.font = UIFont(name: "AvenirNext-Regular", size: 15)
-        
-        
-        
-        
         return myCell
     }
     
@@ -1280,6 +1274,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         venueButton.hidden = false
         usernameButton.hidden = false
 
+
         self.view.layer.addSublayer(venueTable.layer)
         self.view.layer.addSublayer(venueButton.layer)
         self.view.layer.addSublayer(usernameButton.layer)
@@ -1290,7 +1285,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
     {
-        venueTable.hidden = false
+        self.venueTable.hidden = false
         self.venueButton.hidden = false
         self.usernameButton.hidden = false
 

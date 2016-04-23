@@ -138,26 +138,20 @@ public class S3Upload {
                                 }
                                 
                                 thumbnailTask.resume();
-                                
-                                
-                            
-                            
-                            
-                            
-                            do {
-                                try NSFileManager.defaultManager().removeItemAtPath(videoPath!)  //.removeItemAtURL(fakeoutputFileURL!)
-                                dispatch_async(dispatch_get_main_queue()) {
-                                    print("siiiiil")
-                                    isUploaded = true
                     
-                                
-                                }
-                            } catch _ {
-                                
-                            }
-                            
  
                 })
+                                            do {
+                                                try NSFileManager.defaultManager().removeItemAtPath(videoPath!)  //.removeItemAtURL(fakeoutputFileURL!)
+                                                dispatch_async(dispatch_get_main_queue()) {
+                                                    print("siiiiil")
+                                                    isUploaded = true
+                
+                
+                                                }
+                                            } catch _ {
+                                                
+                                            }
             }
             return nil
         }

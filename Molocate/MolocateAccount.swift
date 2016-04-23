@@ -360,9 +360,9 @@ public class MolocateAccount {
                 let nsError = error
                 
                 do {
-                    
+                    print(NSString(data: data!, encoding: NSUTF8StringEncoding))
                     let result = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers) as! [String: AnyObject]
-                    
+                   print(result)
                     if(result.count > 1){
                         MoleUserToken = result["access_token"] as? String
                         completionHandler(data: "success" , response: response , error: nsError  )
@@ -595,7 +595,7 @@ public class MolocateAccount {
         let request = NSMutableURLRequest(URL: url)
         request.HTTPMethod = "GET"
         request.addValue("Token " + MoleUserToken!, forHTTPHeaderField: "Authorization")
-        
+    
         let task = NSURLSession.sharedSession().dataTaskWithRequest(request){ data, response, error in
             
             let nsError = error;
@@ -603,7 +603,8 @@ public class MolocateAccount {
             do {
                 //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
                 let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String: AnyObject]
-                print(result)
+                //print(result)
+                
                 
                 var user = MoleUser()
                 user.email = result["email"] as! String
