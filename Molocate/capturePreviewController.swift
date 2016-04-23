@@ -5,6 +5,7 @@
 import UIKit
 import AVFoundation
 import AVKit
+import AWSS3
 
 var CaptionText = ""
 
@@ -58,134 +59,159 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
 //                        let videoId2 = videoId
 //                        let videoUrl2 = videoUrl
                         //print(self.videoLocation)
-                        
-                        CaptionText = CaptionText.componentsSeparatedByString("@")[0]
-                        
-                        let json = [
-                            "video_id": videoId,
-                            "video_url": videoUrl,
-                            "caption": CaptionText,
-                            "category": self.categ,
-                            "tagged_users": self.taggedUsers,
-                            "location": [
-                                [
-                                    "id": self.videoLocation.id,
-                                    "latitude": self.videoLocation.lat,
-                                    "longitude": self.videoLocation.lon,
-                                    "name": self.videoLocation.name,
-                                    "address": self.videoLocation.adress
-                                ]
-                            ]
-                        ]
-                        
-                        let newheaders = [
-                            "authorization": "Token \(MoleUserToken!)",
-                            "content-type": "application/json",
-                            "cache-control": "no-cache"
-                        ]
-                        
-                        do {
-                            
-                            let jsonData = try NSJSONSerialization.dataWithJSONObject(json, options:  NSJSONWritingOptions.PrettyPrinted)
-                           // print(NSString(data: jsonData, encoding: NSUTF8StringEncoding))
-                           // print(jsonData)
-                           // create post request
-                           
-                            let request = NSMutableURLRequest(URL: NSURL(string: MolocateBaseUrl + "video/update/")!,
-                                cachePolicy: .UseProtocolCachePolicy,
-                                timeoutInterval: 10.0)
-                            request.HTTPMethod = "POST"
-                            request.allHTTPHeaderFields = newheaders
-                            request.HTTPBody = jsonData
-                            
-                            
-                            let task = NSURLSession.sharedSession().dataTaskWithRequest(request){ data, response, error in
-                                //print(response)
-                                //print("=========================================")
-                                //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
-                                dispatch_async(dispatch_get_main_queue(), {
-                                    if error != nil{
-                                        print("Error -> \(error)")
-                                        
-                                        return
-                                    }
-                                    
-                                    do {
-                                        
-                                        let result = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)
-                                        
-                                                CaptionText = ""
-                                        //print("Result -> \(result)")
-                                        
-                                        
-                                        
-                                    } catch {
-                                       // print("Error -> \(error)")
-                                    }
-                                    
-                                })
-                            }
-                            
-                            task.resume()
-                            
 
-
-                            
-                            
-                        } catch {
-                            print(error)
-                            
-                            
-                        }
-                        
-            let headers2 = ["content-type": "/*/", "content-disposition":"attachment;filename=molocate.png" ]
-            
-            let thumbnailRequest = NSMutableURLRequest(URL: NSURL(string: MolocateBaseUrl + "/video/api/upload_thumbnail/?video_id="+videoId)!, cachePolicy:.UseProtocolCachePolicy, timeoutInterval: 10.0)
-            
-            thumbnailRequest.HTTPMethod = "POST"
-            thumbnailRequest.allHTTPHeaderFields = headers2
-            let image = UIImageJPEGRepresentation(thumbnail, 0.5)
-            thumbnailRequest.addValue("Token " + MoleUserToken!, forHTTPHeaderField: "Authorization")
-            thumbnailRequest.HTTPBody = image
-            let thumbnailTask = NSURLSession.sharedSession().dataTaskWithRequest(thumbnailRequest){data, response, error  in
-                print(NSString(data: data!, encoding: NSUTF8StringEncoding))
-                
-                let nsError = error;
-                
-                
-                do {
-                    let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! NSDictionary
-                    print(result)
-                    
-                    
-                } catch{
-                    
-                    
-                    print(nsError)
-                }
-                
-            }
-            
-            thumbnailTask.resume();
-            
-            
-        
-        
-        
-        
-        do {
-            try NSFileManager.defaultManager().removeItemAtPath(videoPath!)  //.removeItemAtURL(fakeoutputFileURL!)
-            dispatch_async(dispatch_get_main_queue()) {
-                print("siiiiil")
-                isUploaded = true
-
+            let random = randomStringWithLength(64)
+            let fileName = random.stringByAppendingFormat(".mp4", random)
+            let fileURL = NSURL(fileURLWithPath: videoPath!)
+            let uploadRequest = AWSS3TransferManagerUploadRequest()
+            uploadRequest.body = fileURL
+            uploadRequest.key = "videos/" + (fileName as String)
+            uploadRequest.bucket = S3BucketName
+            let json = [
+                "video_id": fileName as String,
+                "video_url": "https://d1jkin67a303u2.cloudfront.net/videos/"+(fileName as String),
+                "caption": CaptionText,
+                "category": self.categ,
+                "tagged_users": self.taggedUsers,
+                "location": [
+                    [
+                        "id": self.videoLocation.id,
+                        "latitude": self.videoLocation.lat,
+                        "longitude": self.videoLocation.lon,
+                        "name": self.videoLocation.name,
+                        "address": self.videoLocation.adress
+                    ]
+                ]
+            ]
+            S3Upload.upload(uploadRequest, fileURL: "https://d1jkin67a303u2.cloudfront.net/videos/"+(fileName as String), fileID: fileName as String ,json: json)
+//                        CaptionText = CaptionText.componentsSeparatedByString("@")[0]
+//                        
+//                        let json = [
+//                            "video_id": videoId,
+//                            "video_url": videoUrl,
+//                            "caption": CaptionText,
+//                            "category": self.categ,
+//                            "tagged_users": self.taggedUsers,
+//                            "location": [
+//                                [
+//                                    "id": self.videoLocation.id,
+//                                    "latitude": self.videoLocation.lat,
+//                                    "longitude": self.videoLocation.lon,
+//                                    "name": self.videoLocation.name,
+//                                    "address": self.videoLocation.adress
+//                                ]
+//                            ]
+//                        ]
+//                        
+//                        let newheaders = [
+//                            "authorization": "Token \(MoleUserToken!)",
+//                            "content-type": "application/json",
+//                            "cache-control": "no-cache"
+//                        ]
+//                        
+//                        do {
+//                            
+//                            let jsonData = try NSJSONSerialization.dataWithJSONObject(json, options:  NSJSONWritingOptions.PrettyPrinted)
+//                           // print(NSString(data: jsonData, encoding: NSUTF8StringEncoding))
+//                           // print(jsonData)
+//                           // create post request
+//                           
+//                            let request = NSMutableURLRequest(URL: NSURL(string: MolocateBaseUrl + "video/update/")!,
+//                                cachePolicy: .UseProtocolCachePolicy,
+//                                timeoutInterval: 10.0)
+//                            request.HTTPMethod = "POST"
+//                            request.allHTTPHeaderFields = newheaders
+//                            request.HTTPBody = jsonData
+//                            
+//                            
+//                            let task = NSURLSession.sharedSession().dataTaskWithRequest(request){ data, response, error in
+//                                //print(response)
+//                                //print("=========================================")
+//                                //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+//                                dispatch_async(dispatch_get_main_queue(), {
+//                                    if error != nil{
+//                                        print("Error -> \(error)")
+//                                        
+//                                        return
+//                                    }
+//                                    
+//                                    do {
+//                                        
+//                                        let result = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)
+//                                        
+//                                                CaptionText = ""
+//                                        //print("Result -> \(result)")
+//                                        
+//                                        
+//                                        
+//                                    } catch {
+//                                       // print("Error -> \(error)")
+//                                    }
+//                                    
+//                                })
+//                            }
+//                            
+//                            task.resume()
+//                            
+//
+//
+//                            
+//                            
+//                        } catch {
+//                            print(error)
+//                            
+//                            
+//                        }
+//                        
+//            let headers2 = ["content-type": "/*/", "content-disposition":"attachment;filename=molocate.png" ]
+//            
+//            let thumbnailRequest = NSMutableURLRequest(URL: NSURL(string: MolocateBaseUrl + "/video/api/upload_thumbnail/?video_id="+videoId)!, cachePolicy:.UseProtocolCachePolicy, timeoutInterval: 10.0)
+//            
+//            thumbnailRequest.HTTPMethod = "POST"
+//            thumbnailRequest.allHTTPHeaderFields = headers2
+//            let image = UIImageJPEGRepresentation(thumbnail, 0.5)
+//            thumbnailRequest.addValue("Token " + MoleUserToken!, forHTTPHeaderField: "Authorization")
+//            thumbnailRequest.HTTPBody = image
+//            let thumbnailTask = NSURLSession.sharedSession().dataTaskWithRequest(thumbnailRequest){data, response, error  in
+//                print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+//                
+//                let nsError = error;
+//                
+//                
+//                do {
+//                    let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! NSDictionary
+//                    print(result)
+//                    
+//                    
+//                } catch{
+//                    
+//                    
+//                    print(nsError)
+//                }
+//                
+//            }
+//            
+//            thumbnailTask.resume();
+//            
+//            
+//        
+//        
+//        
+//        
+//        do {
+//            try NSFileManager.defaultManager().removeItemAtPath(videoPath!)  //.removeItemAtURL(fakeoutputFileURL!)
+//            dispatch_async(dispatch_get_main_queue()) {
+//                print("siiiiil")
+//                isUploaded = true
+//
+//            self.performSegueWithIdentifier("finishUpdate", sender: self)
+//            
+//            }
+//        } catch _ {
+//            
+//        }
+//        
             self.performSegueWithIdentifier("finishUpdate", sender: self)
-            
-            }
-        } catch _ {
-            
-        }
-        
         }
    
     }
@@ -277,7 +303,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
         caption.contentHorizontalAlignment = .Left
         self.view.addSubview(caption)
         
-        self.postO.enabled = false
+        //self.postO.enabled = false
         
          NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(capturePreviewController.buttonEnable) , name: "buttonEnable", object: nil)
         
@@ -302,6 +328,20 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
         
     }
     
+    func randomStringWithLength (len : Int) -> NSString {
+        
+        let letters : NSString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        
+        var randomString : NSMutableString = NSMutableString(capacity: len)
+        
+        for (var i=0; i < len; i++){
+            var length = UInt32 (letters.length)
+            var rand = arc4random_uniform(length)
+            randomString.appendFormat("%C", letters.characterAtIndex(Int(rand)))
+        }
+        
+        return randomString
+    }
 
     
     

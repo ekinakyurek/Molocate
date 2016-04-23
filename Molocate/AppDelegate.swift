@@ -8,7 +8,7 @@ import FBSDKLoginKit
 import Bolts
 import QuadratTouch
 import SDWebImage
-
+import AWSS3
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -23,7 +23,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SDImageCache.sharedImageCache().clearMemory()
         SDImageCache.sharedImageCache().clearDisk()
         SDImageCache.sharedImageCache().maxMemoryCountLimit = 40
+        let credentialProvider = AWSCognitoCredentialsProvider(
+            regionType: CognitoRegionType,
+            identityPoolId: CognitoIdentityPoolId)
+        let configuration1 = AWSServiceConfiguration(
+            region: DefaultServiceRegionType,
+            credentialsProvider: credentialProvider)
         
+        AWSServiceManager.defaultServiceManager().defaultServiceConfiguration = configuration1
         
         // [Optional] Track statistics around application opens.
         let client = Client(clientID: "HKPVG4H554DNGF002XP30XKS1UL1MLX1XLRPZIZVBVMET5HX",

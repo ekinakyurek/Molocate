@@ -748,11 +748,8 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         videoComposition.instructions = NSArray(object: instruction) as! [AVVideoCompositionInstructionProtocol]
         let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory,.UserDomainMask,true)[0]
         let random = arc4random()
-        print(arc4random())
         let exportPath = documentsPath.stringByAppendingFormat("/CroppedVideo\(random).mp4", documentsPath)
-        
         let exportURl = NSURL(fileURLWithPath: exportPath)
-        
         let exporter = AVAssetExportSession(asset: tempasset, presetName:AVAssetExportPresetMediumQuality )
         exporter?.videoComposition = videoComposition
         exporter?.outputURL = exportURl
@@ -786,180 +783,182 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                 //print(error)
                 
             }
-           print(thumbnail.description)
+           //print(thumbnail.description)
             
             
             //isUploaded = false
-            var videodata = NSData()
-            self.progress = 0.0
-            do {
-                videodata = try NSData(contentsOfURL: contentURL, options: NSDataReadingOptions.DataReadingUncached)
-                
-            } catch _{
-                //print("error")
-                self.activityIndicator.stopAnimating()
-                if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
-                UIApplication.sharedApplication().endIgnoringInteractionEvents()
-                }
-                self.displayAlert("Hata", message: "Videonuz yüklenemedi. Lütfen tekrar deneyiniz.")
-                tempAssetURL = nil
-                self.firstAsset = nil
-                self.secondAsset = nil
-                
-                dispatch_async(dispatch_get_main_queue()) {
-                    let cleanup: dispatch_block_t = {
-                        do {
-                            
-                            try NSFileManager.defaultManager().removeItemAtURL(fakeoutputFileURL!)
-                            //try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
-
-                        } catch _ {}
-                        
-                    }
-                    if(fakeoutputFileURL != nil){
-                        cleanup()
-                        //print("siliniyor")
-                        
-                    }
-                    
-                    
-                    let cleanuppath: dispatch_block_t = {
-                        do {
-                            
-                            try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
-                            
-                        } catch _ {}
-                        
-                    }
-                    cleanuppath()
-                }
-
+//            var videodata = NSData()
+//            self.progress = 0.0
+//            do {
+//                videodata = try NSData(contentsOfURL: contentURL, options: NSDataReadingOptions.DataReadingUncached)
+//                
+//            } catch _{
+//                //print("error")
+//                self.activityIndicator.stopAnimating()
+//                if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
+//                UIApplication.sharedApplication().endIgnoringInteractionEvents()
+//                }
+//                self.displayAlert("Hata", message: "Videonuz yüklenemedi. Lütfen tekrar deneyiniz.")
+//                tempAssetURL = nil
+//                self.firstAsset = nil
+//                self.secondAsset = nil
+//                
+//                dispatch_async(dispatch_get_main_queue()) {
+//                    let cleanup: dispatch_block_t = {
+//                        do {
+//                            
+//                            try NSFileManager.defaultManager().removeItemAtURL(fakeoutputFileURL!)
+//                            //try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
+//
+//                        } catch _ {}
+//                        
+//                    }
+//                    if(fakeoutputFileURL != nil){
+//                        cleanup()
+//                        //print("siliniyor")
+//                        
+//                    }
+//                    
+//                    
+//                    let cleanuppath: dispatch_block_t = {
+//                        do {
+//                            
+//                            try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
+//                            
+//                        } catch _ {}
+//                        
+//                    }
+//                    cleanuppath()
+//                }
+//
+//            
+//            }
+//            //let videodata = NSData(contentsOfURL: videoURL!)
+//            let headers = [
+//                "authorization": "Token \(MoleUserToken!)",
+//                "content-type": "/*/",
+//                "content-disposition": "attachment;filename=deneme.mp4",
+//                "cache-control": "no-cache"
+//            ]
+//            let request = NSMutableURLRequest(URL: NSURL(string: MolocateBaseUrl + "video/upload/")!,
+//                cachePolicy: NSURLRequestCachePolicy.ReloadIgnoringCacheData,
+//                timeoutInterval: 10.0)
+//            request.HTTPMethod = "POST"
+//            request.allHTTPHeaderFields = headers
+//            request.HTTPBody = videodata
+//            
+//            let session = NSURLSession.sharedSession()
+//            let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
+//                if (error != nil) {
+//                    //print(error)
+//                } else {
+//                    //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+//                    do {
+//                        let result = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers)
+//                        
+//                        //print("Result -> \(result)")
+//                        let statue = result["result"] as! String
+//                        if(statue == "success"){
+//                            
+//                            videoId = result["video_id"] as! String
+//                            videoUrl = result["video_url"] as! String
+//                            self.activityIndicator.stopAnimating()
+//                            UIApplication.sharedApplication().endIgnoringInteractionEvents()
+//
+//                            NSNotificationCenter.defaultCenter().postNotificationName("buttonEnable", object: nil)
+//                            
+//                        }  else{
+//                            self.activityIndicator.stopAnimating()
+//                            UIApplication.sharedApplication().endIgnoringInteractionEvents()
+//                            self.displayAlert("Hata", message: "Videonuz yüklenemedi. Lütfen tekrar deneyiniz.")
+//                            tempAssetURL = nil
+//                            self.firstAsset = nil
+//                            self.secondAsset = nil
+//                            
+//                            dispatch_async(dispatch_get_main_queue()) {
+//                                let cleanup: dispatch_block_t = {
+//                                    do {
+//                                        
+//                                        try NSFileManager.defaultManager().removeItemAtURL(fakeoutputFileURL!)
+//                                        //try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
+//                                        
+//                                    } catch _ {}
+//                                    
+//                                }
+//                                if(fakeoutputFileURL != nil){
+//                                    cleanup()
+//                                    //print("siliniyor")
+//                                    
+//                                }
+//                                
+//                                
+//                                let cleanuppath: dispatch_block_t = {
+//                                    do {
+//                                        
+//                                        try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
+//                                        
+//                                    } catch _ {}
+//                                    
+//                                }
+//                                cleanuppath()
+//                            }
+//                            
+//                            }
+//                            
+//                            
+//                            
+//                            
+//                        } catch {
+//                            //print("Error -> \(error)")
+//                            self.activityIndicator.stopAnimating()
+//                            UIApplication.sharedApplication().endIgnoringInteractionEvents()
+//                            self.displayAlert("Hata", message: "Videonuz yüklenemedi. Lütfen tekrar deneyiniz.")
+//                            tempAssetURL = nil
+//                            self.firstAsset = nil
+//                            self.secondAsset = nil
+//                            
+//                            dispatch_async(dispatch_get_main_queue()) {
+//                                let cleanup: dispatch_block_t = {
+//                                    do {
+//                                        
+//                                        try NSFileManager.defaultManager().removeItemAtURL(fakeoutputFileURL!)
+//                                        //try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
+//                                        
+//                                    } catch _ {}
+//                                    
+//                                }
+//                                if(fakeoutputFileURL != nil){
+//                                    cleanup()
+//                                    //print("siliniyor")
+//                                    
+//                                }
+//                                
+//                                
+//                                let cleanuppath: dispatch_block_t = {
+//                                    do {
+//                                        
+//                                        try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
+//                                        
+//                                    } catch _ {}
+//                                    
+//                                }
+//                                cleanuppath()
+//                            }
+//                    
+//                        }
+//                    }
+//                })
+//                
+//                dataTask.resume()
+//            
+//            self.performSegueWithIdentifier("capturePreview", sender: self)
+//          
+//            
+//
+//        
+        self.performSegueWithIdentifier("capturePreview", sender: self)
             
-            }
-            //let videodata = NSData(contentsOfURL: videoURL!)
-            let headers = [
-                "authorization": "Token \(MoleUserToken!)",
-                "content-type": "/*/",
-                "content-disposition": "attachment;filename=deneme.mp4",
-                "cache-control": "no-cache"
-            ]
-            let request = NSMutableURLRequest(URL: NSURL(string: MolocateBaseUrl + "video/upload/")!,
-                cachePolicy: NSURLRequestCachePolicy.ReloadIgnoringCacheData,
-                timeoutInterval: 10.0)
-            request.HTTPMethod = "POST"
-            request.allHTTPHeaderFields = headers
-            request.HTTPBody = videodata
-            
-            let session = NSURLSession.sharedSession()
-            let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
-                if (error != nil) {
-                    //print(error)
-                } else {
-                    //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
-                    do {
-                        let result = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers)
-                        
-                        //print("Result -> \(result)")
-                        let statue = result["result"] as! String
-                        if(statue == "success"){
-                            
-                            videoId = result["video_id"] as! String
-                            videoUrl = result["video_url"] as! String
-                            self.activityIndicator.stopAnimating()
-                            UIApplication.sharedApplication().endIgnoringInteractionEvents()
-
-                            NSNotificationCenter.defaultCenter().postNotificationName("buttonEnable", object: nil)
-                            
-                        }  else{
-                            self.activityIndicator.stopAnimating()
-                            UIApplication.sharedApplication().endIgnoringInteractionEvents()
-                            self.displayAlert("Hata", message: "Videonuz yüklenemedi. Lütfen tekrar deneyiniz.")
-                            tempAssetURL = nil
-                            self.firstAsset = nil
-                            self.secondAsset = nil
-                            
-                            dispatch_async(dispatch_get_main_queue()) {
-                                let cleanup: dispatch_block_t = {
-                                    do {
-                                        
-                                        try NSFileManager.defaultManager().removeItemAtURL(fakeoutputFileURL!)
-                                        //try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
-                                        
-                                    } catch _ {}
-                                    
-                                }
-                                if(fakeoutputFileURL != nil){
-                                    cleanup()
-                                    //print("siliniyor")
-                                    
-                                }
-                                
-                                
-                                let cleanuppath: dispatch_block_t = {
-                                    do {
-                                        
-                                        try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
-                                        
-                                    } catch _ {}
-                                    
-                                }
-                                cleanuppath()
-                            }
-                            
-                            }
-                            
-                            
-                            
-                            
-                        } catch {
-                            //print("Error -> \(error)")
-                            self.activityIndicator.stopAnimating()
-                            UIApplication.sharedApplication().endIgnoringInteractionEvents()
-                            self.displayAlert("Hata", message: "Videonuz yüklenemedi. Lütfen tekrar deneyiniz.")
-                            tempAssetURL = nil
-                            self.firstAsset = nil
-                            self.secondAsset = nil
-                            
-                            dispatch_async(dispatch_get_main_queue()) {
-                                let cleanup: dispatch_block_t = {
-                                    do {
-                                        
-                                        try NSFileManager.defaultManager().removeItemAtURL(fakeoutputFileURL!)
-                                        //try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
-                                        
-                                    } catch _ {}
-                                    
-                                }
-                                if(fakeoutputFileURL != nil){
-                                    cleanup()
-                                    //print("siliniyor")
-                                    
-                                }
-                                
-                                
-                                let cleanuppath: dispatch_block_t = {
-                                    do {
-                                        
-                                        try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
-                                        
-                                    } catch _ {}
-                                    
-                                }
-                                cleanuppath()
-                            }
-                    
-                        }
-                    }
-                })
-                
-                dataTask.resume()
-            
-            self.performSegueWithIdentifier("capturePreview", sender: self)
-          
-            
-        })
-        
-       // self.performSegueWithIdentifier("capturePreview", sender: self)
+            })
 
         
     }

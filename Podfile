@@ -13,6 +13,7 @@ pod 'QuadratTouch', '>= 1.0'
 pod "RecordButton"
 pod 'SDWebImage'
 pod 'HanekeSwift'
+pod 'AWSS3'
 
 end
 

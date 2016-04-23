@@ -20,6 +20,7 @@
 		C610230A1C19FDCA00E9CA73 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C61023091C19FDCA00E9CA73 /* Main.storyboard */; };
 		C61023161C1B407600E9CA73 /* Followers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61023151C1B407600E9CA73 /* Followers.swift */; };
 		C610D38C1CC399F20080D48D /* backButton.png in Resources */ = {isa = PBXBuildFile; fileRef = C610D38B1CC399F20080D48D /* backButton.png */; };
+		C61199C01CCAD4FB00DF70F3 /* S3upload.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61199BF1CCAD4FB00DF70F3 /* S3upload.swift */; };
 		C61FDAAF1BFBD0BC007B940E /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61FDAAE1BFBD0BC007B940E /* ContainerViewController.swift */; };
 		C61FDAB11BFBD16D007B940E /* FollowingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61FDAB01BFBD16D007B940E /* FollowingViewController.swift */; };
 		C61FDAB31BFBD332007B940E /* ExploreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C61FDAB21BFBD332007B940E /* ExploreViewController.xib */; };
@@ -128,6 +129,7 @@
 		C61023091C19FDCA00E9CA73 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		C61023151C1B407600E9CA73 /* Followers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Followers.swift; sourceTree = "<group>"; };
 		C610D38B1CC399F20080D48D /* backButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backButton.png; sourceTree = "<group>"; };
+		C61199BF1CCAD4FB00DF70F3 /* S3upload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = S3upload.swift; sourceTree = "<group>"; };
 		C61FDAAE1BFBD0BC007B940E /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 		C61FDAB01BFBD16D007B940E /* FollowingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowingViewController.swift; sourceTree = "<group>"; };
 		C61FDAB21BFBD332007B940E /* ExploreViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExploreViewController.xib; sourceTree = "<group>"; };
@@ -344,6 +346,7 @@
 				E3FC416E1CB6B3EF00EE8995 /* MolocateUtility.swift */,
 				C64B601D1C81D6A500E510DC /* MolocateAccount.swift */,
 				E33DCC681CB3F5250081C0DF /* MolocateVideo.swift */,
+				C61199BF1CCAD4FB00DF70F3 /* S3upload.swift */,
 				E33DCC6A1CB3F73C0081C0DF /* MolocatePlace.swift */,
 				E33DCC6C1CB3FA2C0081C0DF /* MolocateNotifications.swift */,
 				38F771031C9505670079FACD /* Player.swift */,
@@ -700,6 +703,7 @@
 				C63D1F1C1C1FA20D003B2CC1 /* SignUpAdvance.swift in Sources */,
 				38E6210C1C90E49D00FB1AD5 /* changePassword.swift in Sources */,
 				C6DA6BE21C4332D100E24392 /* videoCell.swift in Sources */,
+				C61199C01CCAD4FB00DF70F3 /* S3upload.swift in Sources */,
 				C6CBA4FF1C876EC300AE65AD /* profileOther.swift in Sources */,
 				C65C4F751C8E20B300DB5068 /* captureCollectionCell.swift in Sources */,
 				C6917F921BFA60B700CA501A /* CameraViewController.swift in Sources */,
