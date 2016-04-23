@@ -446,8 +446,8 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
     }
     
     func putVideo() {
+        //dispatch_async(dispatch_get_main_queue())
         videoURL = NSURL(fileURLWithPath: videoPath!, isDirectory: false)
-        print(videoURL)
         newRect = CGRect(x: 0, y: self.collectionView.frame.maxY, width: self.view.frame.width, height: self.view.frame.width)
         self.player.setUrl(videoURL!)
         self.player.view.frame = newRect
@@ -498,14 +498,14 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
     
     func removeDatas(){
         dispatch_async(dispatch_get_main_queue()) {
-            let cleanup: dispatch_block_t = {
-                do {
-                    try NSFileManager.defaultManager().removeItemAtURL(self.videoURL!)
-                    
-                } catch _ {}
-                
-            }
-            cleanup()
+//            let cleanup: dispatch_block_t = {
+//                do {
+//                    try NSFileManager.defaultManager().removeItemAtURL(self.videoURL!)
+//                    
+//                } catch _ {}
+//                
+//            }
+//            cleanup()
             self.performSegueWithIdentifier("backToCamera", sender: self)
             
             

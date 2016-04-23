@@ -17,7 +17,6 @@ let S3BucketName: String = "molocatebucket"
 public class S3Upload {
     class func upload(uploadRequest: AWSS3TransferManagerUploadRequest, fileURL: String, fileID: String, json: AnyObject) {
         let transferManager = AWSS3TransferManager.defaultS3TransferManager()
-        
         transferManager.upload(uploadRequest).continueWithBlock { (task) -> AnyObject! in
             if let error = task.error {
                 if error.domain == AWSS3TransferManagerErrorDomain as String {
@@ -25,7 +24,8 @@ public class S3Upload {
                         switch (errorCode) {
                         case .Cancelled, .Paused:
                             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                //self.collectionView.reloadData()
+                                
+                                
                             })
                             break;
                             
@@ -119,14 +119,14 @@ public class S3Upload {
                                 thumbnailRequest.addValue("Token " + MoleUserToken!, forHTTPHeaderField: "Authorization")
                                 thumbnailRequest.HTTPBody = image
                                 let thumbnailTask = NSURLSession.sharedSession().dataTaskWithRequest(thumbnailRequest){data, response, error  in
-                                    print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+                                    //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
                                     
                                     let nsError = error;
                                     
                                     
                                     do {
                                         let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! NSDictionary
-                                        print(result)
+                                        //print(result)
                                         
                                         
                                     } catch{
@@ -141,18 +141,19 @@ public class S3Upload {
                     
  
                 })
-                                            do {
-                                                try NSFileManager.defaultManager().removeItemAtPath(videoPath!)  //.removeItemAtURL(fakeoutputFileURL!)
-                                                dispatch_async(dispatch_get_main_queue()) {
-                                                    print("siiiiil")
-                                                    isUploaded = true
-                
-                
-                                                }
-                                            } catch _ {
+                do {
+                try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
                                                 
-                                            }
-            }
+                dispatch_async(dispatch_get_main_queue()) {
+                print("siiiiil")
+                isUploaded = true
+                
+                
+                    }
+                           } catch _ {
+                        
+                                }
+                    }
             return nil
         }
     }

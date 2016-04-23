@@ -112,7 +112,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         searchText.borderStyle = UITextBorderStyle.None
         searchText.layer.borderWidth = 0
         searchText.layer.cornerRadius = 5
-        let str = NSAttributedString(string: "Konum Ara", attributes: [NSForegroundColorAttributeName:UIColor.whiteColor()])
+        let str = NSAttributedString(string: "Ara", attributes: [NSForegroundColorAttributeName:UIColor.whiteColor()])
         searchText.attributedPlaceholder = str
         searchText.textAlignment = .Center
 //        let border2 = CALayer()

@@ -333,6 +333,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         self.locationManager = CLLocationManager()
         self.locationManager.delegate = self
         self.locationManager.requestWhenInUseAuthorization()
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         self.locationManager.startUpdatingLocation()
         self.location = self.locationManager.location
         self.locationManager.stopUpdatingLocation()
@@ -345,12 +346,12 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         
         //var parameters = [Parameter.query:"moda sahil"]
         let parameters = location!.parameters()
-    
+        
         
         let searchTask = session.venues.search(parameters) {
             (result) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
-                print(result)
+                //print(result)
             if let response = result.response {
                 
                
@@ -359,13 +360,19 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                     let item = venues![i]
                     let itemlocation = item["location"] as! [String:AnyObject]
                     let itemstats = item["stats"] as! [String:AnyObject]
-                    
-                    
+                    //print(itemlocation)
+                    let latL = itemlocation["lat"] as! Float
+                    let lonL = itemlocation["lng"] as! Float
+                    let latM = Float(self.location.coordinate.latitude)
+                    let lonM = Float(self.location.coordinate.longitude)
+                    var distancen = ((latM-latL)*(latM-latL))+((lonL-lonM)*(lonL-lonM))
+                    distancen = sqrt(distancen)*111000
+                    //print(distancen)
                     let distance = itemlocation["distance"] as! NSInteger
                     let isVerified = item["verified"] as! Bool
                     let checkinsCount = itemstats["checkinsCount"] as! NSInteger
                     let enoughCheckin:Bool = (checkinsCount > 500)
-                    if (distance < 200){
+                    if (distancen < 200){
                         if(isVerified||enoughCheckin){
                             //let order = [(item["name"] as! String):placesArray.count]
                             placeOrder.setObject(placesArray.count , forKey: (item["name"] as! String))
@@ -765,7 +772,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
             
                 do {
                     try NSFileManager.defaultManager().removeItemAtURL(fakeoutputFileURL!)
- 
+                    
                 } catch _ {
                     
                 }
@@ -778,185 +785,16 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
             do {
                 let imageRef = try imageGenerator.copyCGImageAtTime(time, actualTime: nil)
                 thumbnail = UIImage(CGImage: imageRef)
-                
+                self.performSegueWithIdentifier("capturePreview", sender: self)
             } catch {
                 //print(error)
                 
             }
-           //print(thumbnail.description)
+           
             
             
-            //isUploaded = false
-//            var videodata = NSData()
-//            self.progress = 0.0
-//            do {
-//                videodata = try NSData(contentsOfURL: contentURL, options: NSDataReadingOptions.DataReadingUncached)
-//                
-//            } catch _{
-//                //print("error")
-//                self.activityIndicator.stopAnimating()
-//                if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
-//                UIApplication.sharedApplication().endIgnoringInteractionEvents()
-//                }
-//                self.displayAlert("Hata", message: "Videonuz yüklenemedi. Lütfen tekrar deneyiniz.")
-//                tempAssetURL = nil
-//                self.firstAsset = nil
-//                self.secondAsset = nil
-//                
-//                dispatch_async(dispatch_get_main_queue()) {
-//                    let cleanup: dispatch_block_t = {
-//                        do {
-//                            
-//                            try NSFileManager.defaultManager().removeItemAtURL(fakeoutputFileURL!)
-//                            //try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
-//
-//                        } catch _ {}
-//                        
-//                    }
-//                    if(fakeoutputFileURL != nil){
-//                        cleanup()
-//                        //print("siliniyor")
-//                        
-//                    }
-//                    
-//                    
-//                    let cleanuppath: dispatch_block_t = {
-//                        do {
-//                            
-//                            try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
-//                            
-//                        } catch _ {}
-//                        
-//                    }
-//                    cleanuppath()
-//                }
-//
-//            
-//            }
-//            //let videodata = NSData(contentsOfURL: videoURL!)
-//            let headers = [
-//                "authorization": "Token \(MoleUserToken!)",
-//                "content-type": "/*/",
-//                "content-disposition": "attachment;filename=deneme.mp4",
-//                "cache-control": "no-cache"
-//            ]
-//            let request = NSMutableURLRequest(URL: NSURL(string: MolocateBaseUrl + "video/upload/")!,
-//                cachePolicy: NSURLRequestCachePolicy.ReloadIgnoringCacheData,
-//                timeoutInterval: 10.0)
-//            request.HTTPMethod = "POST"
-//            request.allHTTPHeaderFields = headers
-//            request.HTTPBody = videodata
-//            
-//            let session = NSURLSession.sharedSession()
-//            let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
-//                if (error != nil) {
-//                    //print(error)
-//                } else {
-//                    //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
-//                    do {
-//                        let result = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers)
-//                        
-//                        //print("Result -> \(result)")
-//                        let statue = result["result"] as! String
-//                        if(statue == "success"){
-//                            
-//                            videoId = result["video_id"] as! String
-//                            videoUrl = result["video_url"] as! String
-//                            self.activityIndicator.stopAnimating()
-//                            UIApplication.sharedApplication().endIgnoringInteractionEvents()
-//
-//                            NSNotificationCenter.defaultCenter().postNotificationName("buttonEnable", object: nil)
-//                            
-//                        }  else{
-//                            self.activityIndicator.stopAnimating()
-//                            UIApplication.sharedApplication().endIgnoringInteractionEvents()
-//                            self.displayAlert("Hata", message: "Videonuz yüklenemedi. Lütfen tekrar deneyiniz.")
-//                            tempAssetURL = nil
-//                            self.firstAsset = nil
-//                            self.secondAsset = nil
-//                            
-//                            dispatch_async(dispatch_get_main_queue()) {
-//                                let cleanup: dispatch_block_t = {
-//                                    do {
-//                                        
-//                                        try NSFileManager.defaultManager().removeItemAtURL(fakeoutputFileURL!)
-//                                        //try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
-//                                        
-//                                    } catch _ {}
-//                                    
-//                                }
-//                                if(fakeoutputFileURL != nil){
-//                                    cleanup()
-//                                    //print("siliniyor")
-//                                    
-//                                }
-//                                
-//                                
-//                                let cleanuppath: dispatch_block_t = {
-//                                    do {
-//                                        
-//                                        try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
-//                                        
-//                                    } catch _ {}
-//                                    
-//                                }
-//                                cleanuppath()
-//                            }
-//                            
-//                            }
-//                            
-//                            
-//                            
-//                            
-//                        } catch {
-//                            //print("Error -> \(error)")
-//                            self.activityIndicator.stopAnimating()
-//                            UIApplication.sharedApplication().endIgnoringInteractionEvents()
-//                            self.displayAlert("Hata", message: "Videonuz yüklenemedi. Lütfen tekrar deneyiniz.")
-//                            tempAssetURL = nil
-//                            self.firstAsset = nil
-//                            self.secondAsset = nil
-//                            
-//                            dispatch_async(dispatch_get_main_queue()) {
-//                                let cleanup: dispatch_block_t = {
-//                                    do {
-//                                        
-//                                        try NSFileManager.defaultManager().removeItemAtURL(fakeoutputFileURL!)
-//                                        //try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
-//                                        
-//                                    } catch _ {}
-//                                    
-//                                }
-//                                if(fakeoutputFileURL != nil){
-//                                    cleanup()
-//                                    //print("siliniyor")
-//                                    
-//                                }
-//                                
-//                                
-//                                let cleanuppath: dispatch_block_t = {
-//                                    do {
-//                                        
-//                                        try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
-//                                        
-//                                    } catch _ {}
-//                                    
-//                                }
-//                                cleanuppath()
-//                            }
-//                    
-//                        }
-//                    }
-//                })
-//                
-//                dataTask.resume()
-//            
-//            self.performSegueWithIdentifier("capturePreview", sender: self)
-//          
-//            
-//
-//        
-        self.performSegueWithIdentifier("capturePreview", sender: self)
+    
+       
             
             })
 
@@ -1412,6 +1250,8 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         
     }
     
+    
+    
 
 }
 
@@ -1426,7 +1266,8 @@ extension CLLocation {
         let valuellacc = "\(self.horizontalAccuracy)"
         let valuealt = "\(self.altitude)"
         let valuealtacc = "\(self.verticalAccuracy)"
-        
+        print(self.verticalAccuracy)
+        print(self.horizontalAccuracy)
         return [ myll:valuell , myllacc:valuellacc , myalt:valuealt, myaltAcc: valuealtacc]
     }
     

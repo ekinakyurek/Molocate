@@ -557,8 +557,11 @@ public class MolocateAccount {
 //        
 //    }
     class func searchUser(username: String, completionHandler: (data: [MoleUser], response: NSURLResponse!, error: NSError!) -> ()) {
-        let url = NSURL(string: MolocateBaseUrl + "/account/api/search_user/?username=" + (username as String))!
-        let request = NSMutableURLRequest(URL: url)
+   // print((username as NSString).UTF8String)
+
+        let url = NSURLComponents(string: MolocateBaseUrl + "/account/api/search_user/")
+        url?.queryItems = [NSURLQueryItem(name: "username", value: username)]
+        let request = NSMutableURLRequest(URL: (url?.URL)!)
         request.HTTPMethod = "GET"
         request.addValue("Token " + MoleUserToken!, forHTTPHeaderField: "Authorization")
         
@@ -567,7 +570,7 @@ public class MolocateAccount {
             let nsError = error;
             
             do {
-//                print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+                print(NSString(data: data!, encoding: NSUTF8StringEncoding))
                 let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [[String:AnyObject]]
                 var userArray = [MoleUser]()
                 for item in result {
