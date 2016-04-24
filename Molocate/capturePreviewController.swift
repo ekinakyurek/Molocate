@@ -199,7 +199,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        
+        if scrollView == placeTable {
         let verticalIndicator: UIImageView = (scrollView.subviews[(scrollView.subviews.count - 1)] as! UIImageView)
         if verticalIndicator.subviews.count > 0 {
             for subView in verticalIndicator.subviews as! [UIView] {
@@ -212,7 +212,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
         newVerticalIndicator.layer.cornerRadius = 4.0
         newVerticalIndicator.clipsToBounds = true
         verticalIndicator.addSubview(newVerticalIndicator)
-        
+        }
     }
     
     func randomStringWithLength (len : Int) -> NSString {
