@@ -92,7 +92,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         bottomToolbar.clipsToBounds = true
         
         locationDict = [[String:locations]]()
-        dispatch_async(dispatch_get_main_queue()) {
+        
         self.locationManager = CLLocationManager()
         self.locationManager.delegate = self
         self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
@@ -103,7 +103,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         self.deviceLon = self.locationManager.location?.coordinate.longitude
             
             
-        }
+        
         let width = self.view.frame.width
         let height = (self.view.frame.height-self.view.frame.width-2*self.toolbar.frame.height-self.toolbarYancı.frame.height)
         let topRect = CGRect(x: 0, y: self.view.frame.width+self.toolbar.frame.height+self.toolbarYancı.frame.height, width: width, height: height)
@@ -310,12 +310,13 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
     func displayLocationInfo(placemark: CLPlacemark) {
             //stop updating location to save battery life
             locationManager.stopUpdatingLocation()
-            print(placemark.locality)
-            print(placemark.country)
-            print(placemark.administrativeArea)
-            print(placemark.subAdministrativeArea)
-            print(placemark.postalCode)
-
+//            print(placemark.locality)
+//            print(placemark.country)
+//            print(placemark.administrativeArea)
+//            print(placemark.subAdministrativeArea)
+//            print(placemark.postalCode)
+            print(placemark.subLocality)
+            //print(placemark)
     }
 
     
@@ -356,7 +357,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                 }
             }
         }
-        
+        dispatch_async(dispatch_get_main_queue()) {
         self.locationManager = CLLocationManager()
         self.locationManager.delegate = self
         self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
@@ -367,7 +368,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         self.location = self.locationManager.location
         self.deviceLat = self.locationManager.location?.coordinate.latitude
         self.deviceLon = self.locationManager.location?.coordinate.longitude
-        
+        }
         let session = Session.sharedSession()
         
         
@@ -774,6 +775,8 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         let instruction = AVMutableVideoCompositionInstruction()
         instruction.timeRange = CMTimeRangeMake(kCMTimeZero, CMTimeMakeWithSeconds(60, 30))
         let transformer = AVMutableVideoCompositionLayerInstruction(assetTrack: clipVideoTrack)
+        let cropRect = CGRect(x: 0, y: clipVideoTrack.naturalSize.width*(self.toolbar.frame.height+self.toolbarYancı.frame.height)/self.view.frame.height, width: clipVideoTrack.naturalSize.height, height: clipVideoTrack.naturalSize.height)
+        
         let t1 = CGAffineTransformMakeTranslation(clipVideoTrack.naturalSize.height, -4*(self.toolbar.frame.height+self.toolbarYancı.frame.height))
         
         let t2 = CGAffineTransformRotate(t1, 3.141593/2)

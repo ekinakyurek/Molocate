@@ -285,7 +285,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDe
         super.viewDidLoad()
         let screenHeight = screenSize.height
         let screenWidth = screenSize.width
-        
+        myCache.removeAll()
+        dictionary.removeAllObjects()
         loginBut.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).CGColor
         loginBut.layer.shadowOffset = CGSizeMake(0.0, 0.7)
         loginBut.layer.shadowOpacity = 1.0

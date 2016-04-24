@@ -24,25 +24,30 @@ public class S3Upload {
                         switch (errorCode) {
                         case .Cancelled, .Paused:
                             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                
+                                print("internet low")
+                                //upload(uploadRequest, fileURL: fileURL, fileID: fileID, json: json)
                                 
                             })
                             break;
                             
                         default:
                             print("upload() failed: [\(error)]")
+                            upload(uploadRequest, fileURL: fileURL, fileID: fileID, json: json)
                             break;
                         }
                     } else {
                         print("upload() failed: [\(error)]")
+                        upload(uploadRequest, fileURL: fileURL, fileID: fileID, json: json)
                     }
                 } else {
                     print("upload() failed: [\(error)]")
+                    upload(uploadRequest, fileURL: fileURL, fileID: fileID, json: json)
                 }
             }
             
             if let exception = task.exception {
                 print("upload() failed: [\(exception)]")
+                upload(uploadRequest, fileURL: fileURL, fileID: fileID, json: json)
             }
             
             if task.result != nil {
