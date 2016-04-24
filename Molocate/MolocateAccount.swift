@@ -633,7 +633,45 @@ public class MolocateAccount {
     }
     
     
-    
+    class func changePassword(old_password:String,new_password: String, completionHandler: (data: String! , response: NSURLResponse!, error: NSError!) -> ()){
+        
+        do{
+            
+            let Body = ["old_password": old_password,
+                        "new_password": new_password]
+            
+            let jsonData = try NSJSONSerialization.dataWithJSONObject(Body, options: NSJSONWritingOptions())
+            let url = NSURL(string: MolocateBaseUrl + "account/api/change_password/")!
+            let request = NSMutableURLRequest(URL: url)
+            request.HTTPMethod = "POST"
+            request.addValue("Token " + MoleUserToken!, forHTTPHeaderField: "Authorization")
+            request.HTTPBody = jsonData
+            
+            let task = NSURLSession.sharedSession().dataTaskWithRequest(request){ data, response, error in
+                
+                //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+                
+                let nsError = error
+                
+                do {
+                    //check result if it is succed
+                    let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String:AnyObject]
+                    let answer = result["result"] as! String
+                    //print(result)
+                    completionHandler(data: answer  , response: response , error: nsError  )
+                } catch{
+                    completionHandler(data: "fail" , response: nil , error: nsError  )
+                    print("Error:: in mole.EditUser()")
+                }
+                
+            }
+            
+            task.resume()
+        }catch{
+            completionHandler(data: "fail" , response: nil , error: nil )
+            print("Error:: in mole.EditUser()")
+        }
+    }
     
     
     class func EditUser(completionHandler: (data: String! , response: NSURLResponse!, error: NSError!) -> ()){

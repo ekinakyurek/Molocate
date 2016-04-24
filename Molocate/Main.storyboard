@@ -1677,7 +1677,7 @@
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Profili Düzenle" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kI6-qa-ur2">
-                                <rect key="frame" x="121" y="48" width="133" height="20"/>
+                                <rect key="frame" x="121" y="28" width="133" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="Cbi-t3-hDu"/>
                                     <constraint firstAttribute="width" constant="133" id="KmT-Xn-8zH"/>
@@ -1708,9 +1708,9 @@
                             <constraint firstItem="7z6-dU-HQR" firstAttribute="top" secondItem="uA8-f3-5im" secondAttribute="bottom" id="Nga-UZ-4r3"/>
                             <constraint firstItem="7z6-dU-HQR" firstAttribute="top" secondItem="6Rp-qk-T6h" secondAttribute="bottom" id="QHR-IX-klB"/>
                             <constraint firstItem="7z6-dU-HQR" firstAttribute="top" secondItem="uA8-f3-5im" secondAttribute="bottom" constant="16" id="Qsb-Y7-wt1"/>
+                            <constraint firstItem="kI6-qa-ur2" firstAttribute="top" secondItem="6Rp-qk-T6h" secondAttribute="bottom" constant="12" id="SbB-OX-8aP"/>
                             <constraint firstItem="bXw-ih-yRr" firstAttribute="centerX" secondItem="cuB-en-MI6" secondAttribute="centerX" id="Uqi-79-Dbd"/>
                             <constraint firstItem="bXw-ih-yRr" firstAttribute="top" secondItem="7z6-dU-HQR" secondAttribute="bottom" constant="20" id="W6m-0C-kgm"/>
-                            <constraint firstItem="kI6-qa-ur2" firstAttribute="top" secondItem="uA8-f3-5im" secondAttribute="bottom" constant="28" id="X4D-pV-BEq"/>
                             <constraint firstItem="6Rp-qk-T6h" firstAttribute="top" secondItem="cuB-en-MI6" secondAttribute="topMargin" id="Zyn-r1-Ri7"/>
                             <constraint firstItem="kI6-qa-ur2" firstAttribute="centerX" secondItem="cuB-en-MI6" secondAttribute="centerX" id="c5D-hx-FE5"/>
                             <constraint firstItem="bxt-ed-iKk" firstAttribute="width" secondItem="7Tc-aX-rr8" secondAttribute="width" id="g2Y-FH-ZNi"/>

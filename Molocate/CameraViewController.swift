@@ -8,6 +8,7 @@ import AVFoundation
 import Photos
 import QuadratTouch
 import RecordButton
+import CoreLocation
 
 var locationDict:[[String:locations]]!
 var placeOrder:NSMutableDictionary!
@@ -94,9 +95,9 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         dispatch_async(dispatch_get_main_queue()) {
         self.locationManager = CLLocationManager()
         self.locationManager.delegate = self
-        
-        self.locationManager.startUpdatingLocation()
         self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        self.locationManager.requestWhenInUseAuthorization()
+        self.locationManager.startUpdatingLocation()
         self.location = self.locationManager.location
         self.deviceLat = self.locationManager.location?.coordinate.latitude
         self.deviceLon = self.locationManager.location?.coordinate.longitude
@@ -290,6 +291,32 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         displayAlert("Hata", message: error.helpAnchor!)
     }
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        CLGeocoder().reverseGeocodeLocation(manager.location!, completionHandler: {(placemarks, error) -> Void in
+            if (error != nil) {
+                print("Reverse geocoder failed with error" + error!.localizedDescription)
+                return
+            }
+            
+            if placemarks!.count > 0 {
+                let pm = placemarks![0] as CLPlacemark
+                self.displayLocationInfo(pm)
+            } else {
+                print("Problem with the data received from geocoder")
+            }
+        })
+    }
+    
+    func displayLocationInfo(placemark: CLPlacemark) {
+            //stop updating location to save battery life
+            locationManager.stopUpdatingLocation()
+            print(placemark.locality)
+            print(placemark.country)
+            print(placemark.administrativeArea)
+            print(placemark.subAdministrativeArea)
+            print(placemark.postalCode)
+
+    }
 
     
     override func viewWillAppear(animated: Bool) {
@@ -332,9 +359,9 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         
         self.locationManager = CLLocationManager()
         self.locationManager.delegate = self
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         self.locationManager.requestWhenInUseAuthorization()
         self.locationManager.startUpdatingLocation()
-        self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         self.location = self.locationManager.location
         self.locationManager.stopUpdatingLocation()
         self.location = self.locationManager.location
@@ -949,6 +976,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         recordButton.setProgress(progress)
         if progress > 0.999999 {
             self.holdRelease()
+            self.recordButton.enabled = false
         }
         if progress >= 1 {
             progressTimer.invalidate()
@@ -1264,11 +1292,12 @@ extension CLLocation {
         let myaltAcc = Parameter.altAcc
         
         let valuell = "\(self.coordinate.latitude),\(self.coordinate.longitude)"
-        let valuellacc = "\(10)"
+        let valuellacc = "\(self.horizontalAccuracy)"
         let valuealt = "\(self.altitude)"
         let valuealtacc = "\(self.verticalAccuracy)"
 //        print(self.verticalAccuracy)
 //        print(self.horizontalAccuracy)
+//        print(self.coordinate)
         return [ myll:valuell , myllacc:valuellacc , myalt:valuealt, myaltAcc: valuealtacc]
     }
     

@@ -12,6 +12,8 @@ class changePasswordd: UIViewController {
 
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    
     @IBAction func backButton(sender: AnyObject) {
         
         self.willMoveToParentViewController(nil)
@@ -24,21 +26,44 @@ class changePasswordd: UIViewController {
     @IBOutlet var yenitekrar: UITextField!
     @IBOutlet var yeni: UITextField!
     @IBOutlet var eski: UITextField!
-    @IBAction func onayButton(sender: AnyObject) {
-        
-        if yeni.text == yenitekrar.text{
-            
-            //eski şifre doğru mu kontrol et değilse allert ekle
-            //doğruysa yeni şifreyi gönder (yeni yazan)
+    @IBAction func onayButton(sender: UIButton) {
+        activityIndicator.frame = sender.frame
+        activityIndicator.center = sender.center
+        self.view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+        sender.hidden = true
+        if yeni.text == yenitekrar.text && yeni.text?.characters.count > 3 && yeni.text?.characters.count < 20{
+          
+            MolocateAccount.changePassword(eski.text!, new_password: yeni.text!, completionHandler: { (data, response, error) in
+                dispatch_async(dispatch_get_main_queue()) { () -> Void in
+                sender.hidden = false
+                self.activityIndicator.stopAnimating()
+                if data == "password_changed" {
+                    
+                    self.displayAlert("Tamam", message: "Parolanızı başarıyla değiştiridiniz")
+                    
+                }else if data == "password_wrong"{
+                    self.displayAlert("Tamam", message: "Eski parolanızı yanlış girdiniz")
+                 
+                    
+                }else{
+                    self.displayAlert("Tamam", message: "Paralo değiştirmede bir hata oluştu!")
+                
+                }
+                }
+            })
             
         }
         else{
+            sender.hidden = false
+            self.activityIndicator.stopAnimating()
             //displayAlert("Hata", message: "Yazdığınız şifreler uyuşmuyor, lütfen aynı şifreyi girin.")
             let alertController = UIAlertController(title: "Hata!", message:
-                "Yazdığınız şifreler uyuşmuyor, lütfen aynı şifreyi girin.", preferredStyle: UIAlertControllerStyle.Alert)
+                "Yazdığınız şifreler uyuşmuyor ve ya şifreniz çok kısa", preferredStyle: UIAlertControllerStyle.Alert)
             alertController.addAction(UIAlertAction(title: "Tamam", style: UIAlertActionStyle.Default,handler: nil))
             
             self.presentViewController(alertController, animated: true, completion: nil)
+            self.activityIndicator.stopAnimating()
         }
         
     }
@@ -57,6 +82,8 @@ class changePasswordd: UIViewController {
         self.toolBar.clipsToBounds = true
         self.toolBar.translucent = false
         self.toolBar.barTintColor = swiftColor
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
     }
 
     override func didReceiveMemoryWarning() {

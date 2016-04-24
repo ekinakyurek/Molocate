@@ -312,7 +312,7 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
         MolocateAccount.uploadProfilePhoto(imageData!) { (data, response, error) -> () in
             dispatch_async(dispatch_get_main_queue()) { () -> Void in
                 
-                print(data)
+                //print(data)
                 SDImageCache.sharedImageCache().removeImageForKey(data!)
                 SDImageCache.sharedImageCache().storeImage(self.photo.image!, forKey: data!)
                 MoleCurrentUser.profilePic = NSURL(string: data!)!

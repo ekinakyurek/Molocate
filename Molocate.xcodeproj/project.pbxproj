@@ -28,6 +28,7 @@
 		C61FDAB71BFBD3A9007B940E /* FollowingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C61FDAB61BFBD3A9007B940E /* FollowingViewController.xib */; };
 		C63629451CCC04FB0071E6BF /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C63629441CCC04FB0071E6BF /* StoreKit.framework */; };
 		C63629471CCC04FF0071E6BF /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C63629461CCC04FF0071E6BF /* GameKit.framework */; };
+		C63629491CCCEE210071E6BF /* searchUsername.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63629481CCCEE210071E6BF /* searchUsername.swift */; };
 		C638AFF31C9C7E74003085E8 /* likeVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C638AFF21C9C7E74003085E8 /* likeVideo.swift */; };
 		C638AFF71C9C80B3003085E8 /* likeVideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C638AFF61C9C80B3003085E8 /* likeVideoCell.swift */; };
 		C63D1F1C1C1FA20D003B2CC1 /* SignUpAdvance.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63D1F1B1C1FA20D003B2CC1 /* SignUpAdvance.swift */; };
@@ -139,6 +140,7 @@
 		C61FDAB61BFBD3A9007B940E /* FollowingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FollowingViewController.xib; sourceTree = "<group>"; };
 		C63629441CCC04FB0071E6BF /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		C63629461CCC04FF0071E6BF /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		C63629481CCCEE210071E6BF /* searchUsername.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = searchUsername.swift; sourceTree = "<group>"; };
 		C638AFF21C9C7E74003085E8 /* likeVideo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = likeVideo.swift; sourceTree = "<group>"; };
 		C638AFF61C9C80B3003085E8 /* likeVideoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = likeVideoCell.swift; sourceTree = "<group>"; };
 		C63D1F1B1C1FA20D003B2CC1 /* SignUpAdvance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpAdvance.swift; sourceTree = "<group>"; };
@@ -287,6 +289,7 @@
 				E3F4673C1CC03F02005F8434 /* molocateNotificationCell.swift */,
 				C68872851C8CED2800BDBE00 /* optionCell.swift */,
 				C6D0CDF21C44200F006AAFF0 /* TableViewCellFollowerFollowing.swift */,
+				C63629481CCCEE210071E6BF /* searchUsername.swift */,
 				C6DA6BE11C4332D100E24392 /* videoCell.swift */,
 				C67C444E1C75D69700FCB157 /* myCollectionViewCell.swift */,
 				C65C4F741C8E20B300DB5068 /* captureCollectionCell.swift */,
@@ -717,6 +720,7 @@
 				C61199C01CCAD4FB00DF70F3 /* S3upload.swift in Sources */,
 				C6CBA4FF1C876EC300AE65AD /* profileOther.swift in Sources */,
 				C65C4F751C8E20B300DB5068 /* captureCollectionCell.swift in Sources */,
+				C63629491CCCEE210071E6BF /* searchUsername.swift in Sources */,
 				C6917F921BFA60B700CA501A /* CameraViewController.swift in Sources */,
 				E33DCC6D1CB3FA2D0081C0DF /* MolocateNotifications.swift in Sources */,
 				C64B601E1C81D6A500E510DC /* MolocateAccount.swift in Sources */,
