@@ -36,9 +36,18 @@ public class S3Upload {
                         default:
                             if (n < 10) {
                             print("upload() failed: [\(error)]")
+                                let seconds = 1.0
+                                let delay = seconds * Double(NSEC_PER_SEC)  // nanoseconds per seconds
+                                let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
                                 
-                            upload(uploadRequest, fileURL: fileURL, fileID: fileID, json: json)
-                            n += 1
+                                dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+                                    
+                                    upload(uploadRequest, fileURL: fileURL, fileID: fileID, json: json)
+                                    n += 1
+                                    
+                                })
+                                
+
                             } else {
                                 do {
                                     try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
@@ -54,9 +63,16 @@ public class S3Upload {
                     } else {
                         print("upload() failed: [\(error)]")
                         if (n < 10) {
+                            let seconds = 1.0
+                            let delay = seconds * Double(NSEC_PER_SEC)  // nanoseconds per seconds
+                            let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
                             
-                            upload(uploadRequest, fileURL: fileURL, fileID: fileID, json: json)
-                            n += 1
+                            dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+                                
+                                upload(uploadRequest, fileURL: fileURL, fileID: fileID, json: json)
+                                n += 1
+                                
+                            })
                         } else {
                             do {
                                 try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
@@ -71,8 +87,16 @@ public class S3Upload {
                     print("upload() failed: [\(error)]")
                     if (n < 10) {
                        
-                        upload(uploadRequest, fileURL: fileURL, fileID: fileID, json: json)
-                        n += 1
+                        let seconds = 1.0
+                        let delay = seconds * Double(NSEC_PER_SEC)  // nanoseconds per seconds
+                        let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+                        
+                        dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+                            
+                            upload(uploadRequest, fileURL: fileURL, fileID: fileID, json: json)
+                            n += 1
+                            
+                        })
                     } else {
                         do {
                             try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
@@ -89,8 +113,16 @@ public class S3Upload {
                 print("upload() failed: [\(exception)]")
                 if (n < 10) {
                     
-                    upload(uploadRequest, fileURL: fileURL, fileID: fileID, json: json)
-                    n += 1
+                    let seconds = 1.0
+                    let delay = seconds * Double(NSEC_PER_SEC)  // nanoseconds per seconds
+                    let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+                    
+                    dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+                        
+                        upload(uploadRequest, fileURL: fileURL, fileID: fileID, json: json)
+                        n += 1
+                        
+                    })
                 } else {
                     do {
                         try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
