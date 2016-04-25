@@ -118,8 +118,12 @@ class tagComment: UIViewController, UITextViewDelegate {
        // cell.textLabel?.frame.origin.x = 200
         
         // Configure the cell...insert the special characters using edit > emoji on the menu
+        if numbers.contains(indexPath.row) {
+        cell.textLabel?.text = "⚫         " + userRelations.relations[indexPath.row].username
+        }else{
         cell.textLabel?.text = "⚪         " + userRelations.relations[indexPath.row].username
-        return cell
+        }
+            return cell
     
     
     }
