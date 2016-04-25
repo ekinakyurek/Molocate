@@ -194,11 +194,11 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                     //self.bottomLayer.frame = bottomRect
                     self.topLayer.backgroundColor = UIColor.whiteColor().CGColor
                     //self.bottomLayer.backgroundColor = UIColor.whiteColor().CGColor
-                    self.topLayer.opacity = 0.4
-                    self.bottomLayer.opacity = 0.4
-                    self.toolbar.layer.opacity = 0.4
-                    self.toolbarYancı.layer.opacity = 0.4
-                    self.bottomToolbar.layer.opacity = 0.4
+                    self.topLayer.opacity = 1
+                    self.bottomLayer.opacity = 1
+                    self.toolbar.layer.opacity = 1
+                    self.toolbarYancı.layer.opacity = 1
+                    self.bottomToolbar.layer.opacity = 1
                     
                     self.view.layer.addSublayer(self.previewLayer!)
                     self.view.layer.addSublayer(self.bottomLayer)
@@ -412,6 +412,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                             }
                         }
                     }
+                    NSNotificationCenter.defaultCenter().postNotificationName("configurePlace", object: nil)
                     
                 }
                 
@@ -659,7 +660,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                                     do {
                                         try NSFileManager.defaultManager().removeItemAtURL(fakeoutputFileURL!)
                                         try NSFileManager.defaultManager().removeItemAtURL(outputFileURL)
-
+                                        fakeoutputFileURL = nil
                                         
                                     } catch _ {}
                                     if currentBackgroundRecordingID != UIBackgroundTaskInvalid {
@@ -720,8 +721,9 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
 
     @IBOutlet var videoDone: UIBarButtonItem!
     @IBAction func videoDone(sender: AnyObject) {
-        
+        self.holdRelease()
         if ((self.progress > 0.2)&&(fakeoutputFileURL != nil)) {
+        
         tempAssetURL = nil
         firstAsset = nil
         secondAsset = nil
@@ -832,7 +834,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
             
                 do {
                     try NSFileManager.defaultManager().removeItemAtURL(fakeoutputFileURL!)
-                    
+                    fakeoutputFileURL = nil
                 } catch _ {
                     
                 }
@@ -901,6 +903,8 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
             //print("siliniyor")
             
         }
+        placesArray.removeAll()
+        placeOrder.removeAllObjects()
         self.performSegueWithIdentifier("backToCont", sender: self)
         }
         
@@ -932,7 +936,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                     let newFrame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
                     self.flashLayer.frame = newFrame
                     self.flashLayer.backgroundColor = UIColor.whiteColor().CGColor
-                    self.flashLayer.opacity = 0.8
+                    self.flashLayer.opacity = 0.9
                     self.brightness = UIScreen.mainScreen().brightness
                     UIScreen.mainScreen().brightness = 1.0
                     self.view.layer.addSublayer(self.flashLayer)
@@ -1041,7 +1045,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
 
 
     func holdRelease(){
-        if self.progress < 0.999999 {
+        
         self.progressTimer.invalidate()
 
         if self.isFlashMode {
@@ -1069,7 +1073,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         if self.videoOutput!.recording {
         self.videoOutput?.stopRecording()
         }
-        }
+        
         
     }
     

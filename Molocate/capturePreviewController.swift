@@ -11,6 +11,7 @@ var CaptionText = ""
 
 class capturePreviewController: UIViewController, UITextFieldDelegate, UITableViewDelegate ,UITableViewDataSource,UICollectionViewDelegate ,UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,PlayerDelegate, UIScrollViewDelegate {
     var categ:String!
+    private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     @IBOutlet var toolBar: UIToolbar!
     
     @IBOutlet var downArrow: UIImageView!
@@ -196,6 +197,23 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
         
      
        self.downArrow.layer.zPosition = 1
+        
+        if placesArray.count == 0 {
+            activityIndicator = UIActivityIndicatorView(frame: self.textField.frame)
+            activityIndicator.center = CGPoint(x: self.view.frame.width/2, y: activityIndicator.center.y)
+            activityIndicator.hidesWhenStopped = true
+            activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.White
+            view.addSubview(activityIndicator)
+            activityIndicator.startAnimating()
+
+        } else {
+            textField.text = placesArray[0]
+            let correctedRow = placeOrder.objectForKey(placesArray[0]) as! Int
+            videoLocation = locationDict[correctedRow][placesArray[correctedRow]]
+            //print(videoLocation.name)
+            isLocationSelected = true
+        }
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(capturePreviewController.configurePlace), name: "configurePlace", object: nil)
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
@@ -250,7 +268,14 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
     func buttonEnable(){
         self.postO.enabled = true
     }
-    
+    func configurePlace() {
+        self.activityIndicator.stopAnimating()
+        textField.text = placesArray[0]
+        let correctedRow = placeOrder.objectForKey(placesArray[0]) as! Int
+        videoLocation = locationDict[correctedRow][placesArray[correctedRow]]
+        //print(videoLocation.name)
+        isLocationSelected = true
+    }
     func pressedCaption(sender: UIButton) {
         
         let controller:tagComment = self.storyboard!.instantiateViewControllerWithIdentifier("tagComment") as! tagComment
@@ -437,6 +462,8 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
             
         }
         cleanup()
+        placesArray.removeAll()
+        placeOrder.removeAllObjects()
         self.performSegueWithIdentifier("backToCamera", sender: self)
        
             
