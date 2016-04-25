@@ -10,9 +10,9 @@ import QuadratTouch
 import RecordButton
 import CoreLocation
 
-var locationDict:[[String:locations]]!
+var locationDict:[[String:locationss]]!
 var placeOrder:NSMutableDictionary!
-struct locations{
+struct locationss{
     var id = ""
     var name = ""
     var lat:Float!
@@ -76,9 +76,14 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
     var location:CLLocation!
     var locationManager:CLLocationManager!
     var firstFront = false
+    
+    var locationMeasurements : NSMutableArray!
+    var bestEffortAtLocation : CLLocation!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        locationMeasurements = NSMutableArray()
+        
         toolbar.barTintColor = swiftColor
         toolbar.translucent = false
         toolbar.clipsToBounds = true
@@ -91,18 +96,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         bottomToolbar.translucent = false
         bottomToolbar.clipsToBounds = true
         
-        locationDict = [[String:locations]]()
-        
-        self.locationManager = CLLocationManager()
-        self.locationManager.delegate = self
-        self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-        self.locationManager.requestWhenInUseAuthorization()
-        self.locationManager.startUpdatingLocation()
-        self.location = self.locationManager.location
-        self.deviceLat = self.locationManager.location?.coordinate.latitude
-        self.deviceLon = self.locationManager.location?.coordinate.longitude
-            
-            
+        locationDict = [[String:locationss]]()
         
         let width = self.view.frame.width
         let height = (self.view.frame.height-self.view.frame.width-2*self.toolbar.frame.height-self.toolbarYancı.frame.height)
@@ -287,27 +281,61 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
 
     }
     
+    func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
+        let locationAge = newLocation.timestamp.timeIntervalSinceNow
+        
+        print(locationAge)
+        if locationAge > 5 {
+            return
+        }
+
+        if (bestEffortAtLocation == nil) || (bestEffortAtLocation.horizontalAccuracy > newLocation.horizontalAccuracy) {
+            self.bestEffortAtLocation = newLocation
+//            print(locationManager.desiredAccuracy)
+//            print(bestEffortAtLocation.horizontalAccuracy)
+            if (newLocation.horizontalAccuracy <= locationManager.desiredAccuracy) {
+                        CLGeocoder().reverseGeocodeLocation(manager.location!, completionHandler: {(placemarks, error) -> Void in
+                            if (error != nil) {
+                                print("Reverse geocoder failed with error" + error!.localizedDescription)
+                                return
+                            }
+                
+                            if placemarks!.count > 0 {
+                                let pm = placemarks![0] as CLPlacemark
+                                self.displayLocationInfo(pm, location: newLocation)
+                
+                
+                                
+                            } else {
+                                print("Problem with the data received from geocoder")
+                            }
+                        })            }
+        }
+    }
     
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         displayAlert("Hata", message: error.helpAnchor!)
     }
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        CLGeocoder().reverseGeocodeLocation(manager.location!, completionHandler: {(placemarks, error) -> Void in
-            if (error != nil) {
-                print("Reverse geocoder failed with error" + error!.localizedDescription)
-                return
-            }
-            
-            if placemarks!.count > 0 {
-                let pm = placemarks![0] as CLPlacemark
-                self.displayLocationInfo(pm)
-            } else {
-                print("Problem with the data received from geocoder")
-            }
-        })
-    }
+//    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+//        CLGeocoder().reverseGeocodeLocation(manager.location!, completionHandler: {(placemarks, error) -> Void in
+//            if (error != nil) {
+//                print("Reverse geocoder failed with error" + error!.localizedDescription)
+//                return
+//            }
+//            
+//            if placemarks!.count > 0 {
+//                let pm = placemarks![0] as CLPlacemark
+//                self.displayLocationInfo(pm)
+//                
+//
+//                
+//            } else {
+//                print("Problem with the data received from geocoder")
+//            }
+//        })
+//    }
     
-    func displayLocationInfo(placemark: CLPlacemark) {
+    func displayLocationInfo(placemark: CLPlacemark, location: CLLocation) {
             //stop updating location to save battery life
             locationManager.stopUpdatingLocation()
 //            print(placemark.locality)
@@ -317,6 +345,81 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
 //            print(placemark.postalCode)
             print(placemark.subLocality)
             //print(placemark)
+        let session = Session.sharedSession()
+        
+        
+        //var parameters = [Parameter.query:"moda sahil"]
+        let parameters = location.parameters()
+        
+        
+        let searchTask = session.venues.search(parameters) {
+            (result) -> Void in
+            dispatch_async(dispatch_get_main_queue(), {
+                //print(result)
+                locationDict.removeAll()
+                placesArray.removeAll()
+                placeOrder.removeAllObjects()
+                if let response = result.response {
+                    
+                    
+                    let venues = response["venues"] as! [JSONParameters]?
+                    for (var i = 0; i < venues?.count ; i+=1){
+                        let item = venues![i]
+                        let itemlocation = item["location"] as! [String:AnyObject]
+                        let itemstats = item["stats"] as! [String:AnyObject]
+                        //print(itemlocation)
+                        let latL = itemlocation["lat"] as! Float
+                        let lonL = itemlocation["lng"] as! Float
+                        let latM = Float(self.location.coordinate.latitude)
+                        let lonM = Float(self.location.coordinate.longitude)
+                        var distancen = ((latM-latL)*(latM-latL))+((lonL-lonM)*(lonL-lonM))
+                        distancen = sqrt(distancen)*111000
+                        //print(distancen)
+                        let distance = itemlocation["distance"] as! NSInteger
+                        let isVerified = item["verified"] as! Bool
+                        let checkinsCount = itemstats["checkinsCount"] as! NSInteger
+                        let enoughCheckin:Bool = (checkinsCount > 500)
+                        if (distance < 200){
+                            if(isVerified||enoughCheckin){
+                                //let order = [(item["name"] as! String):placesArray.count]
+                                placeOrder.setObject(placesArray.count , forKey: (item["name"] as! String))
+                                placesArray.append(item["name"] as! String)
+                                let name = item["name"] as! String
+                                let id = item["id"] as! String
+                                let lat = itemlocation["lat"] as! Float
+                                let lon = itemlocation["lng"] as! Float
+                                let address = itemlocation["formattedAddress"] as! [String]
+                                
+                                var loc = locationss()
+                                loc.name = name
+                                loc.id = id
+                                loc.lat = lat
+                                loc.lon = lon
+                                for item in address {
+                                    loc.adress = loc.adress + item
+                                }
+                                //print(venues?.count)
+                                if item.indexForKey("photo") != nil {
+                                    ////print("foto var")
+                                } else {
+                                    
+                                    ////print("foto yok")
+                                }
+                                
+                                let locationDictitem = [name:loc]
+                                locationDict.append(locationDictitem)
+                                
+                            }
+                        }
+                    }
+                    
+                }
+                
+                
+            })
+        }
+        
+        searchTask.start()
     }
 
     
@@ -360,89 +463,14 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         dispatch_async(dispatch_get_main_queue()) {
         self.locationManager = CLLocationManager()
         self.locationManager.delegate = self
-        self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
         self.locationManager.requestWhenInUseAuthorization()
         self.locationManager.startUpdatingLocation()
-        self.location = self.locationManager.location
-        self.locationManager.stopUpdatingLocation()
         self.location = self.locationManager.location
         self.deviceLat = self.locationManager.location?.coordinate.latitude
         self.deviceLon = self.locationManager.location?.coordinate.longitude
         }
-        let session = Session.sharedSession()
-        
-        
-        //var parameters = [Parameter.query:"moda sahil"]
-        let parameters = location!.parameters()
-        
-        
-        let searchTask = session.venues.search(parameters) {
-            (result) -> Void in
-            dispatch_async(dispatch_get_main_queue(), {
-                //print(result)
-            if let response = result.response {
-                
-               
-                let venues = response["venues"] as! [JSONParameters]?
-                for (var i = 0; i < venues?.count ; i+=1){
-                    let item = venues![i]
-                    let itemlocation = item["location"] as! [String:AnyObject]
-                    let itemstats = item["stats"] as! [String:AnyObject]
-                    //print(itemlocation)
-                    let latL = itemlocation["lat"] as! Float
-                    let lonL = itemlocation["lng"] as! Float
-                    let latM = Float(self.location.coordinate.latitude)
-                    let lonM = Float(self.location.coordinate.longitude)
-                    var distancen = ((latM-latL)*(latM-latL))+((lonL-lonM)*(lonL-lonM))
-                    distancen = sqrt(distancen)*111000
-                    //print(distancen)
-                    let distance = itemlocation["distance"] as! NSInteger
-                    let isVerified = item["verified"] as! Bool
-                    let checkinsCount = itemstats["checkinsCount"] as! NSInteger
-                    let enoughCheckin:Bool = (checkinsCount > 500)
-                    if (distance < 200){
-                        if(isVerified||enoughCheckin){
-                            //let order = [(item["name"] as! String):placesArray.count]
-                            placeOrder.setObject(placesArray.count , forKey: (item["name"] as! String))
-                            placesArray.append(item["name"] as! String)
-                            let name = item["name"] as! String
-                            let id = item["id"] as! String
-                            let lat = itemlocation["lat"] as! Float
-                            let lon = itemlocation["lng"] as! Float
-                            let address = itemlocation["formattedAddress"] as! [String]
-                            
-                            var loc = locations()
-                            loc.name = name
-                            loc.id = id
-                            loc.lat = lat
-                            loc.lon = lon
-                            for item in address {
-                                loc.adress = loc.adress + item
-                            }
-                            //print(venues?.count)
-                            if item.indexForKey("photo") != nil {
-                                ////print("foto var")
-                            } else {
-                                
-                                ////print("foto yok")
-                            }
-
-                        let locationDictitem = [name:loc]
-                            locationDict.append(locationDictitem)
-                        
-                        }
-                    }
-                }
-               
-            }
-                
-         
-            })
-        }
-
-        searchTask.start()
-        
-    }
+           }
     
 
     

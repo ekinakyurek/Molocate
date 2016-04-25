@@ -141,6 +141,7 @@
 		C63629441CCC04FB0071E6BF /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		C63629461CCC04FF0071E6BF /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		C63629481CCCEE210071E6BF /* searchUsername.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = searchUsername.swift; sourceTree = "<group>"; };
+		C636294A1CCD3D360071E6BF /* md5-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "md5-Bridging-Header.h"; sourceTree = "<group>"; };
 		C638AFF21C9C7E74003085E8 /* likeVideo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = likeVideo.swift; sourceTree = "<group>"; };
 		C638AFF61C9C80B3003085E8 /* likeVideoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = likeVideoCell.swift; sourceTree = "<group>"; };
 		C63D1F1B1C1FA20D003B2CC1 /* SignUpAdvance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpAdvance.swift; sourceTree = "<group>"; };
@@ -368,6 +369,7 @@
 				C609053D1C486A7300614C7F /* NotInUse */,
 				C63FBD0D1BF3E5B900DBB34C /* Assets.xcassets */,
 				C63FBD0F1BF3E5B900DBB34C /* LaunchScreen.storyboard */,
+				C636294A1CCD3D360071E6BF /* md5-Bridging-Header.h */,
 			);
 			path = Molocate;
 			sourceTree = "<group>";
@@ -897,6 +899,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mellonapp.Molocate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "molocate/md5-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -919,6 +922,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mellonapp.Molocate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "molocate/md5-Bridging-Header.h";
 			};
 			name = Release;
 		};

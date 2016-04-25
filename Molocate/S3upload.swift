@@ -13,9 +13,12 @@ let CognitoRegionType = AWSRegionType.USEast1
 let DefaultServiceRegionType = AWSRegionType.EUCentral1
 let CognitoIdentityPoolId: String = "us-east-1:721a27e4-d95e-4586-a25c-83a658a1c7cc"
 let S3BucketName: String = "molocatebucket"
+var n = 0
 
 public class S3Upload {
+    
     class func upload(uploadRequest: AWSS3TransferManagerUploadRequest, fileURL: String, fileID: String, json: AnyObject) {
+        
         let transferManager = AWSS3TransferManager.defaultS3TransferManager()
         transferManager.upload(uploadRequest).continueWithBlock { (task) -> AnyObject! in
             if let error = task.error {
@@ -24,30 +27,79 @@ public class S3Upload {
                         switch (errorCode) {
                         case .Cancelled, .Paused:
                             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                print("internet low")
+                                //print("internet low")
                                 //upload(uploadRequest, fileURL: fileURL, fileID: fileID, json: json)
                                 
                             })
                             break;
                             
                         default:
+                            if (n < 10) {
                             print("upload() failed: [\(error)]")
+                                
                             upload(uploadRequest, fileURL: fileURL, fileID: fileID, json: json)
+                            n += 1
+                            } else {
+                                do {
+                                    try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
+
+                                } catch _ {
+                                    
+                                }
+                            }
+
+                            
                             break;
                         }
                     } else {
                         print("upload() failed: [\(error)]")
-                        upload(uploadRequest, fileURL: fileURL, fileID: fileID, json: json)
+                        if (n < 10) {
+                            
+                            upload(uploadRequest, fileURL: fileURL, fileID: fileID, json: json)
+                            n += 1
+                        } else {
+                            do {
+                                try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
+                                
+                            } catch _ {
+                                
+                            }
+                        }
+
                     }
                 } else {
                     print("upload() failed: [\(error)]")
-                    upload(uploadRequest, fileURL: fileURL, fileID: fileID, json: json)
+                    if (n < 10) {
+                       
+                        upload(uploadRequest, fileURL: fileURL, fileID: fileID, json: json)
+                        n += 1
+                    } else {
+                        do {
+                            try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
+                            
+                        } catch _ {
+                            
+                        }
+                    }
+
                 }
             }
             
             if let exception = task.exception {
                 print("upload() failed: [\(exception)]")
-                upload(uploadRequest, fileURL: fileURL, fileID: fileID, json: json)
+                if (n < 10) {
+                    
+                    upload(uploadRequest, fileURL: fileURL, fileID: fileID, json: json)
+                    n += 1
+                } else {
+                    do {
+                        try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
+                        
+                    } catch _ {
+                        
+                    }
+                }
+
             }
             
             if task.result != nil {
@@ -151,8 +203,8 @@ public class S3Upload {
                                                 
                 dispatch_async(dispatch_get_main_queue()) {
                 print("siiiiil")
-                isUploaded = true
                 
+                n = 0
                 
                     }
                            } catch _ {

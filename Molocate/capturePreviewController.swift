@@ -44,7 +44,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
     @IBOutlet var textField: UITextField!
     var categories = ["Eğlence","Yemek","Gezi","Moda" , "Güzellik", "Spor","Etkinlik","Kampüs"]
    
-    var videoLocation:locations!
+    var videoLocation:locationss!
     @IBOutlet var placeTable: UITableView!
     var taggedUsers = [String]()
     @IBOutlet var postO: UIButton!
@@ -118,7 +118,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
         self.player = Player()
         player.delegate = self
         self.player.playbackLoops = true
-        videoLocation = locations()
+        videoLocation = locationss()
         if is4s{
             
         } else {
