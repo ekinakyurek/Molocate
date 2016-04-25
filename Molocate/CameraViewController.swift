@@ -672,6 +672,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                                 
                                 fakeoutputFileURL = exporter?.outputURL
                                 tempAssetURL = fakeoutputFileURL
+                                
                                 self.videoDone.enabled = true
 
                             }
@@ -883,7 +884,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
             if(fakeoutputFileURL != nil){
             cleanup()
                 //print("siliniyor")
-                
+            fakeoutputFileURL = nil
             }
         
         
