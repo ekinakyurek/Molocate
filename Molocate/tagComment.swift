@@ -17,8 +17,8 @@ class tagComment: UIViewController, UITextViewDelegate {
         let parent =  (self.parentViewController as! capturePreviewController)
        
         for(var i = 0; i < numbers.count; i += 1 ){
-            CaptionText = CaptionText + " @" + userRelations.relations[numbers[i]].username
-            print(CaptionText)
+            
+          
             parent.taggedUsers.append(userRelations.relations[numbers[i]].username)
         }
         

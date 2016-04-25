@@ -33,16 +33,16 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
         if(classUser.post_count != 0 || classUser.tag_count != 0 ) {
             errorMessage.hidden = true
         }
-        if(user.username == MoleCurrentUser.username){
+        if(classUser.username == MoleCurrentUser.username){
             showTable()
             scrollView.userInteractionEnabled = false
             UIView.animateWithDuration(0.75) { () -> Void in
             }
         }else {
-            if !user.isFollowing{
+            if !classUser.isFollowing{
                 FollowButton.image = UIImage(named: "unfollow")
                 user.isFollowing = true
-                MolocateAccount.follow(user.username, completionHandler: { (data, response, error) -> () in
+                MolocateAccount.follow(classUser.username, completionHandler: { (data, response, error) -> () in
                   MoleCurrentUser.following_count += 1
                  
                     ////print("follow"+data)
@@ -50,7 +50,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
             } else {
                 FollowButton.image = UIImage(named: "follow")
                 user.isFollowing = false
-                MolocateAccount.unfollow(user.username, completionHandler: { (data, response, error) -> () in
+                MolocateAccount.unfollow(classUser.username, completionHandler: { (data, response, error) -> () in
                    MoleCurrentUser.following_count -= 1
                     if let parentVC = self.parentViewController {
                         if let parentVC = parentVC as? Followers{

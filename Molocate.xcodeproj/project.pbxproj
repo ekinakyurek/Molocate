@@ -26,8 +26,6 @@
 		C61FDAB31BFBD332007B940E /* ExploreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C61FDAB21BFBD332007B940E /* ExploreViewController.xib */; };
 		C61FDAB51BFBD393007B940E /* CameraViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C61FDAB41BFBD393007B940E /* CameraViewController.xib */; };
 		C61FDAB71BFBD3A9007B940E /* FollowingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C61FDAB61BFBD3A9007B940E /* FollowingViewController.xib */; };
-		C63629451CCC04FB0071E6BF /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C63629441CCC04FB0071E6BF /* StoreKit.framework */; };
-		C63629471CCC04FF0071E6BF /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C63629461CCC04FF0071E6BF /* GameKit.framework */; };
 		C63629491CCCEE210071E6BF /* searchUsername.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63629481CCCEE210071E6BF /* searchUsername.swift */; };
 		C638AFF31C9C7E74003085E8 /* likeVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C638AFF21C9C7E74003085E8 /* likeVideo.swift */; };
 		C638AFF71C9C80B3003085E8 /* likeVideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C638AFF61C9C80B3003085E8 /* likeVideoCell.swift */; };
@@ -138,8 +136,6 @@
 		C61FDAB21BFBD332007B940E /* ExploreViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExploreViewController.xib; sourceTree = "<group>"; };
 		C61FDAB41BFBD393007B940E /* CameraViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraViewController.xib; sourceTree = "<group>"; };
 		C61FDAB61BFBD3A9007B940E /* FollowingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FollowingViewController.xib; sourceTree = "<group>"; };
-		C63629441CCC04FB0071E6BF /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		C63629461CCC04FF0071E6BF /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		C63629481CCCEE210071E6BF /* searchUsername.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = searchUsername.swift; sourceTree = "<group>"; };
 		C636294A1CCD3D360071E6BF /* md5-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "md5-Bridging-Header.h"; sourceTree = "<group>"; };
 		C638AFF21C9C7E74003085E8 /* likeVideo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = likeVideo.swift; sourceTree = "<group>"; };
@@ -233,11 +229,9 @@
 				C6BA0A151BFA422B0091E088 /* libz.tbd in Frameworks */,
 				C6BA0A131BFA421D0091E088 /* SystemConfiguration.framework in Frameworks */,
 				C6BA0A0F1BFA42110091E088 /* QuartzCore.framework in Frameworks */,
-				C63629451CCC04FB0071E6BF /* StoreKit.framework in Frameworks */,
 				C6BA0A101BFA42110091E088 /* Security.framework in Frameworks */,
 				C6BA0A0A1BFA42000091E088 /* CoreGraphics.framework in Frameworks */,
 				C6BA0A0B1BFA42000091E088 /* CoreLocation.framework in Frameworks */,
-				C63629471CCC04FF0071E6BF /* GameKit.framework in Frameworks */,
 				C6BA0A071BFA41F20091E088 /* CFNetwork.framework in Frameworks */,
 				C6BA0A051BFA417B0091E088 /* AudioToolbox.framework in Frameworks */,
 				C65A45101C694AFC00E9DA6F /* FBSDKShareKit.framework in Frameworks */,
@@ -424,8 +418,6 @@
 		C686D2C91C05FEA5003484A5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C63629461CCC04FF0071E6BF /* GameKit.framework */,
-				C63629441CCC04FB0071E6BF /* StoreKit.framework */,
 				C68956291C4EC3E200D391F2 /* Accounts.framework */,
 				C68956271C4EC3D500D391F2 /* Social.framework */,
 				C6560BA21C0E610B00DD0BA5 /* Facebook */,
@@ -563,10 +555,10 @@
 						DevelopmentTeam = 573682DC5D;
 						SystemCapabilities = {
 							com.apple.GameCenter = {
-								enabled = 1;
+								enabled = 0;
 							};
 							com.apple.InAppPurchase = {
-								enabled = 1;
+								enabled = 0;
 							};
 							com.apple.WAC = {
 								enabled = 0;
