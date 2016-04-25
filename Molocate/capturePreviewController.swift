@@ -175,14 +175,14 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
         //caption.titleLabel!.textColor = UIColor.blackColor()
         caption.backgroundColor = UIColor.whiteColor()
         if CaptionText == "" {
-            caption.setTitle("Yorum ve arkadaş ekle", forState: .Normal)
-            caption.setTitleColor(UIColor.blackColor(), forState: .Normal)
-            caption.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 15.5)
-
+           
+            var multipleAttributes2 = [String : NSObject]()
+            multipleAttributes2[NSFontAttributeName] =  UIFont(name: "AvenirNext-Regular", size: 14)
+            multipleAttributes2[NSForegroundColorAttributeName] = UIColor.grayColor()
+            let commentext = NSMutableAttributedString(string: "Yorum ve arkadaş ekle", attributes:  multipleAttributes2)
+            caption.setAttributedTitle(commentext, forState: .Normal)
         }else{
-            caption.setTitle(CaptionText, forState: .Normal)
-              caption.setTitleColor(UIColor.blackColor(), forState: .Normal)
-            caption.titleLabel?.font =  UIFont(name: "AvenirNext-Regular", size: 15.5)
+           // caption.setTitle(CaptionText, forState: .Normal)
 
         }
        // caption.setTitleColor(UIColor.blackColor(), forState: .Normal)

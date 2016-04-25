@@ -15,14 +15,31 @@ class tagComment: UIViewController, UITextViewDelegate {
     @IBAction func done(sender: AnyObject) {
         CaptionText = textField.text!
         let parent =  (self.parentViewController as! capturePreviewController)
+        
+        var textstring = " "
        
         for(var i = 0; i < numbers.count; i += 1 ){
-            
-          
             parent.taggedUsers.append(userRelations.relations[numbers[i]].username)
+            textstring +=  "@" + userRelations.relations[numbers[i]].username
         }
         
-       parent.caption.setTitle(CaptionText, forState: .Normal)
+      
+        var multipleAttributes = [String : NSObject]()
+        multipleAttributes[NSForegroundColorAttributeName] = swiftColor2
+        multipleAttributes[NSFontAttributeName] =  UIFont(name: "AvenirNext-Regular", size: 14)
+        
+        let tags =  NSAttributedString(string: textstring, attributes: multipleAttributes)
+        
+        var multipleAttributes2 = [String : NSObject]()
+        multipleAttributes2[NSFontAttributeName] =  UIFont(name: "AvenirNext-Regular", size: 14)
+        multipleAttributes2[NSForegroundColorAttributeName] = UIColor.blackColor()
+        
+        
+        let commentext = NSMutableAttributedString(string: CaptionText, attributes:  multipleAttributes2)
+        //print(videoInfo.caption+"--------------")
+        commentext.appendAttributedString(tags)
+        
+        parent.caption.setAttributedTitle(commentext, forState: .Normal)
         
         self.willMoveToParentViewController(nil)
         self.view.removeFromSuperview()
