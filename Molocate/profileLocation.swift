@@ -283,9 +283,9 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
                 cell.likeCount.setTitle("\(videoArray[indexPath.row].likeCount)", forState: .Normal)
                 
                 if(videoArray[indexPath.row].isLiked == 0) {
-                    cell.likeButton.setBackgroundImage(UIImage(named: "Like.png"), forState: UIControlState.Normal)
+                    cell.likeButton.setBackgroundImage(UIImage(named: "likeunfilled"), forState: UIControlState.Normal)
                 }else{
-                    cell.likeButton.setBackgroundImage(UIImage(named: "LikeFilled.png"), forState: UIControlState.Normal)
+                    cell.likeButton.setBackgroundImage(UIImage(named: "likefilled"), forState: UIControlState.Normal)
                     cell.likeButton.tintColor = UIColor.whiteColor()
                 }
             }else if pressedFollow{
