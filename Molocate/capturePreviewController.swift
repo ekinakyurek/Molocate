@@ -6,6 +6,7 @@ import UIKit
 import AVFoundation
 import AVKit
 import AWSS3
+import Photos
 
 var CaptionText = ""
 
@@ -59,7 +60,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
                         
 //                        let videoId2 = videoId
 //                        let videoUrl2 = videoUrl
-                        //print(self.videoLocation)
+                        ////print(self.videoLocation)
 
             let random = randomStringWithLength(64)
             let fileName = random.stringByAppendingFormat(".mp4", random)
@@ -89,7 +90,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
 //        do {
 //            try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
 //            dispatch_async(dispatch_get_main_queue()) {
-//                print("siiiiil")
+//                //print("siiiiil")
 //                isUploaded = true
 //
 //            self.performSegueWithIdentifier("finishUpdate", sender: self)
@@ -107,7 +108,96 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
     
 
     @IBOutlet var share4s: UIButton!
-    
+   
+    @IBAction func share44s(sender: AnyObject) {
+        if is4s {
+            if (!isLocationSelected || !isCategorySelected){
+                self.postO.enabled = false
+                displayAlert("Dikkat", message: "Lütfen Kategori ve Konum seçiniz.")
+            }
+            else {
+                
+                
+                //                        let videoId2 = videoId
+                //                        let videoUrl2 = videoUrl
+                ////print(self.videoLocation)
+                
+                let random = randomStringWithLength(64)
+                let fileName = random.stringByAppendingFormat(".mp4", random)
+                let fileURL = NSURL(fileURLWithPath: videoPath!)
+                let uploadRequest = AWSS3TransferManagerUploadRequest()
+                uploadRequest.body = fileURL
+                uploadRequest.key = "videos/" + (fileName as String)
+                uploadRequest.bucket = S3BucketName
+                let json = [
+                    "video_id": fileName as String,
+                    "video_url": "https://d1jkin67a303u2.cloudfront.net/videos/"+(fileName as String),
+                    "caption": CaptionText,
+                    "category": self.categ,
+                    "tagged_users": self.taggedUsers,
+                    "location": [
+                        [
+                            "id": self.videoLocation.id,
+                            "latitude": self.videoLocation.lat,
+                            "longitude": self.videoLocation.lon,
+                            "name": self.videoLocation.name,
+                            "address": self.videoLocation.adress
+                        ]
+                    ]
+                ]
+                S3Upload.upload(uploadRequest, fileURL: "https://d1jkin67a303u2.cloudfront.net/videos/"+(fileName as String), fileID: fileName as String ,json: json)
+                
+                //        do {
+                //            try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
+                //            dispatch_async(dispatch_get_main_queue()) {
+                //                //print("siiiiil")
+                //                isUploaded = true
+                //
+                //            self.performSegueWithIdentifier("finishUpdate", sender: self)
+                //
+                //            }
+                //        } catch _ {
+                //
+                //        }
+                
+                self.performSegueWithIdentifier("finishUpdate", sender: self)
+            }
+            
+            
+        } else {
+            self.player.stop()
+            self.player = Player()
+            activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 0.0, y: 0.0, width: 50.0, height: 50.0))
+            activityIndicator.center = self.view.center
+            activityIndicator.hidesWhenStopped = true
+            activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.White
+            view.addSubview(activityIndicator)
+            activityIndicator.startAnimating()
+            PHPhotoLibrary.sharedPhotoLibrary().performChanges({
+                // In iOS 9 and later, it's possible to move the file into the photo library without duplicating the file data.
+                // This avoids using double the disk space during save, which can make a difference on devices with limited free disk space.
+                let newURL = NSURL(fileURLWithPath: videoPath!)
+                
+                PHAssetChangeRequest.creationRequestForAssetFromVideoAtFileURL(newURL)
+                }, completionHandler: {success, error in
+                    if !success {
+                        NSLog("Could not save movie to photo library: %@", error!)
+                    }
+                    
+                    
+                    
+            })
+            self.activityIndicator.stopAnimating()
+            self.displayAlert("Kaydet", message: "Videonuz kaydedilmiştir.")
+            self.putVideo()
+            
+            
+            
+        }
+        
+        
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -123,9 +213,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
         if is4s{
             
         } else {
-            self.share4s.hidden = true
-            self.share4s.enabled = false
-            self.share4s.tintColor = UIColor.clearColor()
+            self.share4s.setTitle("Kaydet", forState: .Normal)
             
             
         }
@@ -207,10 +295,10 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
             activityIndicator.startAnimating()
 
         } else {
-            textField.text = placesArray[0]
+            textField.text = "📌"+placesArray[0]
             let correctedRow = placeOrder.objectForKey(placesArray[0]) as! Int
             videoLocation = locationDict[correctedRow][placesArray[correctedRow]]
-            //print(videoLocation.name)
+            //////print(videoLocation.name)
             isLocationSelected = true
         }
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(capturePreviewController.configurePlace), name: "configurePlace", object: nil)
@@ -270,10 +358,10 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
     }
     func configurePlace() {
         self.activityIndicator.stopAnimating()
-        textField.text = placesArray[0]
+        textField.text = "📌"+placesArray[0]
         let correctedRow = placeOrder.objectForKey(placesArray[0]) as! Int
         videoLocation = locationDict[correctedRow][placesArray[correctedRow]]
-        //print(videoLocation.name)
+        ////print(videoLocation.name)
         isLocationSelected = true
     }
     func pressedCaption(sender: UIButton) {
@@ -325,8 +413,8 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
         //dispatch_async(dispatch_get_main_queue()) {
         
         self.categ = MoleCategoriesDictionary[self.categories[indexPath.row]]
-        print(self.categories[indexPath.row])
-        print(self.categ)
+        //print(self.categories[indexPath.row])
+        //print(self.categ)
         self.isCategorySelected = true
         if isLocationSelected {
          self.bottomToolbar.barTintColor = swiftColor
@@ -355,7 +443,6 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
         placeTable.hidden = false
         downArrow.hidden = false
         let substring = (self.textField.text! as NSString).stringByReplacingCharactersInRange(range, withString: string)
-        
         searchAutocompleteEntriesWithSubstring(substring)
         return true
     }
@@ -382,14 +469,17 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
         
         for curString in placesArray
         {
-            print(curString)
+            ////print(curString)
             let myString: NSString! = curString as NSString
             let substringRange: NSRange! = myString.rangeOfString(substring)
-            print(substringRange.location)
+            ////print(substringRange.location)
             if (substringRange.location == 0)
             {
                 autocompleteUrls.append(curString)
             }
+        }
+        if substring == "" {
+            autocompleteUrls = placesArray
         }
         
             placeTable.reloadData()
@@ -426,7 +516,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
         self.view.endEditing(true)
         let correctedRow = placeOrder.objectForKey((selectedCell.textLabel?.text!)!) as! Int
         videoLocation = locationDict[correctedRow][placesArray[correctedRow]]
-        print(videoLocation.name)
+        //print(videoLocation.name)
         isLocationSelected = true
         if isCategorySelected {
             self.bottomToolbar.barTintColor = swiftColor

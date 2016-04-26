@@ -111,7 +111,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
         let notif = notificationArray[indexPath.row].sentence
         
         let notificationAttributedString = NSAttributedString(string: notif, attributes:  multipleAttributes2)
-        //print(videoInfo.caption+"--------------")
+        ////print(videoInfo.caption+"--------------")
         usernameAttributedString.appendAttributedString(notificationAttributedString)
     
         cell.myLabel.textAlignment = .Left
@@ -134,7 +134,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
     }
     
     func labelTapped(sender: UITapGestureRecognizer){
-        print("play")
+        //print("play")
         let buttonRow = sender.view!.tag
         
         var multipleAttributes2 = [String : NSObject]()
@@ -148,7 +148,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
         let touchPoint = sender.locationInView(sender.view)
         
         
-        print(touchPoint)
+        //print(touchPoint)
         
         let validFrame = CGRectMake(0, 0, sizeLabel.intrinsicContentSize().width, 25);
  
@@ -222,7 +222,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
     
     func pressedProfilePhoto(sender: UIButton) {
         let buttonRow = sender.tag
-        ////////print("username e basıldı at index path: \(buttonRow)")
+        //////////print("username e basıldı at index path: \(buttonRow)")
 
         activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
         activityIndicator.center = self.view.center
@@ -256,7 +256,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
     
     func pressedUsername(sender: UITapGestureRecognizer) {
         let buttonRow = sender.view!.tag
-        //print("username e basıldı at index path: \(buttonRow)")
+        ////print("username e basıldı at index path: \(buttonRow)")
         activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
         activityIndicator.center = self.view.center
         activityIndicator.hidesWhenStopped = true

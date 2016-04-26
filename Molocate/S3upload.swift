@@ -27,7 +27,7 @@ public class S3Upload {
                         switch (errorCode) {
                         case .Cancelled, .Paused:
                             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                //print("internet low")
+                                ////print("internet low")
                                 //upload(uploadRequest, fileURL: fileURL, fileID: fileID, json: json)
                                 
                             })
@@ -35,7 +35,7 @@ public class S3Upload {
                             
                         default:
                             if (n < 10) {
-                            print("upload() failed: [\(error)]")
+                            //print("upload() failed: [\(error)]")
                                 let seconds = 1.0
                                 let delay = seconds * Double(NSEC_PER_SEC)  // nanoseconds per seconds
                                 let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
@@ -61,7 +61,7 @@ public class S3Upload {
                             break;
                         }
                     } else {
-                        print("upload() failed: [\(error)]")
+                        //print("upload() failed: [\(error)]")
                         if (n < 10) {
                             let seconds = 1.0
                             let delay = seconds * Double(NSEC_PER_SEC)  // nanoseconds per seconds
@@ -84,7 +84,7 @@ public class S3Upload {
 
                     }
                 } else {
-                    print("upload() failed: [\(error)]")
+                    //print("upload() failed: [\(error)]")
                     if (n < 10) {
                        
                         let seconds = 1.0
@@ -110,7 +110,7 @@ public class S3Upload {
             }
             
             if let exception = task.exception {
-                print("upload() failed: [\(exception)]")
+                //print("upload() failed: [\(exception)]")
                 if (n < 10) {
                     
                     let seconds = 1.0
@@ -147,8 +147,8 @@ public class S3Upload {
                                             do {
                     
                                                 let jsonData = try NSJSONSerialization.dataWithJSONObject(json, options:  NSJSONWritingOptions.PrettyPrinted)
-                                               // print(NSString(data: jsonData, encoding: NSUTF8StringEncoding))
-                                               // print(jsonData)
+                                               // //print(NSString(data: jsonData, encoding: NSUTF8StringEncoding))
+                                               // //print(jsonData)
                                                // create post request
                     
                                                 let request = NSMutableURLRequest(URL: NSURL(string: MolocateBaseUrl + "video/update/")!,
@@ -160,12 +160,12 @@ public class S3Upload {
                     
                     
                                                 let task = NSURLSession.sharedSession().dataTaskWithRequest(request){ data, response, error in
-                                                    //print(response)
-                                                    //print("=========================================")
-                                                    print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+                                                    ////print(response)
+                                                    ////print("=========================================")
+                                                    //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
                                                     dispatch_async(dispatch_get_main_queue(), {
                                                         if error != nil{
-                                                            print("Error -> \(error)")
+                                                            //print("Error -> \(error)")
                     
                                                             return
                                                         }
@@ -175,12 +175,12 @@ public class S3Upload {
                                                             let result = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)
                     
                                                                     CaptionText = ""
-                                                            //print("Result -> \(result)")
+                                                            ////print("Result -> \(result)")
                     
                     
                     
                                                         } catch {
-                                                           // print("Error -> \(error)")
+                                                           // //print("Error -> \(error)")
                                                         }
                     
                                                     })
@@ -193,7 +193,7 @@ public class S3Upload {
                     
                     
                                             } catch {
-                                                print(error)
+                                                //print(error)
                     
                     
                                             }
@@ -208,20 +208,20 @@ public class S3Upload {
                                 thumbnailRequest.addValue("Token " + MoleUserToken!, forHTTPHeaderField: "Authorization")
                                 thumbnailRequest.HTTPBody = image
                                 let thumbnailTask = NSURLSession.sharedSession().dataTaskWithRequest(thumbnailRequest){data, response, error  in
-                                    //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+                                    ////print(NSString(data: data!, encoding: NSUTF8StringEncoding))
                                     
                                     let nsError = error;
                                     
                                     
                                     do {
                                         let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! NSDictionary
-                                        //print(result)
+                                        ////print(result)
                                         
                                         
                                     } catch{
                                         
                                         
-                                        print(nsError)
+                                        //print(nsError)
                                     }
                                     
                                 }
@@ -234,7 +234,7 @@ public class S3Upload {
                 try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
                                                 
                 dispatch_async(dispatch_get_main_queue()) {
-                print("siiiiil")
+                //print("siiiiil")
                 
                 n = 0
                 

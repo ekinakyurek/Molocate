@@ -284,19 +284,19 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
     func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
         let locationAge = newLocation.timestamp.timeIntervalSinceNow
         
-        print(locationAge)
+        //print(locationAge)
         if locationAge > 5 {
             return
         }
 
         if (bestEffortAtLocation == nil) || (bestEffortAtLocation.horizontalAccuracy > newLocation.horizontalAccuracy) {
             self.bestEffortAtLocation = newLocation
-//            print(locationManager.desiredAccuracy)
-//            print(bestEffortAtLocation.horizontalAccuracy)
+//            //print(locationManager.desiredAccuracy)
+//            //print(bestEffortAtLocation.horizontalAccuracy)
             if (newLocation.horizontalAccuracy <= locationManager.desiredAccuracy) {
                         CLGeocoder().reverseGeocodeLocation(manager.location!, completionHandler: {(placemarks, error) -> Void in
                             if (error != nil) {
-                                print("Reverse geocoder failed with error" + error!.localizedDescription)
+                                //print("Reverse geocoder failed with error" + error!.localizedDescription)
                                 return
                             }
                 
@@ -307,7 +307,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                 
                                 
                             } else {
-                                print("Problem with the data received from geocoder")
+                                //print("Problem with the data received from geocoder")
                             }
                         })            }
         }
@@ -319,7 +319,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
 //    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 //        CLGeocoder().reverseGeocodeLocation(manager.location!, completionHandler: {(placemarks, error) -> Void in
 //            if (error != nil) {
-//                print("Reverse geocoder failed with error" + error!.localizedDescription)
+//                //print("Reverse geocoder failed with error" + error!.localizedDescription)
 //                return
 //            }
 //            
@@ -330,7 +330,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
 //
 //                
 //            } else {
-//                print("Problem with the data received from geocoder")
+//                //print("Problem with the data received from geocoder")
 //            }
 //        })
 //    }
@@ -338,13 +338,13 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
     func displayLocationInfo(placemark: CLPlacemark, location: CLLocation) {
             //stop updating location to save battery life
             locationManager.stopUpdatingLocation()
-//            print(placemark.locality)
-//            print(placemark.country)
-//            print(placemark.administrativeArea)
-//            print(placemark.subAdministrativeArea)
-//            print(placemark.postalCode)
-            print(placemark.subLocality)
-            //print(placemark)
+//            //print(placemark.locality)
+//            //print(placemark.country)
+//            //print(placemark.administrativeArea)
+//            //print(placemark.subAdministrativeArea)
+//            //print(placemark.postalCode)
+            //print(placemark.subLocality)
+            ////print(placemark)
         let session = Session.sharedSession()
         
         
@@ -355,7 +355,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         let searchTask = session.venues.search(parameters) {
             (result) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
-                //print(result)
+                ////print(result)
                 locationDict.removeAll()
                 placesArray.removeAll()
                 placeOrder.removeAllObjects()
@@ -367,14 +367,14 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                         let item = venues![i]
                         let itemlocation = item["location"] as! [String:AnyObject]
                         let itemstats = item["stats"] as! [String:AnyObject]
-                        //print(itemlocation)
+                        ////print(itemlocation)
                         let latL = itemlocation["lat"] as! Float
                         let lonL = itemlocation["lng"] as! Float
                         let latM = Float(self.location.coordinate.latitude)
                         let lonM = Float(self.location.coordinate.longitude)
                         var distancen = ((latM-latL)*(latM-latL))+((lonL-lonM)*(lonL-lonM))
                         distancen = sqrt(distancen)*111000
-                        //print(distancen)
+                        ////print(distancen)
                         let distance = itemlocation["distance"] as! NSInteger
                         let isVerified = item["verified"] as! Bool
                         let checkinsCount = itemstats["checkinsCount"] as! NSInteger
@@ -398,12 +398,12 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                                 for item in address {
                                     loc.adress = loc.adress + item
                                 }
-                                //print(venues?.count)
+                                ////print(venues?.count)
                                 if item.indexForKey("photo") != nil {
-                                    ////print("foto var")
+                                    //////print("foto var")
                                 } else {
                                     
-                                    ////print("foto yok")
+                                    //////print("foto yok")
                                 }
                                 
                                 let locationDictitem = [name:loc]
@@ -602,7 +602,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
             success = error!.userInfo[AVErrorRecordingSuccessfullyFinishedKey] as! Bool? ?? false
         }
         if success {
-            ////print(outputFileURL)
+            //////print(outputFileURL)
             if firstAsset == nil {
                 firstAsset = AVAsset(URL: outputFileURL)
                 tempAssetURL = outputFileURL
@@ -645,7 +645,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                     
                         let outputFileName = NSProcessInfo.processInfo().globallyUniqueString as NSString
                         let exportPath = (NSTemporaryDirectory() as NSString).stringByAppendingPathComponent(outputFileName.stringByAppendingPathExtension("mov")!)
-                        //print(exportPath)
+                        ////print(exportPath)
                         let exportURL = NSURL(fileURLWithPath: exportPath)
                         let exporter = AVAssetExportSession(asset: merge, presetName: AVAssetExportPresetHighestQuality)
                         exporter?.outputURL = exportURL
@@ -686,7 +686,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                     
                 }
                 catch let error {
-                    //print(error)
+                    ////print(error)
                 }
             }
             
@@ -722,6 +722,9 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
     @IBOutlet var videoDone: UIBarButtonItem!
     @IBAction func videoDone(sender: AnyObject) {
         self.holdRelease()
+        if (self.videoOutput!.recording) {
+            self.videoOutput?.stopRecording()
+        }
         if ((self.progress > 0.2)&&(fakeoutputFileURL != nil)) {
         
         tempAssetURL = nil
@@ -849,7 +852,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                 thumbnail = UIImage(CGImage: imageRef)
                 self.performSegueWithIdentifier("capturePreview", sender: self)
             } catch {
-                //print(error)
+                ////print(error)
                 
             }
            
@@ -885,7 +888,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
             }
             if(fakeoutputFileURL != nil){
             cleanup()
-                //print("siliniyor")
+                ////print("siliniyor")
             fakeoutputFileURL = nil
             }
         
@@ -900,7 +903,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         }
         if(videoPath != ""){
             cleanuppath()
-            //print("siliniyor")
+            ////print("siliniyor")
             
         }
         placesArray.removeAll()
@@ -926,8 +929,8 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
             do {
                 try device.lockForConfiguration()
                 defer {device.unlockForConfiguration()}
-                //print(device.description)
-                //print(device.isFlashModeSupported(AVCaptureFlashMode.On))
+                ////print(device.description)
+                ////print(device.isFlashModeSupported(AVCaptureFlashMode.On))
                 
                 if (device.position == AVCaptureDevicePosition.Back){
                     device.torchMode = .On
@@ -973,7 +976,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                 
                 // Start recording to a temporary file.
                 let outputFileName = NSProcessInfo.processInfo().globallyUniqueString as NSString
-                ////print(outputFileName)
+                //////print(outputFileName)
 
                 let outputFilePath: String = (NSTemporaryDirectory() as NSString).stringByAppendingPathComponent(outputFileName.stringByAppendingPathExtension("mov")!)
                 
@@ -1086,12 +1089,12 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                 try device.lockForConfiguration()
                 device.flashMode = flashMode
                 device.torchMode = AVCaptureTorchMode.On
-                //print(device.torchLevel)
+                ////print(device.torchLevel)
                 device.unlockForConfiguration()
                 
             } catch let error1 as NSError {
                 error = error1
-                //print(error)
+                ////print(error)
             }
         }
         
@@ -1128,10 +1131,10 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         let transform = assetTrack.preferredTransform
         let assetInfo = orientationFromTransform(transform)
         var scaleToFitRatio = UIScreen.mainScreen().bounds.width / assetTrack.naturalSize.width
-        //print(assetInfo.orientation)
+        ////print(assetInfo.orientation)
         if assetInfo.isPortrait {
             // 4
-            //print("ppppp")
+            ////print("ppppp")
             scaleToFitRatio = UIScreen.mainScreen().bounds.width / assetTrack.naturalSize.height
             let scaleFactor = CGAffineTransformMakeScale(scaleToFitRatio, scaleToFitRatio)
 
@@ -1149,7 +1152,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
             let scaleFactor = CGAffineTransformMakeScale(scaleToFitRatio, scaleToFitRatio)
             var concat = CGAffineTransformConcat(CGAffineTransformConcat(assetTrack.preferredTransform, scaleFactor), CGAffineTransformMakeTranslation(0, UIScreen.mainScreen().bounds.width / 2))
             if assetInfo.orientation == .Down {
-                //print("down")
+                ////print("down")
                 let fixUpsideDown = CGAffineTransformMakeRotation(CGFloat(M_PI))
                 let windowBounds = UIScreen.mainScreen().bounds
                 let yFix = assetTrack.naturalSize.height + windowBounds.height
@@ -1331,9 +1334,9 @@ extension CLLocation {
         let valuellacc = "\(self.horizontalAccuracy)"
         let valuealt = "\(self.altitude)"
         let valuealtacc = "\(self.verticalAccuracy)"
-//        print(self.verticalAccuracy)
-//        print(self.horizontalAccuracy)
-//        print(self.coordinate)
+//        //print(self.verticalAccuracy)
+//        //print(self.horizontalAccuracy)
+//        //print(self.coordinate)
         return [ myll:valuell , myllacc:valuellacc , myalt:valuealt, myaltAcc: valuealtacc]
     }
     
