@@ -13,9 +13,13 @@ class ContainerController: UIViewController,UIScrollViewDelegate {
         
         dispatch_async(dispatch_get_main_queue()) {
             self.scrollView.setContentOffset(CGPoint(x: self.view.frame.width*0.23, y: 0), animated: false)
+            (self.childViewControllers[1] as! UITabBarController).selectedIndex = choosedIndex
             self.childViewControllers[1].viewDidLoad()
+          
 
         }
+        
+        
         
         scrollView.delegate = self
         

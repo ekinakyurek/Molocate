@@ -4,12 +4,14 @@
 
 import UIKit
 
-var choosedIndex = 100
+var choosedIndex = 1
+
+
 
 class SideBarController: UITableViewController {
 
     var menuArray = ["HABER KAYNAĞI","KEŞFET","BİLDİRİM MERKEZİ","PROFİL"]
-   var tableData: [String] = ["home", "explore", "notifications","avatar"]
+    var tableData: [String] = ["home", "explore", "notifications","avatar"]
     let cellIdentifier = "cell"
     var attractionImages = [String]()
     override func viewDidLoad() {
@@ -19,6 +21,8 @@ class SideBarController: UITableViewController {
         self.tableView.backgroundColor = swiftColor2
       
         tableView.contentInset = UIEdgeInsetsMake(30, 0, 0, 0);
+       
+    
         
     }
 
@@ -63,11 +67,13 @@ class SideBarController: UITableViewController {
 
         cell.imageFrame.image = UIImage(named: tableData[indexPath.row])
         cell.label.textColor = UIColor.whiteColor()
-        cell.backgroundColor = swiftColor2
        
-        
+        print(choosedIndex)
+        print(indexPath.row)
         if choosedIndex == indexPath.row {
         cell.backgroundColor = swiftColor
+        }else{
+        cell.backgroundColor = swiftColor2
         }
         return cell
     }
@@ -77,12 +83,20 @@ class SideBarController: UITableViewController {
         user = MoleCurrentUser
         //tableView.deselectRowAtIndexPath(indexPath, animated: false)
         let cell = tableView.cellForRowAtIndexPath(indexPath)
-        cell?.backgroundColor = swiftColor
+      
+        
         choosedIndex = indexPath.row
-        self.parentViewController?.childViewControllers[1].childViewControllers[0].tabBarController?.selectedIndex = indexPath.row
+        
+        
+        
+        self.parentViewController?.childViewControllers[1].childViewControllers[0].tabBarController?.selectedIndex = choosedIndex
+        
         NSNotificationCenter.defaultCenter().postNotificationName("closeSideBar", object: nil )
-        cell?.backgroundColor = swiftColor2
-        switch (indexPath.row){
+       
+        
+        tableView.reloadData()
+        
+        switch (choosedIndex){
         case 0:
             (self.parentViewController?.childViewControllers[1].childViewControllers[0].tabBarController?.selectedViewController as! HomePageViewController).tableView.setContentOffset(CGPoint(x: 0,y: 0), animated: true)
         case 1:
@@ -98,6 +112,7 @@ class SideBarController: UITableViewController {
             break;
         }
         
+
     }
 
     

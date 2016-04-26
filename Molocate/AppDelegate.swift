@@ -41,6 +41,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         configuration.shouldControllNetworkActivityIndicator = true
         Session.setupSharedSessionWithConfiguration(configuration)
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
+        
+     
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     }
     
