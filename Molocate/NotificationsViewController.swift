@@ -41,13 +41,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
         self.toolBar.translucent = false
         self.toolBar.barTintColor = swiftColor
         self.view.backgroundColor = swiftColor
-        
-        locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
-        location = locationManager.location
-        
+
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NotificationsViewController.scrollToTop), name: "scrollToTop", object: nil)
         if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
             UIApplication.sharedApplication().endIgnoringInteractionEvents()
@@ -303,6 +297,11 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
     
     
     @IBAction func openCamera(sender: AnyObject) {
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        location = locationManager.location
         if (location != nil) {
          if (isUploaded) {
             activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
@@ -332,6 +331,11 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
 
     }
     override func viewWillAppear(animated: Bool) {
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        location = locationManager.location
         
     }
 

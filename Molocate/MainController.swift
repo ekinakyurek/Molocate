@@ -128,11 +128,8 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         collectionView.backgroundColor = swiftColor3
         
         lastOffset = CGPoint(x: 0, y: 0)
-        locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
-        location = locationManager.location
+        
+        
         self.view.backgroundColor = swiftColor
         
         if(choosedIndex != 3 && profileOn == 1){
@@ -1073,10 +1070,15 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     @IBOutlet var cameraButton: UIBarButtonItem!
     
     @IBAction func openCamera(sender: AnyObject) {
-        player1.stop()
-        player2.stop()
+
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        location = locationManager.location
         if(location != nil){
-        
+            player1.stop()
+            player2.stop()
         if (isUploaded) {
             CaptionText = ""
             if isSearching != true {
@@ -1237,6 +1239,12 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     }
     
     override func viewWillAppear(animated: Bool) {
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        location = locationManager.location
+        
         
         
     }
