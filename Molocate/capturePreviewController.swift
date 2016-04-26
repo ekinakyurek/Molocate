@@ -15,8 +15,10 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     @IBOutlet var toolBar: UIToolbar!
     
+    
+    
     @IBOutlet var downArrow: UIImageView!
-    //@IBOutlet var downArrow: UIImageView!
+    
         var caption: UIButton!
         var player:Player!
         var newRect:CGRect!
@@ -235,7 +237,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
         placeTable.dataSource = self
         placeTable.scrollEnabled = true
         placeTable.hidden = true
-        downArrow.hidden = true
+     //   downArrow.hidden = true
 //        let imageName = "downarrows"
 //        let image = UIImage(named: imageName)
 //        downArrow = UIImageView(image: image!)

@@ -27,7 +27,7 @@ public class S3Upload {
                         switch (errorCode) {
                         case .Cancelled, .Paused:
                             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                ////print("internet low")
+                                print("internet low")
                                 //upload(uploadRequest, fileURL: fileURL, fileID: fileID, json: json)
                                 
                             })

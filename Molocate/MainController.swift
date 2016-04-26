@@ -452,10 +452,10 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
             }
         } else {
             if !venueoruser {
-                let rowHeight : CGFloat = 60
+                let rowHeight : CGFloat = 54
                 return rowHeight
             }
-            return 44
+            return 60
         }
     }
     
@@ -467,6 +467,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                 IsExploreInProcess = true
                 MolocateVideo.getExploreVideos(nextUrl, completionHandler: { (data, response, error, next) -> () in
                     self.nextUrl = next
+                    
                     dispatch_async(dispatch_get_main_queue()){
                         
                         for item in data!{
@@ -489,6 +490,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         
         
     }
+    
     
     func tableView(atableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if atableView == tableView {
@@ -619,33 +621,46 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                 return cell
             }
 
-            
+          
+           
         } else {
             if venueoruser {
-            let cell = venueTable.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
+            let cell = searchVenue(style: UITableViewCellStyle.Default, reuseIdentifier: "cell")
+//            let cell = venueTable.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)  
             let venue = venues[indexPath.row]
-            if let venueLocation = venue["location"] as? JSONParameters {
-                var detailText = ""
+              if let venueLocation = venue["location"] as? JSONParameters {
+                 var detailText = ""
                 if let distance = venueLocation["distance"] as? CLLocationDistance {
-                    detailText = distanceFormatter.stringFromDistance(distance)
-                }
+                         detailText = distanceFormatter.stringFromDistance(distance)
+                         cell.distanceLabel?.text = detailText
+                 }
                 if let address = venueLocation["address"] as? String {
-                    detailText = detailText +  " - " + address
-                }
-                cell.detailTextLabel?.text = detailText
-            }
-            cell.textLabel?.text = venue["name"] as? String
+                         cell.addressNameLabel.text = address
+                 }
+                
+              
+              }
+            cell.nameLabel.text = venue["name"] as? String
             return cell
             } else {
-               let cell = TableViewCellFollowerFollowing(style: UITableViewCellStyle.Default, reuseIdentifier: "myIdentifier2")
-                cell.myButton1.setTitle("\(searchedUsers[indexPath.row].username)", forState: .Normal)
-                if(searchedUsers[indexPath.row].profilePic.absoluteString != ""){
-                    cell.fotoButton.sd_setImageWithURL(searchedUsers[indexPath.row].profilePic, forState: UIControlState.Normal)
+                let cell = searchUsername(style: UITableViewCellStyle.Default, reuseIdentifier: "cell")
+
+                cell.usernameLabel.text = "@\(searchedUsers[indexPath.row].username)"
+                if searchedUsers[indexPath.row].first_name == "" {
+                cell.nameLabel.text = "\(searchedUsers[indexPath.row].username)"
                 }
-                cell.myButton1.addTarget(self, action: #selector(MainController.pressedProfileSearch(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-                cell.fotoButton.addTarget(self, action: #selector(MainController.pressedProfileSearch(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-                cell.fotoButton.tag = indexPath.row
-                cell.myButton1.tag = indexPath.row
+                else{
+                cell.nameLabel.text = "\(searchedUsers[indexPath.row].first_name) \(searchedUsers[indexPath.row].last_name)"
+                }
+//                let cell = TableViewCellFollowerFollowing(style: UITableViewCellStyle.Default, reuseIdentifier: "myIdentifier2")
+//                cell.myButton1.setTitle("\(searchedUsers[indexPath.row].username)", forState: .Normal)
+                if(searchedUsers[indexPath.row].profilePic.absoluteString != ""){
+                    cell.profilePhoto.sd_setImageWithURL(searchedUsers[indexPath.row].profilePic, forState: UIControlState.Normal)
+                }
+//                cell.myButton1.addTarget(self, action: #selector(MainController.pressedProfileSearch(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+//                cell.fotoButton.addTarget(self, action: #selector(MainController.pressedProfileSearch(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+//                cell.fotoButton.tag = indexPath.row
+//                cell.myButton1.tag = indexPath.row
                 //cell.detailTextLabel?.text = "\(searchedUsers[indexPath.row].first_name) \(searchedUsers[indexPath.row].last_name)"
                 return cell
             }

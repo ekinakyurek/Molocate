@@ -78,6 +78,7 @@
 		C6DA6BE21C4332D100E24392 /* videoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DA6BE11C4332D100E24392 /* videoCell.swift */; };
 		C6E53DC31C8A9C4E00379C31 /* Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = C6E53DC21C8A9C4E00379C31 /* Logo.png */; };
 		C6E86EAF1CB0E68E00203513 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C6E86EAE1CB0E68D00203513 /* Launch Screen.storyboard */; };
+		C6E92F781CCFD0F900CAE237 /* searchVenue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6E92F771CCFD0F900CAE237 /* searchVenue.swift */; };
 		C6F7B2651C134FAF0062E408 /* Tagged.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F7B2641C134FAF0062E408 /* Tagged.swift */; };
 		C6F7B2671C134FBF0062E408 /* Added.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F7B2661C134FBF0062E408 /* Added.swift */; };
 		C6F7B26B1C1351A20062E408 /* Added.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6F7B26A1C1351A20062E408 /* Added.xib */; };
@@ -195,6 +196,7 @@
 		C6DA6BE11C4332D100E24392 /* videoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = videoCell.swift; sourceTree = "<group>"; };
 		C6E53DC21C8A9C4E00379C31 /* Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Logo.png; sourceTree = "<group>"; };
 		C6E86EAE1CB0E68D00203513 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		C6E92F771CCFD0F900CAE237 /* searchVenue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = searchVenue.swift; sourceTree = "<group>"; };
 		C6F7B2641C134FAF0062E408 /* Tagged.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tagged.swift; sourceTree = "<group>"; };
 		C6F7B2661C134FBF0062E408 /* Added.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Added.swift; sourceTree = "<group>"; };
 		C6F7B26A1C1351A20062E408 /* Added.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Added.xib; path = ../Added.xib; sourceTree = "<group>"; };
@@ -278,6 +280,7 @@
 		3871AAA11C947F9E00DDD83E /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				C6E92F771CCFD0F900CAE237 /* searchVenue.swift */,
 				C638AFF61C9C80B3003085E8 /* likeVideoCell.swift */,
 				3871AAA21C9488BA00DDD83E /* sideCell.swift */,
 				C689562F1C50441C00D391F2 /* notificationCell.swift */,
@@ -718,6 +721,7 @@
 				C6917F921BFA60B700CA501A /* CameraViewController.swift in Sources */,
 				E33DCC6D1CB3FA2D0081C0DF /* MolocateNotifications.swift in Sources */,
 				C64B601E1C81D6A500E510DC /* MolocateAccount.swift in Sources */,
+				C6E92F781CCFD0F900CAE237 /* searchVenue.swift in Sources */,
 				C61FDAAF1BFBD0BC007B940E /* ContainerViewController.swift in Sources */,
 				C609053A1C48143C00614C7F /* MainController.swift in Sources */,
 				E33DCC6F1CB3FD7F0081C0DF /* MolocateRecord.swift in Sources */,

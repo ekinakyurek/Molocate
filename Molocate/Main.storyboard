@@ -2156,8 +2156,8 @@ bir video bulunmamaktadır :(</string>
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Qm-0t-BEd">
-                                <rect key="frame" x="-4" y="579" width="383" height="44"/>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Qm-0t-BEd">
+                                <rect key="frame" x="-4" y="623" width="383" height="44"/>
                                 <color key="backgroundColor" red="0.78823529410000004" green="0.14117647059999999" blue="0.31764705879999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="uCp-iR-NfW"/>
@@ -2274,27 +2274,6 @@ bir video bulunmamaktadır :(</string>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="downarrows" translatesAutoresizingMaskIntoConstraints="NO" id="9gc-Nr-tjG">
-                                <rect key="frame" x="358" y="264" width="16" height="15"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="17" id="307-yB-usb"/>
-                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="17" id="9b8-jd-km4"/>
-                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="17" id="CM0-xK-qMb"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="16" id="KbB-cU-2vV"/>
-                                    <constraint firstAttribute="height" constant="15" id="NNo-Sh-lE8"/>
-                                    <constraint firstAttribute="width" constant="16" id="Te1-8P-Rcg"/>
-                                    <constraint firstAttribute="height" constant="16" id="Wfd-3F-V3d"/>
-                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="15" id="bMc-oP-37B"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="16" id="dzk-d9-VAM"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="Wfd-3F-V3d"/>
-                                        <exclude reference="bMc-oP-37B"/>
-                                        <exclude reference="dzk-d9-VAM"/>
-                                    </mask>
-                                </variation>
-                            </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rightarrows" translatesAutoresizingMaskIntoConstraints="NO" id="Z1u-bs-wmu">
                                 <rect key="frame" x="357" y="122" width="16" height="16"/>
                                 <constraints>
@@ -2310,24 +2289,29 @@ bir video bulunmamaktadır :(</string>
                                     </mask>
                                 </variation>
                             </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="downarrows" translatesAutoresizingMaskIntoConstraints="NO" id="Csa-hp-M7g">
+                                <rect key="frame" x="341" y="77" width="18" height="18"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="18" id="7FV-Cz-pV7"/>
+                                    <constraint firstAttribute="width" constant="18" id="cef-3u-G3l"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.92156862745098034" green="0.16862745098039217" blue="0.36470588235294116" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="A0W-5J-K2r" firstAttribute="leading" secondItem="3fg-W9-KY2" secondAttribute="leadingMargin" constant="-20" id="1yh-6u-kGd"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="9gc-Nr-tjG" secondAttribute="trailing" id="4ux-nS-z6Y"/>
                             <constraint firstItem="y2r-Lc-d5x" firstAttribute="leading" secondItem="3fg-W9-KY2" secondAttribute="leadingMargin" constant="-20" id="5Dh-Hi-JzX"/>
                             <constraint firstAttribute="trailingMargin" secondItem="A0W-5J-K2r" secondAttribute="trailing" constant="-20" id="6ay-kv-DQU"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="9gc-Nr-tjG" secondAttribute="trailing" constant="18" id="7tw-xT-ZVB"/>
                             <constraint firstItem="Yzx-Ur-Ne1" firstAttribute="width" secondItem="A0W-5J-K2r" secondAttribute="width" id="9zc-9o-o8l"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Csa-hp-M7g" secondAttribute="trailing" id="GyI-7t-ehY"/>
                             <constraint firstItem="3Qm-0t-BEd" firstAttribute="width" secondItem="y2r-Lc-d5x" secondAttribute="width" id="KHE-CL-lZo"/>
                             <constraint firstItem="uXp-wN-ZT7" firstAttribute="width" secondItem="A0W-5J-K2r" secondAttribute="width" id="L7h-ZP-UI7"/>
                             <constraint firstItem="3Qm-0t-BEd" firstAttribute="leading" secondItem="Yzx-Ur-Ne1" secondAttribute="leading" id="NRv-ON-1mF"/>
-                            <constraint firstItem="9gc-Nr-tjG" firstAttribute="top" secondItem="uXp-wN-ZT7" secondAttribute="bottom" constant="-20" id="SmI-ls-S6y"/>
                             <constraint firstItem="3Qm-0t-BEd" firstAttribute="leading" secondItem="uXp-wN-ZT7" secondAttribute="leading" id="TnS-T3-7ol"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Z1u-bs-wmu" secondAttribute="trailing" constant="-14" id="Xa5-sn-d5x"/>
                             <constraint firstItem="Z1u-bs-wmu" firstAttribute="top" secondItem="Yzx-Ur-Ne1" secondAttribute="bottom" constant="14" id="ZwC-AE-9Vg"/>
+                            <constraint firstItem="Csa-hp-M7g" firstAttribute="top" secondItem="A0W-5J-K2r" secondAttribute="bottom" constant="13" id="b0i-Ac-UTE"/>
                             <constraint firstItem="uXp-wN-ZT7" firstAttribute="top" secondItem="Yzx-Ur-Ne1" secondAttribute="bottom" id="by1-lj-ADH"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="9gc-Nr-tjG" secondAttribute="trailing" constant="-15" id="cb8-yJ-IFZ"/>
                             <constraint firstItem="3Qm-0t-BEd" firstAttribute="leading" secondItem="A0W-5J-K2r" secondAttribute="leading" id="cwR-IN-VGv"/>
                             <constraint firstItem="y2r-Lc-d5x" firstAttribute="top" secondItem="Yzx-Ur-Ne1" secondAttribute="bottom" id="e08-S5-iQU"/>
                             <constraint firstItem="3Qm-0t-BEd" firstAttribute="bottom" secondItem="svE-vn-fIx" secondAttribute="top" id="h6t-DG-CUI"/>
@@ -2341,8 +2325,6 @@ bir video bulunmamaktadır :(</string>
                             <mask key="constraints">
                                 <exclude reference="har-Ep-oCt"/>
                                 <exclude reference="w5O-Sw-Xp7"/>
-                                <exclude reference="4ux-nS-z6Y"/>
-                                <exclude reference="7tw-xT-ZVB"/>
                             </mask>
                         </variation>
                     </view>
@@ -2351,7 +2333,7 @@ bir video bulunmamaktadır :(</string>
                     <connections>
                         <outlet property="bottomToolbar" destination="3Qm-0t-BEd" id="LAb-bN-EKQ"/>
                         <outlet property="collectionView" destination="y2r-Lc-d5x" id="M96-Aw-duF"/>
-                        <outlet property="downArrow" destination="9gc-Nr-tjG" id="tf7-fL-PFM"/>
+                        <outlet property="downArrow" destination="Csa-hp-M7g" id="7zO-sV-A2j"/>
                         <outlet property="placeTable" destination="uXp-wN-ZT7" id="Mya-ms-jJO"/>
                         <outlet property="postO" destination="k4Z-6M-DOq" id="TDd-ed-JQB"/>
                         <outlet property="share4s" destination="kex-er-Gz6" id="r1A-68-DEU"/>

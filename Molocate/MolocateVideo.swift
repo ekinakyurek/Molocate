@@ -86,6 +86,8 @@ public class MolocateVideo {
     class func getExploreVideos(nextURL: NSURL?, completionHandler: (data: [MoleVideoInformation]?, response: NSURLResponse!, error: NSError!, next: NSURL?) -> ()){
         
         print("getExplore")
+        print(nextURL)
+        
         let request = NSMutableURLRequest(URL: nextURL!)
         request.HTTPMethod = "GET"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -137,6 +139,10 @@ public class MolocateVideo {
                     
                     videoStr.thumbnailURL = NSURL(string:item["thumbnail"] as! String)!
                     videoArray.append(videoStr)
+                    //print(videoArray[indexPath.row].username)
+                    print(videoStr.username)
+                    print(videoStr.urlSta)
+                  
                     
                 }
                 completionHandler(data: videoArray, response: response, error: nsError, next: nexturl)
@@ -280,6 +286,9 @@ public class MolocateVideo {
                     
                     videoStr.thumbnailURL = NSURL(string:item["thumbnail"] as! String)!
                     videoArray.append(videoStr)
+                  
+                    
+                    
                 }
                 completionHandler(data: videoArray, response: response, error: nsError)
             }catch{

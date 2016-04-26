@@ -10,9 +10,10 @@ import UIKit
 
 class searchUsername: UITableViewCell {
     
-    var myLabel1: UIButton!
-    var myButton1: UIButton!
-    var fotoButton: UIButton!
+    var profilePhoto: UIButton!
+    var usernameLabel: UILabel!
+    var nameLabel: UILabel!
+    var followButton: UIButton!
     
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:)")
@@ -21,51 +22,56 @@ class searchUsername: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
         
-        let gap : CGFloat = 10
-        //let labelHeight: CGFloat = 30
-        //let labelWidth: CGFloat = 140
+        profilePhoto = UIButton()
+        profilePhoto.frame = CGRectMake(5, 5, 44, 44)
+        //photo ata
         
-        let mole = UIImage(named: "profilepic.png")! as UIImage
+        let image = UIImage(named: "profilepic.png")! as UIImage
+        profilePhoto.layer.borderWidth = 0.1
+        profilePhoto.layer.masksToBounds = false
+        profilePhoto.layer.borderColor = UIColor.whiteColor().CGColor
+        profilePhoto.layer.cornerRadius = profilePhoto.frame.height/2
+        profilePhoto.clipsToBounds = true
+        profilePhoto.setBackgroundImage(image, forState: UIControlState.Normal)
+        contentView.addSubview(profilePhoto)
         
-        fotoButton = UIButton()
-        fotoButton.frame = CGRectMake(gap, gap, 40 , 40)
-        fotoButton.setBackgroundImage(mole, forState: .Normal)
-        contentView.addSubview(fotoButton)
-        fotoButton.layer.borderWidth = 0.1
-        fotoButton.layer.masksToBounds = false
-        fotoButton.layer.borderColor = UIColor.whiteColor().CGColor
-        fotoButton.layer.cornerRadius = fotoButton.frame.height/2
-        fotoButton.clipsToBounds = true
-        fotoButton.setBackgroundImage(mole, forState: UIControlState.Normal)
-        myButton1 = UIButton()
-        myButton1.frame = CGRectMake(60, gap, 200 , 40)
+        usernameLabel = UILabel()
+        usernameLabel.frame = CGRectMake(59 , 6 , screenSize.width - 100, 25)
+        usernameLabel.textColor = UIColor.blackColor()
+        usernameLabel.textAlignment = .Left
+        usernameLabel.text = "@kcenan"
+        usernameLabel.font = UIFont(name: "AvenirNext-Regular", size:17)
+        //Username.addTarget(self, action: "pressedUsername:", forControlEvents:UIControlEvents.TouchUpInside)
+        contentView.addSubview(usernameLabel)
         
-        myButton1.setTitleColor(UIColor.blackColor(), forState: .Normal)
-        myButton1.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
-        contentView.addSubview(myButton1)
+        nameLabel = UILabel()
+        nameLabel.frame = CGRectMake(59 , 27 , screenSize.width - 100, 22)
+        nameLabel.textColor = UIColor.grayColor()
+        nameLabel.textAlignment = .Left
+        nameLabel.text = "Kağan Cenan"
+        nameLabel.font = UIFont(name: "AvenirNext-Regular", size:12)
+        contentView.addSubview(nameLabel)
         
-        let tick = UIImage(named: "follow")! as UIImage
-        myLabel1 = UIButton()
-        
-        myLabel1.frame = CGRect(x:UIScreen.mainScreen().bounds.width - 40 , y: gap + 5, width: 30, height: 30)
-        myLabel1.setBackgroundImage(tick, forState: .Normal)
-        contentView.addSubview(myLabel1)
-        
-        myLabel1.hidden = true
-        
-        
-        
+        followButton = UIButton()
+        followButton.frame = CGRectMake(screenSize.width - 41 , 11 , 32 , 32)
+        followButton.setBackgroundImage(UIImage(named: "follow"), forState: UIControlState.Normal)
+        contentView.addSubview(followButton)
     }
     
     deinit{
         
         
-        fotoButton = nil
-        myButton1 = nil
+        profilePhoto = nil
+        usernameLabel = nil
+        nameLabel = nil
+        followButton = nil
         
         
     }
+    
+
 
     
 }
