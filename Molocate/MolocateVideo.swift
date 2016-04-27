@@ -1,6 +1,6 @@
 
 import Foundation
-
+import AWSS3
 
 let MoleCategoriesDictionary = ["Eğlence":"fun","Yemek":"food","Gezi":"travel","Moda":"fashion" , "Güzellik":"makeup", "Spor": "Sport","Etkinlik": "Event","Kampüs":"university", "Hepsi":"all"]
 
@@ -21,7 +21,19 @@ struct MoleVideoInformation{
     var dateStr: String = ""
     var taggedUsers = [String]()
     var thumbnailURL:NSURL = NSURL()
+    var isUploading = false
 }
+
+struct VideoUploadRequest{
+    var filePath = ""
+    var thumbUrl = NSURL()
+    var thumbnail:NSData
+    var JsonData: [String:AnyObject]
+    var fileId = ""
+    var uploadRequest: AWSS3TransferManagerUploadRequest
+}
+
+var GlobalVideoUploadRequest: VideoUploadRequest?
 
 struct MoleVideoComment{
     var id: String = ""
@@ -62,7 +74,7 @@ public class MolocateVideo {
                     for (var i = 0 ; i < commentdata.count ; i+=1){
                         var thecomment = MoleVideoComment()
                         let thing = commentdata[i] as! [String:AnyObject]
-                        print(thing)
+                        //print(thing)
                         thecomment.username = thing["username"] as! String
                         thecomment.photo = thing["picture_url"] is NSNull ? NSURL():NSURL(string: thing["picture_url"] as! String)!
                         thecomment.text = thing["comment"] as! String
@@ -85,8 +97,8 @@ public class MolocateVideo {
     
     class func getExploreVideos(nextURL: NSURL?, completionHandler: (data: [MoleVideoInformation]?, response: NSURLResponse!, error: NSError!, next: NSURL?) -> ()){
         
-        print("getExplore")
-        print(nextURL)
+        //print("getExplore")
+        //print(nextURL)
         
         let request = NSMutableURLRequest(URL: nextURL!)
         request.HTTPMethod = "GET"
@@ -140,8 +152,8 @@ public class MolocateVideo {
                     videoStr.thumbnailURL = NSURL(string:item["thumbnail"] as! String)!
                     videoArray.append(videoStr)
                     //print(videoArray[indexPath.row].username)
-                    print(videoStr.username)
-                    print(videoStr.urlSta)
+                    //print(videoStr.username)
+                    //print(videoStr.urlSta)
                   
                     
                 }

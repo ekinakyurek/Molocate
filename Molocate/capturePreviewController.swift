@@ -87,7 +87,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
                     ]
                 ]
             ]
-            S3Upload.upload(uploadRequest, fileURL: "https://d1jkin67a303u2.cloudfront.net/videos/"+(fileName as String), fileID: fileName as String ,json: json)
+            S3Upload.upload(uploadRequest:uploadRequest, fileURL: "https://d1jkin67a303u2.cloudfront.net/videos/"+(fileName as String), fileID: fileName as String ,json: json as! [String : AnyObject])
        
 //        do {
 //            try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
@@ -147,7 +147,9 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
                         ]
                     ]
                 ]
-                S3Upload.upload(uploadRequest, fileURL: "https://d1jkin67a303u2.cloudfront.net/videos/"+(fileName as String), fileID: fileName as String ,json: json)
+                
+                
+                S3Upload.upload(uploadRequest: uploadRequest, fileURL: "https://d1jkin67a303u2.cloudfront.net/videos/"+(fileName as String), fileID: fileName as String ,json: json as! [String : AnyObject])
                 
                 //        do {
                 //            try NSFileManager.defaultManager().removeItemAtPath(videoPath!)

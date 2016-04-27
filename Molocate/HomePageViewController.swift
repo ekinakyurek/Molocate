@@ -11,6 +11,8 @@ import Haneke
 import AVFoundation
 var dictionary = NSMutableDictionary()
 var myCache = Shared.dataCache
+var progressBar: UIProgressView?
+
 class HomePageViewController: UIViewController,UITableViewDelegate , UITableViewDataSource ,UIToolbarDelegate , UICollectionViewDelegate  ,CLLocationManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,NSURLConnectionDataDelegate,PlayerDelegate, UITextFieldDelegate {
     var isRequested:NSMutableDictionary!
     var lastOffset:CGPoint!
@@ -98,8 +100,26 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
         MolocateVideo.getExploreVideos(url, completionHandler: { (data, response, error,next) -> () in
             self.nextUrl  = next
             dispatch_async(dispatch_get_main_queue()){
-            
-                self.videoArray = data!
+                if GlobalVideoUploadRequest == nil {
+                    self.videoArray = data!
+                }else{
+                    var queu = MoleVideoInformation()
+                    let json = (GlobalVideoUploadRequest?.JsonData)!
+                    let loc = json["location"] as! [[String:AnyObject]]
+                    queu.dateStr = "0s"
+                    queu.urlSta = (GlobalVideoUploadRequest?.uploadRequest.body)!
+                    queu.username = MoleCurrentUser.username
+                    queu.userpic = MoleCurrentUser.profilePic
+                    queu.caption = json["caption"] as! String
+                    queu.location = loc[0]["name"] as! String
+                    queu.locationID = loc[0]["id"] as! String
+                    queu.isFollowing = 1
+                    queu.thumbnailURL = (GlobalVideoUploadRequest?.thumbUrl)!
+                    queu.isUploading = true
+                    self.videoArray.append(queu)
+                    self.videoArray += data!
+                    
+                }
                 self.tableView.reloadData()
                 if self.videoArray.count == 0 {
                     self.nofollowings.hidden = false
@@ -148,7 +168,26 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
             
                 self.tableView.hidden = true
                 self.videoArray.removeAll()
-                self.videoArray = data!
+                if GlobalVideoUploadRequest == nil {
+                    self.videoArray = data!
+                }else{
+                    var queu = MoleVideoInformation()
+                    let json = (GlobalVideoUploadRequest?.JsonData)!
+                    let loc = json["location"] as! [[String:AnyObject]]
+                    queu.dateStr = "0s"
+                    queu.urlSta = (GlobalVideoUploadRequest?.uploadRequest.body)!
+                    queu.username = MoleCurrentUser.username
+                    queu.userpic = MoleCurrentUser.profilePic
+                    queu.caption = json["caption"] as! String
+                    queu.location = loc[0]["name"] as! String
+                    queu.locationID = loc[0]["id"] as! String
+                    queu.isFollowing = 1
+                    queu.thumbnailURL = (GlobalVideoUploadRequest?.thumbUrl)!
+                    queu.isUploading = true
+                    self.videoArray.append(queu)
+                    self.videoArray += data!
+                    
+                }
                 self.tableView.reloadData()
                 self.refreshControl.endRefreshing()
                 if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
@@ -554,7 +593,16 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
             let playtap = UITapGestureRecognizer(target: self, action:#selector(MainController.playTapped(_:) ));
             playtap.numberOfTapsRequired = 1
             cell.contentView.addGestureRecognizer(playtap)
+          
             
+            
+            if videoArray[indexPath.row].isUploading {
+             
+                let myprogress = progressBar==nil ? 0.0:(progressBar?.progress)!
+                progressBar = UIProgressView(frame: cell.label3.frame)
+                progressBar?.progress = myprogress
+                cell.contentView.addSubview(progressBar!)
+            }
             
             playtap.requireGestureRecognizerToFail(tap)
             
@@ -575,18 +623,22 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
             if dictionary.objectForKey(self.videoArray[indexPath.row].id) != nil {
                 trueURL = dictionary.objectForKey(self.videoArray[indexPath.row].id) as! NSURL
             } else {
-                
-                trueURL = self.videoArray[indexPath.row].urlSta
-                dispatch_async(dispatch_get_main_queue()) {
-                myCache.fetch(URL:self.videoArray[indexPath.row].urlSta ).onSuccess{ NSData in
-                   ////print("hop")
-                    let url = self.videoArray[indexPath.row].urlSta.absoluteString
-                    let path = NSURL(string: DiskCache.basePath())!.URLByAppendingPathComponent("shared-data/original")
-                    let cached = DiskCache(path: path.absoluteString).pathForKey(url)
-                    let file = NSURL(fileURLWithPath: cached)
-                    dictionary.setObject(file, forKey: self.videoArray[indexPath.row].id)
-                    
-                }
+                let url = self.videoArray[indexPath.row].urlSta.absoluteString
+                if(url[0] == "h") {
+                    trueURL = self.videoArray[indexPath.row].urlSta
+                    dispatch_async(dispatch_get_main_queue()) {
+                    myCache.fetch(URL:self.videoArray[indexPath.row].urlSta ).onSuccess{ NSData in
+                       ////print("hop")
+                        let url = self.videoArray[indexPath.row].urlSta.absoluteString
+                        let path = NSURL(string: DiskCache.basePath())!.URLByAppendingPathComponent("shared-data/original")
+                        let cached = DiskCache(path: path.absoluteString).pathForKey(url)
+                        let file = NSURL(fileURLWithPath: cached)
+                        dictionary.setObject(file, forKey: self.videoArray[indexPath.row].id)
+                        
+                    }
+                    }
+                }else{
+                    trueURL = self.videoArray[indexPath.row].urlSta
                 }
             }
                 if !cell.hasPlayer {

@@ -153,7 +153,26 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
             MolocateVideo.getExploreVideos(url, completionHandler: { (data, response, error,next) -> () in
                 self.nextUrl = next
                 dispatch_async(dispatch_get_main_queue()){
-                    self.videoArray = data!
+                    if GlobalVideoUploadRequest == nil {
+                        self.videoArray = data!
+                    }else{
+                        var queu = MoleVideoInformation()
+                        let json = (GlobalVideoUploadRequest?.JsonData)!
+                        let loc = json["location"] as! [[String:AnyObject]]
+                        queu.dateStr = "0s"
+                        queu.urlSta = (GlobalVideoUploadRequest?.uploadRequest.body)!
+                        queu.username = MoleCurrentUser.username
+                        queu.userpic = MoleCurrentUser.profilePic
+                        queu.caption = json["caption"] as! String
+                        queu.location = loc[0]["name"] as! String
+                        queu.locationID = loc[0]["id"] as! String
+                        queu.isFollowing = 1
+                        queu.thumbnailURL = (GlobalVideoUploadRequest?.thumbUrl)!
+                        queu.isUploading = true
+                        self.videoArray.append(queu)
+                        self.videoArray += data!
+                        
+                    }
                     self.tableView.reloadData()
                 }
             })
@@ -256,7 +275,26 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
             dispatch_async(dispatch_get_main_queue()){
                 self.tableView.hidden = true
                 self.videoArray.removeAll()
-                self.videoArray = data!
+                if GlobalVideoUploadRequest == nil {
+                    self.videoArray = data!
+                }else{
+                    var queu = MoleVideoInformation()
+                    let json = (GlobalVideoUploadRequest?.JsonData)!
+                    let loc = json["location"] as! [[String:AnyObject]]
+                    queu.dateStr = "0s"
+                    queu.urlSta = (GlobalVideoUploadRequest?.uploadRequest.body)!
+                    queu.username = MoleCurrentUser.username
+                    queu.userpic = MoleCurrentUser.profilePic
+                    queu.caption = json["caption"] as! String
+                    queu.location = loc[0]["name"] as! String
+                    queu.locationID = loc[0]["id"] as! String
+                    queu.isFollowing = 1
+                    queu.thumbnailURL = (GlobalVideoUploadRequest?.thumbUrl)!
+                    queu.isUploading = true
+                    self.videoArray.append(queu)
+                    self.videoArray += data!
+                    
+                }
                 self.tableView.reloadData()
                 self.refreshControl.endRefreshing()
                 UIApplication.sharedApplication().endIgnoringInteractionEvents()
@@ -554,6 +592,16 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                     cell.cellthumbnail.image = UIImage(named: "Mole")!
                 }
                 
+                
+                if videoArray[indexPath.row].isUploading {
+                   
+                    let myprogress = progressBar==nil ? 0.0:(progressBar?.progress)!
+                    progressBar = UIProgressView(frame: cell.label3.frame)
+                    progressBar?.progress = myprogress
+                    cell.contentView.addSubview(progressBar!)
+                }
+                
+                
                 var trueURL = NSURL()
                 
                 //print(videoArray[indexPath.row].location)
@@ -564,15 +612,22 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                 if dictionary.objectForKey(self.videoArray[indexPath.row].id) != nil {
                     trueURL = dictionary.objectForKey(self.videoArray[indexPath.row].id) as! NSURL
                 } else {
-                    trueURL = self.videoArray[indexPath.row].urlSta
-                    dispatch_async(dispatch_get_main_queue()) {
-                        myCache.fetch(URL:self.videoArray[indexPath.row].urlSta ).onSuccess{ NSData in
-                            let url = self.videoArray[indexPath.row].urlSta.absoluteString
-                            let path = NSURL(string: DiskCache.basePath())!.URLByAppendingPathComponent("shared-data/original")
-                            let cached = DiskCache(path: path.absoluteString).pathForKey(url)
-                            let file = NSURL(fileURLWithPath: cached)
-                            dictionary.setObject(file, forKey: self.videoArray[indexPath.row].id)
+                    let url = self.videoArray[indexPath.row].urlSta.absoluteString
+                    if(url[0] == "h") {
+                        trueURL = self.videoArray[indexPath.row].urlSta
+                        dispatch_async(dispatch_get_main_queue()) {
+                            myCache.fetch(URL:self.videoArray[indexPath.row].urlSta ).onSuccess{ NSData in
+                                ////print("hop")
+                                let url = self.videoArray[indexPath.row].urlSta.absoluteString
+                                let path = NSURL(string: DiskCache.basePath())!.URLByAppendingPathComponent("shared-data/original")
+                                let cached = DiskCache(path: path.absoluteString).pathForKey(url)
+                                let file = NSURL(fileURLWithPath: cached)
+                                dictionary.setObject(file, forKey: self.videoArray[indexPath.row].id)
+                                
+                            }
                         }
+                    }else{
+                        trueURL = self.videoArray[indexPath.row].urlSta
                     }
                 }
                  if !cell.hasPlayer {
