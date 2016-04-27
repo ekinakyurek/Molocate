@@ -38,7 +38,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     var player1:Player!
     var player2: Player!
     var session: Session!
-    var location: CLLocation!
+    //var location: CLLocation!
     var venues: [JSONParameters]!
     var searchedUsers:[MoleUser]!
     let distanceFormatter = MKDistanceFormatter()
@@ -48,6 +48,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     var player1Turn = false
     var nextUrl: NSURL?
     var venueoruser: Bool = true
+    var bestEffortAtLocation : CLLocation!
     //true konum seçili demek
     //var dictionary = NSMutableDictionary()
     @IBOutlet var usernameButton: UIButton!
@@ -1140,18 +1141,14 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     @IBOutlet var cameraButton: UIBarButtonItem!
     
     @IBAction func openCamera(sender: AnyObject) {
-
-        locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
-        location = locationManager.location
-        if(location != nil){
+        
             player1.stop()
             player2.stop()
         if (isUploaded) {
             CaptionText = ""
             if isSearching != true {
+                if(bestEffortAtLocation != nil){
                 activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
                 activityIndicator.center = self.view.center
                 activityIndicator.hidesWhenStopped = true
@@ -1160,6 +1157,22 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                 activityIndicator.startAnimating()
                 UIApplication.sharedApplication().beginIgnoringInteractionEvents()
                 self.parentViewController!.parentViewController!.performSegueWithIdentifier("goToCamera", sender: self.parentViewController)
+                } else {
+                    let message = NSLocalizedString("Molocate'in konum servislerini kullanmasına izin vermediniz. Lütfen ayarları değiştiriniz.", comment: "" )
+                    let alertController = UIAlertController(title: "Molocate Konum", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+                    let cancelAction = UIAlertAction(title: NSLocalizedString("OK", comment: "Alert OK button"), style: UIAlertActionStyle.Cancel, handler: nil)
+                    alertController.addAction(cancelAction)
+                    // Provide quick access to Settings.
+                    let settingsAction = UIAlertAction(title: NSLocalizedString("Ayarlar", comment: "Alert button to open Settings"), style: UIAlertActionStyle.Default) {action in
+                        UIApplication.sharedApplication().openURL(NSURL(string:UIApplicationOpenSettingsURLString)!)
+                        
+                    }
+                    alertController.addAction(settingsAction)
+                    self.presentViewController(alertController, animated: true, completion: nil)
+                    
+                    
+                }
+
             } else {
                 self.cameraButton.image = UIImage(named: "Camera")
                 self.cameraButton.title = nil
@@ -1172,22 +1185,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
             self.activityIndicator.removeFromSuperview()
         }
             
-        } else {
-            let message = NSLocalizedString("Molocate'in konum servislerini kullanmasına izin vermediniz. Lütfen ayarları değiştiriniz.", comment: "" )
-            let alertController = UIAlertController(title: "Molocate Konum", message: message, preferredStyle: UIAlertControllerStyle.Alert)
-            let cancelAction = UIAlertAction(title: NSLocalizedString("OK", comment: "Alert OK button"), style: UIAlertActionStyle.Cancel, handler: nil)
-            alertController.addAction(cancelAction)
-            // Provide quick access to Settings.
-            let settingsAction = UIAlertAction(title: NSLocalizedString("Ayarlar", comment: "Alert button to open Settings"), style: UIAlertActionStyle.Default) {action in
-                UIApplication.sharedApplication().openURL(NSURL(string:UIApplicationOpenSettingsURLString)!)
-                
-            }
-            alertController.addAction(settingsAction)
-            self.presentViewController(alertController, animated: true, completion: nil)
-
-            
-        }
-    }
+           }
     
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         isScrollingFast = false
@@ -1308,14 +1306,38 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         }
     }
     
+    func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
+        let locationAge = newLocation.timestamp.timeIntervalSinceNow
+        
+        //print(locationAge)
+        if locationAge > 5 {
+            return
+        }
+        
+        if (bestEffortAtLocation == nil) || (bestEffortAtLocation.horizontalAccuracy > newLocation.horizontalAccuracy) {
+            self.bestEffortAtLocation = newLocation
+           
+        }
+    }
+
+    
     override func viewWillAppear(animated: Bool) {
-        locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
-        location = locationManager.location
-        
-        
+        dispatch_async(dispatch_get_main_queue()) {
+            self.locationManager = CLLocationManager()
+            self.locationManager.delegate = self
+            self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+            self.locationManager.requestWhenInUseAuthorization()
+            self.locationManager.startUpdatingLocation()
+            let seconds = 5.0
+            let delay = seconds * Double(NSEC_PER_SEC)  // nanoseconds per seconds
+            let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+            dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+                
+                self.locationManager.stopUpdatingLocation()
+                
+            })
+            
+        }
         
     }
     override func viewDidDisappear(animated: Bool) {
@@ -1327,15 +1349,15 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         player2.stop()
         player2.removeFromParentViewController()
         if isSearching == true {
-            self.cameraButton.image = UIImage(named: "camera")
+            self.cameraButton.image = UIImage(named: "Camera")
             self.cameraButton.title = nil
             self.isSearching = false
             self.venueTable.hidden = true
             self.venueButton.hidden = true
             self.usernameButton.hidden = true
-            
             self.searchText.resignFirstResponder()
         }
+        
         //myCache.removeAll()
         //dictionary.removeAllObjects()
         
@@ -1370,13 +1392,27 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         let whitespaceCharacterSet = NSCharacterSet.symbolCharacterSet()
         let strippedString = searchText.text!.stringByTrimmingCharactersInSet(whitespaceCharacterSet)
         
-        if self.location == nil {
-            return true
-        }
+
         if venueoruser {
+            locationManager.startUpdatingLocation()
+            if self.bestEffortAtLocation == nil {
+                let message = NSLocalizedString("Molocate'in konum servislerini kullanmasına izin vermediniz. Lütfen ayarları değiştiriniz.", comment: "" )
+                let alertController = UIAlertController(title: "Molocate Konum", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+                let cancelAction = UIAlertAction(title: NSLocalizedString("OK", comment: "Alert OK button"), style: UIAlertActionStyle.Cancel, handler: nil)
+                alertController.addAction(cancelAction)
+                // Provide quick access to Settings.
+                let settingsAction = UIAlertAction(title: NSLocalizedString("Ayarlar", comment: "Alert button to open Settings"), style: UIAlertActionStyle.Default) {action in
+                    UIApplication.sharedApplication().openURL(NSURL(string:UIApplicationOpenSettingsURLString)!)
+                    
+                }
+                alertController.addAction(settingsAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
+
+                return true
+            }
         currentTask?.cancel()
         var parameters = [Parameter.query:strippedString]
-        parameters += self.location.parameters()
+        parameters += self.bestEffortAtLocation.parameters()
         currentTask = session.venues.search(parameters) {
             (result) -> Void in
             if let response = result.response {
@@ -1398,6 +1434,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
             }
         }
         currentTask?.start()
+                
         } else {
             
             if searchText.text?.characters.count > 1 {

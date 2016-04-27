@@ -30,6 +30,7 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
     var refreshing: Bool = false
     var player1Turn = false
     var nextUrl: NSURL?
+    var bestEffortAtLocation:CLLocation!
     @IBOutlet var nofollowings: UILabel!
     var direction = 0 // 0 is down and 1 is up
     @IBOutlet var tableView: UITableView!
@@ -1018,12 +1019,7 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
     @IBOutlet var cameraButton: UIBarButtonItem!
     
     @IBAction func openCamera(sender: AnyObject) {
-        locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
-        location = locationManager.location
-        if (location != nil) {
+        if (bestEffortAtLocation != nil) {
         player1.stop()
         player2.stop()
         activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
@@ -1101,13 +1097,39 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
         }
     }
     
-    override func viewWillAppear(animated: Bool) {
-        locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
-        location = locationManager.location
+    
+    func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
+        let locationAge = newLocation.timestamp.timeIntervalSinceNow
         
+        //print(locationAge)
+        if locationAge > 5 {
+            return
+        }
+        
+        if (bestEffortAtLocation == nil) || (bestEffortAtLocation.horizontalAccuracy > newLocation.horizontalAccuracy) {
+            self.bestEffortAtLocation = newLocation
+            
+        }
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.locationManager = CLLocationManager()
+            self.locationManager.delegate = self
+            self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+            self.locationManager.requestWhenInUseAuthorization()
+            self.locationManager.startUpdatingLocation()
+            let seconds = 5.0
+            let delay = seconds * Double(NSEC_PER_SEC)  // nanoseconds per seconds
+            let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+            
+            dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+                
+                self.locationManager.stopUpdatingLocation()
+                
+            })
+            
+        }
         
     }
     override func viewDidDisappear(animated: Bool) {

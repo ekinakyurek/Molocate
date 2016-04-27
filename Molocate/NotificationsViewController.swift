@@ -10,7 +10,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
     var locationManager: CLLocationManager!
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     var location:CLLocation!
-   
+     var bestEffortAtLocation:CLLocation!
     @IBOutlet var tableView: UITableView!
     @IBOutlet var toolBar: UIToolbar!
     
@@ -297,12 +297,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
     
     
     @IBAction func openCamera(sender: AnyObject) {
-        locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
-        location = locationManager.location
-        if (location != nil) {
+        if (bestEffortAtLocation != nil) {
          if (isUploaded) {
             activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
             activityIndicator.center = self.view.center
@@ -330,12 +325,40 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
     }
 
     }
+    
+    func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
+        let locationAge = newLocation.timestamp.timeIntervalSinceNow
+        
+        //print(locationAge)
+        if locationAge > 5 {
+            return
+        }
+        
+        if (bestEffortAtLocation == nil) || (bestEffortAtLocation.horizontalAccuracy > newLocation.horizontalAccuracy) {
+            self.bestEffortAtLocation = newLocation
+            
+        }
+    }
+
+    
     override func viewWillAppear(animated: Bool) {
-        locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
-        location = locationManager.location
+        dispatch_async(dispatch_get_main_queue()) {
+            self.locationManager = CLLocationManager()
+            self.locationManager.delegate = self
+            self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+            self.locationManager.requestWhenInUseAuthorization()
+            self.locationManager.startUpdatingLocation()
+            let seconds = 5.0
+            let delay = seconds * Double(NSEC_PER_SEC)  // nanoseconds per seconds
+            let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+            
+            dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+                
+                self.locationManager.stopUpdatingLocation()
+                
+            })
+            
+        }
         
     }
 

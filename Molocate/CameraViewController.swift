@@ -302,7 +302,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                 
                             if placemarks!.count > 0 {
                                 let pm = placemarks![0] as CLPlacemark
-                                self.displayLocationInfo(pm, location: newLocation)
+                                self.displayLocationInfo(newLocation)
                 
                 
                                 
@@ -335,7 +335,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
 //        })
 //    }
     
-    func displayLocationInfo(placemark: CLPlacemark, location: CLLocation) {
+    func displayLocationInfo(location: CLLocation) {
             //stop updating location to save battery life
             locationManager.stopUpdatingLocation()
 //            //print(placemark.locality)
@@ -368,12 +368,12 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                         let itemlocation = item["location"] as! [String:AnyObject]
                         let itemstats = item["stats"] as! [String:AnyObject]
                         ////print(itemlocation)
-                        let latL = itemlocation["lat"] as! Float
-                        let lonL = itemlocation["lng"] as! Float
-                        let latM = Float(self.location.coordinate.latitude)
-                        let lonM = Float(self.location.coordinate.longitude)
-                        var distancen = ((latM-latL)*(latM-latL))+((lonL-lonM)*(lonL-lonM))
-                        distancen = sqrt(distancen)*111000
+//                        let latL = itemlocation["lat"] as! Float
+//                        let lonL = itemlocation["lng"] as! Float
+//                        let latM = Float(self.location.coordinate.latitude)
+//                        let lonM = Float(self.location.coordinate.longitude)
+//                        var distancen = ((latM-latL)*(latM-latL))+((lonL-lonM)*(lonL-lonM))
+//                        distancen = sqrt(distancen)*111000
                         ////print(distancen)
                         let distance = itemlocation["distance"] as! NSInteger
                         let isVerified = item["verified"] as! Bool
@@ -467,9 +467,16 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
         self.locationManager.requestWhenInUseAuthorization()
         self.locationManager.startUpdatingLocation()
-        self.location = self.locationManager.location
-        self.deviceLat = self.locationManager.location?.coordinate.latitude
-        self.deviceLon = self.locationManager.location?.coordinate.longitude
+            let seconds = 5.0
+            let delay = seconds * Double(NSEC_PER_SEC)  // nanoseconds per seconds
+            let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+            
+            dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+                
+                self.displayLocationInfo(self.bestEffortAtLocation)
+                
+            })
+
         }
            }
     
