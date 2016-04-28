@@ -49,10 +49,11 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     var nextUrl: NSURL?
     var venueoruser: Bool = true
     var bestEffortAtLocation : CLLocation!
-    //true konum seçili demek
-    //var dictionary = NSMutableDictionary()
-    @IBOutlet var usernameButton: UIButton!
-    @IBOutlet var venueButton: UIButton!
+    
+    var venueButton2: UIButton!
+    var usernameButton2: UIButton!
+    var backgroundLabel: UILabel!
+    
     var on = true
     @IBOutlet var tableView: UITableView!
     @IBOutlet var rightArrow: UIImageView!
@@ -97,11 +98,60 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         toolBar.translucent = false
         toolBar.clipsToBounds = true
         
-        venueButton.backgroundColor = swiftColor2
-        venueButton.hidden = true
-        usernameButton.backgroundColor = swiftColor3
-        usernameButton.hidden = true
+        backgroundLabel = UILabel()
+        backgroundLabel.frame = CGRectMake( 0 , 60 , screenSize.width , 44)
+        backgroundLabel.backgroundColor = UIColor.whiteColor()
+        backgroundLabel.layer.borderWidth = 0.7
+        backgroundLabel.layer.masksToBounds = false
+        backgroundLabel.layer.borderColor = swiftColor.CGColor
+        view.addSubview(backgroundLabel)
+    
         
+        usernameButton2 = UIButton()
+        usernameButton2.frame = CGRectMake(screenSize.width / 2  ,67 , screenSize.width / 2 - 20, 30)
+        usernameButton2.setTitleColor(UIColor.blackColor(), forState: .Normal)
+        usernameButton2.contentHorizontalAlignment = .Center
+        usernameButton2.setTitle("KİŞİLER", forState: .Normal)
+        usernameButton2.titleLabel?.font = UIFont(name: "AvenirNext-Medium", size:13)
+        usernameButton2.addTarget(self, action: #selector(MainController.pressedUsernameButton(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        view.addSubview(usernameButton2)
+        
+        venueButton2 = UIButton()
+        venueButton2.frame = CGRectMake(20 ,67 , screenSize.width / 2 - 20, 30)
+        venueButton2.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        venueButton2.contentHorizontalAlignment = .Center
+        venueButton2.setTitle("KONUMLAR", forState: .Normal)
+        venueButton2.titleLabel?.font = UIFont(name: "AvenirNext-Medium", size:13)
+       
+        venueButton2.addTarget(self, action: #selector(MainController.pressedVenue(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        view.addSubview(venueButton2)
+        venueButton2.backgroundColor = swiftColor2
+        venueButton2.hidden = true
+        usernameButton2.backgroundColor = swiftColor3
+        usernameButton2.hidden = true
+        backgroundLabel.hidden = true
+        
+        
+        let rectShape = CAShapeLayer()
+        rectShape.bounds = self.usernameButton2.frame
+        rectShape.position = self.usernameButton2.center
+        rectShape.path = UIBezierPath(roundedRect: self.usernameButton2.bounds, byRoundingCorners: [.BottomRight , .TopRight] , cornerRadii: CGSize(width: 8, height: 8)).CGPath
+        rectShape.borderWidth = 1.0
+        rectShape.borderColor = swiftColor2.CGColor
+        self.usernameButton2.layer.backgroundColor = swiftColor3.CGColor
+        //Here I'm masking the textView's layer with rectShape layer
+        self.usernameButton2.layer.mask = rectShape
+        
+        let rectShape2 = CAShapeLayer()
+        rectShape2.bounds = self.venueButton2.frame
+        rectShape2.position = self.venueButton2.center
+        rectShape2.path = UIBezierPath(roundedRect: self.venueButton2.bounds, byRoundingCorners: [.BottomLeft , .TopLeft] , cornerRadii: CGSize(width: 8, height: 8)).CGPath
+        rectShape2.borderWidth = 1.0
+        rectShape2.borderColor = swiftColor2.CGColor
+        self.venueButton2.layer.backgroundColor = swiftColor2.CGColor
+        //Here I'm masking the textView's layer with rectShape layer
+        self.venueButton2.layer.mask = rectShape2
+
         
         
         searchText.font = UIFont(name: "AvenirNext-Regular", size: 14)
@@ -126,7 +176,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         let index = NSIndexPath(forRow: 0, inSection: 0)
         self.collectionView.selectItemAtIndexPath(index, animated: false, scrollPosition: UICollectionViewScrollPosition.None)
         collectionView.contentSize.width = 75 * 9
-        collectionView.backgroundColor = swiftColor3
+        collectionView.backgroundColor = UIColor.whiteColor()
         
         lastOffset = CGPoint(x: 0, y: 0)
         
@@ -213,24 +263,26 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         
     }
     
-    @IBAction func venueButton(sender: AnyObject) {
+    func pressedVenue(sender: UIButton) {
+
         venueoruser = true
-        self.venueButton.backgroundColor = swiftColor2
-        self.usernameButton.backgroundColor = swiftColor3
-        self.venueButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        self.usernameButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+        self.venueButton2.backgroundColor = swiftColor2
+        self.usernameButton2.backgroundColor = swiftColor2
+        self.venueButton2.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        self.usernameButton2.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
         if self.venueTable.numberOfRowsInSection(0) > 0 {
             self.venueTable.reloadData()  }
         
         
     }
     
-    @IBAction func usernameButton(sender: AnyObject) {
+    
+    func pressedUsernameButton(sender: UIButton) {
         venueoruser = false
-        self.venueButton.backgroundColor = swiftColor3
-        self.venueButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-        self.usernameButton.backgroundColor = swiftColor2
-        self.usernameButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        self.venueButton2.backgroundColor = swiftColor3
+        self.venueButton2.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+        self.usernameButton2.backgroundColor = swiftColor2
+        self.usernameButton2.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         if self.venueTable.numberOfRowsInSection(0) > 0 {
             self.venueTable.reloadData()  }
     }
@@ -671,7 +723,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                 }else if pressedFollow{
                     pressedFollow = true
                     
-                    cell.followButton.hidden = videoArray[indexPath.row].isFollowing == 1 ? true:false
+                    //cell.followButton.hidden = videoArray[indexPath.row].isFollowing == 1 ? true:false
                     
                 }
                 return cell
@@ -700,7 +752,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
             return cell
             } else {
                 let cell = searchUsername(style: UITableViewCellStyle.Default, reuseIdentifier: "cell")
-
+                cell.followButton.hidden = true
                 cell.usernameLabel.text = "@\(searchedUsers[indexPath.row].username)"
                 if searchedUsers[indexPath.row].first_name == "" {
                 cell.nameLabel.text = "\(searchedUsers[indexPath.row].username)"
@@ -1177,8 +1229,10 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                 self.cameraButton.image = UIImage(named: "Camera")
                 self.cameraButton.title = nil
                 self.isSearching = false
-                self.venueButton.hidden = true
-                self.usernameButton.hidden = true
+                self.venueButton2.hidden = true
+                self.usernameButton2.hidden = true
+                self.backgroundLabel.hidden = true
+                self.collectionView.hidden = false
                 self.venueTable.hidden = true
                 self.searchText.resignFirstResponder()
             }
@@ -1353,8 +1407,10 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
             self.cameraButton.title = nil
             self.isSearching = false
             self.venueTable.hidden = true
-            self.venueButton.hidden = true
-            self.usernameButton.hidden = true
+            self.venueButton2.hidden = true
+            self.usernameButton2.hidden = true
+            self.backgroundLabel.hidden = true
+            self.collectionView.hidden = false
             self.searchText.resignFirstResponder()
         }
         
@@ -1389,13 +1445,16 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         cameraButton.image = nil
         cameraButton.title = "Vazgeç"
         venueTable.hidden = false
-        venueButton.hidden = false
-        usernameButton.hidden = false
+        venueButton2.hidden = false
+        usernameButton2.hidden = false
+        backgroundLabel.hidden = false
+        collectionView.hidden = true
 
 
         self.view.layer.addSublayer(venueTable.layer)
-        self.view.layer.addSublayer(venueButton.layer)
-        self.view.layer.addSublayer(usernameButton.layer)
+        self.view.layer.addSublayer(backgroundLabel.layer)
+        self.view.layer.addSublayer(venueButton2.layer)
+        self.view.layer.addSublayer(usernameButton2.layer)
         
     }
 
@@ -1404,8 +1463,10 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
     {
         self.venueTable.hidden = false
-        self.venueButton.hidden = false
-        self.usernameButton.hidden = false
+        self.venueButton2.hidden = false
+        self.usernameButton2.hidden = false
+        self.backgroundLabel.hidden = false
+        self.collectionView.hidden = true
 
         let whitespaceCharacterSet = NSCharacterSet.symbolCharacterSet()
         let strippedString = searchText.text!.stringByTrimmingCharactersInSet(whitespaceCharacterSet)

@@ -25,9 +25,7 @@ class searchUsername: UITableViewCell {
         let screenSize: CGRect = UIScreen.mainScreen().bounds
         
         profilePhoto = UIButton()
-        profilePhoto.frame = CGRectMake(5, 5, 44, 44)
-        //photo ata
-        
+        profilePhoto.frame = CGRectMake(10, 5, 44, 44)
         let image = UIImage(named: "profilepic.png")! as UIImage
         profilePhoto.layer.borderWidth = 0.1
         profilePhoto.layer.masksToBounds = false
@@ -38,20 +36,20 @@ class searchUsername: UITableViewCell {
         contentView.addSubview(profilePhoto)
         
         usernameLabel = UILabel()
-        usernameLabel.frame = CGRectMake(59 , 6 , screenSize.width - 100, 25)
+        usernameLabel.frame = CGRectMake(64 , 6 , screenSize.width - 100, 25)
         usernameLabel.textColor = UIColor.blackColor()
         usernameLabel.textAlignment = .Left
         usernameLabel.text = "@kcenan"
-        usernameLabel.font = UIFont(name: "AvenirNext-Regular", size:17)
+        usernameLabel.font = UIFont(name: "AvenirNext-Regular", size:15)
         //Username.addTarget(self, action: "pressedUsername:", forControlEvents:UIControlEvents.TouchUpInside)
         contentView.addSubview(usernameLabel)
         
         nameLabel = UILabel()
-        nameLabel.frame = CGRectMake(59 , 27 , screenSize.width - 100, 22)
+        nameLabel.frame = CGRectMake(64 , 27 , screenSize.width - 100, 22)
         nameLabel.textColor = UIColor.grayColor()
         nameLabel.textAlignment = .Left
         nameLabel.text = "Kağan Cenan"
-        nameLabel.font = UIFont(name: "AvenirNext-Regular", size:12)
+        nameLabel.font = UIFont(name: "AvenirNext-Regular", size:13)
         contentView.addSubview(nameLabel)
         
         followButton = UIButton()
