@@ -209,7 +209,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
             
         }
         tableView.allowsSelection = false
-
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MainController.prepareForRetry), name: "prepareForRetry", object: nil)
         
     }
     
@@ -1361,6 +1361,24 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         //myCache.removeAll()
         //dictionary.removeAllObjects()
         
+    }
+    func prepareForRetry(){
+        var rect = (tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0,inSection: 0)) as! videoCell).newRect
+        var layer = CALayer()
+        layer.frame = rect
+        layer.backgroundColor = UIColor.blackColor().CGColor
+        layer.opacity = 0.8
+        (tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0,inSection: 0)) as! videoCell).layer.addSublayer(layer)
+        var newButton = UIButton(frame: CGRect(x: 0.0, y: 0.0, width: 100.0, height: 100.0))
+        newButton.setTitle("Burda", forState: .Normal)
+        newButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size:20)
+        newButton.tintColor = UIColor.whiteColor()
+        newButton.center = (tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0,inSection: 0)) as! videoCell).contentView.center
+        (tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0,inSection: 0)) as! videoCell).contentView.addSubview(newButton)
+        newButton.addTarget(self, action: #selector(MainController.retryRequest), forControlEvents: UIControlEvents.TouchUpInside)
+    }
+    func retryRequest(){
+        S3Upload.upload(false, uploadRequest: (GlobalVideoUploadRequest?.uploadRequest)!, fileURL:(GlobalVideoUploadRequest?.filePath)!, fileID: (GlobalVideoUploadRequest?.fileId)!, json: (GlobalVideoUploadRequest?.JsonData)!)
     }
     
     func textFieldDidBeginEditing(textField: UITextField) {

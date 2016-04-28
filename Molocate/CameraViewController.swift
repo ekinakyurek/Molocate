@@ -291,8 +291,6 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
 
         if (bestEffortAtLocation == nil) || (bestEffortAtLocation.horizontalAccuracy > newLocation.horizontalAccuracy) {
             self.bestEffortAtLocation = newLocation
-//            //print(locationManager.desiredAccuracy)
-//            //print(bestEffortAtLocation.horizontalAccuracy)
             if (newLocation.horizontalAccuracy <= locationManager.desiredAccuracy) {
                         CLGeocoder().reverseGeocodeLocation(manager.location!, completionHandler: {(placemarks, error) -> Void in
                             if (error != nil) {
@@ -316,35 +314,11 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         displayAlert("Hata", message: error.helpAnchor!)
     }
-//    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//        CLGeocoder().reverseGeocodeLocation(manager.location!, completionHandler: {(placemarks, error) -> Void in
-//            if (error != nil) {
-//                //print("Reverse geocoder failed with error" + error!.localizedDescription)
-//                return
-//            }
-//            
-//            if placemarks!.count > 0 {
-//                let pm = placemarks![0] as CLPlacemark
-//                self.displayLocationInfo(pm)
-//                
-//
-//                
-//            } else {
-//                //print("Problem with the data received from geocoder")
-//            }
-//        })
-//    }
+
     
     func displayLocationInfo(location: CLLocation) {
             //stop updating location to save battery life
-            locationManager.stopUpdatingLocation()
-//            //print(placemark.locality)
-//            //print(placemark.country)
-//            //print(placemark.administrativeArea)
-//            //print(placemark.subAdministrativeArea)
-//            //print(placemark.postalCode)
-            //print(placemark.subLocality)
-            ////print(placemark)
+        locationManager.stopUpdatingLocation()
         let session = Session.sharedSession()
         
         
@@ -381,7 +355,6 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                         let enoughCheckin:Bool = (checkinsCount > 500)
                         if (distance < 200){
                             if(isVerified||enoughCheckin){
-                                //let order = [(item["name"] as! String):placesArray.count]
                                 placeOrder.setObject(placesArray.count , forKey: (item["name"] as! String))
                                 placesArray.append(item["name"] as! String)
                                 let name = item["name"] as! String

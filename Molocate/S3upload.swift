@@ -45,6 +45,16 @@ public class S3Upload {
             dispatch_sync(dispatch_get_main_queue(), { () -> Void in
                 if totalBytesSent <= totalBytesExpectedToSend-10 {
                     progressBar?.progress = Float(totalBytesSent)/Float(totalBytesExpectedToSend)
+                    let seconds = 10.0
+                    let delay = seconds * Double(NSEC_PER_SEC)  // nanoseconds per seconds
+                    let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+                    dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+                        
+                        //self.cancelUploadRequest(uploadRequest)
+                       
+                    })
+
+                    
                 }else{
                     progressBar?.hidden = true
                 }
@@ -61,6 +71,7 @@ public class S3Upload {
                         switch (errorCode) {
                         case .Cancelled, .Paused:
                             print("internet low")
+                             //NSNotificationCenter.defaultCenter().postNotificationName("prepareForRetry", object: nil)
                             break;
                         default:
                             break;
@@ -197,9 +208,28 @@ public class S3Upload {
                     
                 }
             }
+            
             return nil
         }
+    
     }
+    
+    
+    class func cancelUploadRequest(uploadRequest: AWSS3TransferManagerUploadRequest) {
+    
+        uploadRequest.cancel().continueWithBlock({ (task) -> AnyObject! in
+            if let error = task.error {
+                print("cancel() failed: [\(error)]")
+            }
+            if let exception = task.exception {
+                print("cancel() failed: [\(exception)]")
+            }
+            return nil
+        })
+        
+    }
+    
+    
     
     
 }
