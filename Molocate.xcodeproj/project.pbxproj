@@ -61,6 +61,7 @@
 		C69B823F1CA0D6F5008658CF /* oneVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69B823E1CA0D6F5008658CF /* oneVideo.swift */; };
 		C69B824B1CA1102D008658CF /* sign-2.png in Resources */ = {isa = PBXBuildFile; fileRef = C69B824A1CA1102D008658CF /* sign-2.png */; };
 		C69DB1BF1C99079D0042DA03 /* tagComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69DB1BE1C99079D0042DA03 /* tagComment.swift */; };
+		C6B19B431CD3A38500A9C602 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6B19B421CD3A38500A9C602 /* StoreKit.framework */; };
 		C6B7C9EB1C7BE7EF005607EC /* profileLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B7C9EA1C7BE7EF005607EC /* profileLocation.swift */; };
 		C6BA0A051BFA417B0091E088 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6BA0A041BFA417B0091E088 /* AudioToolbox.framework */; };
 		C6BA0A071BFA41F20091E088 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6BA0A061BFA41F20091E088 /* CFNetwork.framework */; };
@@ -179,6 +180,7 @@
 		C69B823E1CA0D6F5008658CF /* oneVideo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = oneVideo.swift; sourceTree = "<group>"; };
 		C69B824A1CA1102D008658CF /* sign-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sign-2.png"; sourceTree = "<group>"; };
 		C69DB1BE1C99079D0042DA03 /* tagComment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = tagComment.swift; sourceTree = "<group>"; };
+		C6B19B421CD3A38500A9C602 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		C6B7C9EA1C7BE7EF005607EC /* profileLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = profileLocation.swift; sourceTree = "<group>"; };
 		C6BA0A041BFA417B0091E088 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		C6BA0A061BFA41F20091E088 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -231,6 +233,7 @@
 				C6BA0A151BFA422B0091E088 /* libz.tbd in Frameworks */,
 				C6BA0A131BFA421D0091E088 /* SystemConfiguration.framework in Frameworks */,
 				C6BA0A0F1BFA42110091E088 /* QuartzCore.framework in Frameworks */,
+				C6B19B431CD3A38500A9C602 /* StoreKit.framework in Frameworks */,
 				C6BA0A101BFA42110091E088 /* Security.framework in Frameworks */,
 				C6BA0A0A1BFA42000091E088 /* CoreGraphics.framework in Frameworks */,
 				C6BA0A0B1BFA42000091E088 /* CoreLocation.framework in Frameworks */,
@@ -421,6 +424,7 @@
 		C686D2C91C05FEA5003484A5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C6B19B421CD3A38500A9C602 /* StoreKit.framework */,
 				C68956291C4EC3E200D391F2 /* Accounts.framework */,
 				C68956271C4EC3D500D391F2 /* Social.framework */,
 				C6560BA21C0E610B00DD0BA5 /* Facebook */,
@@ -564,7 +568,7 @@
 								enabled = 0;
 							};
 							com.apple.InAppPurchase = {
-								enabled = 0;
+								enabled = 1;
 							};
 							com.apple.Push = {
 								enabled = 1;
@@ -814,6 +818,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -860,6 +865,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";

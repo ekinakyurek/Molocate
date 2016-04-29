@@ -267,7 +267,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
 
         venueoruser = true
         self.venueButton2.backgroundColor = swiftColor2
-        self.usernameButton2.backgroundColor = swiftColor2
+        self.usernameButton2.backgroundColor = swiftColor3
         self.venueButton2.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         self.usernameButton2.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
         if self.venueTable.numberOfRowsInSection(0) > 0 {

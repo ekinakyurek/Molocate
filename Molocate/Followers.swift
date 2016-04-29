@@ -99,7 +99,7 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
         
        
         let cell = TableViewCellFollowerFollowing(style: UITableViewCellStyle.Default, reuseIdentifier: "myIdentifier2")
-
+        
         if follower {
             cell.myButton1.setTitle("\(userRelations.relations[indexPath.row].username)", forState: .Normal)
             if(userRelations.relations[indexPath.row].picture_url.absoluteString != ""){

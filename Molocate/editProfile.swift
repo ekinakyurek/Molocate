@@ -79,7 +79,7 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
         
         let scr = screenHeight - 60
         
-        datepicker = UIDatePicker(frame:CGRectMake(screenWidth / 3 + 5  , 60 + (scr * (60 / 120)), screenWidth - (screenWidth / 3 - 10)     , (scr * 20) / 120 ))
+        datepicker = UIDatePicker(frame:CGRectMake(screenWidth / 3 + 5  , 60 + (scr * (61 / 120)), screenWidth - (screenWidth / 3 - 10)     , (scr * 20) / 120 ))
         
         datepicker.locale = NSLocale(localeIdentifier: "tr_TR")
         datepicker.datePickerMode = UIDatePickerMode.Date
@@ -121,18 +121,23 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
             photo.image = UIImage(named: "profilepic.png")!
         }
         
-        photo!.frame = CGRectMake(10 , 60 + (scr * 2) / 120 , (scr * 26) / 120 , (scr * 26) / 120)
+        photo!.frame = CGRectMake((screenWidth / 2) - ((scr * 21) / 240) , 60 + (scr * 2) / 120 , (scr * 21) / 120 , (scr * 21) / 120)
+        photo.layer.borderWidth = 0.1
+        photo.layer.masksToBounds = false
+        //photo.layer.borderColor = UIColor.whiteColor().CGColor
+        photo.layer.cornerRadius = photo.frame.height / 2
+        photo.clipsToBounds = true
         self.view.addSubview(photo!)
         
         name = UILabel()
-        name.frame = CGRectMake(0, 60 + (scr * (32 / 120)), screenWidth / 3, (scr * 6) / 120)
+        name.frame = CGRectMake(0, 60 + (scr * (33 / 120)), screenWidth / 3, (scr * 6) / 120)
         name.text = "İsim Soyisim:"
         name.textAlignment = .Right
         name.font = UIFont (name: "AvenirNext-Regular", size: 16)
         view.addSubview(name)
         
         nameText = UITextField()
-        nameText.frame = CGRectMake(screenWidth / 3 + 10 , 60 + (scr * (32 / 120)), (screenWidth - (screenWidth / 3) - 20) / 2 - 5, (scr * 6) / 120)
+        nameText.frame = CGRectMake(screenWidth / 3 + 10 , 60 + (scr * (33 / 120)), (screenWidth - (screenWidth / 3) - 20) / 2 - 5, (scr * 6) / 120)
         nameText.borderStyle = .RoundedRect
         nameText.textColor = UIColor.blackColor()
         nameText.keyboardType = .Default
@@ -142,7 +147,7 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
         view.addSubview(nameText)
         
         surnameText = UITextField()
-        surnameText.frame = CGRectMake(2 * screenWidth / 3 + 10  , 60 + (scr * (32 / 120)), (screenWidth - (screenWidth / 3) - 20) / 2 - 5 , (scr * 6) / 120)
+        surnameText.frame = CGRectMake(2 * screenWidth / 3 + 10  , 60 + (scr * (33 / 120)), (screenWidth - (screenWidth / 3) - 20) / 2 - 5 , (scr * 6) / 120)
         surnameText.font = UIFont(name: "AvenirNext-Regular", size: 14)
         surnameText.borderStyle = .RoundedRect
         surnameText.textColor = UIColor.blackColor()
@@ -151,14 +156,14 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
         view.addSubview(surnameText)
         
         notification = UILabel()
-        notification.frame = CGRectMake(0, 60 + (scr * (42 / 120)), screenWidth / 3, (scr * 6) / 120)
+        notification.frame = CGRectMake(0, 60 + (scr * (43 / 120)), screenWidth / 3, (scr * 6) / 120)
         notification.text = "Bildirimler:"
         notification.textAlignment = .Right
         notification.font = UIFont (name: "AvenirNext-Regular", size: 16)
         view.addSubview(notification)
         
         gender = UILabel()
-        gender.frame = CGRectMake(0, 60 + (scr * (52 / 120)), screenWidth / 3, (scr * 6) / 120)
+        gender.frame = CGRectMake(0, 60 + (scr * (53 / 120)), screenWidth / 3, (scr * 6) / 120)
         gender.text = "Cinsiyet:"
         gender.textAlignment = .Right
         gender.font = UIFont (name: "AvenirNext-Regular", size: 16)
@@ -166,7 +171,7 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
         
         birthday = UILabel()
         birthday.font = UIFont (name: "AvenirNext-Regular", size: 16)
-        birthday.frame = CGRectMake(0, 60 + (scr * (62 / 120)), screenWidth / 3, (scr * 16) / 120)
+        birthday.frame = CGRectMake(0, 60 + (scr * (63 / 120)), screenWidth / 3, (scr * 16) / 120)
         birthday.text = "Doğum Tarihi:"
         birthday.textAlignment = .Right
         view.addSubview(birthday)
@@ -174,8 +179,8 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
         
         
         
-        let xvalue : CGFloat = (screenWidth - screenWidth / 3 ) / 2 + screenWidth / 3
-        let yvalue : CGFloat = 60 + (scr * (45 / 120))
+        let xvalue : CGFloat = (screenWidth - screenWidth / 3 ) / 2 + screenWidth / 3 - 20
+        let yvalue : CGFloat = 60 + (scr * (46 / 120))
         
         switchDemo = UISwitch()
         switchDemo.center.x = xvalue
@@ -186,32 +191,32 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
         
         
         let femaleButton   = UIButton(type: UIButtonType.System)
-        femaleButton.frame = CGRectMake(screenWidth / 3 + 51 , 60 + (scr * (55 / 120)) - 6 , 38 , 38)
+        femaleButton.frame = CGRectMake(screenWidth / 3 + 51 , 60 + (scr * (56 / 120)) - 6 , 38 , 38)
         //femaleButton.setTitle("◽️", forState: UIControlState.Normal)
         femaleButton.addTarget(self, action: #selector(editProfile.femaleSelected(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         self.view.addSubview(femaleButton)
         
         
         let maleButton   = UIButton(type: UIButtonType.System) as UIButton
-        maleButton.frame = CGRectMake(screenWidth / 3 + 141 , 60 + (scr * (55 / 120)) - 6 , 38 , 38)
+        maleButton.frame = CGRectMake(screenWidth / 3 + 141 , 60 + (scr * (56 / 120)) - 6 , 38 , 38)
         //maleButton.setTitle("◽️", forState: UIControlState.Normal)
         maleButton.addTarget(self, action: #selector(editProfile.maleSelected(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         self.view.addSubview(maleButton)
         
         kadın = UILabel()
-        kadın.frame = CGRectMake(screenWidth / 3 + 10, 60 + (scr * (52 / 120)), 50, (scr * 6) / 120)
+        kadın.frame = CGRectMake(screenWidth / 3 + 10, 60 + (scr * (53 / 120)), 50, (scr * 6) / 120)
         kadın.text = "Kadın"
         kadın.font = UIFont (name: "AvenirNext-Regular", size: 16)
         kadın.textAlignment = .Right
         view.addSubview(kadın)
         
         erkekimage = UILabel()
-        erkekimage.frame = CGRectMake(screenWidth / 3 + 150 , 60 + (scr * (55 / 120)) - 10 , 25 , 20)
+        erkekimage.frame = CGRectMake(screenWidth / 3 + 150 , 60 + (scr * (56 / 120)) - 10 , 25 , 20)
         erkekimage.text = "◽️"
         view.addSubview(erkekimage)
         
         kadınimage = UILabel()
-        kadınimage.frame = CGRectMake(screenWidth / 3 + 65 , 60 + (scr * (55 / 120)) - 10 , 25 , 20)
+        kadınimage.frame = CGRectMake(screenWidth / 3 + 65 , 60 + (scr * (56 / 120)) - 10 , 25 , 20)
         kadınimage.text = "◽️"
         view.addSubview(kadınimage)
         
@@ -223,18 +228,20 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
         saveButton.layer.cornerRadius = 10
         saveButton.layer.borderWidth = 0
         saveButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        saveButton.titleLabel!.font =  UIFont(name: "AvenirNext-DemiBold.tff", size: 18)
+        saveButton.titleLabel!.font =  UIFont(name: "AvenirNext-DemiBold.ttf", size: 18)
         self.view.addSubview(saveButton)
         
         let changePhoto   = UIButton(type: UIButtonType.System) as UIButton
-        changePhoto.frame = CGRectMake(10 , 60 + (scr * 2) / 120 , (scr * 26) / 120 , (scr * 26) / 120)
-        changePhoto.backgroundColor = .None
-        changePhoto.titleLabel?.lineBreakMode = NSLineBreakMode.ByWordWrapping;
+        changePhoto.frame = CGRectMake((screenWidth / 2) - 40, 60 + (scr * 24) / 120 , 80 , (scr * 5) / 120)
+        changePhoto.backgroundColor = swiftColor
+        changePhoto.layer.cornerRadius = 10
+        changePhoto.layer.borderWidth = 0
+        //changePhoto.titleLabel?.lineBreakMode = NSLineBreakMode.ByWordWrapping;
         changePhoto.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        changePhoto.titleLabel!.font =  UIFont(name: "AvenirNext-Regular.tff", size: 20)
-        changePhoto.setTitle("Fotoğrafı\nDeğiştir", forState: UIControlState.Normal)
+        changePhoto.titleLabel!.font =  UIFont(name: "AvenirNext-Regular", size: 12)
+        changePhoto.setTitle("Düzenle", forState: UIControlState.Normal)
         changePhoto.addTarget(self, action: #selector(editProfile.changePhoto(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-        changePhoto.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        //changePhoto.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         self.view.addSubview(changePhoto)
         
         let password   = UIButton(type: UIButtonType.System) as UIButton
@@ -244,14 +251,13 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
         password.backgroundColor = swiftColor
         password.setTitle("Şifre Değiştir", forState: UIControlState.Normal)
         password.addTarget(self, action: #selector(editProfile.changePassword(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-        
         password.layer.cornerRadius = 10
         password.layer.borderWidth = 0
         self.view.addSubview(password)
         
         
         erkek = UILabel()
-        erkek.frame = CGRectMake(screenWidth / 3 + 100 , 60 + (scr * (52 / 120)) , 50, (scr * 6) / 120)
+        erkek.frame = CGRectMake(screenWidth / 3 + 100 , 60 + (scr * (53 / 120)) , 50, (scr * 6) / 120)
         erkek.text = "Erkek"
         erkek.font = UIFont (name: "AvenirNext-Regular", size: 16)
         erkek.textAlignment = .Left
@@ -407,52 +413,52 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
         
         let line1 = UIView(frame: CGRectMake(0 , 60 + (scr * (31 / 120)) , screenWidth , 1.0))
         line1.layer.borderWidth = 1.0
-        line1.layer.borderColor = UIColor.grayColor().CGColor
+        line1.layer.borderColor = UIColor.lightGrayColor().CGColor
         self.view.addSubview(line1)
         
-        let line2 = UIView(frame: CGRectMake(0 , 60 + (scr * (39 / 120)) , screenWidth , 1.0))
-        line2.layer.borderWidth = 1.0
-        line2.layer.borderColor = UIColor.grayColor().CGColor
-        self.view.addSubview(line2)
+//        let line2 = UIView(frame: CGRectMake(0 , 60 + (scr * (39 / 120)) , screenWidth , 1.0))
+//        line2.layer.borderWidth = 1.0
+//        line2.layer.borderColor = UIColor.grayColor().CGColor
+//        self.view.addSubview(line2)
         
         let line3 = UIView(frame: CGRectMake(0 , 60 + (scr * (41 / 120)) , screenWidth , 1.0))
         line3.layer.borderWidth = 1.0
-        line3.layer.borderColor = UIColor.grayColor().CGColor
+        line3.layer.borderColor = UIColor.lightGrayColor().CGColor
         self.view.addSubview(line3)
         
-        let line4 = UIView(frame: CGRectMake(0 , 60 + (scr * (49 / 120)) , screenWidth , 1.0))
-        line4.layer.borderWidth = 1.0
-        line4.layer.borderColor = UIColor.grayColor().CGColor
-        self.view.addSubview(line4)
+//        let line4 = UIView(frame: CGRectMake(0 , 60 + (scr * (49 / 120)) , screenWidth , 1.0))
+//        line4.layer.borderWidth = 1.0
+//        line4.layer.borderColor = UIColor.grayColor().CGColor
+//        self.view.addSubview(line4)
         
         let line5 = UIView(frame: CGRectMake(0 , 60 + (scr * (51 / 120)) , screenWidth , 1.0))
         line5.layer.borderWidth = 1.0
-        line5.layer.borderColor = UIColor.grayColor().CGColor
+        line5.layer.borderColor = UIColor.lightGrayColor().CGColor
         self.view.addSubview(line5)
         
-        let line6 = UIView(frame: CGRectMake(0 , 60 + (scr * (59 / 120)) , screenWidth , 1.0))
-        line6.layer.borderWidth = 1.0
-        line6.layer.borderColor = UIColor.grayColor().CGColor
-        self.view.addSubview(line6)
+//        let line6 = UIView(frame: CGRectMake(0 , 60 + (scr * (59 / 120)) , screenWidth , 1.0))
+//        line6.layer.borderWidth = 1.0
+//        line6.layer.borderColor = UIColor.grayColor().CGColor
+//        self.view.addSubview(line6)
         
         let line7 = UIView(frame: CGRectMake(0 , 60 + (scr * (61 / 120)) , screenWidth , 1.0))
         line7.layer.borderWidth = 1.0
-        line7.layer.borderColor = UIColor.grayColor().CGColor
+        line7.layer.borderColor = UIColor.lightGrayColor().CGColor
         self.view.addSubview(line7)
         
-        let line10 = UIView(frame: CGRectMake(0 , 60 + (scr * (79 / 120)) , screenWidth , 1.0))
-        line10.layer.borderWidth = 1.0
-        line10.layer.borderColor = UIColor.grayColor().CGColor
-        self.view.addSubview(line10)
+//        let line10 = UIView(frame: CGRectMake(0 , 60 + (scr * (79 / 120)) , screenWidth , 1.0))
+//        line10.layer.borderWidth = 1.0
+//        line10.layer.borderColor = UIColor.lightGrayColor().CGColor
+//        self.view.addSubview(line10)
         
         let line11 = UIView(frame: CGRectMake(0 , 60 + (scr * (81 / 120)) , screenWidth , 1.0))
         line11.layer.borderWidth = 1.0
-        line11.layer.borderColor = UIColor.grayColor().CGColor
+        line11.layer.borderColor = UIColor.lightGrayColor().CGColor
         self.view.addSubview(line11)
         
         let line12 = UIView(frame: CGRectMake(0 , 60 + (scr * (89 / 120)) , screenWidth , 1.0))
         line12.layer.borderWidth = 1.0
-        line12.layer.borderColor = UIColor.grayColor().CGColor
+        line12.layer.borderColor = UIColor.lightGrayColor().CGColor
         self.view.addSubview(line12)
         
     }
