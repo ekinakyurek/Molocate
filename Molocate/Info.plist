@@ -78,6 +78,10 @@
 		<string>LatoTR-Regular.ttf</string>
 		<string>LatoTR-Bold.ttf</string>
 	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchImageFile~iphone</key>
 	<string>mole</string>
 	<key>UILaunchStoryboardName</key>
