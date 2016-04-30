@@ -721,9 +721,9 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                         cell.likeButton.tintColor = UIColor.whiteColor()
                     }
                 }else if pressedFollow{
-                    pressedFollow = true
+                    pressedFollow = false
                     
-                    //cell.followButton.hidden = videoArray[indexPath.row].isFollowing == 1 ? true:false
+                    cell.followButton.hidden = videoArray[indexPath.row].isFollowing == 1 ? true:false
                     
                 }
                 return cell

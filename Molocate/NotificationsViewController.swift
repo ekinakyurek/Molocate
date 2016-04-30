@@ -68,7 +68,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
         
          let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! molocateNotificationCell
       //  cell.myButton.addTarget(self, action: #selector(NotificationsViewController.pressedUsername(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-        cell.fotoButton.addTarget(self, action: #selector(NotificationsViewController.pressedProfilePhoto(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        //cell.fotoButton.addTarget(self, action: #selector(NotificationsViewController.pressedProfilePhoto(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         cell.fotoButton.layer.borderWidth = 0.1
         cell.fotoButton.layer.masksToBounds = false
         cell.fotoButton.layer.borderColor = UIColor.whiteColor().CGColor
@@ -99,7 +99,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
        
         
         var multipleAttributes2 = [String : NSObject]()
-        multipleAttributes2[NSFontAttributeName] =  UIFont(name: "AvenirNext-Regular", size: 14.0)
+        multipleAttributes2[NSFontAttributeName] =  UIFont(name: "AvenirNext-Regular", size: 12.0)
         multipleAttributes2[NSForegroundColorAttributeName] = UIColor.blackColor()
         
         let notif = notificationArray[indexPath.row].sentence
@@ -142,12 +142,15 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
         let touchPoint = sender.locationInView(sender.view)
         
         
-        //print(touchPoint)
+        print(touchPoint)
+        print(sizeLabel.intrinsicContentSize().width)
         
         let validFrame = CGRectMake(0, 0, sizeLabel.intrinsicContentSize().width, 25);
- 
-        if  true == CGRectContainsPoint(validFrame, touchPoint)
-        {
+        
+        print(CGRectContainsPoint(validFrame, touchPoint))
+        
+        
+        if CGRectContainsPoint(validFrame, touchPoint){
             pressedUsername(sender)
         }else{
            pressedCell(sender)
@@ -157,7 +160,8 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
     
     func pressedCell(sender: UITapGestureRecognizer){
         let buttonRow = sender.view?.tag
-        if notificationArray[buttonRow!].action == "like" || notificationArray[buttonRow!].action == "comment" {
+        print(notificationArray[buttonRow!].action )
+        if notificationArray[buttonRow!].action != "follow" {
             activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
             activityIndicator.center = self.view.center
             activityIndicator.hidesWhenStopped = true
