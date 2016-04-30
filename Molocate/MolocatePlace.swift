@@ -160,5 +160,64 @@ public class MolocatePlace {
         task.resume()
     }
     
+    class func getFollowers(nextUrl: String = "", placeId: String, completionHandler: (data: MoleUserRelations, response: NSURLResponse!, error: NSError!, count: Int, next: String?, previous: String? ) -> ()) {
+        var url  = NSURL()
+        if(nextUrl == ""){
+            url = NSURL(string: MolocateBaseUrl + "place/api/get_followers/?place_id=" + (placeId as String) )!
+        }else{
+            url = NSURL(string:nextUrl)!
+        }
+        let request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "GET"
+        request.addValue("Token " + MoleUserToken!, forHTTPHeaderField: "Authorization")
+        
+        let task = NSURLSession.sharedSession().dataTaskWithRequest(request){ data, response, error in
+            // print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+            
+            let nsError = error;
+            
+            do {
+                //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+                let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String: AnyObject]
+                // print(result)
+                let count: Int = result["count"] as! Int
+                let next =  result["next"] is NSNull ? "":result["next"] as? String
+                let previous =  result["previous"] is NSNull ? "":result["previous"] as? String
+                let results = result["results"] as! NSArray
+                var followers = MoleUserRelations()
+                followers.totalCount = count
+                var friends: Array<MoleUserFriend> = Array<MoleUserFriend>()
+                
+                if(count != 0){
+                    //print(result["results"] )
+                    for i in 0..<results.count{
+                        var friend = MoleUserFriend()
+                        let thing = results[i] as! [String:AnyObject]
+                        friend.username = thing["username"] as! String
+                        friend.picture_url = thing["picture_url"] is NSNull ? NSURL():NSURL(string: thing["picture_url"] as! String)!
+                        let isfollowing = thing["is_following"] as! Int
+                        
+                        friend.is_following = isfollowing == 0 ? false:true
+                        if(friend.username==MoleCurrentUser.username){
+                            friend.is_following = true
+                        }
+                        
+                        
+                        friends.append(friend)
+                    }
+                }
+                
+                followers.relations = friends
+                
+                completionHandler(data: followers , response: response , error: nsError, count: count, next: next, previous: previous  )
+            } catch{
+                completionHandler(data:  MoleUserRelations() , response: nil , error: nsError, count: 0, next: nil, previous: nil  )
+                print("Error:: in mole.getFollowers()")
+            }
+            
+        }
+        task.resume()
+    }
+    
     
 }

@@ -23,6 +23,7 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
     
 
     var classUser = MoleUser()
+    var classPlace = MolePlace()
     var userRelations = MoleUserRelations()
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     var myTable: UITableView!
@@ -50,15 +51,31 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
             self.TitleLabel.text = "Takipçi"
             self.TitleLabel.textColor = UIColor.whiteColor()
             self.TitleLabel.font = UIFont(name: "AvenirNext-Regular", size: (self.TitleLabel.font?.pointSize)!)
-            MolocateAccount.getFollowers(username: classUser.username) { (data, response, error, count, next, previous) -> () in
-                self.relationNextUrl = next!
-                self.userRelations = data
-                dispatch_async(dispatch_get_main_queue()){
-                    self.myTable.reloadData()
-                    self.followerCount = data.totalCount
+            if(classPlace.name == ""){
+                MolocateAccount.getFollowers(username: classUser.username) { (data, response, error, count, next, previous) -> () in
+                    self.relationNextUrl = next!
+                    self.userRelations = data
+                    dispatch_async(dispatch_get_main_queue()){
+                        self.myTable.reloadData()
+                        self.followerCount = data.totalCount
+                    }
+                
                 }
-            
-        }}else{
+            }else{
+                MolocatePlace.getFollowers(placeId: thePlace.id) { (data, response, error, count, next, previous) -> () in
+                    
+                    print(data)
+                    self.relationNextUrl = next!
+                    self.userRelations = data
+                    dispatch_async(dispatch_get_main_queue()){
+                        self.myTable.reloadData()
+                        self.followerCount = data.totalCount
+                    }
+                    
+                }
+            }
+        
+        }else{
                 follower = false
                 self.TitleLabel.text = "Takip"
                 self.TitleLabel.textColor = UIColor.whiteColor()

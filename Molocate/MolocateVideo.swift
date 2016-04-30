@@ -108,6 +108,7 @@ public class MolocateVideo {
         
         let task = NSURLSession.sharedSession().dataTaskWithRequest(request){ (data, response, error) -> Void in
             let nsError = error
+            
             do {
                 let result = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers ) as! [String: AnyObject]
                 

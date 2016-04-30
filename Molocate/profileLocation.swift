@@ -84,7 +84,25 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
     }
     @IBOutlet var followerCount: UIButton!
     
+    
     @IBAction func followersButton(sender: AnyObject) {
+        player1.stop()
+        player2.stop()
+        follewersclicked = true
+        user = MoleCurrentUser
+        let controller:Followers = self.storyboard!.instantiateViewControllerWithIdentifier("Followers") as! Followers
+        controller.classPlace = thePlace
+        controller.classUser = MoleCurrentUser
+        
+        //print(thePlace)
+        controller.view.frame = self.view.bounds;
+        controller.willMoveToParentViewController(self)
+        self.view.addSubview(controller.view)
+        self.addChildViewController(controller)
+        controller.didMoveToParentViewController(self)
+        
+        
+        
     }
     
     var videoData:NSMutableData!

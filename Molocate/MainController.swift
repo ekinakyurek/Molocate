@@ -1423,7 +1423,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         let layer = CALayer()
         layer.frame = rect
         layer.backgroundColor = UIColor.blackColor().CGColor
-        layer.opacity = 0.8
+        layer.opacity = 0.2
         (tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0,inSection: 0)) as! videoCell).layer.addSublayer(layer)
         let newButton = UIButton(frame: CGRect(x: 0.0, y: 0.0, width: 100.0, height: 100.0))
         newButton.setTitle("Burda", forState: .Normal)
