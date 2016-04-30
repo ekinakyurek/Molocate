@@ -75,7 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 sourceApplication: sourceApplication,
                 annotation: annotation)
         
-            return Session.sharedSession().handleURL(url)
+           // return Session.sharedSession().handleURL(url)
     }
     func application(application: UIApplication, willChangeStatusBarFrame newStatusBarFrame: CGRect) {
         let windows = UIApplication.sharedApplication().windows
