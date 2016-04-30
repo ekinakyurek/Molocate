@@ -184,7 +184,7 @@ public class S3Upload {
                     
                     let headers2 = ["content-type": "/*/", "content-disposition":"attachment;filename=molocate.png" ]
                     
-                    let thumbnailRequest = NSMutableURLRequest(URL: NSURL(string: MolocateBaseUrl + "/video/api/upload_thumbnail/?video_id="+fileID)!, cachePolicy:.UseProtocolCachePolicy, timeoutInterval: 10.0)
+                    let thumbnailRequest = NSMutableURLRequest(URL: NSURL(string: MolocateBaseUrl + "/video/api/upload_thumbnail/?video_id="+fileID)!, cachePolicy:.UseProtocolCachePolicy, timeoutInterval: 70.0)
                     
                     thumbnailRequest.HTTPMethod = "POST"
                     thumbnailRequest.allHTTPHeaderFields = headers2
