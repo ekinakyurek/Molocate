@@ -71,6 +71,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
             uploadRequest.body = fileURL
             uploadRequest.key = "videos/" + (fileName as String)
             uploadRequest.bucket = S3BucketName
+            
             let json = [
                 "video_id": fileName as String,
                 "video_url": "https://d1jkin67a303u2.cloudfront.net/videos/"+(fileName as String),
@@ -150,19 +151,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
                 
                 
                 S3Upload.upload(uploadRequest: uploadRequest, fileURL: "https://d1jkin67a303u2.cloudfront.net/videos/"+(fileName as String), fileID: fileName as String ,json: json as! [String : AnyObject])
-                
-                //        do {
-                //            try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
-                //            dispatch_async(dispatch_get_main_queue()) {
-                //                //print("siiiiil")
-                //                isUploaded = true
-                //
-                //            self.performSegueWithIdentifier("finishUpdate", sender: self)
-                //
-                //            }
-                //        } catch _ {
-                //
-                //        }
+
                 
                 self.performSegueWithIdentifier("finishUpdate", sender: self)
             }
