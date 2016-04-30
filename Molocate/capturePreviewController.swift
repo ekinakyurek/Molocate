@@ -193,6 +193,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
 
     override func viewDidLoad() {
         super.viewDidLoad()
+      
         
                try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
         UIApplication.sharedApplication().endIgnoringInteractionEvents()
@@ -277,7 +278,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
 //         NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(capturePreviewController.buttonEnable) , name: "buttonEnable", object: nil)
         
      
-       self.downArrow.layer.zPosition = 1
+       self.downArrow.layer.zPosition = 2
         
         if placesArray.count == 0 {
             activityIndicator = UIActivityIndicatorView(frame: self.textField.frame)
@@ -360,12 +361,14 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
     func pressedCaption(sender: UIButton) {
         
         let controller:tagComment = self.storyboard!.instantiateViewControllerWithIdentifier("tagComment") as! tagComment
+        controller.view.layer.zPosition = 1
         //controller.ANYPROPERTY=THEVALUE // If you want to pass value
         controller.view.frame = self.view.bounds;
         controller.willMoveToParentViewController(self)
         self.view.addSubview(controller.view)
         self.addChildViewController(controller)
         controller.didMoveToParentViewController(self)
+        self.downArrow.hidden = true
         
 
     }

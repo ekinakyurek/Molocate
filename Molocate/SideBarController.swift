@@ -10,7 +10,7 @@ var choosedIndex = 1
 
 class SideBarController: UITableViewController {
 
-    var menuArray = ["HABER KAYNAĞI","KEŞFET","BİLDİRİM MERKEZİ","PROFİL"]
+    var menuArray = ["HABER","KEŞFET","BİLDİRİM","PROFİL"]
     var tableData: [String] = ["home", "explore", "notifications","avatar"]
     let cellIdentifier = "cell"
     var attractionImages = [String]()

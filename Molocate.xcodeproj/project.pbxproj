@@ -283,6 +283,7 @@
 		3871AAA11C947F9E00DDD83E /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				388173F61C97ABE20064EBB5 /* commentCell.swift */,
 				C6E92F771CCFD0F900CAE237 /* searchVenue.swift */,
 				C638AFF61C9C80B3003085E8 /* likeVideoCell.swift */,
 				3871AAA21C9488BA00DDD83E /* sideCell.swift */,
@@ -460,7 +461,6 @@
 				C638AFF21C9C7E74003085E8 /* likeVideo.swift */,
 				388173F41C97AACB0064EBB5 /* commentController.swift */,
 				C69DB1BE1C99079D0042DA03 /* tagComment.swift */,
-				388173F61C97ABE20064EBB5 /* commentCell.swift */,
 				C6CBA4FE1C876EC300AE65AD /* profileOther.swift */,
 				C6B7C9EA1C7BE7EF005607EC /* profileLocation.swift */,
 				38E621051C90D9AB00FB1AD5 /* editProfile.swift */,

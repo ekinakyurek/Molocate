@@ -142,12 +142,12 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
         let touchPoint = sender.locationInView(sender.view)
         
         
-        print(touchPoint)
-        print(sizeLabel.intrinsicContentSize().width)
+        //print(touchPoint)
+        //print(sizeLabel.intrinsicContentSize().width)
         
         let validFrame = CGRectMake(0, 0, sizeLabel.intrinsicContentSize().width, 25);
         
-        print(CGRectContainsPoint(validFrame, touchPoint))
+        //print(CGRectContainsPoint(validFrame, touchPoint))
         
         
         if CGRectContainsPoint(validFrame, touchPoint){
@@ -160,7 +160,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
     
     func pressedCell(sender: UITapGestureRecognizer){
         let buttonRow = sender.view?.tag
-        print(notificationArray[buttonRow!].action )
+        //print(notificationArray[buttonRow!].action )
         if notificationArray[buttonRow!].action != "follow" {
             activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
             activityIndicator.center = self.view.center

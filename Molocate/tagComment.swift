@@ -54,6 +54,7 @@ class tagComment: UIViewController, UITextViewDelegate {
             self.removeFromParentViewController()
             
             
+            
         }
         
     }

@@ -77,6 +77,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
             return Session.sharedSession().handleURL(url)
     }
+    func application(application: UIApplication, willChangeStatusBarFrame newStatusBarFrame: CGRect) {
+        let windows = UIApplication.sharedApplication().windows
+        
+        for window in windows {
+            window.removeConstraints(window.constraints)
+        }
+    }
+    
     
     
     //Make sure it isn't already declared in the app delegate (possible redefinition of func error)
