@@ -1945,7 +1945,7 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="g7m-lw-kCh"/>
-                                    <barButtonItem tag="1" image="shapes.png" id="zJt-Bx-yuJ">
+                                    <barButtonItem tag="1" image="follow" id="zJt-Bx-yuJ">
                                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <action selector="FollowButton:" destination="aR2-G9-Y6Y" id="ddX-RF-FvU"/>
@@ -2737,7 +2737,6 @@ bir video bulunmamaktadır :(</string>
         <image name="points" width="42" height="42"/>
         <image name="profilepic.png" width="256" height="256"/>
         <image name="rightarrows" width="26" height="26"/>
-        <image name="shapes.png" width="32" height="32"/>
         <image name="sideMenu" width="31" height="22"/>
         <image name="switch" width="32" height="32"/>
     </resources>

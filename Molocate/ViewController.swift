@@ -110,7 +110,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDe
                 }else {
                     
                     let emailValidation = MolocateUtility.isValidEmail(email.text!)
-                    print(emailValidation)
+                    //print(emailValidation)
                     if username.text?.characters.count > 3 && emailValidation{
                     let mail: String = email.text!.lowercaseString
                     

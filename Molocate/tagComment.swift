@@ -192,7 +192,7 @@ class tagComment: UIViewController, UITextViewDelegate {
             newChar = "⚫         "
            //checkedSymptom = true
             numbers.append(indexPath.row)
-            print(numbers)
+            //print(numbers)
            
            
         } else {
@@ -207,13 +207,13 @@ class tagComment: UIViewController, UITextViewDelegate {
             }
             
             if xAppears {
-                print("yes")
+                //print("yes")
                 let indexOfA = numbers.indexOf(indexPath.row)
                 numbers.removeAtIndex(indexOfA!)
             } else {
-                print("no")
+                //print("no")
             }
-            print(numbers)
+            //print(numbers)
         }
         
         // change the cell and text of the tapped row with the new "checkbox"

@@ -110,7 +110,7 @@ public class MolocatePlace {
                     place.lat = CFStringGetDoubleValue(lat)
                     if (item.indexForKey("next_place_videos") != nil){
                         if item["next_place_videos"] is NSNull {
-                            print("next is null")
+                            //print("next is null")
                             MoleNextPlaceVideos = nil
                         }else {
                             let nextStr = item["next_place_videos"] as! String

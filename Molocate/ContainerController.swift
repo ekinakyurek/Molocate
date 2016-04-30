@@ -104,7 +104,7 @@ class ContainerController: UIViewController,UIScrollViewDelegate {
     }
     
     func deneme() {
-        print("hadi dedeler")
+        //print("hadi dedeler")
     }
     
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {

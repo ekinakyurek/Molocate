@@ -68,8 +68,8 @@ class SideBarController: UITableViewController {
         cell.imageFrame.image = UIImage(named: tableData[indexPath.row])
         cell.label.textColor = UIColor.whiteColor()
        
-        print(choosedIndex)
-        print(indexPath.row)
+        //print(choosedIndex)
+        //print(indexPath.row)
         if choosedIndex == indexPath.row {
         cell.backgroundColor = swiftColor
         }else{

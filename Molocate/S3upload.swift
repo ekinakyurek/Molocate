@@ -101,7 +101,7 @@ public class S3Upload {
                 if uploadTask == nil {
                     uploadTask = task
                 }
-                print(bytesSent)
+                //print(bytesSent)
                 if totalBytesSent <= totalBytesExpectedToSend {
                     progressBar?.progress = Float(totalBytesSent)/Float(totalBytesExpectedToSend)
                 }else{

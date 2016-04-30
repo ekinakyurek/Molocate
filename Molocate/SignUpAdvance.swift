@@ -216,7 +216,7 @@ class SignUpAdvance: UIViewController , UITextFieldDelegate {
     }
     
     override func viewDidDisappear(animated: Bool) {
-        print("Hoca")
+        //print("Hoca")
     }
     
 }

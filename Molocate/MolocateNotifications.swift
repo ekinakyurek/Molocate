@@ -47,7 +47,7 @@ public class MolocateNotifications{
                 completionHandler(data: notificationArray, response: response, error: nsError)
             }catch{
                 completionHandler(data: nil, response: NSURLResponse(), error: nsError)
-                print(nsError)
+                print(nsError?.helpAnchor)
             }
         }
         task.resume()

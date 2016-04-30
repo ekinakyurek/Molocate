@@ -117,7 +117,7 @@ public class MolocateVideo {
                 
                 if (result["next"] != nil){
                     if result["next"] is NSNull {
-                        print("next is null")
+                        //print("next is null")
                         nexturl = nil
                     }else {
                         let nextStr = result["next"] as! String
@@ -244,7 +244,7 @@ public class MolocateVideo {
                 case "user":
                     if (result["next"] != nil){
                         if result["next"] is NSNull {
-                            print("next is null")
+                            //print("next is null")
                             AddedNextUserVideos = nil
                         }else {
                             let nextStr = result["next"] as! String
@@ -256,7 +256,7 @@ public class MolocateVideo {
                 case "tagged":
                     if (result["next"] != nil){
                         if result["next"] is NSNull {
-                            print("next is null")
+                            //print("next is null")
                             TaggedNextUserVideos = nil
                         }else {
                             let nextStr = result["next"] as! String
@@ -481,7 +481,7 @@ public class MolocateVideo {
                 do {
                     
                     let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String:AnyObject]
-                    print(result)
+                    //print(result)
                     if result["result"] as! String == "success" {
                     completionHandler(data: result["comment_id"] as! String , response: response , error: nsError  )
                     } else {

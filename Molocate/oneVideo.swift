@@ -160,7 +160,7 @@ class oneVideo: UIViewController,PlayerDelegate {
         player.stop()
         
         print("place e basıldı at index path: \(buttonRow) ")
-        print("================================" )
+        //print("================================" )
         MolocatePlace.getPlace(MoleGlobalVideo.locationID) { (data, response, error) -> () in
             dispatch_async(dispatch_get_main_queue()){
                 thePlace = data
@@ -187,7 +187,7 @@ class oneVideo: UIViewController,PlayerDelegate {
     func pressedFollow(sender: UIButton) {
         let buttonRow = sender.tag
         pressedFollow = true
-        print("followa basıldı at index path: \(buttonRow) ")
+        //print("followa basıldı at index path: \(buttonRow) ")
         MoleGlobalVideo.isFollowing = 1
         var indexes = [NSIndexPath]()
         let index = NSIndexPath(forRow: buttonRow, inSection: 0)
@@ -216,7 +216,7 @@ class oneVideo: UIViewController,PlayerDelegate {
     
     func doubleTapped(sender: UITapGestureRecognizer) {
         let buttonRow = sender.view!.tag
-        print("like a basıldı at index path: \(buttonRow) ")
+       // print("like a basıldı at index path: \(buttonRow) ")
         pressedLike = true
         let indexpath = NSIndexPath(forRow: buttonRow, inSection: 0)
         let  cell = tableView.cellForRowAtIndexPath(indexpath)
@@ -261,7 +261,7 @@ class oneVideo: UIViewController,PlayerDelegate {
     }
     func pressedLike(sender: UIButton) {
         let buttonRow = sender.tag
-        print("like a basıldı at index path: \(buttonRow) ")
+        //print("like a basıldı at index path: \(buttonRow) ")
         pressedLike = true
         let indexpath = NSIndexPath(forRow: buttonRow, inSection: 0)
         var indexes = [NSIndexPath]()
@@ -312,7 +312,7 @@ class oneVideo: UIViewController,PlayerDelegate {
                 self.addChildViewController(controller)
                 controller.didMoveToParentViewController(self)
                 
-                print("comment e basıldı at index path: \(buttonRow)")
+                //print("comment e basıldı at index path: \(buttonRow)")
             }
         }
         
@@ -339,7 +339,7 @@ class oneVideo: UIViewController,PlayerDelegate {
         
         let reportVideo: UIAlertAction = UIAlertAction(title: "Report the Video", style: .Default) { action -> Void in
             
-            print("reported")
+            //print("reported")
         }
         actionSheetController.addAction(reportVideo)
         

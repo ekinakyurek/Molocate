@@ -278,7 +278,7 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
                 if let parentVC = parentVC as? profileOther{
                     if(follewersclicked){
                         parentVC.followersCount.setTitle(  "\(self.followerCount)", forState: .Normal)
-                        print(self.userRelations.relations.count)
+                        //print(self.userRelations.relations.count)
                     }else{
                          parentVC.followingsCount.setTitle("\(self.followingCount)", forState: .Normal)
                     }

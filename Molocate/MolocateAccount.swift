@@ -360,16 +360,16 @@ public class MolocateAccount {
                 let nsError = error
                 
                 do {
-                    print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+                    //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
                     let result = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers) as! [String: AnyObject]
-                   print(result)
+                  // print(result)
                     if(result.count > 1){
                         MoleUserToken = result["access_token"] as? String
                         completionHandler(data: "success" , response: response , error: nsError  )
                         
                     } else{
                         let error = result["result"] as! String
-                        print(error)
+                       // print(error)
                         switch (error){
                         case "user_exist":
                             completionHandler(data: "Lütfen daha önce kullanılmamış bir kullanıcı adı seçiniz." , response: response , error: nsError  )
@@ -410,7 +410,7 @@ public class MolocateAccount {
         request.addValue("Token " + MoleUserToken!, forHTTPHeaderField: "Authorization")
         
         let task = NSURLSession.sharedSession().dataTaskWithRequest(request){ data, response, error in
-            print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+           // print(NSString(data: data!, encoding: NSUTF8StringEncoding))
             
             let nsError = error
             
@@ -569,7 +569,7 @@ public class MolocateAccount {
             let nsError = error;
             
             do {
-                print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+                //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
                 let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [[String:AnyObject]]
                 var userArray = [MoleUser]()
                 for item in result {

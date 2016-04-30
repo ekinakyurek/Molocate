@@ -41,7 +41,7 @@ class likeVideo: UIViewController, UITableViewDelegate, UITableViewDataSource  {
         tableView.allowsSelection = false
         tableView.tableFooterView = UIView()
         
-        print(video_id)
+       // print(video_id)
         MolocateVideo.getLikes(video_id) { (data, response, error, count, next, previous) -> () in
             
             self.users.removeAll()
@@ -89,7 +89,7 @@ class likeVideo: UIViewController, UITableViewDelegate, UITableViewDataSource  {
         if(users[indexPath.row].profilePic.absoluteString != ""){
             cell.profileImage.setBackgroundImage(UIImage(named: "profilepic.png")!, forState:
                 UIControlState.Normal)
-            print(users[indexPath.row].profilePic.absoluteString)
+            //print(users[indexPath.row].profilePic.absoluteString)
             MolocateAccount.getDataFromUrl(users[indexPath.row].profilePic, completion: { (data, response, error) -> Void in
                 dispatch_async(dispatch_get_main_queue()){
                     
@@ -117,7 +117,7 @@ class likeVideo: UIViewController, UITableViewDelegate, UITableViewDataSource  {
     }
     func pressedProfile(sender: UIButton) {
         let buttonRow = sender.tag
-        print("pressed profile")
+        //print("pressed profile")
         
         MolocateAccount.getUser(users[buttonRow].username) { (data, response, error) -> () in
             dispatch_async(dispatch_get_main_queue()){
@@ -136,7 +136,7 @@ class likeVideo: UIViewController, UITableViewDelegate, UITableViewDataSource  {
     }
     
     func pressedFollow(sender: UIButton) {
-        print("pressedfollow")
+        //print("pressedfollow")
         let buttonRow = sender.tag
         users[buttonRow].isFollowing = true
         let index : NSIndexPath = NSIndexPath(forRow: buttonRow, inSection: 0)

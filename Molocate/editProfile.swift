@@ -98,8 +98,8 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
         }
         datepicker.setDate( dateFormatter.dateFromString(birthdaytext)!, animated: true)
         //date pickerdan string al, max min value ata
-        let selectedDate = dateFormatter.stringFromDate(datepicker.date)
-        print(selectedDate)
+        //let selectedDate = dateFormatter.stringFromDate(datepicker.date)
+        //print(selectedDate)
         datepicker.transform = CGAffineTransformMakeScale(0.8 , 0.9 )
         //datepicker.transform = CGAffineTransformMakeScale(0. , 1)
         self.view.addSubview(datepicker)
