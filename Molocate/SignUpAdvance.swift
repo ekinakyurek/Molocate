@@ -178,7 +178,7 @@ class SignUpAdvance: UIViewController , UITextFieldDelegate {
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         if textField == username {
             let maxLength = 20
-            let aSet = NSCharacterSet(charactersInString:"ABCDEFGHIJKLMNOPRSTUVYZXWQabcdefghijklmnoprstuvyzxwq0123456789-_.").invertedSet
+            let aSet = NSCharacterSet(charactersInString:"abcdefghijklmnoprstuvyzxwq0123456789-_.").invertedSet
             let compSepByCharInSet = string.componentsSeparatedByCharactersInSet(aSet)
             let numberFiltered = compSepByCharInSet.joinWithSeparator("")
             let currentString: NSString = username.text!

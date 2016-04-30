@@ -51,7 +51,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDe
         
         if(textField==username){
             let maxLength = 20
-            let aSet = NSCharacterSet(charactersInString:"abcdefghijklmnoprstuvyzxwq_-.").invertedSet
+            let aSet = NSCharacterSet(charactersInString:"abcdefghijklmnoprstuvyzxwq1234567890_-.").invertedSet
             let compSepByCharInSet = string.componentsSeparatedByCharactersInSet(aSet)
             let numberFiltered = compSepByCharInSet.joinWithSeparator("")
             let currentString: NSString = textField.text!

@@ -143,6 +143,7 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
         UIApplication.sharedApplication().endIgnoringInteractionEvents()
             
         }
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MainController.prepareForRetry), name: "prepareForRetry", object: nil)
     }
     
     func refresh(sender:AnyObject){
@@ -761,6 +762,28 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
                 self.activityIndicator.removeFromSuperview()
             }
         }
+        
+    }
+    
+    var newButton = UIButton()
+    func prepareForRetry(){
+        let rect = (tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0,inSection: 0)) as! videoCell).newRect
+        let layer = CALayer()
+        layer.frame = rect
+        layer.backgroundColor = UIColor.blackColor().CGColor
+        layer.opacity = 0.8
+        (tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0,inSection: 0)) as! videoCell).layer.addSublayer(layer)
+        newButton = UIButton(frame: CGRect(x: 0.0, y: 0.0, width: 100.0, height: 100.0))
+        newButton.setImage(UIImage(named: "options"), forState: .Normal)
+        newButton.tintColor = UIColor.whiteColor()
+        newButton.center = (tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0,inSection: 0)) as! videoCell).contentView.center
+        (tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0,inSection: 0)) as! videoCell).superview!.addSubview(newButton)
+        newButton.addTarget(self, action: #selector(MainController.retryRequest), forControlEvents: UIControlEvents.TouchUpInside)
+    }
+    func retryRequest(){
+        S3Upload.upload(false, uploadRequest: (GlobalVideoUploadRequest?.uploadRequest)!, fileURL:(GlobalVideoUploadRequest?.filePath)!, fileID: (GlobalVideoUploadRequest?.fileId)!, json: (GlobalVideoUploadRequest?.JsonData)!)
+        self.newButton.removeFromSuperview()
+        self.tableView.reloadData()
         
     }
     

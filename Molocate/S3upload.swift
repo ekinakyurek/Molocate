@@ -20,7 +20,7 @@ public class S3Upload {
     static var uploadTask:AWSS3TransferUtilityTask?
     static var completionHandler:AWSS3TransferUtilityUploadCompletionHandlerBlock?
     class func upload(retry:Bool = false,uploadRequest: AWSS3TransferManagerUploadRequest, fileURL: String, fileID: String, json:  [String:AnyObject]) {
-        
+        isUp = false
         if !retry {
             do{
                 let image = UIImageJPEGRepresentation(thumbnail, 0.5)!
@@ -220,7 +220,7 @@ public class S3Upload {
                                         dispatch_async(dispatch_get_main_queue()) {
                                             progressBar?.hidden = true
                                             n = 0
-                                            
+                                            //print("yüklendi")
                                         }
                                     } catch _ {
                                         
@@ -258,7 +258,7 @@ public class S3Upload {
             if ((task.result) != nil) {
                 let uploadTask = task.result
                 // Do something with uploadTask.
-                let seconds = 60.0
+                let seconds = 10.0
                 let delay = seconds * Double(NSEC_PER_SEC)  // nanoseconds per seconds
                 let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
                 dispatch_after(dispatchTime, dispatch_get_main_queue(), {

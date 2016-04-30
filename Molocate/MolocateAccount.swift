@@ -579,6 +579,7 @@ public class MolocateAccount {
                     user.profilePic = item["picture_url"] is NSNull ? NSURL():NSURL(string: item["picture_url"] as! String)!
                     user.first_name = item["first_name"] as! String
                     user.last_name = item["last_name"] as! String
+                    user.isFollowing = item["is_following"] as! Int == 1 ? true:false
                     userArray.append(user)
                     
                 }

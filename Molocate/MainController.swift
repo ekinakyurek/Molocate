@@ -752,7 +752,12 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
             return cell
             } else {
                 let cell = searchUsername(style: UITableViewCellStyle.Default, reuseIdentifier: "cell")
+                if searchedUsers[indexPath.row].isFollowing {
                 cell.followButton.hidden = true
+                } else {
+                    
+                    cell.followButton.addTarget(self, action: #selector(MainController.pressedFollowSearch(_:)), forControlEvents: .TouchUpInside)
+                }
                 cell.usernameLabel.text = "@\(searchedUsers[indexPath.row].username)"
                 if searchedUsers[indexPath.row].first_name == "" {
                 cell.nameLabel.text = "\(searchedUsers[indexPath.row].username)"
@@ -760,16 +765,15 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                 else{
                 cell.nameLabel.text = "\(searchedUsers[indexPath.row].first_name) \(searchedUsers[indexPath.row].last_name)"
                 }
-//                let cell = TableViewCellFollowerFollowing(style: UITableViewCellStyle.Default, reuseIdentifier: "myIdentifier2")
-//                cell.myButton1.setTitle("\(searchedUsers[indexPath.row].username)", forState: .Normal)
                 if(searchedUsers[indexPath.row].profilePic.absoluteString != ""){
                     cell.profilePhoto.sd_setImageWithURL(searchedUsers[indexPath.row].profilePic, forState: UIControlState.Normal)
                 }
-//                cell.myButton1.addTarget(self, action: #selector(MainController.pressedProfileSearch(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-//                cell.fotoButton.addTarget(self, action: #selector(MainController.pressedProfileSearch(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-//                cell.fotoButton.tag = indexPath.row
-//                cell.myButton1.tag = indexPath.row
-                //cell.detailTextLabel?.text = "\(searchedUsers[indexPath.row].first_name) \(searchedUsers[indexPath.row].last_name)"
+                
+                cell.profilePhoto.addTarget(self, action: #selector(MainController.pressedProfileSearch(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+                //cell.followButton.addTarget(self, action: Selector("pressedFollowSearch"), forControlEvents: .TouchUpInside)
+                cell.followButton.tag = indexPath.row
+                cell.profilePhoto.tag = indexPath.row
+
                 return cell
             }
         
@@ -952,11 +956,24 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         pressedFollow = false
     }
     
+    func pressedFollowSearch(sender: UIButton) {
+        print(sender.tag)
+        let buttonRow = sender.tag
+        pressedFollow = true
+        self.searchedUsers[buttonRow].isFollowing = true
+        var indexes = [NSIndexPath]()
+        let index = NSIndexPath(forRow: buttonRow, inSection: 0)
+        indexes.append(index)
+        self.venueTable.reloadRowsAtIndexPaths(indexes, withRowAnimation: .None)
+        
+        MolocateAccount.follow(self.searchedUsers[buttonRow].username){ (data, response, error) -> () in
+            MoleCurrentUser.following_count += 1
+            
+        }
+        pressedFollow = false
+    }
+
     func pressedLikeCount(sender: UIButton) {
-        ////////print("____________________________--------------")
-        ////////print(sender.tag)
-        player1.stop()
-        player2.stop()
         video_id = videoArray[sender.tag].id
         videoIndex = sender.tag
         let controller:likeVideo = self.storyboard!.instantiateViewControllerWithIdentifier("likeVideo") as! likeVideo
@@ -1418,23 +1435,26 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         //dictionary.removeAllObjects()
         
     }
+    var newButton = UIButton()
     func prepareForRetry(){
         let rect = (tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0,inSection: 0)) as! videoCell).newRect
         let layer = CALayer()
         layer.frame = rect
         layer.backgroundColor = UIColor.blackColor().CGColor
-        layer.opacity = 0.2
+        layer.opacity = 0.8
         (tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0,inSection: 0)) as! videoCell).layer.addSublayer(layer)
-        let newButton = UIButton(frame: CGRect(x: 0.0, y: 0.0, width: 100.0, height: 100.0))
-        newButton.setTitle("Burda", forState: .Normal)
-        newButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size:20)
+        newButton = UIButton(frame: CGRect(x: 0.0, y: 0.0, width: 100.0, height: 100.0))
+        newButton.setImage(UIImage(named: "options"), forState: .Normal)
         newButton.tintColor = UIColor.whiteColor()
         newButton.center = (tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0,inSection: 0)) as! videoCell).contentView.center
-        (tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0,inSection: 0)) as! videoCell).contentView.addSubview(newButton)
+        (tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0,inSection: 0)) as! videoCell).superview!.addSubview(newButton)
         newButton.addTarget(self, action: #selector(MainController.retryRequest), forControlEvents: UIControlEvents.TouchUpInside)
     }
     func retryRequest(){
         S3Upload.upload(false, uploadRequest: (GlobalVideoUploadRequest?.uploadRequest)!, fileURL:(GlobalVideoUploadRequest?.filePath)!, fileID: (GlobalVideoUploadRequest?.fileId)!, json: (GlobalVideoUploadRequest?.JsonData)!)
+        self.newButton.removeFromSuperview()
+        self.tableView.reloadData()
+        
     }
     
     func textFieldDidBeginEditing(textField: UITextField) {
