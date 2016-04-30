@@ -183,9 +183,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDe
     
     func fbLoginInitiate() {
         
-        let loginManager = FBSDKLoginManager()
-        
-        loginManager.logInWithReadPermissions(["public_profile", "email","user_birthday", "user_friends"], handler: {(Result:FBSDKLoginManagerLoginResult!, error:NSError!) -> Void in
+            
+        FBSDKLoginManager().logInWithReadPermissions(["public_profile", "email","user_birthday", "user_friends"],
+                fromViewController:self,
+                handler: { (Result:FBSDKLoginManagerLoginResult!, error:NSError!) -> Void in
+         
             
             if (error != nil) {
                 self.removeFbData()

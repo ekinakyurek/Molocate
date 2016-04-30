@@ -71,7 +71,7 @@ public class MolocateVideo {
                 var comments: Array<MoleVideoComment> = Array<MoleVideoComment>()
                 
                 if(count != 0){
-                    for (var i = 0 ; i < commentdata.count ; i+=1){
+                    for i in 0..<commentdata.count{
                         var thecomment = MoleVideoComment()
                         let thing = commentdata[i] as! [String:AnyObject]
                         //print(thing)
@@ -127,7 +127,7 @@ public class MolocateVideo {
                 
                 var videoArray = [MoleVideoInformation]()
                 
-                for (var i = 0 ; i < videos.count ; i+=1){
+                for i in 0..<videos.count{
                     let item = videos[i] as! [String:AnyObject]
                     let owner_user = item["owner_user"] as! [String:AnyObject]
                     let place_taken = item["place_taken"] as! [String:String]
@@ -154,8 +154,6 @@ public class MolocateVideo {
                     //print(videoArray[indexPath.row].username)
                     //print(videoStr.username)
                     //print(videoStr.urlSta)
-                  
-                    
                 }
                 completionHandler(data: videoArray, response: response, error: nsError, next: nexturl)
             }catch{
@@ -193,7 +191,7 @@ public class MolocateVideo {
                 var users: Array<MoleUser> = Array<MoleUser>()
                 
                 if(count != 0){
-                    for (var i = 0 ; i < likers.count ; i+=1){
+                    for i in 0..<likers.count{
                         let thing = likers[i] as! [String:AnyObject]
                         var user = MoleUser()
                         user.username = thing["username"] as! String
@@ -274,7 +272,7 @@ public class MolocateVideo {
                 let videos = result["results"] as! NSArray
                 var videoArray = [MoleVideoInformation]()
                 
-                for (var i = 0 ; i < videos.count ; i+=1){
+                for i in 0..<videos.count{
                     let item = videos[i] as! [String:AnyObject]
                     let owner_user = item["owner_user"] as! [String:AnyObject]
                     let place_taken = item["place_taken"] as! [String:String]
@@ -504,8 +502,7 @@ public class MolocateVideo {
     
     
     class func deleteAComment(id: String, completionHandler: (data: String! , response: NSURLResponse!, error: NSError!) -> ()){
-        
-        do{
+   
             
             let url = NSURL(string: MolocateBaseUrl + "video/api/delete_comment/?comment_id=" + (id as String))!
             let request = NSMutableURLRequest(URL: url)
@@ -530,14 +527,5 @@ public class MolocateVideo {
             }
             
             task.resume()
-        }catch{
-            completionHandler(data: "fail" , response: nil , error: nil )
-            print("Error:: in mole.deleteComment()")
-        }
     }
-    
-    
-    
-    
-    
 }

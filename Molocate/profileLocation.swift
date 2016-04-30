@@ -153,8 +153,8 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
         let longitude :CLLocationDegrees = thePlace.lon
         let latitude :CLLocationDegrees = thePlace.lat
         let span = MKCoordinateSpanMake(0.005, 0.005)
-        var location:CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-        var region:MKCoordinateRegion = MKCoordinateRegion(center: location, span: span)
+        let location:CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        let region:MKCoordinateRegion = MKCoordinateRegion(center: location, span: span)
         map.setRegion(region, animated: false)
         map.userInteractionEnabled = false
         let annotation = MKPointAnnotation()

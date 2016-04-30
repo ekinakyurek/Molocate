@@ -18,9 +18,9 @@ class tagComment: UIViewController, UITextViewDelegate {
         
         var textstring = " "
        
-        for(var i = 0; i < numbers.count; i += 1 ){
-            parent.taggedUsers.append(userRelations.relations[numbers[i]].username)
-            textstring +=  "@" + userRelations.relations[numbers[i]].username
+        for relative in userRelations.relations{
+            parent.taggedUsers.append(relative.username)
+            textstring +=  "@" + relative.username
         }
         
       
@@ -183,20 +183,20 @@ class tagComment: UIViewController, UITextViewDelegate {
         
         // compare the first character
         let newChar: String
-        let checkedSymptom: Bool
+        //var checkedSymptom: Bool
         
         // insert the special characters using edit > emoji on the menu
         // this is where the toggle magic happens!
         if firstChar == "⚪" {
             newChar = "⚫         "
-            checkedSymptom = true
+           // checkedSymptom = true
             numbers.append(indexPath.row)
             print(numbers)
            
            
         } else {
             newChar = "⚪         "
-            checkedSymptom = false
+          //  checkedSymptom = false
             var xAppears = false
             
             for number in numbers {

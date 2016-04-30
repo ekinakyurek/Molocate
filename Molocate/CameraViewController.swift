@@ -210,11 +210,11 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                     self.view.layer.addSublayer(self.flashButton.layer)
 
                     //self.view.layer.addSublayer(self.videoDoneOutlet.layer)
-                    let statusBarOrientation = UIApplication.sharedApplication().statusBarOrientation
-                    var initialVideoOrientation = AVCaptureVideoOrientation.Portrait
-                    if statusBarOrientation != UIInterfaceOrientation.Unknown {
-                        initialVideoOrientation = AVCaptureVideoOrientation(rawValue: statusBarOrientation.rawValue)!
-                    }
+                  //  let statusBarOrientation = UIApplication.sharedApplication().statusBarOrientation
+//                    var initialVideoOrientation = AVCaptureVideoOrientation.Portrait
+//                    if statusBarOrientation != UIInterfaceOrientation.Unknown {
+//                        initialVideoOrientation = AVCaptureVideoOrientation(rawValue: statusBarOrientation.rawValue)!
+//                    }
                     self.previewLayer?.connection.videoOrientation
                     
                 }
@@ -299,7 +299,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                             }
                 
                             if placemarks!.count > 0 {
-                                let pm = placemarks![0] as CLPlacemark
+                               // let pm = placemarks![0] as CLPlacemark
                                 self.displayLocationInfo(newLocation)
                 
                 
@@ -337,7 +337,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                     
                     
                     let venues = response["venues"] as! [JSONParameters]?
-                    for (var i = 0; i < venues?.count ; i+=1){
+                    for i in 0..<venues!.count{
                         let item = venues![i]
                         let itemlocation = item["location"] as! [String:AnyObject]
                         let itemstats = item["stats"] as! [String:AnyObject]
@@ -665,7 +665,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                     
                     
                 }
-                catch let error {
+                catch{
                     ////print(error)
                 }
             }
@@ -789,7 +789,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         let instruction = AVMutableVideoCompositionInstruction()
         instruction.timeRange = CMTimeRangeMake(kCMTimeZero, CMTimeMakeWithSeconds(60, 30))
         let transformer = AVMutableVideoCompositionLayerInstruction(assetTrack: clipVideoTrack)
-        let cropRect = CGRect(x: 0, y: clipVideoTrack.naturalSize.width*(self.toolbar.frame.height+self.toolbarYancı.frame.height)/self.view.frame.height, width: clipVideoTrack.naturalSize.height, height: clipVideoTrack.naturalSize.height)
+       // let cropRect = CGRect(x: 0, y: clipVideoTrack.naturalSize.width*(self.toolbar.frame.height+self.toolbarYancı.frame.height)/self.view.frame.height, width: clipVideoTrack.naturalSize.height, height: clipVideoTrack.naturalSize.height)
         
         let t1 = CGAffineTransformMakeTranslation(clipVideoTrack.naturalSize.height, -4*(self.toolbar.frame.height+self.toolbarYancı.frame.height))
         
@@ -1064,7 +1064,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
     class func setFlashMode(flashMode: AVCaptureFlashMode, device: AVCaptureDevice){
         
         if device.hasFlash && device.isFlashModeSupported(flashMode) {
-            var error: NSError? = nil
+           // var error: NSError? = nil
             do {
                 try device.lockForConfiguration()
                 device.flashMode = flashMode
@@ -1072,8 +1072,8 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                 ////print(device.torchLevel)
                 device.unlockForConfiguration()
                 
-            } catch let error1 as NSError {
-                error = error1
+            } catch{
+                //error = error1
                 ////print(error)
             }
         }

@@ -165,7 +165,7 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
         view.addSubview(activityIndicator)
         activityIndicator.startAnimating()
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
-        var username =  userRelations.relations[buttonRow].username
+        let username =  userRelations.relations[buttonRow].username
       
         MolocateAccount.getUser(username) { (data, response, error) -> () in
             dispatch_async(dispatch_get_main_queue()){

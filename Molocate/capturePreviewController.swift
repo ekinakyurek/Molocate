@@ -320,7 +320,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
         
         let randomString : NSMutableString = NSMutableString(capacity: len)
         
-        for (var i=0; i < len; i++){
+        for _ in 0..<len{
             let length = UInt32 (letters.length)
             let rand = arc4random_uniform(length)
             randomString.appendFormat("%C", letters.characterAtIndex(Int(rand)))
@@ -487,7 +487,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
         let autoCompleteRowIdentifier = "AutoCompleteRowIdentifier"
-        var cell = (tableView.dequeueReusableCellWithIdentifier(autoCompleteRowIdentifier))! as? UITableViewCell
+        var cell = tableView.dequeueReusableCellWithIdentifier(autoCompleteRowIdentifier)
         
         if let _ = cell
         {

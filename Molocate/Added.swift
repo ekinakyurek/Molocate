@@ -1,4 +1,4 @@
-//  Added.swift
+ //  Added.swift
 //  Molocate
 
 
@@ -301,16 +301,16 @@ class Added: UIViewController, UITableViewDelegate, UITableViewDataSource,Player
                 direction = 1
             }
             
-            var currentOffset = scrollView.contentOffset
-            var currentTime = NSDate().timeIntervalSinceReferenceDate   // [NSDate timeIntervalSinceReferenceDate];
+            let currentOffset = scrollView.contentOffset
+            let currentTime = NSDate().timeIntervalSinceReferenceDate   // [NSDate timeIntervalSinceReferenceDate];
             
-            var timeDiff = currentTime - lastOffsetCapture;
+            let timeDiff = currentTime - lastOffsetCapture;
             if(timeDiff > 0.1) {
-                var distance = currentOffset.y - lastOffset.y;
+                let distance = currentOffset.y - lastOffset.y;
                 //The multiply by 10, / 1000 isn't really necessary.......
-                var scrollSpeedNotAbs = (distance * 10) / 1000 //in pixels per millisecond
+                let scrollSpeedNotAbs = (distance * 10) / 1000 //in pixels per millisecond
                 
-                var scrollSpeed = fabsf(Float(scrollSpeedNotAbs));
+                let scrollSpeed = fabsf(Float(scrollSpeedNotAbs));
                 if (scrollSpeed > 0.1) {
                     isScrollingFast = true
                     //print("hızlı")

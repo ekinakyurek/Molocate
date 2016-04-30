@@ -120,7 +120,7 @@ public class MolocatePlace {
                     
                     let videos = item["place_videos"] as! NSArray
                     
-                    for (var i = 0 ; i < videos.count ; i++) {
+                    for i in 0..<videos.count {
                         //print(item)
                         let item = videos[i]
                         let owner_user = item["owner_user"] as!  [String: AnyObject]

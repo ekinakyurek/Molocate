@@ -82,7 +82,7 @@ class SideBarController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         user = MoleCurrentUser
         //tableView.deselectRowAtIndexPath(indexPath, animated: false)
-        let cell = tableView.cellForRowAtIndexPath(indexPath)
+      
       
         
         choosedIndex = indexPath.row

@@ -74,7 +74,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 openURL: url,
                 sourceApplication: sourceApplication,
                 annotation: annotation)
-            return Session.sharedSession().handleURL(url)
+        
+            //return Session.sharedSession().handleURL(url)
     }
     
     
@@ -117,7 +118,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         super.touchesBegan(touches, withEvent: event)
         
-        var location :CGPoint = (event?.allTouches()?.first?.locationInView(self.window))!
+        let location :CGPoint = (event?.allTouches()?.first?.locationInView(self.window))!
         if (location.y > 0) && (location.y < 16) {
             NSNotificationCenter.defaultCenter().postNotificationName("scrollToTop", object: nil)
 //            switch (choosedIndex){

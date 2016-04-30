@@ -157,7 +157,7 @@ public class S3Upload {
                                 
                                 do {
                                     
-                                    let result = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)
+                                    _ = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)
                                     
                                     
                                     
@@ -201,7 +201,7 @@ public class S3Upload {
                     let thumbnailTask = NSURLSession.sharedSession().dataTaskWithRequest(thumbnailRequest){data, response, error  in
                         ////print(NSString(data: data!, encoding: NSUTF8StringEncoding))
                         
-                        let nsError = error;
+                    //    let nsError = error;
                         
                         
                         do {

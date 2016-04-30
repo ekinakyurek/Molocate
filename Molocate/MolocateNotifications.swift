@@ -31,7 +31,7 @@ public class MolocateNotifications{
     
                 var notificationArray = [MoleUserNotifications]()
                 
-                for (var i = 0 ; i < result.count ; i+=1 ) {
+                for i in 0..<result.count {
                     let item = result[i] as![String:AnyObject]
                     var notification = MoleUserNotifications()
                     

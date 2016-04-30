@@ -96,7 +96,7 @@ public class MolocateAccount {
                 
                 if(count != 0){
                     //print(result["results"] )
-                 for (var i = 0 ; i < results.count; i+=1){
+                 for i in 0..<results.count{
                         var friend = MoleUserFriend()
                         let thing = results[i] as! [String:AnyObject]
                         friend.username = thing["username"] as! String
@@ -154,7 +154,7 @@ public class MolocateAccount {
                 
                 if(count != 0){
                     //print(result["results"] )
-                    for (var i = 0 ; i < results.count; i+=1){
+                    for i in 0..<results.count{
                         var friend = MoleUserFriend()
                         let thing = results[i] as! [String:AnyObject]
                         friend.username = thing["username"] as! String
@@ -214,7 +214,7 @@ public class MolocateAccount {
                         let result = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments) as! [String:AnyObject]
                         
                         if(result.indexForKey("token") != nil){
-                            MoleUserToken = result["token"] as! String
+                            MoleUserToken = result["token"] as? String
                             MolocateAccount.getCurrentUser({ (data, response, error) -> () in
                                 completionHandler(data:"success" , response: response , error: nsError  )
                             })
@@ -261,7 +261,7 @@ public class MolocateAccount {
                     let loggedIn = logging == 1
                     
                     if (loggedIn) {
-                        MoleUserToken = resultJson["access_token"] as! String
+                        MoleUserToken = resultJson["access_token"] as? String
                         completionHandler(data: "success", response:  response, error: error)
                         
                     } else {
@@ -322,7 +322,7 @@ public class MolocateAccount {
                             }
                         }
                     } else {
-                        MoleUserToken = result["access_token"] as! String
+                        MoleUserToken = result["access_token"] as? String
                         completionHandler(data: "success", response:  response, error: Nserror)
                     }
                     

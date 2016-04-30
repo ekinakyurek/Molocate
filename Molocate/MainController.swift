@@ -1419,13 +1419,13 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         
     }
     func prepareForRetry(){
-        var rect = (tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0,inSection: 0)) as! videoCell).newRect
-        var layer = CALayer()
+        let rect = (tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0,inSection: 0)) as! videoCell).newRect
+        let layer = CALayer()
         layer.frame = rect
         layer.backgroundColor = UIColor.blackColor().CGColor
         layer.opacity = 0.8
         (tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0,inSection: 0)) as! videoCell).layer.addSublayer(layer)
-        var newButton = UIButton(frame: CGRect(x: 0.0, y: 0.0, width: 100.0, height: 100.0))
+        let newButton = UIButton(frame: CGRect(x: 0.0, y: 0.0, width: 100.0, height: 100.0))
         newButton.setTitle("Burda", forState: .Normal)
         newButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size:20)
         newButton.tintColor = UIColor.whiteColor()

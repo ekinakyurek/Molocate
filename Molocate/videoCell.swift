@@ -233,8 +233,8 @@ class videoCell: UITableViewCell {
         
         var textstring = " "
         //print(videoInfo.taggedUsers)
-        for(var i = 0; i < videoInfo.taggedUsers.count; i += 1 ){
-            textstring +=  "@" + videoInfo.taggedUsers[i]
+        for user in videoInfo.taggedUsers{
+            textstring +=  "@" + user
         }
         var multipleAttributes = [String : NSObject]()
         multipleAttributes[NSForegroundColorAttributeName] = swiftColor2
