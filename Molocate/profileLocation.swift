@@ -48,13 +48,32 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
                 MoleCurrentUser.following_count += 1
             }
             self.followerCount.setTitle("\(thePlace.follower_count+1)", forState: .Normal)
-        }else{
-            followButton.image = UIImage(named: "follow");
-            thePlace.is_following = 0
-            MolocatePlace.unfollowAPlace(thePlace.id) { (data, response, error) in
-                MoleCurrentUser.following_count -= 1
+        }else{ let actionSheetController: UIAlertController = UIAlertController(title: nil, message: "Takibi bırakmak istediğine emin misin?", preferredStyle: .ActionSheet)
+            
+            
+            let cancelAction: UIAlertAction = UIAlertAction(title: "Vazgeç", style: .Cancel) { action -> Void in
+                //Just dismiss the action sheet
             }
-            self.followerCount.setTitle("\(thePlace.follower_count-1)", forState: .Normal)
+            actionSheetController.addAction(cancelAction)
+            //Create and add first option action
+            let takePictureAction: UIAlertAction = UIAlertAction(title: "Takibi Bırak", style: .Default)
+            { action -> Void in
+                self.followButton.image = UIImage(named: "follow");
+                thePlace.is_following = 0
+                MolocatePlace.unfollowAPlace(thePlace.id) { (data, response, error) in
+                    MoleCurrentUser.following_count -= 1
+                }
+                self.followerCount.setTitle("\(thePlace.follower_count-1)", forState: .Normal)
+                
+                
+            }
+            actionSheetController.addAction(takePictureAction)
+            //We need to provide a popover sourceView when using it on iPad
+            actionSheetController.popoverPresentationController?.sourceView = sender as? UIView
+            
+            //Present the AlertController
+            self.presentViewController(actionSheetController, animated: true, completion: nil)
+            
         }
         
     }

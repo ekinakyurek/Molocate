@@ -49,28 +49,40 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
                     ////print("follow"+data)
                 })
             } else {
-                FollowButton.image = UIImage(named: "follow")
-                user.isFollowing = false
-                MolocateAccount.unfollow(classUser.username, completionHandler: { (data, response, error) -> () in
-                   MoleCurrentUser.following_count -= 1
-                    if let parentVC = self.parentViewController {
-                        if let parentVC = parentVC as? Followers{
-                            MolocateAccount.getFollowings(username: MoleCurrentUser.username, completionHandler: { (data, response, error, count, next, previous) in
-                                ////print("Sucess")
-                                dispatch_async(dispatch_get_main_queue()) {
-                                    parentVC.userRelations = data
-                                    parentVC.myTable.reloadData()
-                                }
-                                
-                                
-                            })
-                            
+                let actionSheetController: UIAlertController = UIAlertController(title: "Takibi bırakmak istediğine emin misin?", message: nil, preferredStyle: .ActionSheet)
+                
+                
+                let cancelAction: UIAlertAction = UIAlertAction(title: "Vazgeç", style: .Cancel) { action -> Void in
+                    //Just dismiss the action sheet
+                }
+                actionSheetController.addAction(cancelAction)
+                //Create and add first option action
+                let takePictureAction: UIAlertAction = UIAlertAction(title: "Takibi Bırak", style: .Default)
+                { action -> Void in
+                    self.FollowButton.image = UIImage(named: "follow")
+                    user.isFollowing = false
+                    MolocateAccount.unfollow(self.classUser.username, completionHandler: { (data, response, error) -> () in
+                        MoleCurrentUser.following_count -= 1
+                        if let parentVC = self.parentViewController {
+                            if let parentVC = parentVC as? Followers{
+                                MolocateAccount.getFollowings(username: MoleCurrentUser.username, completionHandler: { (data, response, error, count, next, previous) in
+                                    ////print("Sucess")
+                                    dispatch_async(dispatch_get_main_queue()) {
+                                        parentVC.userRelations = data
+                                        parentVC.myTable.reloadData()
+                                    }
+                                })
+                            }
                         }
-                    }
-                    ////print("unfollow"+data)
-                })
-              
-
+                        ////print("unfollow"+data)
+                    })
+                }
+                actionSheetController.addAction(takePictureAction)
+                //We need to provide a popover sourceView when using it on iPad
+                actionSheetController.popoverPresentationController?.sourceView = sender as? UIView
+                
+                //Present the AlertController
+                self.presentViewController(actionSheetController, animated: true, completion: nil)
             }
             
         }
@@ -406,6 +418,8 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
         
     }
     @IBAction func pressedPhoto(sender: AnyObject) {
+        
+        //burada fotosu var mı check
         let controller:onePhoto = self.storyboard!.instantiateViewControllerWithIdentifier("onePhoto") as! onePhoto
         controller.classUser = classUser
         controller.view.frame = self.view.bounds;
