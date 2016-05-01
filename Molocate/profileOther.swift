@@ -123,6 +123,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
         follewersclicked = true
         let controller:Followers = self.storyboard!.instantiateViewControllerWithIdentifier("Followers") as! Followers
         controller.classUser = classUser
+        controller.followerCount = Int(followersCount.titleLabel!.text!)!
         controller.view.frame = self.view.bounds;
         controller.willMoveToParentViewController(self)
         self.view.addSubview(controller.view)
@@ -158,6 +159,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
         follewersclicked = false
         let controller:Followers = self.storyboard!.instantiateViewControllerWithIdentifier("Followers") as! Followers
         controller.classUser = classUser
+        controller.followingCount = Int(followingsCount.titleLabel!.text!)!
         controller.view.frame = self.view.bounds;
         controller.willMoveToParentViewController(self)
         self.view.addSubview(controller.view)
