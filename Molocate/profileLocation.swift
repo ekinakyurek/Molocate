@@ -114,12 +114,12 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
     @IBAction func followersButton(sender: AnyObject) {
         player1.stop()
         player2.stop()
-        follewersclicked = true
+       
         user = MoleCurrentUser
         let controller:Followers = self.storyboard!.instantiateViewControllerWithIdentifier("Followers") as! Followers
         controller.classPlace = thePlace
         controller.classUser = MoleCurrentUser
-        
+        controller.follewersclicked = true
         //print(thePlace)
         controller.view.frame = self.view.bounds;
         controller.willMoveToParentViewController(self)

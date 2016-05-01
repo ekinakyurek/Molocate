@@ -8,7 +8,7 @@
 
 import UIKit
 
-var follewersclicked: Bool = true
+
 
 class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
     
@@ -29,6 +29,7 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
     var myTable: UITableView!
     var follower = true
     var relationNextUrl = ""
+    var follewersclicked: Bool = true
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -143,7 +144,7 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
         cell.myLabel1.hidden = true
         cell.myLabel1.enabled = false
        
-        if(follewersclicked && user.username == MoleCurrentUser.username && !userRelations.relations[indexPath.row].is_following){
+        if(follewersclicked && classUser.username == MoleCurrentUser.username && !userRelations.relations[indexPath.row].is_following){
          cell.myLabel1.hidden = false
          cell.myLabel1.enabled = true
          cell.myLabel1.tag = indexPath.row
@@ -276,7 +277,7 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
            
             if let parentVC = self.parentViewController {
                 if let parentVC = parentVC as? profileOther{
-                    if(follewersclicked){
+                    if(self.follewersclicked){
                         parentVC.followersCount.setTitle(  "\(self.followerCount)", forState: .Normal)
                         //print(self.userRelations.relations.count)
                     }else{

@@ -120,9 +120,10 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
         AVc.player1.stop()
         BVc.player2.stop()
         BVc.player1.stop()
-        follewersclicked = true
+   
         let controller:Followers = self.storyboard!.instantiateViewControllerWithIdentifier("Followers") as! Followers
         controller.classUser = classUser
+        controller.follewersclicked = true
         controller.followerCount = Int(followersCount.titleLabel!.text!)!
         controller.view.frame = self.view.bounds;
         controller.willMoveToParentViewController(self)
@@ -156,9 +157,10 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
         AVc.player1.stop()
         BVc.player2.stop()
         BVc.player1.stop()
-        follewersclicked = false
+       
         let controller:Followers = self.storyboard!.instantiateViewControllerWithIdentifier("Followers") as! Followers
         controller.classUser = classUser
+        controller.follewersclicked = false
         controller.followingCount = Int(followingsCount.titleLabel!.text!)!
         controller.view.frame = self.view.bounds;
         controller.willMoveToParentViewController(self)
@@ -365,6 +367,11 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
         }
         if indexPath.row == 2 {
             ////print("log out yapılacak")
+            
+            
+            MolocateAccount.unregisterDevice({ (data, response, error) in
+                print(data)
+            })
             sideClicked = false
             profileOn = 0
             category = "All"
@@ -373,18 +380,15 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
             user = MoleUser()
             videoIndex = 0
             isUploaded = true
-            follewersclicked = true
             choosedIndex = 100
             origin = 0.0
             frame = CGRect()
             MoleCurrentUser = MoleUser()
-            MoleUserToken = ""
-            DeviceToken = nil
+            MoleUserToken = nil
+           // DeviceToken = nil
+            isDeviceTokenTaken = false
             MoleGlobalVideo = nil
-            
-            MolocateAccount.registerDevice({ (data, response, error) in
-                print(data)
-            })
+//
             NSUserDefaults.standardUserDefaults().setObject(nil, forKey: "userToken")
             self.parentViewController!.performSegueWithIdentifier("logout", sender: self)
         }

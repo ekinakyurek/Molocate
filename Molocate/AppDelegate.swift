@@ -55,7 +55,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
     }
+//    
+//    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
+//        // display the userInfo
+//        if let notification = userInfo["aps"] as? NSDictionary,
+//            //let alert = notification["alert"] as? String {
+//            //let alertCtrl = UIAlertController(title: "Time Entry", message: alert as String, preferredStyle: UIAlertControllerStyle.Alert)
+//            //alertCtrl.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+//            // Find the presented VC...
+//            var presentedVC = self.window?.rootViewController
+//            while (presentedVC!.presentedViewController != nil)  {
+//                presentedVC = presentedVC!.presentedViewController
+//            }
+//            presentedVC!.presentViewController(alertCtrl, animated: true, completion: nil)
+//            
+//            // call the completion handler
+//            // -- pass in NoData, since no new data was fetched from the server.
+//            completionHandler(UIBackgroundFetchResult.NoData)
+//        }
+//    }
     
+   
+ 
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         let tokenChars = UnsafePointer<CChar>(deviceToken.bytes)
         var tokenString = ""
@@ -67,10 +88,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("Device Token:", tokenString)
         
         DeviceToken = tokenString
-        
-        MolocateAccount.registerDevice { (data, response, error) in
-            print(data)
-        }
+
     }
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
@@ -110,9 +128,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
-        if(DeviceToken == nil){
-              registerForPushNotifications(application)
+   
+        if(!isDeviceTokenTaken && DeviceToken == nil && MoleUserToken != nil){
+             registerForPushNotifications(application)
         }
+        
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     }
 
