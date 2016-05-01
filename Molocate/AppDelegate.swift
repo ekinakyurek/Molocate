@@ -19,7 +19,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         // [Optional] Power your app with Local Datastore. For more info, go to
-        registerForPushNotifications(application)
+        if(DeviceToken == nil){
+            registerForPushNotifications(application)
+        }
         SDImageCache.sharedImageCache().clearMemory()
         SDImageCache.sharedImageCache().clearDisk()
         SDImageCache.sharedImageCache().maxMemoryCountLimit = 40
@@ -63,6 +65,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         print("Device Token:", tokenString)
+        
+        DeviceToken = tokenString
+        
+        MolocateAccount.registerDevice { (data, response, error) in
+            print(data)
+        }
     }
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
@@ -102,6 +110,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
+        if(DeviceToken == nil){
+              registerForPushNotifications(application)
+        }
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     }
 
@@ -112,6 +123,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillTerminate(application: UIApplication) {
+    
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     

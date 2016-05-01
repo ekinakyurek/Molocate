@@ -22,6 +22,7 @@ struct MoleVideoInformation{
     var taggedUsers = [String]()
     var thumbnailURL:NSURL = NSURL()
     var isUploading = false
+    var deletable = false
 }
 
 struct VideoUploadRequest{
@@ -40,6 +41,7 @@ struct MoleVideoComment{
     var text: String = ""
     var username: String = ""
     var photo: NSURL = NSURL()
+    var deletable = false
 }
 
 var MoleGlobalVideo:MoleVideoInformation!
@@ -79,6 +81,7 @@ public class MolocateVideo {
                         thecomment.photo = thing["picture_url"] is NSNull ? NSURL():NSURL(string: thing["picture_url"] as! String)!
                         thecomment.text = thing["comment"] as! String
                         thecomment.id = thing["comment_id"] as! String
+                        thecomment.deletable = thing["is_deletable"] as! Bool
                         comments.append(thecomment)
                     }
                 }
@@ -151,6 +154,7 @@ public class MolocateVideo {
                     videoStr.taggedUsers = item["tagged_users"] as! [String]
                     
                     videoStr.thumbnailURL = NSURL(string:item["thumbnail"] as! String)!
+                    videoStr.deletable = item["is_deletable"] as! Bool
                     videoArray.append(videoStr)
                     //print(videoArray[indexPath.row].username)
                     //print(videoStr.username)
@@ -296,6 +300,7 @@ public class MolocateVideo {
                     videoStr.taggedUsers = item["tagged_users"] as! [String]
                     
                     videoStr.thumbnailURL = NSURL(string:item["thumbnail"] as! String)!
+                    videoStr.deletable = item["is_deletable"] as! Bool
                     videoArray.append(videoStr)
                   
                     
@@ -343,7 +348,7 @@ public class MolocateVideo {
                 videoStr.userpic = owner_user["picture_url"] is NSNull ? NSURL():NSURL(string: owner_user["picture_url"] as! String)!
                 videoStr.dateStr = item["date_str"] as! String
                 videoStr.taggedUsers = item["tagged_users"] as! [String]
-                
+                videoStr.deletable = item["is_deletable"] as! Bool
                 videoStr.thumbnailURL = NSURL(string:item["thumbnail"] as! String)!
                 
                 

@@ -46,8 +46,12 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
             followButton.image = UIImage(named: "unfollow");
             MolocatePlace.followAPlace(thePlace.id) { (data, response, error) in
                 MoleCurrentUser.following_count += 1
+                dispatch_async(dispatch_get_main_queue()) {
+                 thePlace.follower_count += 1
+                 self.followerCount.setTitle("\(thePlace.follower_count)", forState: .Normal)
+                }
             }
-            self.followerCount.setTitle("\(thePlace.follower_count+1)", forState: .Normal)
+           
         }else{ let actionSheetController: UIAlertController = UIAlertController(title: nil, message: "Takibi bırakmak istediğine emin misin?", preferredStyle: .ActionSheet)
             
             
@@ -60,11 +64,14 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
             { action -> Void in
                 self.followButton.image = UIImage(named: "follow");
                 thePlace.is_following = 0
+                MoleCurrentUser.following_count -= 1
                 MolocatePlace.unfollowAPlace(thePlace.id) { (data, response, error) in
-                    MoleCurrentUser.following_count -= 1
+                    dispatch_async(dispatch_get_main_queue()) {
+                    thePlace.follower_count -= 1
+                    self.followerCount.setTitle("\(thePlace.follower_count)", forState: .Normal)
+                    }
+
                 }
-                self.followerCount.setTitle("\(thePlace.follower_count-1)", forState: .Normal)
-                
                 
             }
             actionSheetController.addAction(takePictureAction)
@@ -593,7 +600,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
         //////print("pressedReport at index path: \(buttonRow)")
         let actionSheetController: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         
-        if(videoArray[buttonRow].username == MoleCurrentUser.username){
+        if(videoArray[buttonRow].deletable){
             
             let deleteVideo: UIAlertAction = UIAlertAction(title: "Videoyu Sil", style: .Default) { action -> Void in
                 let index = NSIndexPath(forRow: buttonRow, inSection: 0)

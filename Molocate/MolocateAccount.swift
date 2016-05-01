@@ -23,7 +23,8 @@ struct MoleUserRelations{
 
 //var nextT:NSURL!
 
-
+var DeviceToken:String?
+var isDeviceTokenTaken = false
 var MoleUserToken: String?
 
 var IsExploreInProcess = false
@@ -218,8 +219,12 @@ public class MolocateAccount {
                             MolocateAccount.getCurrentUser({ (data, response, error) -> () in
                                 completionHandler(data:"success" , response: response , error: nsError  )
                             })
+                        
+                            if(DeviceToken != nil){
+                                MolocateAccount.registerDevice({ (data, response, error) in
                             
-                            
+                                })
+                            }
                             
                         } else {
                             completionHandler(data: "Hata" , response: response , error: nsError  )
@@ -263,6 +268,12 @@ public class MolocateAccount {
                     if (loggedIn) {
                         MoleUserToken = resultJson["access_token"] as? String
                         completionHandler(data: "success", response:  response, error: error)
+                        
+                        if(DeviceToken != nil){
+                            MolocateAccount.registerDevice({ (data, response, error) in
+                                
+                            })
+                        }
                         
                     } else {
                         FaceMail = resultJson["email_validation"] as! String
@@ -324,6 +335,12 @@ public class MolocateAccount {
                     } else {
                         MoleUserToken = result["access_token"] as? String
                         completionHandler(data: "success", response:  response, error: Nserror)
+                        
+                        if(DeviceToken != nil){
+                            MolocateAccount.registerDevice({ (data, response, error) in
+                                
+                            })
+                        }
                     }
                     
                 } catch{
@@ -366,6 +383,13 @@ public class MolocateAccount {
                     if(result.count > 1){
                         MoleUserToken = result["access_token"] as? String
                         completionHandler(data: "success" , response: response , error: nsError  )
+                        
+                        
+                        if(DeviceToken != nil){
+                            MolocateAccount.registerDevice({ (data, response, error) in
+                                
+                            })
+                        }
                         
                     } else{
                         let error = result["result"] as! String
@@ -429,6 +453,61 @@ public class MolocateAccount {
         
     }
     
+    
+    class func registerDevice (completionHandler: (data: String! , response: NSURLResponse!, error: NSError!) -> ()){
+        
+        let url = NSURL(string: MolocateBaseUrl + "/activity/api/register_device/?device_token=" + (DeviceToken! as String))!
+        let request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "POST"
+        request.addValue("Token " + MoleUserToken!, forHTTPHeaderField: "Authorization")
+        
+        let task = NSURLSession.sharedSession().dataTaskWithRequest(request){ data, response, error in
+            //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+            
+            let nsError = error
+            
+            do {
+                let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String:AnyObject]
+                
+                print(result)
+                completionHandler(data: result["result"] as! String , response: response , error: nsError  )
+            } catch{
+                completionHandler(data: "" , response: nil , error: nsError  )
+                print("Error:: in mole.follow()")
+            }
+            
+        }
+        
+        task.resume()
+        
+    }
+    
+    class func unregisterDevice (completionHandler: (data: String! , response: NSURLResponse!, error: NSError!) -> ()){
+        
+        let url = NSURL(string: MolocateBaseUrl + "/activity/api/unregister_device/")
+        let request = NSMutableURLRequest(URL: url!)
+        request.HTTPMethod = "POST"
+        request.addValue("Token " + MoleUserToken!, forHTTPHeaderField: "Authorization")
+        
+        let task = NSURLSession.sharedSession().dataTaskWithRequest(request){ data, response, error in
+            // print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+            
+            let nsError = error
+            
+            do {
+                let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String:AnyObject]
+                
+                completionHandler(data: result["result"] as! String , response: response , error: nsError  )
+            } catch{
+                completionHandler(data: "" , response: nil , error: nsError  )
+                print("Error:: in mole.follow()")
+            }
+            
+        }
+        
+        task.resume()
+        
+    }
     class func getDataFromUrl(url:NSURL, completion: ((data: NSData?, response: NSURLResponse?, error: NSError? ) -> Void)) {
         NSURLSession.sharedSession().dataTaskWithURL(url) { (data, response, error) in
             completion(data: data, response: response, error: error)

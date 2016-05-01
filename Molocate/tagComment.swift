@@ -82,8 +82,9 @@ class tagComment: UIViewController, UITextViewDelegate {
         textField.returnKeyType = .Done
         
         MolocateAccount.getFollowers(username:MoleCurrentUser.username) { (data, response, error, count, next, previous) -> () in
-                 self.relationNextUrl = next!
+            
              dispatch_async(dispatch_get_main_queue()){
+                self.relationNextUrl = next!
                 self.userRelations = data
                 self.tableView.reloadData()
              }

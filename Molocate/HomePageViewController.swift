@@ -983,7 +983,7 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
         ////////print("pressedReport at index path: \(buttonRow)")
         let actionSheetController: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         
-        if(videoArray[buttonRow].username == MoleCurrentUser.username){
+        if(videoArray[buttonRow].deletable){
             
             let deleteVideo: UIAlertAction = UIAlertAction(title: "Videoyu Sil", style: .Default) { action -> Void in
                 let index = NSIndexPath(forRow: buttonRow, inSection: 0)

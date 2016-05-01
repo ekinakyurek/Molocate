@@ -346,7 +346,4 @@ class oneVideo: UIViewController,PlayerDelegate {
         self.presentViewController(actionSheetController, animated: true, completion: nil)
         
     }
-
-
-
 }

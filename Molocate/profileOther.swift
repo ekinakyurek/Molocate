@@ -42,11 +42,14 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
         }else {
             if !classUser.isFollowing{
                 FollowButton.image = UIImage(named: "unfollow")
-                user.isFollowing = true
+               
+                classUser.isFollowing = true
+                classUser.follower_count+=1
+                MoleCurrentUser.following_count += 1
+                self.followersCount.setTitle("\(self.classUser.follower_count)", forState: .Normal)
+            
                 MolocateAccount.follow(classUser.username, completionHandler: { (data, response, error) -> () in
-                  MoleCurrentUser.following_count += 1
-                 
-                    ////print("follow"+data)
+                    
                 })
             } else {
                 let actionSheetController: UIAlertController = UIAlertController(title: "Takibi bırakmak istediğine emin misin?", message: nil, preferredStyle: .ActionSheet)
@@ -60,9 +63,13 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
                 let takePictureAction: UIAlertAction = UIAlertAction(title: "Takibi Bırak", style: .Default)
                 { action -> Void in
                     self.FollowButton.image = UIImage(named: "follow")
-                    user.isFollowing = false
+                
+                    self.classUser.isFollowing = false
+                    MoleCurrentUser.following_count -= 1
+                    self.classUser.follower_count -= 1
+                    self.followersCount.setTitle("\(self.classUser.follower_count)", forState: .Normal)
+                    
                     MolocateAccount.unfollow(self.classUser.username, completionHandler: { (data, response, error) -> () in
-                        MoleCurrentUser.following_count -= 1
                         if let parentVC = self.parentViewController {
                             if let parentVC = parentVC as? Followers{
                                 MolocateAccount.getFollowings(username: MoleCurrentUser.username, completionHandler: { (data, response, error, count, next, previous) in
@@ -370,6 +377,12 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
             frame = CGRect()
             MoleCurrentUser = MoleUser()
             MoleUserToken = ""
+            DeviceToken = nil
+            MoleGlobalVideo = nil
+            
+            MolocateAccount.registerDevice({ (data, response, error) in
+                print(data)
+            })
             NSUserDefaults.standardUserDefaults().setObject(nil, forKey: "userToken")
             self.parentViewController!.performSegueWithIdentifier("logout", sender: self)
         }
