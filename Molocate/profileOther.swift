@@ -28,6 +28,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
     @IBOutlet var followersCount: UIButton!
     @IBOutlet var FollowButton: UIBarButtonItem!
     
+
     @IBAction func FollowButton(sender: AnyObject) {
         
         if(classUser.post_count != 0 || classUser.tag_count != 0 ) {
@@ -404,18 +405,21 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
         return cell
         
     }
-    //burda notificationları açıp açmadığını kontrol edicez.
-    func switchValueDidChange(sender:UISwitch!)
-    {
-        if (sender.on == true){
-            ////print("on")
-            
-            
-        }
-        else{
-            ////print("off")
-        }
+    @IBAction func pressedPhoto(sender: AnyObject) {
+        let controller:onePhoto = self.storyboard!.instantiateViewControllerWithIdentifier("onePhoto") as! onePhoto
+        controller.classUser = classUser
+        controller.view.frame = self.view.bounds;
+        controller.willMoveToParentViewController(self)
+        self.view.addSubview(controller.view)
+        controller.usernameLabel.text = user.username
+        controller.profilePhoto.sd_setImageWithURL(user.profilePic)
+        self.addChildViewController(controller)
+        controller.didMoveToParentViewController(self)
+       
     }
+    
+    
+    
     func showTable(){
         
         UIView.animateWithDuration(0.25) { () -> Void in
