@@ -973,6 +973,8 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     }
 
     func pressedLikeCount(sender: UIButton) {
+        player1.stop()
+        player2.stop()
         video_id = videoArray[sender.tag].id
         videoIndex = sender.tag
         let controller:likeVideo = self.storyboard!.instantiateViewControllerWithIdentifier("likeVideo") as! likeVideo
