@@ -464,6 +464,36 @@ public class MolocateAccount {
         let task = NSURLSession.sharedSession().dataTaskWithRequest(request){ data, response, error in
             //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
             
+            isDeviceTokenTaken = true
+            
+            let nsError = error
+            
+            do {
+                let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String:AnyObject]
+                
+                print(result)
+                completionHandler(data: result["result"] as! String , response: response , error: nsError  )
+            } catch{
+                completionHandler(data: "" , response: nil , error: nsError  )
+                print("Error:: in mole.follow()")
+            }
+            
+        }
+        
+        task.resume()
+        
+    }
+    
+    class func resetBadge (completionHandler: (data: String! , response: NSURLResponse!, error: NSError!) -> ()){
+        
+        let url = NSURL(string: MolocateBaseUrl + "/activity/api/zero_badge/")
+        let request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "POST"
+        request.addValue("Token " + MoleUserToken!, forHTTPHeaderField: "Authorization")
+        
+        let task = NSURLSession.sharedSession().dataTaskWithRequest(request){ data, response, error in
+            //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+            
             let nsError = error
             
             do {

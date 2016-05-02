@@ -112,12 +112,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
    
         if(DeviceToken == nil) {
              registerForPushNotifications(application)
+        
         }else if !isDeviceTokenTaken && MoleUserToken != nil {
         
             MolocateAccount.registerDevice({ (data, response, error) in
                 print("Success")
             })
         
+        }else if isDeviceTokenTaken{
+            MolocateAccount.resetBadge({ (data, response, error) in
+                print("Success")
+            })
         }
       
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
@@ -145,8 +150,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         
-       
-        UIApplication.sharedApplication().applicationIconBadgeNumber += 1
+
     
     }
     
