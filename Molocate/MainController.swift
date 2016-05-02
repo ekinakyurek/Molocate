@@ -942,7 +942,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     func pressedFollow(sender: UIButton) {
         let buttonRow = sender.tag
         pressedFollow = true
-        //////print("followa basıldı at index path: \(buttonRow) ")
+        print("followa basıldı at index path: \(buttonRow) ")
         self.videoArray[buttonRow].isFollowing = 1
         var indexes = [NSIndexPath]()
         let index = NSIndexPath(forRow: buttonRow, inSection: 0)
@@ -951,7 +951,6 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         
         MolocateAccount.follow(videoArray[buttonRow].username){ (data, response, error) -> () in
           MoleCurrentUser.following_count += 1
-        
         }
         pressedFollow = false
     }

@@ -2239,17 +2239,8 @@ bir video bulunmamaktadır :(</string>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="5gM-C5-WO8"/>
-                                    <barButtonItem title="Item" style="plain" id="uSq-ze-UZj">
-                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="kex-er-Gz6">
-                                            <rect key="frame" x="271" y="-26" width="96" height="96"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <state key="normal" image="download">
-                                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                            </state>
-                                            <connections>
-                                                <action selector="share44s:" destination="KaE-bU-5kG" eventType="touchUpInside" id="ggT-fj-sSS"/>
-                                            </connections>
-                                        </button>
+                                    <barButtonItem image="download" style="plain" id="uSq-ze-UZj">
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </barButtonItem>
                                 </items>
                             </toolbar>
@@ -2433,7 +2424,6 @@ bir video bulunmamaktadır :(</string>
                         <outlet property="downArrow" destination="Csa-hp-M7g" id="7zO-sV-A2j"/>
                         <outlet property="placeTable" destination="uXp-wN-ZT7" id="Mya-ms-jJO"/>
                         <outlet property="postO" destination="k4Z-6M-DOq" id="TDd-ed-JQB"/>
-                        <outlet property="share4s" destination="kex-er-Gz6" id="r1A-68-DEU"/>
                         <outlet property="textField" destination="Yzx-Ur-Ne1" id="LLy-0Y-uMx"/>
                         <outlet property="toolBar" destination="A0W-5J-K2r" id="o1w-8H-rlu"/>
                         <segue destination="XJp-AN-JyV" kind="show" identifier="finishUpdate" id="iVR-Yc-KKO"/>
