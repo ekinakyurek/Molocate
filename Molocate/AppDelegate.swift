@@ -9,19 +9,21 @@ import Bolts
 import QuadratTouch
 import SDWebImage
 import AWSS3
+
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    
+
     
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         // [Optional] Power your app with Local Datastore. For more info, go to
-        if(DeviceToken == nil){
-            registerForPushNotifications(application)
-        }
+      
+        registerForPushNotifications(application)
+        
         SDImageCache.sharedImageCache().clearMemory()
         SDImageCache.sharedImageCache().clearDisk()
         SDImageCache.sharedImageCache().maxMemoryCountLimit = 40
@@ -43,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         configuration.shouldControllNetworkActivityIndicator = true
         Session.setupSharedSessionWithConfiguration(configuration)
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
-        
+        //UIApplication.sharedApplication().applicationIconBadgeNumber = 0
      
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     }
@@ -108,9 +110,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(application: UIApplication) {
    
-        if(!isDeviceTokenTaken && DeviceToken == nil && MoleUserToken != nil){
+        if(DeviceToken == nil) {
              registerForPushNotifications(application)
+        }else if !isDeviceTokenTaken && MoleUserToken != nil {
+        
+            MolocateAccount.registerDevice({ (data, response, error) in
+                print("Success")
+            })
+        
         }
+      
+        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+        
         
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     }
@@ -133,11 +144,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
-        let aps = userInfo["aps"] as! [String: AnyObject]
         
-    }
+       
+        UIApplication.sharedApplication().applicationIconBadgeNumber += 1
     
-
+    }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         super.touchesBegan(touches, withEvent: event)

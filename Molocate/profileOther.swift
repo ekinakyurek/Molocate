@@ -385,7 +385,6 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
             frame = CGRect()
             MoleCurrentUser = MoleUser()
             MoleUserToken = nil
-           // DeviceToken = nil
             isDeviceTokenTaken = false
             MoleGlobalVideo = nil
 //
