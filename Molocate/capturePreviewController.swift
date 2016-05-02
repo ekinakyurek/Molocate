@@ -29,7 +29,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
         var latitude: Float!
         var longitude: Float!
         var rating: Float!
-            
+    
        
         
     }
@@ -51,6 +51,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
     var videoLocation:locationss!
     @IBOutlet var placeTable: UITableView!
     var taggedUsers = [String]()
+    var numbers = [Int]()
     @IBOutlet var postO: UIButton!
     @IBAction func post(sender: AnyObject) {
         if (!isLocationSelected || !isCategorySelected){
@@ -362,8 +363,10 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
         
         let controller:tagComment = self.storyboard!.instantiateViewControllerWithIdentifier("tagComment") as! tagComment
         controller.view.layer.zPosition = 1
+        
         //controller.ANYPROPERTY=THEVALUE // If you want to pass value
         controller.view.frame = self.view.bounds;
+        controller.numbers = numbers
         controller.willMoveToParentViewController(self)
         self.view.addSubview(controller.view)
         self.addChildViewController(controller)
@@ -506,7 +509,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         textField.text = ""
         let selectedCell : UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
-        textField.text = "📌" + selectedCell.textLabel!.text!
+        textField.text = selectedCell.textLabel!.text!
         placeTable.hidden = true
         downArrow.hidden = true
         self.view.endEditing(true)

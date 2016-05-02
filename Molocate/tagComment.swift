@@ -23,6 +23,7 @@ class tagComment: UIViewController, UITextViewDelegate {
             textstring +=  "@" + userRelations.relations[i].username
         }
         
+        
       
         var multipleAttributes = [String : NSObject]()
         multipleAttributes[NSForegroundColorAttributeName] = swiftColor2
@@ -40,6 +41,7 @@ class tagComment: UIViewController, UITextViewDelegate {
         commentext.appendAttributedString(tags)
         
         parent.caption.setAttributedTitle(commentext, forState: .Normal)
+        parent.numbers = numbers
         
         self.willMoveToParentViewController(nil)
         self.view.removeFromSuperview()
@@ -112,8 +114,10 @@ class tagComment: UIViewController, UITextViewDelegate {
     func dismissKeyboard() {
         view.endEditing(true)
     }
+    
+    
     var numbers = [Int]()
-    var checked = [Bool]() // Have an array equal to the number of cells in your table
+    // Have an array equal to the number of cells in your table
     
     
   
