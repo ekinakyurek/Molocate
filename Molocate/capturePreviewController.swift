@@ -205,13 +205,13 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
         player.delegate = self
         self.player.playbackLoops = true
         videoLocation = locationss()
-        if is4s{
-            
-        } else {
-            self.share4s.setTitle("Kaydet", forState: .Normal)
-            
-            
-        }
+//        if is4s{
+//            
+//        } else {
+//            self.share4s.setTitle("Kaydet", forState: .Normal)
+//            
+//            
+//        }
 
         
         dispatch_async(dispatch_get_main_queue()) {
