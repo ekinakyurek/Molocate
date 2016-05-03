@@ -776,7 +776,7 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
         blackView.layer.opacity = 0.8
         (tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0,inSection: 0)) as! videoCell).superview?.addSubview(blackView)
         resendButton = UIButton(frame: CGRect(x: 0.0, y: 0.0, width: 80.0, height: 80.0))
-        resendButton.setImage(UIImage(named: "options"), forState: .Normal)
+        resendButton.setImage(UIImage(named: "retry"), forState: .Normal)
         resendButton.tintColor = UIColor.whiteColor()
         let videoView = UIView(frame: (tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0,inSection: 0)) as! videoCell).newRect)
         resendButton.center = CGPoint(x: videoView.center.x-50, y: videoView.center.y)
@@ -799,6 +799,23 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
     }
     func retryRequest(){
         S3Upload.upload(false, uploadRequest: (GlobalVideoUploadRequest?.uploadRequest)!, fileURL:(GlobalVideoUploadRequest?.filePath)!, fileID: (GlobalVideoUploadRequest?.fileId)!, json: (GlobalVideoUploadRequest?.JsonData)!)
+        
+        if let _ = tabBarController?.viewControllers![0] as? MainController {
+            let main = tabBarController?.viewControllers![0] as? MainController
+            
+            if  main?.videoArray.count != 0 {
+                
+                if main?.videoArray[0].urlSta.absoluteString[0] != "h"{
+                    main?.resendButton.removeFromSuperview()
+                    main?.blackView.removeFromSuperview()
+                    main?.deleteButton.removeFromSuperview()
+                    main?.errorLabel.removeFromSuperview()
+                    main?.tableView.reloadData()
+                    
+                }
+            }
+        }
+        progressBar?.progress =  0
         self.resendButton.removeFromSuperview()
         self.blackView.removeFromSuperview()
         self.deleteButton.removeFromSuperview()
@@ -814,6 +831,23 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
             CaptionText = ""
             NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isStuck")
             try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
+            if let _ = tabBarController?.viewControllers![0] as? MainController {
+                let main = tabBarController?.viewControllers![0] as? MainController
+                
+                if  main?.videoArray.count != 0 {
+                    
+                    if main?.videoArray[0].urlSta.absoluteString[0] != "h"{
+                        main?.videoArray.removeFirst()
+                        main?.resendButton.removeFromSuperview()
+                        main?.blackView.removeFromSuperview()
+                        main?.deleteButton.removeFromSuperview()
+                        main?.errorLabel.removeFromSuperview()
+                        main?.tableView.reloadData()
+                        
+                    }
+                }
+            }
+            
             self.resendButton.removeFromSuperview()
             self.blackView.removeFromSuperview()
             self.deleteButton.removeFromSuperview()
