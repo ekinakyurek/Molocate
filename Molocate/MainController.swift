@@ -21,6 +21,8 @@ var videoIndex = 0
 var isUploaded = true
 var myViewController = "MainController"
 var thePlace:MolePlace!
+
+
 class MainController: UIViewController,UITableViewDelegate , UITableViewDataSource ,UIToolbarDelegate , UICollectionViewDelegate  ,CLLocationManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,NSURLConnectionDataDelegate,PlayerDelegate, UITextFieldDelegate {
     var lastOffset:CGPoint!
     var lastOffsetCapture:NSTimeInterval!
@@ -189,6 +191,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         
         tableView.allowsSelection = true
         tableView.tableFooterView = UIView()
+        initGUIforRetry()
         switch(choosedIndex){
         case 0:
             tableView.reloadData()
@@ -1444,41 +1447,56 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     var blackView = UIView()
     var errorLabel = UILabel()
     
-    func prepareForRetry(){
-        let rect = (tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0,inSection: 0)) as! videoCell).newRect
-        blackView.frame = rect
+    
+    func initGUIforRetry(){
         blackView.backgroundColor = UIColor.blackColor()
         blackView.layer.opacity = 0.8
-        (tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0,inSection: 0)) as! videoCell).superview?.addSubview(blackView)
         resendButton = UIButton(frame: CGRect(x: 0.0, y: 0.0, width: 80.0, height: 80.0))
         resendButton.setImage(UIImage(named: "retry"), forState: .Normal)
         resendButton.tintColor = UIColor.whiteColor()
-        let videoView = UIView(frame: (tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0,inSection: 0)) as! videoCell).newRect)
-        resendButton.center = CGPoint(x: videoView.center.x-50, y: videoView.center.y)
         deleteButton = UIButton(frame: CGRect(x: 0.0, y: 0.0, width: 80.0, height: 80.0))
         deleteButton.setImage(UIImage(named: "unfollow"), forState: .Normal)
         deleteButton.tintColor = UIColor.whiteColor()
-        deleteButton.center = CGPoint(x: videoView.center.x+50, y: videoView.center.y)
-        resendButton.addTarget(self, action: #selector(MainController.retryRequest), forControlEvents: UIControlEvents.TouchUpInside)
-        deleteButton.addTarget(self, action: #selector(MainController.deleteVideo), forControlEvents: UIControlEvents.TouchUpInside)
-        errorLabel.frame = CGRect(x: 0, y: resendButton.frame.maxY+10, width: blackView.frame.width, height: 40)
         errorLabel.textAlignment = NSTextAlignment.Center
         errorLabel.textColor = UIColor.whiteColor()
         errorLabel.font = UIFont(name: "AvenirNext-Regular", size:17)
         errorLabel.text = "Videonuz yüklenemedi."
-        (tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0,inSection: 0)) as! videoCell).superview!.addSubview(resendButton)
-        (tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0,inSection: 0)) as! videoCell).superview!.addSubview(deleteButton)
-        (tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0,inSection: 0)) as! videoCell).superview!.addSubview(errorLabel)
-        
+        resendButton.addTarget(self, action: #selector(MainController.retryRequest), forControlEvents: UIControlEvents.TouchUpInside)
+        deleteButton.addTarget(self, action: #selector(MainController.deleteVideo), forControlEvents: UIControlEvents.TouchUpInside)
         
     }
+    func prepareForRetry(){
+        if let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0,inSection: 0)) as? videoCell{
+            let rect = cell.newRect
+            blackView.frame = rect
+            cell.superview?.addSubview(blackView)
+            let videoView = UIView(frame: cell.newRect)
+            resendButton.center = CGPoint(x: videoView.center.x-50, y: videoView.center.y)
+            deleteButton.center = CGPoint(x: videoView.center.x+50, y: videoView.center.y)
+            errorLabel.frame = CGRect(x: 0, y: resendButton.frame.maxY+10, width: blackView.frame.width, height: 40)
+            
+            cell.superview!.addSubview(resendButton)
+            cell.superview!.addSubview(deleteButton)
+            cell.superview!.addSubview(errorLabel)
+            
+            
+            resendButton.enabled = true
+            deleteButton.enabled = true
+        }
+    
+    }
     func retryRequest(){
-        S3Upload.upload(false, uploadRequest: (GlobalVideoUploadRequest?.uploadRequest)!, fileURL:(GlobalVideoUploadRequest?.filePath)!, fileID: (GlobalVideoUploadRequest?.fileId)!, json: (GlobalVideoUploadRequest?.JsonData)!)
+        resendButton.enabled = false
+        deleteButton.enabled = false
+        
+        S3Upload.upload(true, uploadRequest: (GlobalVideoUploadRequest?.uploadRequest)!, fileURL:(GlobalVideoUploadRequest?.filePath)!, fileID: (GlobalVideoUploadRequest?.fileId)!, json: (GlobalVideoUploadRequest?.JsonData)!)
         
         if let _ = tabBarController?.viewControllers![0] as? HomePageViewController {
             let HomePage = tabBarController?.viewControllers![0] as? HomePageViewController
             if  HomePage?.videoArray.count != 0 {
+                
                 if HomePage?.videoArray[0].urlSta.absoluteString[0] != "h"{
+                     print("home  siliniyor")
                     HomePage?.resendButton.removeFromSuperview()
                     HomePage?.blackView.removeFromSuperview()
                     HomePage?.deleteButton.removeFromSuperview()
@@ -1498,6 +1516,8 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     }
     
     func deleteVideo(){
+        resendButton.enabled = false
+        deleteButton.enabled = false
         do {
             self.videoArray.removeAtIndex(0)
             GlobalVideoUploadRequest = nil
@@ -1530,7 +1550,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
             progressBar?.hidden = true
             progressBar?.progress = 0
         } catch _ {
-            
+            print("eroor")
         }
 
 
@@ -1557,7 +1577,10 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         
     }
 
-    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
     {

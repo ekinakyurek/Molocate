@@ -131,6 +131,7 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
                 }
             }
         })
+        initGUIforRetry()
         //////////print("refresh")
         self.refreshControl = UIRefreshControl()
         self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
@@ -769,43 +770,53 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
     var blackView = UIView()
     var errorLabel = UILabel()
     
-    func prepareForRetry(){
-        let rect = (tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0,inSection: 0)) as! videoCell).newRect
-        blackView.frame = rect
+    
+    func initGUIforRetry(){
         blackView.backgroundColor = UIColor.blackColor()
         blackView.layer.opacity = 0.8
-        (tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0,inSection: 0)) as! videoCell).superview?.addSubview(blackView)
         resendButton = UIButton(frame: CGRect(x: 0.0, y: 0.0, width: 80.0, height: 80.0))
         resendButton.setImage(UIImage(named: "retry"), forState: .Normal)
         resendButton.tintColor = UIColor.whiteColor()
-        let videoView = UIView(frame: (tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0,inSection: 0)) as! videoCell).newRect)
-        resendButton.center = CGPoint(x: videoView.center.x-50, y: videoView.center.y)
         deleteButton = UIButton(frame: CGRect(x: 0.0, y: 0.0, width: 80.0, height: 80.0))
         deleteButton.setImage(UIImage(named: "unfollow"), forState: .Normal)
         deleteButton.tintColor = UIColor.whiteColor()
-        deleteButton.center = CGPoint(x: videoView.center.x+50, y: videoView.center.y)
-        resendButton.addTarget(self, action: #selector(MainController.retryRequest), forControlEvents: UIControlEvents.TouchUpInside)
-        deleteButton.addTarget(self, action: #selector(MainController.deleteVideo), forControlEvents: UIControlEvents.TouchUpInside)
-        errorLabel.frame = CGRect(x: 0, y: resendButton.frame.maxY+10, width: blackView.frame.width, height: 40)
         errorLabel.textAlignment = NSTextAlignment.Center
         errorLabel.textColor = UIColor.whiteColor()
         errorLabel.font = UIFont(name: "AvenirNext-Regular", size:17)
         errorLabel.text = "Videonuz yüklenemedi."
-        (tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0,inSection: 0)) as! videoCell).superview!.addSubview(resendButton)
-        (tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0,inSection: 0)) as! videoCell).superview!.addSubview(deleteButton)
-        (tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0,inSection: 0)) as! videoCell).superview!.addSubview(errorLabel)
-        
+        resendButton.addTarget(self, action: #selector(MainController.retryRequest), forControlEvents: UIControlEvents.TouchUpInside)
+        deleteButton.addTarget(self, action: #selector(MainController.deleteVideo), forControlEvents: UIControlEvents.TouchUpInside)
+    }
+    func prepareForRetry(){
+        if let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0,inSection: 0)) as? videoCell{
+            let rect = cell.newRect
+            blackView.frame = rect
+            cell.superview?.addSubview(blackView)
+            let videoView = UIView(frame: cell.newRect)
+            resendButton.center = CGPoint(x: videoView.center.x-50, y: videoView.center.y)
+            deleteButton.center = CGPoint(x: videoView.center.x+50, y: videoView.center.y)
+            errorLabel.frame = CGRect(x: 0, y: resendButton.frame.maxY+10, width: blackView.frame.width, height: 40)
+            cell.superview!.addSubview(resendButton)
+            cell.superview!.addSubview(deleteButton)
+            cell.superview!.addSubview(errorLabel)
+            resendButton.enabled = true
+            deleteButton.enabled = true
+        }
         
     }
     func retryRequest(){
+        resendButton.enabled = false
+        deleteButton.enabled = false
+        
         S3Upload.upload(false, uploadRequest: (GlobalVideoUploadRequest?.uploadRequest)!, fileURL:(GlobalVideoUploadRequest?.filePath)!, fileID: (GlobalVideoUploadRequest?.fileId)!, json: (GlobalVideoUploadRequest?.JsonData)!)
         
-        if let _ = tabBarController?.viewControllers![0] as? MainController {
-            let main = tabBarController?.viewControllers![0] as? MainController
+        if let _ = tabBarController?.viewControllers![1] as? MainController {
+            let main = tabBarController?.viewControllers![1] as? MainController
             
             if  main?.videoArray.count != 0 {
                 
                 if main?.videoArray[0].urlSta.absoluteString[0] != "h"{
+                    print("main siliniyor")
                     main?.resendButton.removeFromSuperview()
                     main?.blackView.removeFromSuperview()
                     main?.deleteButton.removeFromSuperview()
@@ -816,6 +827,7 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
             }
         }
         progressBar?.progress =  0
+        progressBar?.hidden = false
         self.resendButton.removeFromSuperview()
         self.blackView.removeFromSuperview()
         self.deleteButton.removeFromSuperview()
@@ -825,6 +837,8 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
     }
     
     func deleteVideo(){
+        resendButton.enabled = false
+        deleteButton.enabled = false
         do {
             self.videoArray.removeAtIndex(0)
             GlobalVideoUploadRequest = nil
@@ -833,9 +847,7 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
             try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
             if let _ = tabBarController?.viewControllers![0] as? MainController {
                 let main = tabBarController?.viewControllers![0] as? MainController
-                
                 if  main?.videoArray.count != 0 {
-                    
                     if main?.videoArray[0].urlSta.absoluteString[0] != "h"{
                         main?.videoArray.removeFirst()
                         main?.resendButton.removeFromSuperview()
@@ -853,12 +865,10 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
             self.deleteButton.removeFromSuperview()
             self.errorLabel.removeFromSuperview()
             self.tableView.reloadData()
-            dispatch_async(dispatch_get_main_queue()) {
-                progressBar?.hidden = true
-                n = 0
-            }
+            progressBar?.hidden = true
+             
         } catch _ {
-            
+            print("error")
         }
         
         

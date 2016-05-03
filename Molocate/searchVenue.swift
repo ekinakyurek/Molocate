@@ -52,11 +52,7 @@ class searchVenue: UITableViewCell {
         distanceLabel.text = "-"
         distanceLabel.font = UIFont(name: "AvenirNext-Regular", size:11)
         contentView.addSubview(distanceLabel)
-        
-        followButton = UIButton()
-        followButton.frame = CGRectMake(screenSize.width - 41 , 11 , 32 , 32)
-        followButton.setBackgroundImage(UIImage(named: "follow"), forState: UIControlState.Normal)
-        contentView.addSubview(followButton)
+    
     }
     
     deinit{

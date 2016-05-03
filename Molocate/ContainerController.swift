@@ -11,13 +11,10 @@ class ContainerController: UIViewController,UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        dispatch_async(dispatch_get_main_queue()) {
-            self.scrollView.setContentOffset(CGPoint(x: self.view.frame.width*0.23, y: 0), animated: false)
-            (self.childViewControllers[1] as! UITabBarController).selectedIndex = choosedIndex
-            self.childViewControllers[1].viewDidLoad()
-          
-
-        }
+        
+        self.scrollView.setContentOffset(CGPoint(x: self.view.frame.width*0.23, y: 0), animated: false)
+        (self.childViewControllers[1] as! UITabBarController).selectedIndex = choosedIndex
+        self.childViewControllers[1].viewDidLoad()
         
         
         
@@ -32,6 +29,8 @@ class ContainerController: UIViewController,UIScrollViewDelegate {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ContainerController.closeProfile), name: "closeProfile", object: nil)
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ContainerController.pushNotification), name: "pushNotification", object: nil)
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ContainerController.deneme), name: "deneme", object: nil)
        // NSNotificationCenter.defaultCenter().addObserver(self, selector: "openProfile", name: "openProfile", object: nil)
        
@@ -43,7 +42,10 @@ class ContainerController: UIViewController,UIScrollViewDelegate {
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
-    
+    func pushNotification(){
+        (self.childViewControllers[1] as! UITabBarController).selectedIndex = 2
+        self.childViewControllers[1].viewDidLoad()
+    }
     func closeSideBar(){
         scrollView.setContentOffset(CGPoint(x: self.view.frame.width*0.23, y: 0), animated: true)
     }

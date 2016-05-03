@@ -41,7 +41,9 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
         self.toolBar.translucent = false
         self.toolBar.barTintColor = swiftColor
         self.view.backgroundColor = swiftColor
-
+        MolocateAccount.resetBadge { (data, response, error) in
+            
+        }
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NotificationsViewController.scrollToTop), name: "scrollToTop", object: nil)
         if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
             UIApplication.sharedApplication().endIgnoringInteractionEvents()
@@ -161,7 +163,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
     func pressedCell(sender: UITapGestureRecognizer){
         let buttonRow = sender.view?.tag
         //print(notificationArray[buttonRow!].action )
-        if notificationArray[buttonRow!].action != "follow" {
+        if notificationArray[buttonRow!].action != "follow" ||  notificationArray[buttonRow!].action != "friend" {
             activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
             activityIndicator.center = self.view.center
             activityIndicator.hidesWhenStopped = true

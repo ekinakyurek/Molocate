@@ -10,7 +10,6 @@ import QuadratTouch
 import SDWebImage
 import AWSS3
 
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -45,9 +44,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         configuration.shouldControllNetworkActivityIndicator = true
         Session.setupSharedSessionWithConfiguration(configuration)
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
-        //UIApplication.sharedApplication().applicationIconBadgeNumber = 0
-     
+        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+        
+        if let _ = launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey] as? [String: AnyObject] {
+            choosedIndex = 2
+            NSNotificationCenter.defaultCenter().postNotificationName("pushNotification", object: nil)
+            UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+            
+            
+        }
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+       
     }
     
     
@@ -106,10 +113,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
-   
+        
         if(DeviceToken == nil) {
              registerForPushNotifications(application)
         
@@ -119,10 +127,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print("Success")
             })
         
-        }else if isDeviceTokenTaken{
-            MolocateAccount.resetBadge({ (data, response, error) in
-                print("Success")
-            })
         }
       
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
@@ -149,9 +153,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        if (UIApplication.sharedApplication().applicationState == UIApplicationState.Inactive || UIApplication.sharedApplication().applicationState == UIApplicationState.Background) {
+            
+            choosedIndex = 2
+            NSNotificationCenter.defaultCenter().postNotificationName("pushNotification", object: nil)
+            UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+          
+            
+            // go to screen relevant to Notification content
+        } else {
+           
+            // App is in UIApplicationStateActive (running in foreground)
+            // perhaps show an UIAlertView
+        }
         
-
-    
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {

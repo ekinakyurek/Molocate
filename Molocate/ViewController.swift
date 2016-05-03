@@ -264,22 +264,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDe
     
     
     override func viewDidAppear(animated: Bool) {
-        if(MolocateDevice.isConnectedToNetwork()){
-            if NSUserDefaults.standardUserDefaults().objectForKey("userToken") != nil {
-                MoleUserToken = NSUserDefaults.standardUserDefaults().objectForKey("userToken") as? String
-                self.view.hidden = true
-                MolocateAccount.getCurrentUser({ (data, response, error) in
-                    dispatch_async(dispatch_get_main_queue()){
-                        self.performSegueWithIdentifier("login", sender: self)
-                        user = MoleCurrentUser
-                    }
-                })
-                
-            }
-        }else{
-            displayAlert("Hata", message: "Internet bağlantınızı kontrol ediniz")
-        }
-        
+      
         
     }
     
@@ -367,6 +352,23 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDe
         scrollWidth = 3 * self.view.frame.size.width
         scrollHeight  = self.view.frame.size.height
         adjustViewLayout(UIScreen.mainScreen().bounds.size)
+        
+        if(MolocateDevice.isConnectedToNetwork()){
+            if NSUserDefaults.standardUserDefaults().objectForKey("userToken") != nil {
+                MoleUserToken = NSUserDefaults.standardUserDefaults().objectForKey("userToken") as? String
+                self.view.hidden = true
+                MolocateAccount.getCurrentUser({ (data, response, error) in
+                    dispatch_async(dispatch_get_main_queue()){
+                        self.performSegueWithIdentifier("login", sender: self)
+                        user = MoleCurrentUser
+                    }
+                })
+                
+            }
+        }else{
+            displayAlert("Hata", message: "Internet bağlantınızı kontrol ediniz")
+        }
+        
     }
     
     

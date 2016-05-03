@@ -4,7 +4,7 @@
 
 import UIKit
 
-var choosedIndex = 1
+var choosedIndex = 0
 
 
 
