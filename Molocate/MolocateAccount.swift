@@ -487,7 +487,7 @@ public class MolocateAccount {
     class func resetBadge (completionHandler: (data: String! , response: NSURLResponse!, error: NSError!) -> ()){
         
         let url = NSURL(string: MolocateBaseUrl + "/activity/api/zero_badge/")
-        let request = NSMutableURLRequest(URL: url)
+        let request = NSMutableURLRequest(URL: url!)
         request.HTTPMethod = "POST"
         request.addValue("Token " + MoleUserToken!, forHTTPHeaderField: "Authorization")
         

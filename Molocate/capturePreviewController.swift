@@ -68,6 +68,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
             let random = randomStringWithLength(64)
             let fileName = random.stringByAppendingFormat(".mp4", random)
             let fileURL = NSURL(fileURLWithPath: videoPath!)
+            NSUserDefaults.standardUserDefaults().setObject(videoPath, forKey: "videoPath")
             let uploadRequest = AWSS3TransferManagerUploadRequest()
             uploadRequest.body = fileURL
             uploadRequest.key = "videos/" + (fileName as String)

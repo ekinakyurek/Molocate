@@ -23,19 +23,24 @@ public class S3Upload {
         isUp = false
         if !retry {
             do{
-                let image = UIImageJPEGRepresentation(thumbnail, 0.5)!
-         
+                
+                var image = UIImageJPEGRepresentation(thumbnail, 0.5)
+                if image == nil {
+                    let data = NSData(contentsOfURL: (GlobalVideoUploadRequest?.thumbUrl)!)
+                    let nimage = UIImage(data: data!)
+                    image = UIImageJPEGRepresentation(nimage!, 0.5)
+                }
                 let outputFileName = "thumbnail.jpg"
         
                 let outputFilePath: String = (NSTemporaryDirectory() as NSString).stringByAppendingPathComponent(outputFileName)
                 
-                try image.writeToFile(outputFilePath, options: .AtomicWrite )
+                try image!.writeToFile(outputFilePath, options: .AtomicWrite )
                 
                 let thumb = NSURL(fileURLWithPath: outputFilePath)
                 
                 
-                GlobalVideoUploadRequest = VideoUploadRequest(filePath: fileURL,thumbUrl: thumb, thumbnail: image,JsonData: json, fileId: fileID, uploadRequest: uploadRequest)
-                
+                GlobalVideoUploadRequest = VideoUploadRequest(filePath: fileURL,thumbUrl: thumb, thumbnail: image!,JsonData: json, fileId: fileID, uploadRequest: uploadRequest)
+                self.encodeGlobalVideo(fileID, fileURL: fileURL, uploadRequest: uploadRequest, thumb: thumb, json: json)
                 
             }catch{
                 print("uploadRequest cannot created")
@@ -189,12 +194,15 @@ public class S3Upload {
                     thumbnailRequest.HTTPMethod = "POST"
                     thumbnailRequest.allHTTPHeaderFields = headers2
                     
-                    var image: NSData
-                    if !retry {
-                        image = UIImageJPEGRepresentation(thumbnail, 0.5)!
-                    }else{
-                        image = (GlobalVideoUploadRequest?.thumbnail)!
-                    }
+                    
+                    
+                        var image = UIImageJPEGRepresentation(thumbnail, 0.5)
+                        if image == nil {
+                            let data = NSData(contentsOfURL: (GlobalVideoUploadRequest?.thumbUrl)!)
+                            let nimage = UIImage(data: data!)
+                            image = UIImageJPEGRepresentation(nimage!, 0.5)
+                        }
+
                     thumbnailRequest.addValue("Token " + MoleUserToken!, forHTTPHeaderField: "Authorization")
                     thumbnailRequest.HTTPBody = image
                     
@@ -215,6 +223,7 @@ public class S3Upload {
                                         
                                         GlobalVideoUploadRequest = nil
                                         CaptionText = ""
+                                        NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isStuck")
                                         try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
                                         
                                         dispatch_async(dispatch_get_main_queue()) {
@@ -427,6 +436,35 @@ public class S3Upload {
 //            return nil
 //        }
 //    
+    }
+    
+    class func encodeGlobalVideo(fileID: String,fileURL:String,uploadRequest:AWSS3TransferManagerUploadRequest,thumb:NSURL,json:AnyObject){
+        let ud = NSUserDefaults.standardUserDefaults()
+        
+        ud.setBool(true, forKey: "isStuck")
+        ud.setObject(fileID, forKey: "fileID")
+        ud.setObject(fileURL, forKey: "fileURL")
+        ud.setObject(uploadRequest.body.absoluteString, forKey: "uploadRequestBody")
+        ud.setObject(uploadRequest.bucket, forKey: "uploadRequestBucket")
+        ud.setObject(uploadRequest.key, forKey: "uploadRequestKey")
+        ud.setObject(thumb.absoluteString, forKey: "thumbnail")
+        ud.setObject(json, forKey: "json")
+        print(fileURL)
+        
+        
+    }
+    class func decodeGlobalVideo(){
+        let ud = NSUserDefaults.standardUserDefaults()
+        if GlobalVideoUploadRequest == nil {
+            let uploadRequest = AWSS3TransferManagerUploadRequest()
+            uploadRequest.body = NSURL(string: ud.objectForKey("uploadRequestBody") as! String)
+            uploadRequest.bucket = ud.objectForKey("uploadRequestBucket") as? String
+            uploadRequest.key = ud.objectForKey("uploadRequestKey") as? String
+            let thumburl = NSURL(string:ud.objectForKey("thumbnail") as! String )
+            GlobalVideoUploadRequest = VideoUploadRequest(filePath: ud.objectForKey("fileURL") as! String, thumbUrl: thumburl!, thumbnail: NSData(), JsonData:  ud.objectForKey("json") as! [String:AnyObject], fileId: ud.objectForKey("fileID") as! String, uploadRequest: uploadRequest)
+            videoPath = NSUserDefaults.standardUserDefaults().objectForKey("videoPath") as? String
+            
+        }
     }
     
     

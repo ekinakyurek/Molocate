@@ -603,7 +603,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     func tableView(atableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         if atableView == tableView {
-            
+
             if !pressedLike && !pressedFollow {
                 let cell = videoCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "customCell")
                 let index = indexPath.row
@@ -705,6 +705,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                     self.player2.playFromBeginning()
                     on = false
                 }
+                    
                 }
 
                 return cell
@@ -1192,9 +1193,11 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     }
     
     override func viewDidAppear(animated: Bool) {
-        ////////print("bom")
         player2.playFromBeginning()
         NSNotificationCenter.defaultCenter().postNotificationName("closeSideBar", object: nil)
+        
+        
+        
         
     }
     
@@ -1436,26 +1439,70 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         //dictionary.removeAllObjects()
         
     }
-    var newButton = UIButton()
+    var resendButton = UIButton()
+    var deleteButton = UIButton()
+    var blackView = UIView()
+    var errorLabel = UILabel()
+    
     func prepareForRetry(){
         let rect = (tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0,inSection: 0)) as! videoCell).newRect
-        let layer = CALayer()
-        layer.frame = rect
-        layer.backgroundColor = UIColor.blackColor().CGColor
-        layer.opacity = 0.8
-        (tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0,inSection: 0)) as! videoCell).layer.addSublayer(layer)
-        newButton = UIButton(frame: CGRect(x: 0.0, y: 0.0, width: 100.0, height: 100.0))
-        newButton.setImage(UIImage(named: "options"), forState: .Normal)
-        newButton.tintColor = UIColor.whiteColor()
-        newButton.center = (tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0,inSection: 0)) as! videoCell).contentView.center
-        (tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0,inSection: 0)) as! videoCell).superview!.addSubview(newButton)
-        newButton.addTarget(self, action: #selector(MainController.retryRequest), forControlEvents: UIControlEvents.TouchUpInside)
+        blackView.frame = rect
+        blackView.backgroundColor = UIColor.blackColor()
+        blackView.layer.opacity = 0.8
+        (tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0,inSection: 0)) as! videoCell).superview?.addSubview(blackView)
+        resendButton = UIButton(frame: CGRect(x: 0.0, y: 0.0, width: 80.0, height: 80.0))
+        resendButton.setImage(UIImage(named: "options"), forState: .Normal)
+        resendButton.tintColor = UIColor.whiteColor()
+        let videoView = UIView(frame: (tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0,inSection: 0)) as! videoCell).newRect)
+        resendButton.center = CGPoint(x: videoView.center.x-50, y: videoView.center.y)
+        deleteButton = UIButton(frame: CGRect(x: 0.0, y: 0.0, width: 80.0, height: 80.0))
+        deleteButton.setImage(UIImage(named: "unfollow"), forState: .Normal)
+        deleteButton.tintColor = UIColor.whiteColor()
+        deleteButton.center = CGPoint(x: videoView.center.x+50, y: videoView.center.y)
+        resendButton.addTarget(self, action: #selector(MainController.retryRequest), forControlEvents: UIControlEvents.TouchUpInside)
+        deleteButton.addTarget(self, action: #selector(MainController.deleteVideo), forControlEvents: UIControlEvents.TouchUpInside)
+        errorLabel.frame = CGRect(x: 0, y: resendButton.frame.maxY+10, width: blackView.frame.width, height: 40)
+        errorLabel.textAlignment = NSTextAlignment.Center
+        errorLabel.textColor = UIColor.whiteColor()
+        errorLabel.font = UIFont(name: "AvenirNext-Regular", size:17)
+        errorLabel.text = "Videonuz yüklenemedi."
+        (tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0,inSection: 0)) as! videoCell).superview!.addSubview(resendButton)
+        (tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0,inSection: 0)) as! videoCell).superview!.addSubview(deleteButton)
+        (tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0,inSection: 0)) as! videoCell).superview!.addSubview(errorLabel)
+        
+        
     }
     func retryRequest(){
         S3Upload.upload(false, uploadRequest: (GlobalVideoUploadRequest?.uploadRequest)!, fileURL:(GlobalVideoUploadRequest?.filePath)!, fileID: (GlobalVideoUploadRequest?.fileId)!, json: (GlobalVideoUploadRequest?.JsonData)!)
-        self.newButton.removeFromSuperview()
+        self.resendButton.removeFromSuperview()
+        self.blackView.removeFromSuperview()
+        self.deleteButton.removeFromSuperview()
+        self.errorLabel.removeFromSuperview()
         self.tableView.reloadData()
         
+    }
+    
+    func deleteVideo(){
+        do {
+            self.videoArray.removeAtIndex(0)
+            GlobalVideoUploadRequest = nil
+            CaptionText = ""
+            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isStuck")
+            try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
+            self.resendButton.removeFromSuperview()
+            self.blackView.removeFromSuperview()
+            self.deleteButton.removeFromSuperview()
+            self.errorLabel.removeFromSuperview()
+            self.tableView.reloadData()
+            dispatch_async(dispatch_get_main_queue()) {
+                progressBar?.hidden = true
+                n = 0
+            }
+        } catch _ {
+            
+        }
+
+
     }
     
     func textFieldDidBeginEditing(textField: UITextField) {
