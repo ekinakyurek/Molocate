@@ -83,7 +83,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
     override func viewDidLoad() {
         super.viewDidLoad()
         locationMeasurements = NSMutableArray()
-        
+        videoDone.enabled = false
         toolbar.barTintColor = swiftColor
         toolbar.translucent = false
         toolbar.clipsToBounds = true

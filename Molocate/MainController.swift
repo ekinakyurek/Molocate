@@ -1252,6 +1252,8 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
             } else {
                 self.cameraButton.image = UIImage(named: "Camera")
                 self.cameraButton.title = nil
+                self.searchText.text = ""
+                self.searchText.placeholder = "Ara"
                 self.isSearching = false
                 self.venueButton2.hidden = true
                 self.usernameButton2.hidden = true
