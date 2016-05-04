@@ -93,16 +93,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDe
                             if( data == "success" ){
                                 self.performSegueWithIdentifier("login", sender: self)
                                 if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
-                                UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                                    UIApplication.sharedApplication().endIgnoringInteractionEvents()
                                 }
                                 self.activityIndicator.stopAnimating()
                             }else{
                                 self.displayAlert("Hata", message: "Kullanıcı Adı ya da Parola Yanlış!")
                                 self.activityIndicator.stopAnimating()
                                 if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
-                                UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                                    UIApplication.sharedApplication().endIgnoringInteractionEvents()
                                 }
-                                }
+                            }
                         })
                     })
                     
@@ -112,34 +112,34 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDe
                     let emailValidation = MolocateUtility.isValidEmail(email.text!)
                     //print(emailValidation)
                     if username.text?.characters.count > 3 && emailValidation{
-                    let mail: String = email.text!.lowercaseString
-                    
-                    MolocateAccount.SignUp(uname, password: pwd, email: mail, completionHandler: { (data, response, error) in
-                        dispatch_async(dispatch_get_main_queue(), {
-                            if(data == "success"){
-                                self.performSegueWithIdentifier("login", sender: self)
-                                if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
-                                UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                        let mail: String = email.text!.lowercaseString
+                        
+                        MolocateAccount.SignUp(uname, password: pwd, email: mail, completionHandler: { (data, response, error) in
+                            dispatch_async(dispatch_get_main_queue(), {
+                                if(data == "success"){
+                                    self.performSegueWithIdentifier("login", sender: self)
+                                    if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
+                                        UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                                    }
+                                    
+                                } else{
+                                    self.displayAlert("Hata", message: data)
+                                    if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
+                                        UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                                    }
+                                    self.activityIndicator.stopAnimating()
+                                    self.activityIndicator.hidesWhenStopped = true
                                 }
                                 
-                            } else{
-                                self.displayAlert("Hata", message: data)
-                                if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
-                                UIApplication.sharedApplication().endIgnoringInteractionEvents()
-                                }
-                                self.activityIndicator.stopAnimating()
-                                self.activityIndicator.hidesWhenStopped = true
-                            }
+                            })
                             
                         })
                         
-                    })
-                    
-                    
+                        
                     }else if username.text?.characters.count < 4 {
-                     self.displayAlert("Hata", message: "Lütfen kullanıcı adınız için 3 karakterden fazlasını giriniz.")
+                        self.displayAlert("Hata", message: "Lütfen kullanıcı adınız için 3 karakterden fazlasını giriniz.")
                     }else if !emailValidation{
-                    //self.displayAlert("Hata", message: "Lütfen geçerli bir mail adresi giriniz.")
+                        //self.displayAlert("Hata", message: "Lütfen geçerli bir mail adresi giriniz.")
                     }
                 }
                 
@@ -183,56 +183,56 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDe
     
     func fbLoginInitiate() {
         
-            
+        
         FBSDKLoginManager().logInWithReadPermissions(["public_profile", "email","user_birthday", "user_friends"],
-                fromViewController:self,
-                handler: { (Result:FBSDKLoginManagerLoginResult!, error:NSError!) -> Void in
-         
-            
-            if (error != nil) {
-                self.removeFbData()
-            } else if Result.isCancelled {
-                print("Error in fbLoginInitiate")
-                self.removeFbData()
-            } else {
-                print("success")
-                FbToken = FBSDKAccessToken.currentAccessToken().tokenString
-                let json = ["access_token":FbToken]
-
-                MolocateAccount.FacebookLogin(json, completionHandler: { (data, response, error) in
-                    if (data == "success") {
-                        MolocateAccount.getCurrentUser({ (data, response, error) in
-                            dispatch_async(dispatch_get_main_queue()) {
-                                self.performSegueWithIdentifier("login", sender: self)
-                            }
-                        })
-                        
-                        
-                    } else if (data == "signup") {
-                        dispatch_async(dispatch_get_main_queue()) {
-                        self.performSegueWithIdentifier("facebookLogin", sender: self)
-                        }
-                    }
-
-                })
-                
-                
-                if Result.grantedPermissions.contains("email") {
-                    //Do work
-                    self.activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
-                    self.activityIndicator.center = self.view.center
-                    self.activityIndicator.hidesWhenStopped = true
-                    self.activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-                    self.view.addSubview(self.activityIndicator)
-                    self.activityIndicator.hidesWhenStopped = true
-                    self.activityIndicator.startAnimating()
-                    UIApplication.sharedApplication().beginIgnoringInteractionEvents()
-                    self.fetchFacebookProfile()
-                } else {
-                    //Handle error
-                }
-            
-            }
+                                                     fromViewController:self,
+                                                     handler: { (Result:FBSDKLoginManagerLoginResult!, error:NSError!) -> Void in
+                                                        
+                                                        
+                                                        if (error != nil) {
+                                                            self.removeFbData()
+                                                        } else if Result.isCancelled {
+                                                            print("Error in fbLoginInitiate")
+                                                            self.removeFbData()
+                                                        } else {
+                                                            print("success")
+                                                            FbToken = FBSDKAccessToken.currentAccessToken().tokenString
+                                                            let json = ["access_token":FbToken]
+                                                            
+                                                            MolocateAccount.FacebookLogin(json, completionHandler: { (data, response, error) in
+                                                                if (data == "success") {
+                                                                    MolocateAccount.getCurrentUser({ (data, response, error) in
+                                                                        dispatch_async(dispatch_get_main_queue()) {
+                                                                            self.performSegueWithIdentifier("login", sender: self)
+                                                                        }
+                                                                    })
+                                                                    
+                                                                    
+                                                                } else if (data == "signup") {
+                                                                    dispatch_async(dispatch_get_main_queue()) {
+                                                                        self.performSegueWithIdentifier("facebookLogin", sender: self)
+                                                                    }
+                                                                }
+                                                                
+                                                            })
+                                                            
+                                                            
+                                                            if Result.grantedPermissions.contains("email") {
+                                                                //Do work
+                                                                self.activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
+                                                                self.activityIndicator.center = self.view.center
+                                                                self.activityIndicator.hidesWhenStopped = true
+                                                                self.activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+                                                                self.view.addSubview(self.activityIndicator)
+                                                                self.activityIndicator.hidesWhenStopped = true
+                                                                self.activityIndicator.startAnimating()
+                                                                UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+                                                                self.fetchFacebookProfile()
+                                                            } else {
+                                                                //Handle error
+                                                            }
+                                                            
+                                                        }
         })
     }
     func removeFbData() {
@@ -260,11 +260,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDe
             })
         }
     }
-   
+    
     
     
     override func viewDidAppear(animated: Bool) {
-      
+        
         
     }
     
@@ -281,12 +281,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDe
         loginBut.layer.masksToBounds = false
         loginBut.layer.cornerRadius = 4.0
         username.attributedPlaceholder = NSAttributedString(string:"Kullanıcı Adı",
-                                                            attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])
+                                                            attributes:[NSForegroundColorAttributeName: UIColor.lightTextColor()])
         email.attributedPlaceholder = NSAttributedString(string:"E-mail",
-                                                   attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])
+                                                         attributes:[NSForegroundColorAttributeName: UIColor.lightTextColor()])
         password.attributedPlaceholder = NSAttributedString(string:"Şifre",
-                                                           attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])
-       
+                                                            attributes:[NSForegroundColorAttributeName: UIColor.lightTextColor()])
+        
         let imageName = "Logo.png"
         let image = UIImage(named: imageName)
         let imageView = UIImageView(image: image!)
@@ -339,10 +339,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDe
             let nurl = NSURL(string:NSUserDefaults.standardUserDefaults().objectForKey("thumbnail") as! String )
             let data = NSData(contentsOfURL: nurl!)
             if data != nil {
-            S3Upload.decodeGlobalVideo()
-            S3Upload.upload(false, uploadRequest: (GlobalVideoUploadRequest?.uploadRequest)!, fileURL: (GlobalVideoUploadRequest?.filePath)!, fileID: (GlobalVideoUploadRequest?.fileId)!, json: (GlobalVideoUploadRequest?.JsonData)!)
+                S3Upload.decodeGlobalVideo()
+                S3Upload.upload(false, uploadRequest: (GlobalVideoUploadRequest?.uploadRequest)!, fileURL: (GlobalVideoUploadRequest?.filePath)!, fileID: (GlobalVideoUploadRequest?.fileId)!, json: (GlobalVideoUploadRequest?.JsonData)!)
             }
-            }
+        }
         
     }
     
@@ -390,7 +390,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDe
         UIApplication.sharedApplication().endIgnoringInteractionEvents()
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction((UIAlertAction(title: "Tamam", style: .Default, handler: { (action) -> Void in
-          self.activityIndicator.stopAnimating()
+            self.activityIndicator.stopAnimating()
         })))
         self.presentViewController(alert, animated: true, completion: nil)
     }
@@ -409,23 +409,52 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDe
         
     }
     
+    func textFieldDidBeginEditing(textField: UITextField) {
+        if(textField == username){
+            username.attributedPlaceholder = nil
+        }else if(textField == email){
+            email.attributedPlaceholder = nil
+        }else if(textField == password){
+            
+            password.attributedPlaceholder = nil
+        }
+        
+    }
+    func textFieldDidEndEditing(textField: UITextField) {
+        if(username.text == ""){
+            username.attributedPlaceholder = NSAttributedString(string:"Kullanıcı Adı",
+                                                                attributes:[NSForegroundColorAttributeName: UIColor.lightTextColor()])
+        }
+        
+        if(email.text == ""){
+            email.attributedPlaceholder = NSAttributedString(string:"E-mail",
+                                                             attributes:[NSForegroundColorAttributeName: UIColor.lightTextColor()])
+        }
+        if(password.text == ""){
+            
+            password.attributedPlaceholder = NSAttributedString(string:"Şifre",
+                                                                attributes:[NSForegroundColorAttributeName: UIColor.lightTextColor()])
+            
+        }
+    }
+    
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
         adjustViewLayout(size)
     }
     
     func adjustViewLayout(size: CGSize) {
         switch(size.width, size.height) {
-            case (480, 320):
-                break                        // iPhone 4S in landscape
-            case (320, 480):
-                is4s = true                    // iPhone 4s pportrait
-                break
-            case (414, 736):                        // iPhone 6 Plus in portrait
-                break
-            case (736, 414):                        // iphone 6 Plus in landscape
-                break
-            default:
-                break
+        case (480, 320):
+        break                        // iPhone 4S in landscape
+        case (320, 480):
+            is4s = true                    // iPhone 4s pportrait
+            break
+        case (414, 736):                        // iPhone 6 Plus in portrait
+            break
+        case (736, 414):                        // iphone 6 Plus in landscape
+            break
+        default:
+            break
         }
     }
 }
