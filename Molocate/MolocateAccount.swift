@@ -23,9 +23,7 @@ struct MoleUserRelations{
 
 //var nextT:NSURL!
 
-var DeviceToken:String?
-var isDeviceTokenTaken = false
-var MoleUserToken: String?
+
 
 var IsExploreInProcess = false
 
@@ -464,7 +462,7 @@ public class MolocateAccount {
         let task = NSURLSession.sharedSession().dataTaskWithRequest(request){ data, response, error in
             //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
             
-            isDeviceTokenTaken = true
+            isRegistered = true
             
             let nsError = error
             

@@ -385,7 +385,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
             frame = CGRect()
             MoleCurrentUser = MoleUser()
             MoleUserToken = nil
-            isDeviceTokenTaken = false
+            isRegistered = false
             MoleGlobalVideo = nil
 //
             NSUserDefaults.standardUserDefaults().setObject(nil, forKey: "userToken")

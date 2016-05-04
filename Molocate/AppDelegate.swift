@@ -10,6 +10,11 @@ import QuadratTouch
 import SDWebImage
 import AWSS3
 
+var DeviceToken:String?
+var isRegistered = false
+var MoleUserToken: String?
+
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -20,7 +25,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         // [Optional] Power your app with Local Datastore. For more info, go to
-      
+        if(!isRegistered && MoleUserToken != nil && DeviceToken  != nil){
+            MolocateAccount.registerDevice({ (data, response, error) in
+                
+            })
+        }
+        
         registerForPushNotifications(application)
         
         SDImageCache.sharedImageCache().clearMemory()
@@ -118,10 +128,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(application: UIApplication) {
         
-        if(DeviceToken == nil) {
-             registerForPushNotifications(application)
         
-        }else if !isDeviceTokenTaken && MoleUserToken != nil {
+        
+        if(DeviceToken == nil) {
+            registerForPushNotifications(application)
+            if MoleUserToken != nil && DeviceToken != nil && !isRegistered {
+                    MolocateAccount.registerDevice({ (data, response, error) in
+                        print("Success")
+                    })
+            }
+            
+        
+        }
+        
+        else if !isRegistered && MoleUserToken != nil {
         
             MolocateAccount.registerDevice({ (data, response, error) in
                 print("Success")
