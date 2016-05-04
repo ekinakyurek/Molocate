@@ -280,6 +280,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDe
         loginBut.layer.shadowRadius = 1.0
         loginBut.layer.masksToBounds = false
         loginBut.layer.cornerRadius = 4.0
+        username.attributedPlaceholder = NSAttributedString(string:"Kullanıcı Adı",
+                                                            attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])
+        email.attributedPlaceholder = NSAttributedString(string:"E-mail",
+                                                   attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])
+        password.attributedPlaceholder = NSAttributedString(string:"Şifre",
+                                                           attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])
        
         let imageName = "Logo.png"
         let image = UIImage(named: imageName)

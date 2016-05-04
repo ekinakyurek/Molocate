@@ -51,6 +51,7 @@ class tagComment: UIViewController, UITextViewDelegate {
     @IBAction func backButton(sender: AnyObject) {
         dispatch_async(dispatch_get_main_queue()) {
             
+            
             self.willMoveToParentViewController(nil)
             self.view.removeFromSuperview()
             self.removeFromParentViewController()
@@ -109,7 +110,7 @@ class tagComment: UIViewController, UITextViewDelegate {
             textView.text = ""
             textView.textColor = UIColor.lightGrayColor()
         }
-        CaptionText = textField.text
+        //CaptionText = textField.text
     }
     func dismissKeyboard() {
         view.endEditing(true)
@@ -119,6 +120,11 @@ class tagComment: UIViewController, UITextViewDelegate {
     var numbers = [Int]()
     // Have an array equal to the number of cells in your table
     
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
     
   
     
