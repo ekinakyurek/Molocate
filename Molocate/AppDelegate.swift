@@ -92,6 +92,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("Device Token:", tokenString)
         
         DeviceToken = tokenString
+        
+        if(NSUserDefaults.standardUserDefaults().boolForKey("isRegistered")) {
+            if DeviceToken != NSUserDefaults.standardUserDefaults().objectForKey("DeviceToken") as? String{
+                isRegistered = false
+                MolocateAccount.unregisterDevice({ (data, response, error) in
+                    MolocateAccount.registerDevice({ (data, response, error) in
+                        
+                    })
+                })
+                
+               
+            }
+            
+        }
+        
+
 
     }
     

@@ -532,10 +532,10 @@ public class MolocateAccount {
             NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isRegistered")
             NSUserDefaults.standardUserDefaults().setObject("", forKey: "DeviceToken")
             
-
+            
             do {
                 let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String:AnyObject]
-                
+                isRegistered = false
                 completionHandler(data: result["result"] as! String , response: response , error: nsError  )
             } catch{
                 completionHandler(data: "" , response: nil , error: nsError  )
