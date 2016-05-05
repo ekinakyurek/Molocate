@@ -25,6 +25,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         // [Optional] Power your app with Local Datastore. For more info, go to
+        
+        if(NSUserDefaults.standardUserDefaults().boolForKey("isRegistered")) {
+            isRegistered = true
+            DeviceToken = NSUserDefaults.standardUserDefaults().objectForKey("DeviceToken") as? String
+        }
+        
         if(!isRegistered && MoleUserToken != nil && DeviceToken  != nil){
             MolocateAccount.registerDevice({ (data, response, error) in
                 
@@ -128,6 +134,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(application: UIApplication) {
         
+        if(NSUserDefaults.standardUserDefaults().boolForKey("isRegistered")) {
+            isRegistered = true
+            DeviceToken = NSUserDefaults.standardUserDefaults().objectForKey("DeviceToken") as? String
+        }
         
         
         if(DeviceToken == nil) {
@@ -139,9 +149,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             
         
-        }
-        
-        else if !isRegistered && MoleUserToken != nil {
+        }else if !isRegistered && MoleUserToken != nil {
         
             MolocateAccount.registerDevice({ (data, response, error) in
                 print("Success")

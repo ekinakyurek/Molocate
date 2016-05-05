@@ -21,11 +21,12 @@ class notificationCell: UITableViewCell {
         fotoButton.frame = CGRectMake(5 , 10 , 34 , 34)
         fotoButton.layer.borderWidth = 0.1
         fotoButton.layer.masksToBounds = false
-        fotoButton.layer.borderColor = UIColor.whiteColor().CGColor
+        fotoButton.layer.borderColor = profileBackgroundColor.CGColor
+        fotoButton.backgroundColor = profileBackgroundColor
         fotoButton.layer.cornerRadius = fotoButton.frame.height/2
         fotoButton.clipsToBounds = true
         
-        let reportImage = UIImage(named: "profilepic.png")! as UIImage
+        let reportImage = UIImage(named: "profile")! as UIImage
         fotoButton.setBackgroundImage(reportImage, forState: UIControlState.Normal)
         contentView.addSubview(fotoButton)
         
@@ -40,7 +41,7 @@ class notificationCell: UITableViewCell {
     }
     
     deinit{
-        fotoButton = nil
-        myButton = nil
+    fotoButton = nil
+    myButton = nil
     }
 }

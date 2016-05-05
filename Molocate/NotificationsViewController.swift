@@ -10,7 +10,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
     var locationManager: CLLocationManager!
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     var location:CLLocation!
-     var bestEffortAtLocation:CLLocation!
+    var bestEffortAtLocation:CLLocation!
     @IBOutlet var tableView: UITableView!
     @IBOutlet var toolBar: UIToolbar!
     
@@ -25,13 +25,9 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.separatorColor = UIColor.lightGrayColor()
         MolocateNotifications.getNotifications(NSURL()) { (data, response, error) -> () in
-          
-            dispatch_async(dispatch_get_main_queue()){
-                 self.notificationArray.removeAll()
-                for item in data!{
-                   self.notificationArray.append(item)
-                   
-                }
+          dispatch_async(dispatch_get_main_queue()){
+                self.notificationArray.removeAll()
+                self.notificationArray = data!
                 self.tableView.reloadData()
             }
             
@@ -44,7 +40,9 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
         MolocateAccount.resetBadge { (data, response, error) in
             
         }
+       
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NotificationsViewController.scrollToTop), name: "scrollToTop", object: nil)
+        
         if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
             UIApplication.sharedApplication().endIgnoringInteractionEvents()
             
@@ -69,27 +67,21 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
          let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! molocateNotificationCell
-      //  cell.myButton.addTarget(self, action: #selector(NotificationsViewController.pressedUsername(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-        //cell.fotoButton.addTarget(self, action: #selector(NotificationsViewController.pressedProfilePhoto(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+     
+        cell.fotoButton.addTarget(self, action: #selector(NotificationsViewController.pressedProfilePhoto(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         cell.fotoButton.layer.borderWidth = 0.1
         cell.fotoButton.layer.masksToBounds = false
-        cell.fotoButton.layer.borderColor = UIColor.whiteColor().CGColor
+        cell.fotoButton.layer.borderColor = profileBackgroundColor.CGColor
+        cell.fotoButton.backgroundColor = profileBackgroundColor
         cell.fotoButton.layer.cornerRadius = cell.fotoButton.frame.height/2
         cell.fotoButton.clipsToBounds = true
-//        cell.myButton.tag = indexPath.row
         cell.fotoButton.tag = indexPath.row
-//        cell.myButton.setTitle(notificationArray[indexPath.row].actor, forState: UIControlState.Normal)
-//        let buttonWidth = cell.myButton.intrinsicContentSize().width
-//        cell.myButton.frame = CGRectMake(44 , 10 , buttonWidth + 5  , 34)
-//        cell.myButton.setTitleColor(UIColor.blueColor(), forState: .Normal)
-//        cell.myButton.contentHorizontalAlignment = .Left
-//        cell.myButton.setTitleColor(swiftColor, forState: UIControlState.Normal)
-        if( notificationArray.count > indexPath.row && notificationArray[indexPath.row].picture_url.absoluteString != ""){
-            
+        if(notificationArray.count > indexPath.row && notificationArray[indexPath.row].picture_url.absoluteString != ""){
         cell.fotoButton.sd_setImageWithURL(notificationArray[indexPath.row].picture_url, forState: UIControlState.Normal)
+            
+        } else {
+            cell.fotoButton.imageView?.image = UIImage(named: "profile")
         }
-       // cell.contentView.addSubview(cell.myButton)
-        
         var multipleAttributes = [String : NSObject]()
         multipleAttributes[NSForegroundColorAttributeName] = swiftColor2
         multipleAttributes[NSFontAttributeName] =  UIFont(name: "AvenirNext-Regular", size: 14.0)
@@ -193,7 +185,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
 
-        if notificationArray[indexPath.row].action == "like" || notificationArray[indexPath.row].action == "comment" {
+        if notificationArray[indexPath.row].action == "like" || notificationArray[indexPath.row].action == "comment"{
             activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
             activityIndicator.center = self.view.center
             activityIndicator.hidesWhenStopped = true
@@ -216,7 +208,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
             })
 
         } else {
-            //pressedUsername((tableView.cellForRowAtIndexPath(indexPath) as! molocateNotificationCell).)
+            //pressedUsername((tableView.cellForRowAtIndexPath(indexPath) as! molocateNotificationCell))
         }
     }
     

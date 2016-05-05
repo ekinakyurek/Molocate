@@ -199,6 +199,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDe
                                                             FbToken = FBSDKAccessToken.currentAccessToken().tokenString
                                                             let json = ["access_token":FbToken]
                                                             
+                                                            print(FbToken)
+                                                            
                                                             MolocateAccount.FacebookLogin(json, completionHandler: { (data, response, error) in
                                                                 if (data == "success") {
                                                                     MolocateAccount.getCurrentUser({ (data, response, error) in

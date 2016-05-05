@@ -26,10 +26,11 @@ class searchUsername: UITableViewCell {
         
         profilePhoto = UIButton()
         profilePhoto.frame = CGRectMake(10, 5, 44, 44)
-        let image = UIImage(named: "profilepic.png")! as UIImage
+        let image = UIImage(named: "profile")! as UIImage
         profilePhoto.layer.borderWidth = 0.1
         profilePhoto.layer.masksToBounds = false
-        profilePhoto.layer.borderColor = UIColor.whiteColor().CGColor
+        profilePhoto.layer.borderColor = UIColor.lightGrayColor().CGColor
+        profilePhoto.backgroundColor = profileBackgroundColor
         profilePhoto.layer.cornerRadius = profilePhoto.frame.height/2
         profilePhoto.clipsToBounds = true
         profilePhoto.setBackgroundImage(image, forState: UIControlState.Normal)

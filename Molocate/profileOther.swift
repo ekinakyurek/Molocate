@@ -185,8 +185,9 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
         classUser = user
         profilePhoto.layer.borderWidth = 0.5
         profilePhoto.layer.masksToBounds = false
-        profilePhoto.layer.borderColor = UIColor.grayColor().CGColor
+        profilePhoto.layer.borderColor = profileBackgroundColor.CGColor
         profilePhoto.layer.cornerRadius = profilePhoto.frame.height/2
+        profilePhoto.backgroundColor = profileBackgroundColor
         profilePhoto.clipsToBounds = true
 
         //       Molocate.follow("kcenan4") { (data, response, error) -> () in
@@ -286,7 +287,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
         if(user.profilePic.absoluteString != ""){
             profilePhoto.sd_setImageWithURL(user.profilePic)
         }else{
-            profilePhoto.image = UIImage(named: "profilepic.png")!
+            profilePhoto.image = UIImage(named: "profile")!
         }
         
         UIApplication.sharedApplication().endIgnoringInteractionEvents()

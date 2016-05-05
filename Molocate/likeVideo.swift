@@ -82,12 +82,13 @@ class likeVideo: UIViewController, UITableViewDelegate, UITableViewDataSource  {
         cell.profileImage.layer.borderWidth = 0.1
         cell.profileImage.layer.masksToBounds = false
         cell.profileImage.layer.borderColor = UIColor.whiteColor().CGColor
+        cell.profileImage.backgroundColor = profileBackgroundColor
         cell.profileImage.layer.cornerRadius = cell.profileImage.frame.height/2
         cell.profileImage.clipsToBounds = true
         cell.profileImage.tag = indexPath.row
         
         if(users[indexPath.row].profilePic.absoluteString != ""){
-            cell.profileImage.setBackgroundImage(UIImage(named: "profilepic.png")!, forState:
+            cell.profileImage.setBackgroundImage(UIImage(named: "profile")!, forState:
                 UIControlState.Normal)
             //print(users[indexPath.row].profilePic.absoluteString)
             MolocateAccount.getDataFromUrl(users[indexPath.row].profilePic, completion: { (data, response, error) -> Void in
@@ -100,7 +101,7 @@ class likeVideo: UIViewController, UITableViewDelegate, UITableViewDataSource  {
             })
             //photo.image = UIImage(data: data!)!
         }else{
-            cell.profileImage.setBackgroundImage(UIImage(named: "profilepic.png")!, forState:
+            cell.profileImage.setBackgroundImage(UIImage(named: "profile")!, forState:
                 UIControlState.Normal)
         }
         cell.username.addTarget(self, action: #selector(likeVideo.pressedProfile(_:)), forControlEvents: UIControlEvents.TouchUpInside)

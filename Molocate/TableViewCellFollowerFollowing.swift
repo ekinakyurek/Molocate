@@ -26,7 +26,7 @@ class TableViewCellFollowerFollowing: UITableViewCell {
         //let labelHeight: CGFloat = 30
         //let labelWidth: CGFloat = 140
         
-        let mole = UIImage(named: "profilepic.png")! as UIImage
+        let mole = UIImage(named: "profile")! as UIImage
         
         fotoButton = UIButton()
         fotoButton.frame = CGRectMake(gap, gap, 40 , 40)
@@ -34,7 +34,8 @@ class TableViewCellFollowerFollowing: UITableViewCell {
         contentView.addSubview(fotoButton)
         fotoButton.layer.borderWidth = 0.1
         fotoButton.layer.masksToBounds = false
-        fotoButton.layer.borderColor = UIColor.whiteColor().CGColor
+        fotoButton.layer.borderColor = UIColor.lightGrayColor().CGColor
+        fotoButton.backgroundColor = profileBackgroundColor
         fotoButton.layer.cornerRadius = fotoButton.frame.height/2
         fotoButton.clipsToBounds = true
         fotoButton.setBackgroundImage(mole, forState: UIControlState.Normal)

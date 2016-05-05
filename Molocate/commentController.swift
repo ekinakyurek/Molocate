@@ -234,6 +234,7 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
         cell.profilePhoto.layer.borderWidth = 0.1
         cell.profilePhoto.layer.masksToBounds = false
         cell.profilePhoto.layer.borderColor = UIColor.whiteColor().CGColor
+        cell.profilePhoto.backgroundColor = profileBackgroundColor
         cell.profilePhoto.layer.cornerRadius = cell.profilePhoto.frame.height/2
         cell.profilePhoto.clipsToBounds = true
         cell.profilePhoto.tag = indexPath.row
@@ -241,13 +242,13 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
         cell.comment.numberOfLines = 0
         cell.comment.lineBreakMode = NSLineBreakMode.ByWordWrapping
         if(comments[indexPath.row].photo.absoluteString != ""){
-            cell.profilePhoto.setBackgroundImage(UIImage(named: "profilepic.png")!, forState:
+            cell.profilePhoto.setBackgroundImage(UIImage(named: "profile")!, forState:
                 UIControlState.Normal)
             
             cell.profilePhoto.sd_setImageWithURL(comments[indexPath.row].photo, forState: UIControlState.Normal)
 
         }else{
-            cell.profilePhoto.setBackgroundImage(UIImage(named: "profilepic.png")!, forState:
+            cell.profilePhoto.setBackgroundImage(UIImage(named: "profile")!, forState:
                 UIControlState.Normal)
         }
         return cell

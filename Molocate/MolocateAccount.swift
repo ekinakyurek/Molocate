@@ -23,7 +23,7 @@ struct MoleUserRelations{
 
 //var nextT:NSURL!
 
-
+let profileBackgroundColor = UIColor(netHex: 0xDCDDDF)
 
 var IsExploreInProcess = false
 
@@ -265,13 +265,14 @@ public class MolocateAccount {
                     
                     if (loggedIn) {
                         MoleUserToken = resultJson["access_token"] as? String
-                        completionHandler(data: "success", response:  response, error: error)
                         
                         if(DeviceToken != nil){
                             MolocateAccount.registerDevice({ (data, response, error) in
                                 
                             })
                         }
+                        completionHandler(data: "success", response:  response, error: error)
+                       
                         
                     } else {
                         FaceMail = resultJson["email_validation"] as! String
@@ -332,13 +333,14 @@ public class MolocateAccount {
                         }
                     } else {
                         MoleUserToken = result["access_token"] as? String
-                        completionHandler(data: "success", response:  response, error: Nserror)
-                        
                         if(DeviceToken != nil){
                             MolocateAccount.registerDevice({ (data, response, error) in
                                 
                             })
                         }
+                        completionHandler(data: "success", response:  response, error: Nserror)
+                        
+                      
                     }
                     
                 } catch{
@@ -380,14 +382,16 @@ public class MolocateAccount {
                   // print(result)
                     if(result.count > 1){
                         MoleUserToken = result["access_token"] as? String
-                        completionHandler(data: "success" , response: response , error: nsError  )
-                        
                         
                         if(DeviceToken != nil){
                             MolocateAccount.registerDevice({ (data, response, error) in
                                 
                             })
                         }
+                        completionHandler(data: "success" , response: response , error: nsError  )
+                        
+                        
+                    
                         
                     } else{
                         let error = result["result"] as! String
@@ -464,6 +468,10 @@ public class MolocateAccount {
             
             isRegistered = true
             
+            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "isRegistered")
+            NSUserDefaults.standardUserDefaults().setObject(DeviceToken, forKey: "DeviceToken")
+            
+            
             let nsError = error
             
             do {
@@ -521,7 +529,10 @@ public class MolocateAccount {
             // print(NSString(data: data!, encoding: NSUTF8StringEncoding))
             
             let nsError = error
+            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isRegistered")
+            NSUserDefaults.standardUserDefaults().setObject("", forKey: "DeviceToken")
             
+
             do {
                 let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String:AnyObject]
                 

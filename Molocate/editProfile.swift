@@ -108,7 +108,7 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
         photo = UIImageView()
         //print(currentUser.profilePic.absoluteString)
         if(user.profilePic.absoluteString != ""){
-            photo.image = UIImage(named: "profilepic.png")!
+            photo.image = UIImage(named: "profile")!
             photo.sd_setImageWithURL(user.profilePic)
             //            Molocate.getDataFromUrl(user.profilePic, completion: { (data, response, error) -> Void in
             //                dispatch_async(dispatch_get_main_queue()){
@@ -118,13 +118,14 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
             //            })
             //photo.image = UIImage(data: data!)!
         }else{
-            photo.image = UIImage(named: "profilepic.png")!
+            photo.image = UIImage(named: "profile")!
         }
         
         photo!.frame = CGRectMake((screenWidth / 2) - ((scr * 21) / 240) , 60 + (scr * 2) / 120 , (scr * 21) / 120 , (scr * 21) / 120)
         photo.layer.borderWidth = 0.1
         photo.layer.masksToBounds = false
         //photo.layer.borderColor = UIColor.whiteColor().CGColor
+        photo.backgroundColor = profileBackgroundColor
         photo.layer.cornerRadius = photo.frame.height / 2
         photo.clipsToBounds = true
         self.view.addSubview(photo!)
