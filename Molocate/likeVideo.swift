@@ -88,18 +88,10 @@ class likeVideo: UIViewController, UITableViewDelegate, UITableViewDataSource  {
         cell.profileImage.tag = indexPath.row
         
         if(users[indexPath.row].profilePic.absoluteString != ""){
-            cell.profileImage.setBackgroundImage(UIImage(named: "profile")!, forState:
-                UIControlState.Normal)
-            //print(users[indexPath.row].profilePic.absoluteString)
-            MolocateAccount.getDataFromUrl(users[indexPath.row].profilePic, completion: { (data, response, error) -> Void in
-                dispatch_async(dispatch_get_main_queue()){
-                    
-                    cell.profileImage.setBackgroundImage(UIImage(data: data!)!, forState:
-                        UIControlState.Normal)
-                    
-                }
-            })
-            //photo.image = UIImage(data: data!)!
+            //cell.profileImage.setBackgroundImage(UIImage(named: "profile")!, forState:
+               // UIControlState.Normal)
+            cell.profileImage.sd_setBackgroundImageWithURL(users[indexPath.row].profilePic, forState: .Normal)
+            
         }else{
             cell.profileImage.setBackgroundImage(UIImage(named: "profile")!, forState:
                 UIControlState.Normal)

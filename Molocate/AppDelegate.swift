@@ -13,7 +13,8 @@ import AWSS3
 var DeviceToken:String?
 var isRegistered = false
 var MoleUserToken: String?
-
+var is4s = false
+let debug  = true
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

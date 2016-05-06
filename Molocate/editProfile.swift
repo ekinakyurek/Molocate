@@ -1,28 +1,9 @@
 //  editProfile.swift
 //  Molocate
-//
-//  Created by MellonCorp on 3/10/16.
-//  Copyright © 2016 MellonApp. All rights reserved.
-//
 
 import UIKit
 import SDWebImage
-extension UIImageView {
-    func downloadedFrom(url url:NSURL, contentMode mode: UIViewContentMode) {
-        contentMode = mode
-        NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
-            guard
-                let httpURLResponse = response as? NSHTTPURLResponse where httpURLResponse.statusCode == 200,
-                let mimeType = response?.MIMEType where mimeType.hasPrefix("image"),
-                let data = data where error == nil,
-                let image = UIImage(data: data)
-                else { return }
-            dispatch_async(dispatch_get_main_queue()) { () -> Void in
-                self.image = image
-            }
-        }).resume()
-    }
-}
+
 
 class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigationControllerDelegate {
     
@@ -58,8 +39,6 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
     @IBAction func back(sender: AnyObject) {
         self.performSegueWithIdentifier("goBackProfile", sender: self)
     }
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,11 +76,9 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
         }
         }
         datepicker.setDate( dateFormatter.dateFromString(birthdaytext)!, animated: true)
-        //date pickerdan string al, max min value ata
-        //let selectedDate = dateFormatter.stringFromDate(datepicker.date)
-        //print(selectedDate)
+      
         datepicker.transform = CGAffineTransformMakeScale(0.8 , 0.9 )
-        //datepicker.transform = CGAffineTransformMakeScale(0. , 1)
+     
         self.view.addSubview(datepicker)
         addlines()
         
@@ -110,13 +87,7 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
         if(user.profilePic.absoluteString != ""){
             photo.image = UIImage(named: "profile")!
             photo.sd_setImageWithURL(user.profilePic)
-            //            Molocate.getDataFromUrl(user.profilePic, completion: { (data, response, error) -> Void in
-            //                dispatch_async(dispatch_get_main_queue()){
-            //                    self.photo.image = UIImage(data: data!)!
-            //
-            //                }
-            //            })
-            //photo.image = UIImage(data: data!)!
+      
         }else{
             photo.image = UIImage(named: "profile")!
         }
@@ -237,12 +208,12 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
         changePhoto.backgroundColor = swiftColor
         changePhoto.layer.cornerRadius = 10
         changePhoto.layer.borderWidth = 0
-        //changePhoto.titleLabel?.lineBreakMode = NSLineBreakMode.ByWordWrapping;
+        
         changePhoto.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         changePhoto.titleLabel!.font =  UIFont(name: "AvenirNext-Regular", size: 12)
         changePhoto.setTitle("Düzenle", forState: UIControlState.Normal)
         changePhoto.addTarget(self, action: #selector(editProfile.changePhoto(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-        //changePhoto.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        
         self.view.addSubview(changePhoto)
         
         let password   = UIButton(type: UIButtonType.System) as UIButton
@@ -305,10 +276,7 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
         user.printUser()
         
         MoleCurrentUser = user
-        //MoleCurrentUser.printUser()
-        
-        
-        //UIImagePNGRepresentation(photo.image!)
+
         
         let imageData = UIImageJPEGRepresentation(photo.image!, 0.5)
         activityIndicator.frame = sender.frame
@@ -319,7 +287,6 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
         MolocateAccount.uploadProfilePhoto(imageData!) { (data, response, error) -> () in
             dispatch_async(dispatch_get_main_queue()) { () -> Void in
                 
-                //print(data)
                 SDImageCache.sharedImageCache().removeImageForKey(data!)
                 SDImageCache.sharedImageCache().storeImage(self.photo.image!, forKey: data!)
                 MoleCurrentUser.profilePic = NSURL(string: data!)!
@@ -367,7 +334,7 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
     
     func imagePickerController(picker: UIImagePickerController!, didFinishPickingImage image: UIImage!, editingInfo: NSDictionary!) {
         let selectedImage : UIImage = image
-        photo.image=editProfile.RBSquareImageTo(selectedImage, size: CGSize(width: 192, height: 192))
+        photo.image = MolocateUtility.RBSquareImageTo(selectedImage, size: CGSize(width: 192, height: 192))
         
         print("new image")
         self.dismissViewControllerAnimated(true, completion: nil)
@@ -417,40 +384,25 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
         line1.layer.borderColor = UIColor.lightGrayColor().CGColor
         self.view.addSubview(line1)
         
-//        let line2 = UIView(frame: CGRectMake(0 , 60 + (scr * (39 / 120)) , screenWidth , 1.0))
-//        line2.layer.borderWidth = 1.0
-//        line2.layer.borderColor = UIColor.grayColor().CGColor
-//        self.view.addSubview(line2)
         
         let line3 = UIView(frame: CGRectMake(0 , 60 + (scr * (41 / 120)) , screenWidth , 1.0))
         line3.layer.borderWidth = 1.0
         line3.layer.borderColor = UIColor.lightGrayColor().CGColor
         self.view.addSubview(line3)
         
-//        let line4 = UIView(frame: CGRectMake(0 , 60 + (scr * (49 / 120)) , screenWidth , 1.0))
-//        line4.layer.borderWidth = 1.0
-//        line4.layer.borderColor = UIColor.grayColor().CGColor
-//        self.view.addSubview(line4)
+
         
         let line5 = UIView(frame: CGRectMake(0 , 60 + (scr * (51 / 120)) , screenWidth , 1.0))
         line5.layer.borderWidth = 1.0
         line5.layer.borderColor = UIColor.lightGrayColor().CGColor
         self.view.addSubview(line5)
-        
-//        let line6 = UIView(frame: CGRectMake(0 , 60 + (scr * (59 / 120)) , screenWidth , 1.0))
-//        line6.layer.borderWidth = 1.0
-//        line6.layer.borderColor = UIColor.grayColor().CGColor
-//        self.view.addSubview(line6)
+
         
         let line7 = UIView(frame: CGRectMake(0 , 60 + (scr * (61 / 120)) , screenWidth , 1.0))
         line7.layer.borderWidth = 1.0
         line7.layer.borderColor = UIColor.lightGrayColor().CGColor
         self.view.addSubview(line7)
-        
-//        let line10 = UIView(frame: CGRectMake(0 , 60 + (scr * (79 / 120)) , screenWidth , 1.0))
-//        line10.layer.borderWidth = 1.0
-//        line10.layer.borderColor = UIColor.lightGrayColor().CGColor
-//        self.view.addSubview(line10)
+
         
         let line11 = UIView(frame: CGRectMake(0 , 60 + (scr * (81 / 120)) , screenWidth , 1.0))
         line11.layer.borderWidth = 1.0
@@ -463,68 +415,8 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
         self.view.addSubview(line12)
         
     }
-    
-    
-    class func RBSquareImageTo(image: UIImage, size: CGSize) -> UIImage {
-        return RBResizeImage(RBSquareImage(image), targetSize: size)
-    }
-    
-    class func RBSquareImage(image: UIImage) -> UIImage {
-        let originalWidth  = image.size.width
-        let originalHeight = image.size.height
-        var x: CGFloat = 0.0
-        var y: CGFloat = 0.0
-        var edge: CGFloat = 0.0
-        
-        if (originalWidth > originalHeight) {
-            // landscape
-            edge = originalHeight
-            x = (originalWidth - edge) / 2.0
-            y = 0.0
-            
-        } else if (originalHeight > originalWidth) {
-            // portrait
-            edge = originalWidth
-            x = 0.0
-            y = (originalHeight - originalWidth) / 2.0
-        } else {
-            // square
-            edge = originalWidth
-        }
-        
-        let cropSquare = CGRectMake(x, y, edge, edge)
-        let imageRef = CGImageCreateWithImageInRect(image.CGImage, cropSquare);
-        
-        return UIImage(CGImage: imageRef!, scale: UIScreen.mainScreen().scale, orientation: image.imageOrientation)
-    }
-    
-    class func RBResizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
-        let size = image.size
-        
-        let widthRatio  = targetSize.width  / image.size.width
-        let heightRatio = targetSize.height / image.size.height
-        
-        // Figure out what our orientation is, and use that to form the rectangle
-        var newSize: CGSize
-        if(widthRatio > heightRatio) {
-            newSize = CGSizeMake(size.width * heightRatio, size.height * heightRatio)
-        } else {
-            newSize = CGSizeMake(size.width * widthRatio,  size.height * widthRatio)
-        }
-        
-        // This is the rect that we've calculated out and this is what is actually used below
-        let rect = CGRectMake(0, 0, newSize.width, newSize.height)
-        
-        // Actually do the resizing to the rect using the ImageContext stuff
-        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
-        image.drawInRect(rect)
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        return newImage
-    }
+
     func dismissKeyboard() {
-        //Causes the view (or one of its embedded text fields) to resign the first responder status.
         view.endEditing(true)
     }
     

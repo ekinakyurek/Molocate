@@ -61,7 +61,6 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
         activityIndicator.startAnimating()
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
 
-        NSUserDefaults.standardUserDefaults().setObject(MoleUserToken, forKey: "userToken")
         
         MolocateAccount.getCurrentUser({ (data, response, error) -> () in
             

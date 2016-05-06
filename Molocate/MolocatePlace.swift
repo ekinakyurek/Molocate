@@ -1,7 +1,8 @@
 //  MolocatePlace.swift
 //  Molocate
-
 import Foundation
+
+var MoleNextPlaceVideos: NSURL?
 
 struct MolePlace{
     var id: String = ""
@@ -23,25 +24,31 @@ struct MolePlace{
     var lon = 0.0
 }
 
-var MoleNextPlaceVideos: NSURL?
 
 public class MolocatePlace {
+    static let timeout = 8.0
     class func followAPlace(place_id: String, completionHandler: (data: String! , response: NSURLResponse!, error: NSError!) -> ()){
+        
         let url = NSURL(string: MolocateBaseUrl + "place/api/follow/?place_id=" + (place_id as String))!
         let request = NSMutableURLRequest(URL: url)
         request.HTTPMethod = "POST"
         request.addValue("Token " + MoleUserToken!, forHTTPHeaderField: "Authorization")
-        
+        request.timeoutInterval = timeout
         let task = NSURLSession.sharedSession().dataTaskWithRequest(request){ data, response, error in
             // print(NSString(data: data!, encoding: NSUTF8StringEncoding))
-            
-            let nsError = error
-            do {
-                let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String:AnyObject]
-                completionHandler(data: result["result"] as! String , response: response , error: nsError  )
-            } catch{
-                completionHandler(data: "fail" , response: nil , error: nsError  )
-                print("Error:: in mole.followAPlace()")
+            if error == nil {
+                let nsError = error
+                do {
+                    let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String:AnyObject]
+                    completionHandler(data: result["result"] as! String , response: response , error: nsError  )
+                } catch{
+                    completionHandler(data: "fail" , response: nil , error: nsError  )
+                    if debug {print("JsonError:: in MolocatePlace.followAPlace()")}
+                }
+            }else{
+                completionHandler(data: "fail" , response: nil , error: error  )
+                if debug {print("RequestError:: in MolocatePlace.followAPlace()")}
+
             }
             
         }
@@ -54,21 +61,25 @@ public class MolocatePlace {
         let request = NSMutableURLRequest(URL: url)
         request.HTTPMethod = "POST"
         request.addValue("Token "+MoleUserToken!, forHTTPHeaderField: "Authorization")
-        
+        request.timeoutInterval = timeout
         let task = NSURLSession.sharedSession().dataTaskWithRequest(request){ data, response, error in
             // print(NSString(data: data!, encoding: NSUTF8StringEncoding))
-            
-            let nsError = error
-            do {
-                let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String:AnyObject]
-                completionHandler(data: result["result"] as! String , response: response , error: nsError  )
-            } catch{
-                completionHandler(data: "fail" , response: nil , error: nsError  )
-                print("Error:: in mole.unfollowAPlace()")
+            if error == nil {
+                let nsError = error
+                do {
+                    let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String:AnyObject]
+                    completionHandler(data: result["result"] as! String , response: response , error: nsError  )
+                } catch{
+                    completionHandler(data: "fail" , response: nil , error: nsError  )
+                    if debug {print("JsonError:: in MolocatePlace.unFollowAPlace()")}
+                }
+            }else{
+                completionHandler(data: "fail" , response: nil , error: error  )
+                if debug {print("RequestError:: in MolocatePlace.unFollowAPlace()")}
+                
             }
             
         }
-        
         task.resume()
     }
     
@@ -79,82 +90,84 @@ public class MolocatePlace {
         let request = NSMutableURLRequest(URL: url)
         request.HTTPMethod = "GET"
         request.addValue("Token " + MoleUserToken!, forHTTPHeaderField: "Authorization")
-        
+        request.timeoutInterval = timeout
         let task = NSURLSession.sharedSession().dataTaskWithRequest(request){ data, response, error in
-            
-            let nsError = error;
-            
-            do {
+            if error == nil {
+                let nsError = error;
                 
-                let item = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String:AnyObject]
-                var place = MolePlace()
-                let exist = item.indexForKey("result")
-                if  exist != nil{
-                    place.name = "notExist"
-                } else{
+                do {
                     
-                    place.id = placeid
-                    place.name = item["name"] as! String
-                    place.city = item["city"] as! String
-                    place.is_following = item["is_following"] as! Int
-                    place.address = item["address"] as! String
-                    place.video_count = item["video_count"] as! Int
-                    place.follower_count = item["follower_count"] as! Int
-                    place.caption = item["caption"] as! String
-                    place.picture_url = item["picture_url"] is NSNull ? NSURL():NSURL(string: item["picture_url"] as! String)!
-                    place.phone = item["phone"] as! String
-                    place.web_site = item["web_site"] as! String
-                    let lon = item["longitude"] as! String
-                    let lat = item["latitude"] as! String
-                    place.lon = CFStringGetDoubleValue(lon)
-                    place.lat = CFStringGetDoubleValue(lat)
-                    if (item.indexForKey("next_place_videos") != nil){
-                        if item["next_place_videos"] is NSNull {
-                            //print("next is null")
-                            MoleNextPlaceVideos = nil
-                        }else {
-                            let nextStr = item["next_place_videos"] as! String
-                            MoleNextPlaceVideos = NSURL(string: nextStr)!
+                    let item = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String:AnyObject]
+                    var place = MolePlace()
+                    let exist = item.indexForKey("result")
+                    if  exist != nil{
+                        place.name = "notExist"
+                    } else{
+                        
+                        place.id = placeid
+                        place.name = item["name"] as! String
+                        place.city = item["city"] as! String
+                        place.is_following = item["is_following"] as! Int
+                        place.address = item["address"] as! String
+                        place.video_count = item["video_count"] as! Int
+                        place.follower_count = item["follower_count"] as! Int
+                        place.caption = item["caption"] as! String
+                        place.picture_url = item["picture_url"] is NSNull ? NSURL():NSURL(string: item["picture_url"] as! String)!
+                        place.phone = item["phone"] as! String
+                        place.web_site = item["web_site"] as! String
+                        let lon = item["longitude"] as! String
+                        let lat = item["latitude"] as! String
+                        place.lon = CFStringGetDoubleValue(lon)
+                        place.lat = CFStringGetDoubleValue(lat)
+                      
+                        if (item.indexForKey("next_place_videos") != nil){
+                            if item["next_place_videos"] is NSNull {
+                                //print("next is null")
+                                MoleNextPlaceVideos = nil
+                            }else {
+                                let nextStr = item["next_place_videos"] as! String
+                                MoleNextPlaceVideos = NSURL(string: nextStr)!
+                            }
+                        }
+                        
+                        let videos = item["place_videos"] as! NSArray
+                        
+                        for i in 0..<videos.count {
+                            let item = videos[i]
+                            let owner_user = item["owner_user"] as!  [String: AnyObject]
+                            let placeTaken = item["place_taken"] as! [String:String]
+                            var videoStr = MoleVideoInformation()
+                            videoStr.id = item["video_id"] as! String
+                            videoStr.urlSta = NSURL(string:  item["video_url"] as! String)!
+                            videoStr.username = owner_user["username"] as! String
+                            videoStr.location = placeTaken["name"]!
+                            videoStr.locationID = placeTaken["place_id"]!
+                            videoStr.caption = item["caption"] as! String
+                            videoStr.likeCount = item["like_count"] as! Int
+                            videoStr.commentCount = item["comment_count"] as! Int
+                            videoStr.category = item["category"] as! String
+                            videoStr.isLiked = item["is_liked"] as! Int
+                            videoStr.isFollowing = owner_user["is_following"] as! Int
+                            videoStr.userpic = owner_user["picture_url"] is NSNull ? NSURL():NSURL(string: owner_user["picture_url"] as! String)!
+                            videoStr.dateStr = item["date_str"] as! String
+                            videoStr.taggedUsers = item["tagged_users"] as! [String]
+                            
+                            videoStr.thumbnailURL = NSURL(string:item["thumbnail"] as! String)!
+                            place.videoArray.append(videoStr)
+                            
                         }
                     }
                     
-                    let videos = item["place_videos"] as! NSArray
-                    
-                    for i in 0..<videos.count {
-                        //print(item)
-                        let item = videos[i]
-                        let owner_user = item["owner_user"] as!  [String: AnyObject]
-                        let placeTaken = item["place_taken"] as! [String:String]
-                        var videoStr = MoleVideoInformation()
-                        //print(item)
-                        videoStr.id = item["video_id"] as! String
-                        videoStr.urlSta = NSURL(string:  item["video_url"] as! String)!
-                        videoStr.username = owner_user["username"] as! String
-                        videoStr.location = placeTaken["name"]!
-                        videoStr.locationID = placeTaken["place_id"]!
-                        videoStr.caption = item["caption"] as! String
-                        videoStr.likeCount = item["like_count"] as! Int
-                        videoStr.commentCount = item["comment_count"] as! Int
-                        videoStr.category = item["category"] as! String
-                        videoStr.isLiked = item["is_liked"] as! Int
-                        videoStr.isFollowing = owner_user["is_following"] as! Int
-                        videoStr.userpic = owner_user["picture_url"] is NSNull ? NSURL():NSURL(string: owner_user["picture_url"] as! String)!
-                        videoStr.dateStr = item["date_str"] as! String
-                        videoStr.taggedUsers = item["tagged_users"] as! [String]
-                        
-                        videoStr.thumbnailURL = NSURL(string:item["thumbnail"] as! String)!
-                        place.videoArray.append(videoStr)
-                        
-                    }
+                    completionHandler(data: place, response: response , error: nsError  )
+                } catch{
+                    completionHandler(data: MolePlace() , response: nil , error: nsError  )
+                    if debug {print("JsonError:: in MolocatePlace.getPlace()")}
                 }
-                
-                completionHandler(data: place, response: response , error: nsError  )
-            } catch{
-                completionHandler(data: MolePlace() , response: nil , error: nsError  )
-                print("Error:: in mole.getUser()")
+            
+            }else{
+                completionHandler(data: MolePlace() , response: nil , error: error  )
+                if debug {print("RequestError:: in MolocatePlace.getPlace()")}
             }
-            
-            
         }
         
         task.resume()
@@ -170,49 +183,57 @@ public class MolocatePlace {
         let request = NSMutableURLRequest(URL: url)
         request.HTTPMethod = "GET"
         request.addValue("Token " + MoleUserToken!, forHTTPHeaderField: "Authorization")
+        request.timeoutInterval = timeout
         
         let task = NSURLSession.sharedSession().dataTaskWithRequest(request){ data, response, error in
             // print(NSString(data: data!, encoding: NSUTF8StringEncoding))
-            
-            let nsError = error;
-            
-            do {
-                //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
-                let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String: AnyObject]
-                // print(result)
-                let count: Int = result["count"] as! Int
-                let next =  result["next"] is NSNull ? "":result["next"] as? String
-                let previous =  result["previous"] is NSNull ? "":result["previous"] as? String
-                let results = result["results"] as! NSArray
-                var followers = MoleUserRelations()
-                followers.totalCount = count
-                var friends: Array<MoleUserFriend> = Array<MoleUserFriend>()
+            if error == nil {
+                let nsError = error;
                 
-                if(count != 0){
-                    //print(result["results"] )
-                    for i in 0..<results.count{
-                        var friend = MoleUserFriend()
-                        let thing = results[i] as! [String:AnyObject]
-                        friend.username = thing["username"] as! String
-                        friend.picture_url = thing["picture_url"] is NSNull ? NSURL():NSURL(string: thing["picture_url"] as! String)!
-                        let isfollowing = thing["is_following"] as! Int
+                do {
+                    //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+                    let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String: AnyObject]
+                    if let _ = result["results"]{
+                        let count: Int = result["count"] as! Int
+                        let next =  result["next"] is NSNull ? "":result["next"] as? String
+                        let previous =  result["previous"] is NSNull ? "":result["previous"] as? String
+                        let results = result["results"] as! NSArray
+                        var followers = MoleUserRelations()
+                        followers.totalCount = count
+                        var friends: Array<MoleUserFriend> = Array<MoleUserFriend>()
+                    
+                            for i in 0..<results.count{
+                                var friend = MoleUserFriend()
+                                let thing = results[i] as! [String:AnyObject]
+                                friend.username = thing["username"] as! String
+                                friend.picture_url = thing["picture_url"] is NSNull ? NSURL():NSURL(string: thing["picture_url"] as! String)!
+                                let isfollowing = thing["is_following"] as! Int
+                                
+                                friend.is_following = isfollowing == 0 ? false:true
+                                if(friend.username==MoleCurrentUser.username){
+                                    friend.is_following = true
+                                }
+                                
+                                
+                                friends.append(friend)
+                            }
                         
-                        friend.is_following = isfollowing == 0 ? false:true
-                        if(friend.username==MoleCurrentUser.username){
-                            friend.is_following = true
-                        }
                         
+                        followers.relations = friends
                         
-                        friends.append(friend)
+                        completionHandler(data: followers , response: response , error: nsError, count: count, next: next, previous: previous  )
+                    }else{
+                        completionHandler(data:  MoleUserRelations() , response: nil , error: nsError, count: 0, next: nil, previous: nil  )
+                        if debug {print("ServerDataError:: in MolocatePlace.getFollowers()")}
+
                     }
+                } catch{
+                    completionHandler(data:  MoleUserRelations() , response: nil , error: nsError, count: 0, next: nil, previous: nil  )
+                    if debug {print("JsonError:: in MolocatePlace.getFollowers()")}
                 }
-                
-                followers.relations = friends
-                
-                completionHandler(data: followers , response: response , error: nsError, count: count, next: next, previous: previous  )
-            } catch{
-                completionHandler(data:  MoleUserRelations() , response: nil , error: nsError, count: 0, next: nil, previous: nil  )
-                print("Error:: in mole.getFollowers()")
+            }else{
+                completionHandler(data:  MoleUserRelations() , response: nil , error: error, count: 0, next: nil, previous: nil  )
+                if debug {print("RequestError:: in MolocatePlace.getFollowers()")}
             }
             
         }
