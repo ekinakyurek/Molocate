@@ -174,29 +174,30 @@ class SignUpAdvance: UIViewController , UITextFieldDelegate {
         view.endEditing(true)
     }
     
+    func textFieldShouldReturn(textField: UITextField) -> Bool{
+        textField.resignFirstResponder()
+        
+        return true
+        
+    }
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-        if textField == username {
+        
+        if(textField==username){
             let maxLength = 20
-            let aSet = NSCharacterSet(charactersInString:"abcdefghijklmnoprstuvyzxwq0123456789-_.").invertedSet
+            let aSet = NSCharacterSet(charactersInString:"abcdefghijklmnoprstuvyzxwq1234567890_-.").invertedSet
             let compSepByCharInSet = string.componentsSeparatedByCharactersInSet(aSet)
             let numberFiltered = compSepByCharInSet.joinWithSeparator("")
-            let currentString: NSString = username.text!
+            let currentString: NSString = textField.text!
             let newString: NSString = currentString.stringByReplacingCharactersInRange(range, withString: string)
-            if newString.length > maxLength{
-                return false
-                
+            
+            if(string == numberFiltered && newString.length <= maxLength){
+                return true
             }else{
-                if(string == numberFiltered && newString.length <= maxLength){
-                    return true
-                }else{
-                    return false
-                }
+                return false
             }
             
-            
-        }
-        else{
+        }else{
             return true
         }
     }
