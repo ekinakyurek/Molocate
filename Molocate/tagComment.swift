@@ -6,40 +6,41 @@ import UIKit
 
 class tagComment: UIViewController, UITextViewDelegate {
 
+    var relationNextUrl = ""
+    var userRelations = MoleUserRelations()
+    var numbers = [Int]()
+
     @IBOutlet var tableView: UITableView!
     @IBOutlet var textField: UITextView!
     @IBOutlet var toolBar: UIToolbar!
-    var relationNextUrl = ""
-    var userRelations = MoleUserRelations()
+
     //done da verileri yolla backde vazgeçsin yollama
     @IBAction func done(sender: AnyObject) {
         CaptionText = textField.text!
         let parent =  (self.parentViewController as! capturePreviewController)
         
         var textstring = " "
-       
+        
         for i in numbers{
             parent.taggedUsers.append(userRelations.relations[i].username)
             textstring +=  "@" + userRelations.relations[i].username
         }
         
+       
         
-      
+        var multipleAttributes2 = [String : NSObject]()
+        multipleAttributes2[NSFontAttributeName] =  UIFont(name: "AvenirNext-Regular", size: 14)
+        multipleAttributes2[NSForegroundColorAttributeName] = UIColor.blackColor()
+        
+        let commentext = NSMutableAttributedString(string: CaptionText, attributes:  multipleAttributes2)
+        
         var multipleAttributes = [String : NSObject]()
         multipleAttributes[NSForegroundColorAttributeName] = swiftColor2
         multipleAttributes[NSFontAttributeName] =  UIFont(name: "AvenirNext-Regular", size: 14)
         
         let tags =  NSAttributedString(string: textstring, attributes: multipleAttributes)
         
-        var multipleAttributes2 = [String : NSObject]()
-        multipleAttributes2[NSFontAttributeName] =  UIFont(name: "AvenirNext-Regular", size: 14)
-        multipleAttributes2[NSForegroundColorAttributeName] = UIColor.blackColor()
-        
-        
-        let commentext = NSMutableAttributedString(string: CaptionText, attributes:  multipleAttributes2)
-        //print(videoInfo.caption+"--------------")
         commentext.appendAttributedString(tags)
-        
         parent.caption.setAttributedTitle(commentext, forState: .Normal)
         parent.numbers = numbers
         
@@ -49,17 +50,9 @@ class tagComment: UIViewController, UITextViewDelegate {
     }
     
     @IBAction func backButton(sender: AnyObject) {
-        dispatch_async(dispatch_get_main_queue()) {
-            
-            
-            self.willMoveToParentViewController(nil)
-            self.view.removeFromSuperview()
-            self.removeFromParentViewController()
-            
-            
-            
-        }
-        
+        self.willMoveToParentViewController(nil)
+        self.view.removeFromSuperview()
+        self.removeFromParentViewController()
     }
 
     var arraynumber = [Int]()
@@ -76,6 +69,7 @@ class tagComment: UIViewController, UITextViewDelegate {
         toolBar.barTintColor = swiftColor
         toolBar.translucent = false
         toolBar.clipsToBounds = true
+        
         if(CaptionText == "Yorum ve arkadaş ekle") {
             textField.text = "Yorum ve arkadaş ekle"
         }else{
@@ -85,98 +79,44 @@ class tagComment: UIViewController, UITextViewDelegate {
         textField.returnKeyType = .Done
         
         MolocateAccount.getFollowers(username:MoleCurrentUser.username) { (data, response, error, count, next, previous) -> () in
-            
              dispatch_async(dispatch_get_main_queue()){
                 self.relationNextUrl = next!
                 self.userRelations = data
                 self.tableView.reloadData()
-             }
-            
-            UIApplication.sharedApplication().endIgnoringInteractionEvents()
-        }
-       // let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
-        //view.addGestureRecognizer(tap)
-        // Do any additional setup after loading the view.
-    }
-    func textViewDidBeginEditing(textView: UITextView) {
-        if textView.textColor == UIColor.lightGrayColor() {
-            textView.text = nil
-            textView.textColor = UIColor.blackColor()
+            }
         }
     }
-    
-    func textViewDidEndEditing(textView: UITextView) {
-        if textView.text.isEmpty {
-            textView.text = ""
-            textView.textColor = UIColor.lightGrayColor()
-        }
-        //CaptionText = textField.text
-    }
-    func dismissKeyboard() {
-        view.endEditing(true)
-    }
-    
-    
-    var numbers = [Int]()
-    // Have an array equal to the number of cells in your table
-    
-    
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-    
-  
-    
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
-    }
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return userRelations.relations.count
-    }
-    
-    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
-        cell.textLabel!.font = UIFont(name: "Lato-Regular", size: 16)
-        //cell.textLabel?.frame.origin.x = 200
-       // self.tableView.indentationLevel = 50
-       // cell.textLabel?.frame.origin.x = 200
         
-        // Configure the cell...insert the special characters using edit > emoji on the menu
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
+        
+        cell.textLabel!.font = UIFont(name: "Lato-Regular", size: 16)
+        
         if numbers.contains(indexPath.row) {
         cell.textLabel?.text = "⚫         " + userRelations.relations[indexPath.row].username
         }else{
         cell.textLabel?.text = "⚪         " + userRelations.relations[indexPath.row].username
         }
             return cell
-    
-    
     }
     
     
     func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        
-        
         if((indexPath.row%50 == 35)&&(relationNextUrl != "")){
             MolocateAccount.getFollowers(relationNextUrl, username: MoleCurrentUser.username, completionHandler: { (data, response, error, count, next, previous) in
+                if next != nil {
                     self.relationNextUrl = next!
-                    dispatch_async(dispatch_get_main_queue()){
-                        
-                        for item in data.relations{
-                            self.userRelations.relations.append(item)
-                            let newIndexPath = NSIndexPath(forRow: self.userRelations.relations.count-1, inSection: 0)
-                            tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Bottom)
-                            
-                        }
-                        
+                }
+                dispatch_async(dispatch_get_main_queue()){
+                    for item in data.relations{
+                        self.userRelations.relations.append(item)
+                        let newIndexPath = NSIndexPath(forRow: self.userRelations.relations.count-1, inSection: 0)
+                        tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Bottom)
                         
                     }
-                })
-       
+                }
+            })
+   
         }
         
     }
@@ -231,6 +171,42 @@ class tagComment: UIViewController, UITextViewDelegate {
         cell!.textLabel!.text = newChar + " " + userRelations.relations[indexPath.row].username
     }
 
+    func textViewDidBeginEditing(textView: UITextView) {
+        if textView.textColor == UIColor.lightGrayColor() {
+            textView.text = nil
+            textView.textColor = UIColor.blackColor()
+        }
+    }
+    
+    func textViewDidEndEditing(textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.text = ""
+            textView.textColor = UIColor.lightGrayColor()
+        }
+    }
+    func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        // #warning Incomplete implementation, return the number of sections
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete implementation, return the number of rows
+        return userRelations.relations.count
+    }
+    
+    func textViewShouldReturn(textField: UITextField!) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         let maxLength = 300
         let currentString: NSString = textField.text!
@@ -243,10 +219,7 @@ class tagComment: UIViewController, UITextViewDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    func textViewShouldReturn(textField: UITextField!) -> Bool {
-    textField.resignFirstResponder()
-    return true
-    }
+  
     
 
  
