@@ -185,15 +185,15 @@ public class MolocateAccount {
                         
                         completionHandler(data: followings , response: response , error: nsError, count: count, next: next, previous: previous  )
                     }else{
-                        completionHandler(data:  MoleUserRelations() , response: nil , error: nsError, count: -1, next: "", previous: ""  )
+                        completionHandler(data:  MoleUserRelations() , response: nil , error: nsError, count: -1, next: nil, previous: ""  )
                         if debug {print("ServerDataError:: in mole.getFollowings()")}
                     }
                 } catch{
-                    completionHandler(data:  MoleUserRelations() , response: nil , error: nsError, count: 0, next: "", previous: ""  )
+                    completionHandler(data:  MoleUserRelations() , response: nil , error: nsError, count: 0, next: nil, previous: ""  )
                     if debug {print("JSONCastError:: in mole.getFollowings()")}
                 }
             }else{
-                   completionHandler(data:  MoleUserRelations() , response: nil , error: error, count: 0, next: "", previous: ""  )
+                   completionHandler(data:  MoleUserRelations() , response: nil , error: error, count: 0, next: nil, previous: ""  )
                     if debug {print("RequestError:: in mole.getFollowings()")}
             }
         }

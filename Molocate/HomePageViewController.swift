@@ -875,27 +875,34 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
     
     func pressedPlace(sender: UIButton) {
         let buttonRow = sender.tag
+        
         player1.stop()
         player2.stop()
+        
         activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
         activityIndicator.center = self.view.center
         activityIndicator.hidesWhenStopped = true
         activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
         view.addSubview(activityIndicator)
         activityIndicator.startAnimating()
+        
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
-//        ////////print("place e basıldı at index path: \(buttonRow) ")
-//        ////////print("================================" )
+        
         MolocatePlace.getPlace(videoArray[buttonRow].locationID) { (data, response, error) -> () in
             dispatch_async(dispatch_get_main_queue()){
                 thePlace = data
+                
                 let controller:profileLocation = self.storyboard!.instantiateViewControllerWithIdentifier("profileLocation") as! profileLocation
+                controller.classPlace = data
                 controller.view.frame = self.view.bounds;
                 controller.willMoveToParentViewController(self)
+                
                 self.view.addSubview(controller.view)
                 self.addChildViewController(controller)
                 controller.didMoveToParentViewController(self)
-                self.activityIndicator.removeFromSuperview()
+               
+                UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                self.activityIndicator.stopAnimating()
             }
         }
         

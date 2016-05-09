@@ -305,12 +305,12 @@
 			isa = PBXGroup;
 			children = (
 				C60905351C4812A100614C7F /* ContainerController.swift */,
+				C609053B1C48145700614C7F /* SideBarController.swift */,
 				C60905391C48143C00614C7F /* MainController.swift */,
 				C6F9F5501C12574500E62856 /* capturePreviewController.swift */,
 				C6917F911BFA60B700CA501A /* CameraViewController.swift */,
 				C6F9B5C71C80DD9300C7E9FC /* HomePageViewController.swift */,
 				C6F9B5C91C80DDF400C7E9FC /* NotificationsViewController.swift */,
-				C609053B1C48145700614C7F /* SideBarController.swift */,
 			);
 			name = Navigation;
 			sourceTree = "<group>";

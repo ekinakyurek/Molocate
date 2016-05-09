@@ -533,14 +533,14 @@ class Added: UIViewController, UITableViewDelegate, UITableViewDataSource,Player
         let buttonRow = sender.tag
         player1.stop()
         player2.stop()
-        //print("place e basıldı at index path: \(buttonRow) ")
-        //print("================================" )
         MolocatePlace.getPlace(videoArray[buttonRow].locationID) { (data, response, error) -> () in
             dispatch_async(dispatch_get_main_queue()){
                 thePlace = data
                 let controller:profileLocation = self.parentViewController!.storyboard!.instantiateViewControllerWithIdentifier("profileLocation") as! profileLocation
+           
                 controller.view.frame = self.parentViewController!.view.bounds;
                 controller.willMoveToParentViewController(self.parentViewController!)
+                controller.classPlace = data
                 self.parentViewController!.view.addSubview(controller.view)
                 self.parentViewController!.addChildViewController(controller)
                 controller.didMoveToParentViewController(self.parentViewController!)

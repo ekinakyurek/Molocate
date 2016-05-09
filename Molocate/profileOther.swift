@@ -123,7 +123,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
    
         let controller:Followers = self.storyboard!.instantiateViewControllerWithIdentifier("Followers") as! Followers
         controller.classUser = classUser
-        controller.follewersclicked = true
+        controller.followersclicked = true
         controller.followerCount = Int(followersCount.titleLabel!.text!)!
         controller.view.frame = self.view.bounds;
         controller.willMoveToParentViewController(self)
@@ -160,7 +160,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
        
         let controller:Followers = self.storyboard!.instantiateViewControllerWithIdentifier("Followers") as! Followers
         controller.classUser = classUser
-        controller.follewersclicked = false
+        controller.followersclicked = false
         controller.followingCount = Int(followingsCount.titleLabel!.text!)!
         controller.view.frame = self.view.bounds;
         controller.willMoveToParentViewController(self)
@@ -190,14 +190,6 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
         profilePhoto.backgroundColor = profileBackgroundColor
         profilePhoto.clipsToBounds = true
 
-        //       Molocate.follow("kcenan4") { (data, response, error) -> () in
-        //
-        //            ////print(data)
-        //            Molocate.getFollowings(MoleCurrentUser.username) { (data, response, error, count, next, previous) -> () in
-        //                data[0].////printUser()
-        //            }
-        //        }
-        //
         
         addedButton.backgroundColor = swiftColor
         addedButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
@@ -254,33 +246,31 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
         
         configureScrollView()
         if user.username == MoleCurrentUser.username {
-            dispatch_async(dispatch_get_main_queue()) {
             self.FollowButton.image = UIImage(named: "options")
-            }
+            
         }
         
         
         if(choosedIndex==3 ){
-            dispatch_async(dispatch_get_main_queue()) {
+            
             user = MoleCurrentUser
-            self.username.text = user.username
-            self.followingsCount.setTitle("\(user.following_count)", forState: .Normal)
-            self.followersCount.setTitle("\(user.follower_count)", forState: .Normal)
-            self.FollowButton.image = UIImage(named: "settings")
+            classUser = MoleCurrentUser
+            username.text = user.username
+            followingsCount.setTitle("\(user.following_count)", forState: .Normal)
+            followersCount.setTitle("\(user.follower_count)", forState: .Normal)
+            FollowButton.image = UIImage(named: "settings")
             choosedIndex = 4
             self.back.image = UIImage(named:"sideMenu")         
-            }
+            
         }else{
             
-            self.followingsCount.setTitle("\(user.following_count)", forState: .Normal)
-            self.followersCount.setTitle("\(user.follower_count)", forState: .Normal)
+            followingsCount.setTitle("\(user.following_count)", forState: .Normal)
+            followersCount.setTitle("\(user.follower_count)", forState: .Normal)
             if(user.isFollowing){
                 self.FollowButton.image = UIImage(named: "unfollow")
             }else{
                 self.FollowButton.image = UIImage(named: "follow")
             }
-            //choosedIndex = 4
-            
             
         }
         
@@ -428,8 +418,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
         else {
             cell.cancelLabel.hidden = true
         }
-        //cell.switchDemo.addTarget(self, action: "switchValueDidChange:", forControlEvents: .ValueChanged)
-        //
+
         cell.nameOption.text = names[indexPath.row]
         cell.backgroundColor = UIColor.whiteColor()
         return cell

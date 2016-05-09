@@ -20,25 +20,26 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     var refreshControl:UIRefreshControl!
     var player1Turn = false
+    var classPlace = MolePlace()
+    var videoArray = [MoleVideoInformation]()
+    
     @IBOutlet var LocationTitle: UILabel!
-
     @IBOutlet var map: MKMapView!
     @IBOutlet var videosTitle: UILabel!
     @IBOutlet var address: UILabel!
     @IBOutlet var locationName: UILabel!
     @IBOutlet var tableView: UITableView!
-    
     @IBOutlet var videoCount: UILabel!
-    var videoArray = [MoleVideoInformation]()
+    @IBOutlet var followButton: UIBarButtonItem!
+    @IBOutlet var toolBar: UIToolbar!
+    
+    
     @IBAction func backButton(sender: AnyObject) {
         self.willMoveToParentViewController(nil)
         self.view.removeFromSuperview()
         self.removeFromParentViewController()
     }
-    @IBOutlet var followButton: UIBarButtonItem!
-   
-   
-    @IBOutlet var toolBar: UIToolbar!
+    
     @IBAction func followButton(sender: AnyObject) {
         
         if(thePlace.is_following == 0){
@@ -119,7 +120,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
         let controller:Followers = self.storyboard!.instantiateViewControllerWithIdentifier("Followers") as! Followers
         controller.classPlace = thePlace
         controller.classUser = MoleCurrentUser
-        controller.follewersclicked = true
+        controller.followersclicked = true
         //print(thePlace)
         controller.view.frame = self.view.bounds;
         controller.willMoveToParentViewController(self)
