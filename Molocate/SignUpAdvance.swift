@@ -118,6 +118,9 @@ class SignUpAdvance: UIViewController , UITextFieldDelegate {
         } else {
             
         }
+        
+        username.autocapitalizationType = .None
+        email.autocapitalizationType = .None
     }
     func pressedOnay(sender: UIButton) {
         

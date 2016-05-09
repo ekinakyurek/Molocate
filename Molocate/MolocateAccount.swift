@@ -78,36 +78,41 @@ public class MolocateAccount {
 
             if(error == nil){
                 let nsError = error;
+                
                 do {
                     //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
                     let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String: AnyObject]
-                    // print(result)
-                    let count: Int = (result["count"] as? Int)!
-                    let next =  result["next"] is NSNull ? "":result["next"] as? String
-                    let previous =  result["previous"] is NSNull ? "":result["previous"] as? String
-                    let results = result["results"] as! NSArray
-                    
-                    var followers = MoleUserRelations()
-                    followers.totalCount = count
-                    
-                    var friends = [MoleUserFriend]()
-                    
-                        for i in 0..<results.count{
-                            var friend = MoleUserFriend()
-                            let thing = results[i] as! [String:AnyObject]
-                            friend.username = thing["username"] as! String
-                            friend.picture_url = thing["picture_url"] is NSNull ? NSURL():NSURL(string: thing["picture_url"] as! String)!
-                            let isfollowing = thing["is_following"] as! Int
-                            if(username == MoleCurrentUser.username){
-                                friend.is_following = isfollowing == 0 ? false:true
+                    if(result.indexForKey("results") != nil){
+                        let count: Int = (result["count"] as? Int)!
+                        let next =  result["next"] is NSNull ? "":result["next"] as? String
+                        let previous =  result["previous"] is NSNull ? "":result["previous"] as? String
+                        let results = result["results"] as! NSArray
+                        
+                        var followers = MoleUserRelations()
+                        followers.totalCount = count
+                        
+                        var friends = [MoleUserFriend]()
+                        
+                            for i in 0..<results.count{
+                                var friend = MoleUserFriend()
+                                let thing = results[i] as! [String:AnyObject]
+                                friend.username = thing["username"] as! String
+                                friend.picture_url = thing["picture_url"] is NSNull ? NSURL():NSURL(string: thing["picture_url"] as! String)!
+                                let isfollowing = thing["is_following"] as! Int
+                                if(username == MoleCurrentUser.username){
+                                    friend.is_following = isfollowing == 0 ? false:true
+                                }
+                                friends.append(friend)
                             }
-                            friends.append(friend)
-                        }
-                    
-                    
-                    followers.relations = friends
-                    
-                    completionHandler(data: followers , response: response , error: nsError, count: count, next: next, previous: previous)
+                        
+                        
+                        followers.relations = friends
+                        
+                        completionHandler(data: followers , response: response , error: nsError, count: count, next: next, previous: previous)
+                    }else{
+                        completionHandler(data:  MoleUserRelations() , response: nil , error: nsError, count: -1, next: nil, previous: nil  ) //next is not nil, next should be previous next***************check count mines -1
+                        if debug { print("ServerDataError:: in mole.getFollowers()") }
+                    }
                 } catch{
                     completionHandler(data:  MoleUserRelations() , response: nil , error: nsError, count: 0, next: nil, previous: nil  )
                     if debug { print("JSONCastError:: in mole.getFollowers()") }
@@ -135,6 +140,7 @@ public class MolocateAccount {
         request.HTTPMethod = "GET"
         request.addValue("Token " + MoleUserToken! , forHTTPHeaderField: "Authorization")
         request.timeoutInterval = timeOut
+        
         let task = NSURLSession.sharedSession().dataTaskWithRequest(request){ data, response, error in
         
             if error == nil{
@@ -142,41 +148,46 @@ public class MolocateAccount {
                 do {
                     //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
                     let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String: AnyObject]
-                    // print(result)
-                    let count: Int = result["count"] as! Int
-                    let next =  result["next"] is NSNull ? "":result["next"] as? String
-                    let previous =  result["previous"] is NSNull ? "":result["previous"] as? String
-                    let results = result["results"] as! NSArray
-                    var followings = MoleUserRelations()
-                    followings.totalCount = count
-                    var friends = [MoleUserFriend]()
-                    
-          
-                    for i in 0..<results.count{
-                        var friend = MoleUserFriend()
-                        let thing = results[i] as! [String:AnyObject]
-                        friend.username = thing["username"] as! String
-                        friend.picture_url = thing["picture_url"] is NSNull ? NSURL():NSURL(string: thing["picture_url"] as! String)!
-                        let isfollowing = thing["is_following"] as! Int
+                   
+                    if(result.indexForKey("results") != nil){
+                        let count: Int = result["count"] as! Int
+                        let next =  result["next"] is NSNull ? "":result["next"] as? String
+                        let previous =  result["previous"] is NSNull ? "":result["previous"] as? String
+                        let results = result["results"] as! NSArray
+                        var followings = MoleUserRelations()
+                        followings.totalCount = count
+                        var friends = [MoleUserFriend]()
                         
-                        if(username == MoleCurrentUser.username){
-                            friend.is_following = isfollowing == 0 ? false:true
+              
+                        for i in 0..<results.count{
+                            var friend = MoleUserFriend()
+                            let thing = results[i] as! [String:AnyObject]
+                            friend.username = thing["username"] as! String
+                            friend.picture_url = thing["picture_url"] is NSNull ? NSURL():NSURL(string: thing["picture_url"] as! String)!
+                            let isfollowing = thing["is_following"] as! Int
+                            
+                            if(username == MoleCurrentUser.username){
+                                friend.is_following = isfollowing == 0 ? false:true
+                            }
+                            
+                            let type = thing["type"] as! String
+                            friend.is_place = type == "userprofile" ? false: true
+                            
+                            if(friend.is_place){
+                                friend.place_id = thing["place_id"] as! String
+                            }
+                            
+                            friends.append(friend)
                         }
                         
-                        let type = thing["type"] as! String
-                        friend.is_place = type == "userprofile" ? false: true
                         
-                        if(friend.is_place){
-                            friend.place_id = thing["place_id"] as! String
-                        }
+                        followings.relations = friends
                         
-                        friends.append(friend)
+                        completionHandler(data: followings , response: response , error: nsError, count: count, next: next, previous: previous  )
+                    }else{
+                        completionHandler(data:  MoleUserRelations() , response: nil , error: nsError, count: -1, next: "", previous: ""  )
+                        if debug {print("ServerDataError:: in mole.getFollowings()")}
                     }
-                    
-                    
-                    followings.relations = friends
-                    
-                    completionHandler(data: followings , response: response , error: nsError, count: count, next: next, previous: previous  )
                 } catch{
                     completionHandler(data:  MoleUserRelations() , response: nil , error: nsError, count: 0, next: "", previous: ""  )
                     if debug {print("JSONCastError:: in mole.getFollowings()")}
@@ -219,6 +230,8 @@ public class MolocateAccount {
                         if(result.indexForKey("token") != nil){
                             MoleUserToken = result["token"] as? String
                             
+                            NSUserDefaults.standardUserDefaults().setObject(MoleUserToken, forKey: "userToken")
+
                             dispatch_async(dispatch_get_main_queue(), {
                                
                                 MolocateAccount.getCurrentUser({ (data, response, error) -> () in
@@ -276,30 +289,36 @@ public class MolocateAccount {
                     let Nserror = error
                     do {
                         let resultJson = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments) as! [String:AnyObject]
-                        
-                        let logging = resultJson["logged_in"] as! Int
-                        let loggedIn = logging == 1
-                        
-                        if loggedIn {
-                            MoleUserToken = resultJson["access_token"] as? String
-                            dispatch_async(dispatch_get_main_queue(), {
-                                if(DeviceToken != nil && !isRegistered){
-                                    MolocateAccount.registerDevice({ (data, response, error) in
-                                        
-                                    })
-                                }
-                            })
-                            completionHandler(data: "success", response:  response, error: error)
+                        if(resultJson.indexForKey("logged_in") != nil){
+                            let logging = resultJson["logged_in"] as! Int
+                            let loggedIn = logging == 1
                             
-                        } else if let _ = resultJson["email_validation"]{
-                            FaceMail = resultJson["email_validation"] as! String
-                            FaceUsername = resultJson["suggested_username"] as! String
-                            completionHandler(data: "signup", response:  response, error: error)
+                            if loggedIn {
+                                MoleUserToken = resultJson["access_token"] as? String
+                                NSUserDefaults.standardUserDefaults().setObject(MoleUserToken, forKey: "userToken")
+
+                                dispatch_async(dispatch_get_main_queue(), {
+                                    if(DeviceToken != nil && !isRegistered){
+                                        MolocateAccount.registerDevice({ (data, response, error) in
+                                            
+                                        })
+                                    }
+                                })
+                                completionHandler(data: "success", response:  response, error: error)
+                                
+                            } else if let _ = resultJson["email_validation"]{
+                                FaceMail = resultJson["email_validation"] as! String
+                                FaceUsername = resultJson["suggested_username"] as! String
+                                completionHandler(data: "signup", response:  response, error: error)
+                            }else{
+                                completionHandler(data: "error", response:  response, error: error)
+                                if debug {print("JSONCastError:: in MolocateAccount.facebookLogin()")}
+                            }
                         }else{
                             completionHandler(data: "error", response:  response, error: error)
-                            if debug {print("JSONCastError:: in MolocateAccount.facebookLogin()")}
+                            if debug {print("ServerDataError:: in MolocateAccount.facebookLogin()")}
                         }
-                        
+                            
                     } catch{
     
                         completionHandler(data: "error", response:  response, error: Nserror)
@@ -335,41 +354,47 @@ public class MolocateAccount {
                     do {
                         
                         let result = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments) as! [String:AnyObject]
-                        
-                        let logging = result["logged_in"] as! Int
-                        let notloggedin = logging == 0
-                        
-                        if notloggedin{
-                            let usernameb = result["username"] as! String
-                            let emailb = result["email"] as! String
-                            let usernameExist: Bool = usernameb == "username_exists"
-                            let emailNotValid: Bool = emailb  == "not_valid"
+                        if(result.indexForKey("logged_in") != nil){
+                            let logging = result["logged_in"] as! Int
+                            let notloggedin = logging == 0
                             
-                            if (usernameExist && emailNotValid){
-                                completionHandler(data: "Kullanıcı adınız ve e-mailiniz daha önce alındı.", response:  response, error: Nserror)
-                            } else {
-                                if usernameExist {
-                                    completionHandler(data: "Kullanıcı adı daha önce alındı.", response:  response, error: Nserror)
-                                    
+                            if notloggedin{
+                                let usernameb = result["username"] as! String
+                                let emailb = result["email"] as! String
+                                let usernameExist: Bool = usernameb == "username_exists"
+                                let emailNotValid: Bool = emailb  == "not_valid"
+                                
+                                if (usernameExist && emailNotValid){
+                                    completionHandler(data: "Kullanıcı adınız ve e-mailiniz daha önce alındı.", response:  response, error: Nserror)
                                 } else {
-                                    completionHandler(data: "Lütfen e-mailinizi değiştirin.", response:  response, error: Nserror)
-                                }
-                            }
-                        }else {
-                            MoleUserToken = result["access_token"] as? String
-                            dispatch_async(dispatch_get_main_queue(), {
-                                if(DeviceToken != nil){
-                                    MolocateAccount.registerDevice({ (data, response, error) in
+                                    if usernameExist {
+                                        completionHandler(data: "Kullanıcı adı daha önce alındı.", response:  response, error: Nserror)
                                         
-                                    })
+                                    } else {
+                                        completionHandler(data: "Lütfen e-mailinizi değiştirin.", response:  response, error: Nserror)
+                                    }
                                 }
-                            })
-                            completionHandler(data: "success", response:  response, error: Nserror)
+                            }else {
+                                MoleUserToken = result["access_token"] as? String
+                                NSUserDefaults.standardUserDefaults().setObject(MoleUserToken, forKey: "userToken")
+
+                                dispatch_async(dispatch_get_main_queue(), {
+                                    if(DeviceToken != nil){
+                                        MolocateAccount.registerDevice({ (data, response, error) in
+                                            
+                                        })
+                                    }
+                                })
+                                completionHandler(data: "success", response:  response, error: Nserror)
+                            }
+                        }else{
+                            completionHandler(data: "error", response:  response, error: Nserror)
+                            if debug { print("ServerDataError:: in MolocateAccount.facebookSignup()")}
                         }
                         
                     } catch{
                         completionHandler(data: "error", response:  response, error: Nserror)
-                        if debug { print("JSONError:: in MolocateAccount.facebookSignup()")}
+                        if debug { print("JSONCastError:: in MolocateAccount.facebookSignup()")}
                         
                     }
                 }else{
@@ -409,7 +434,7 @@ public class MolocateAccount {
                     do {
                         //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
                         let result = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers) as! [String: AnyObject]
-                        if(result.count > 1){
+                        if(result.indexForKey("access_token") != nil){
                             MoleUserToken = result["access_token"] as? String
                             NSUserDefaults.standardUserDefaults().setObject(MoleUserToken, forKey: "userToken")
                             dispatch_async(dispatch_get_main_queue(), {
@@ -421,7 +446,7 @@ public class MolocateAccount {
                             })
                             completionHandler(data: "success" , response: response , error: nsError  )
                             
-                        } else{
+                        } else if result.indexForKey("result") != nil{
                             let servererror = result["result"] as! String
                            // print(error)
                             switch (servererror){
@@ -439,11 +464,14 @@ public class MolocateAccount {
                                 break
                                 
                             }
+                        }else{
+                            completionHandler(data: "ServerDataError" , response: response , error: nsError  )
+                            if debug {print("ServerDataError: in MolocateAccount.signup()")}
                         }
                         
                     } catch {
                         completionHandler(data: "JsonError" , response: response , error: nsError  )
-                        if debug {print("JSONError: in MolocateAccount.signup()")}
+                        if debug {print("JSONCastError: in MolocateAccount.signup()")}
                     }
                 }else{
                     completionHandler(data: "RequestError check your internet connection" , response: response , error:error  )
@@ -476,7 +504,13 @@ public class MolocateAccount {
                 let nsError = error
                 do {
                    let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String:AnyObject]
-                    completionHandler(data: result["result"] as! String , response: response , error: nsError  )
+                    if result.indexForKey("result") != nil{
+                        completionHandler(data: result["result"] as! String , response: response , error: nsError  )
+                    }else{
+                        completionHandler(data: "ServerDataError" , response: nil , error: nsError  )
+                        if debug{print("ServerDataError:: in MolocateAccount.follow()")}
+
+                    }
                 } catch{
                     completionHandler(data: "JsonError" , response: nil , error: nsError  )
                     if debug{print("JSONError:: in MolocateAccount.follow()")}
@@ -503,16 +537,22 @@ public class MolocateAccount {
             //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
             
             if error == nil {
-                isRegistered = true
                 
-                NSUserDefaults.standardUserDefaults().setBool(true, forKey: "isRegistered")
-                NSUserDefaults.standardUserDefaults().setObject(DeviceToken, forKey: "DeviceToken")
-    
                 let nsError = error
                 
                 do {
                     let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String:AnyObject]
-                    completionHandler(data: result["result"] as! String , response: response , error: nsError)
+                    
+                    if result.indexForKey("result") != nil {
+                        isRegistered = true
+                        NSUserDefaults.standardUserDefaults().setBool(true, forKey: "isRegistered")
+                        NSUserDefaults.standardUserDefaults().setObject(DeviceToken, forKey: "DeviceToken")
+                        completionHandler(data: result["result"] as! String , response: response , error: nsError)
+                        
+                    }else{
+                        completionHandler(data: "ServerDataError" , response: nil , error: nsError  )
+                        if debug {print("ServerDataError:: in MolcateAccount.registerDevice()")}
+                    }
                 } catch{
                     completionHandler(data: "JsonError" , response: nil , error: nsError  )
                     if debug {print("JsonError:: in MolcateAccount.registerDevice()")}
@@ -543,7 +583,14 @@ public class MolocateAccount {
                 let nsError = error
                 do {
                     let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String:AnyObject]
-                    completionHandler(data: result["result"] as! String , response: response , error: nsError  )
+                    if result.indexForKey("result") != nil{
+                        completionHandler(data: result["result"] as! String , response: response , error: nsError  )
+                    }else{
+                        completionHandler(data: "ServerDataError" , response: nil , error: nsError  )
+                        if debug {print("ServerDataError:: in MolocateAccount.resetBadge()")}
+
+                    }
+                 
                 } catch{
                     completionHandler(data: "JsonError" , response: nil , error: nsError  )
                     if debug {print("JsonError:: in MolocateAccount.resetBadge()")}
@@ -572,12 +619,18 @@ public class MolocateAccount {
             // print(NSString(data: data!, encoding: NSUTF8StringEncoding))
             if error == nil {
                 let nsError = error
-                NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isRegistered")
-                NSUserDefaults.standardUserDefaults().setObject("", forKey: "DeviceToken")
-                isRegistered = false
+              
                 do {
                     let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String:AnyObject]
-                    completionHandler(data: result["result"] as! String , response: response , error: nsError  )
+                    if result.indexForKey("result") != nil {
+                        completionHandler(data: result["result"] as! String , response: response , error: nsError  )
+                        NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isRegistered")
+                        NSUserDefaults.standardUserDefaults().setObject("", forKey: "DeviceToken")
+                        isRegistered = false
+                    }else{
+                        completionHandler(data: "ServerDataError" , response: nil , error: nsError  )
+                        print("ServerDataError:: in MolocateAccount.unregisterDevice()")
+                    }
                 } catch{
                     completionHandler(data: "JsonError" , response: nil , error: nsError  )
                     print("JsonError:: in MolocateAccount.unregisterDevice()")
@@ -603,7 +656,12 @@ public class MolocateAccount {
                 let nsError = error
                 do {
                     let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String:AnyObject]
-                    completionHandler(data: result["result"] as! String , response: response , error: nsError  )
+                    if result.indexForKey("result") != nil {
+                        completionHandler(data: result["result"] as! String , response: response , error: nsError  )
+                    }else{
+                        completionHandler(data: "ServerDataError" , response: nil , error: nsError  )
+                        if debug { print("ServerDataError:: in MolocateAccount.unfollow()")}
+                    }
                 } catch{
                     completionHandler(data: "JsonError" , response: nil , error: nsError  )
                     if debug { print("JsonError:: in MolocateAccount.unfollow()")}
@@ -633,6 +691,7 @@ public class MolocateAccount {
                 do {
                     //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
                     let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [[String:AnyObject]]
+                    
                     var userArray = [MoleUser]()
                     for item in result {
                         //print(item)
@@ -672,18 +731,23 @@ public class MolocateAccount {
                 do {
                     //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
                     let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String: AnyObject]
-                    var user = MoleUser()
-                    user.email = result["email"] as! String
-                    user.username = result["username"] as! String
-                    user.first_name = result["first_name"] as! String
-                    user.last_name = result["last_name"] as! String
-                    user.profilePic = result["picture_url"] is NSNull ? NSURL():NSURL(string: result["picture_url"] as! String)!
-                    user.follower_count = result["follower_count"] as! Int
-                    user.following_count = result["following_count"]as! Int
-                    user.tag_count = result["tag_count"] as! Int
-                    user.post_count = result["post_count"]as! Int
-                    user.isFollowing = result["is_following"] as! Int == 1 ? true:false
-                    completionHandler(data: user, response: response , error: nsError  )
+                    if result.indexForKey("email") != nil {
+                        var user = MoleUser()
+                        user.email = result["email"] as! String
+                        user.username = result["username"] as! String
+                        user.first_name = result["first_name"] as! String
+                        user.last_name = result["last_name"] as! String
+                        user.profilePic = result["picture_url"] is NSNull ? NSURL():NSURL(string: result["picture_url"] as! String)!
+                        user.follower_count = result["follower_count"] as! Int
+                        user.following_count = result["following_count"]as! Int
+                        user.tag_count = result["tag_count"] as! Int
+                        user.post_count = result["post_count"]as! Int
+                        user.isFollowing = result["is_following"] as! Int == 1 ? true:false
+                        completionHandler(data: user, response: response , error: nsError  )
+                    }else{
+                        completionHandler(data: MoleUser() , response: nil , error: nsError  )
+                        if debug {print("ServerDataError:: in MolocateAccount.getUser()")}
+                    }
                 } catch{
                     completionHandler(data: MoleUser() , response: nil , error: nsError  )
                     if debug {print("JsonError:: in MolocateAccount.getUser()")}
@@ -721,8 +785,13 @@ public class MolocateAccount {
                     do {
                         //check result if it is succed
                         let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String:AnyObject]
-                        let answer = result["result"] as! String
-                        completionHandler(data: answer  , response: response , error: nsError  )
+                        if result.indexForKey("result") != nil {
+                            let answer = result["result"] as! String
+                            completionHandler(data: answer  , response: response , error: nsError  )
+                        }else{
+                            completionHandler(data: "ServerDataError" , response: nil , error: nsError  )
+                            if debug {print("ServerDataError:: in MolocateAccount.changePassword()")}
+                        }
                     } catch{
                         completionHandler(data: "JsonError" , response: nil , error: nsError  )
                         if debug {print("JsonError:: in MolocateAccount.changePassword()")}
@@ -768,9 +837,16 @@ public class MolocateAccount {
                 let nsError = error
                     do {
                         //check result if it is succed
-                        _ = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String:AnyObject]
-                        //print(result)
-                        completionHandler(data: "success" , response: response , error: nsError  )
+                        let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String:AnyObject]
+                        if result.indexForKey("result") != nil {
+                            //print(result)
+                            completionHandler(data: result["result"] as! String , response: response , error: nsError  )
+                        }else{
+                            completionHandler(data: "ServerError" , response: nil , error: nsError  )
+                            if debug {print("ServerDataError:: in MolocateAccount.EditUser()")}
+
+                        }
+                       
                     } catch{
                         completionHandler(data: "JsonError" , response: nil , error: nsError  )
                         if debug {print("JsonError:: in MolocateAccount.EditUser()")}
@@ -806,14 +882,20 @@ public class MolocateAccount {
                 let nsError = error;
                 do {
                     let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String: String]
-                    var urlString = ""
-                    let message = result["result"]
-                    if(message == "success"){
-                        urlString = result["picture_url"]!
+                    if result.indexForKey("result") != nil{
+                        var urlString = ""
+                        let message = result["result"]
+                        if(message == "success"){
+                            urlString = result["picture_url"]!
+                        }else{
+                            urlString = ""
+                        }
+                        completionHandler(data: urlString, response: response , error: nsError  )
                     }else{
-                        urlString = ""
+                        completionHandler(data: "ServerDataError" , response: nil , error: nsError  )
+                        if debug {print("ServerDataError:: in MolocateAccount.uploadProfilePhoto()")}
                     }
-                    completionHandler(data: urlString, response: response , error: nsError  )
+                   
                 } catch{
                     completionHandler(data: "JsonError" , response: nil , error: nsError  )
                     if debug {print("JsonError:: in MolocateAccount.uploadProfilePhoto()")}
@@ -844,19 +926,25 @@ public class MolocateAccount {
                 do {
                     let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String: AnyObject]
                     //print(result)
-                    MoleCurrentUser.email = result["email"] as! String
-                    MoleCurrentUser.username = result["username"] as! String
-                    MoleCurrentUser.first_name = result["first_name"] as! String
-                    MoleCurrentUser.last_name = result["last_name"] as! String
-                    MoleCurrentUser.profilePic = result["picture_url"] is NSNull ? NSURL():NSURL(string: result["picture_url"] as! String)!
-                    MoleCurrentUser.tag_count = result["tag_count"] as! Int
-                    MoleCurrentUser.post_count = result["post_count"] as! Int
-                    MoleCurrentUser.follower_count = result["follower_count"] as! Int
-                    MoleCurrentUser.following_count = result["following_count"]as! Int
-                    MoleCurrentUser.gender =  result["gender"] is NSNull ? "": (result["gender"] as! String)
-                    MoleCurrentUser.birthday = result["birthday"] is NSNull || (result["birthday"] as! String)   == "" ? "1970-01-01" : result["birthday"] as! String
+                    if result.indexForKey("email") != nil{
+                        MoleCurrentUser.email = result["email"] as! String
+                        MoleCurrentUser.username = result["username"] as! String
+                        MoleCurrentUser.first_name = result["first_name"] as! String
+                        MoleCurrentUser.last_name = result["last_name"] as! String
+                        MoleCurrentUser.profilePic = result["picture_url"] is NSNull ? NSURL():NSURL(string: result["picture_url"] as! String)!
+                        MoleCurrentUser.tag_count = result["tag_count"] as! Int
+                        MoleCurrentUser.post_count = result["post_count"] as! Int
+                        MoleCurrentUser.follower_count = result["follower_count"] as! Int
+                        MoleCurrentUser.following_count = result["following_count"]as! Int
+                        MoleCurrentUser.gender =  result["gender"] is NSNull ? "": (result["gender"] as! String)
+                        MoleCurrentUser.birthday = result["birthday"] is NSNull || (result["birthday"] as! String)   == "" ? "1970-01-01" : result["birthday"] as! String
+                        
+                        completionHandler(data: MoleCurrentUser, response: response , error: nsError  )
+                    }else{
+                        completionHandler(data: MoleUser() , response: nil , error: nsError  )
+                        if debug {print("ServerDataError:: in MolocateAccount.getCurrentUser()")}
+                    }
                     
-                    completionHandler(data: MoleCurrentUser, response: response , error: nsError  )
                 } catch{
                     completionHandler(data: MoleUser() , response: nil , error: nsError  )
                     if debug {print("JsonError:: in MolocateAccount.getCurrentUser()")}

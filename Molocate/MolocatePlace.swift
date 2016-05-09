@@ -98,6 +98,7 @@ public class MolocatePlace {
                 do {
                     
                     let item = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String:AnyObject]
+                    
                     var place = MolePlace()
                     let exist = item.indexForKey("result")
                     if  exist != nil{
@@ -193,7 +194,7 @@ public class MolocatePlace {
                 do {
                     //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
                     let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String: AnyObject]
-                    if let _ = result["results"]{
+                    if result.indexForKey("results") != nil{
                         let count: Int = result["count"] as! Int
                         let next =  result["next"] is NSNull ? "":result["next"] as? String
                         let previous =  result["previous"] is NSNull ? "":result["previous"] as? String

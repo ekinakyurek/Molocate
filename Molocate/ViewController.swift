@@ -48,7 +48,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDe
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         
-        
         if(textField==username){
             let maxLength = 20
             let aSet = NSCharacterSet(charactersInString:"abcdefghijklmnoprstuvyzxwq1234567890_-.").invertedSet
@@ -297,6 +296,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDe
         view.addSubview(imageView)
         username.delegate = self
         password.delegate = self
+        
+        username.autocapitalizationType = .None
+        email.autocapitalizationType = .None
         
         // logoImage.frame.origin.y = (screenHeight * 80 ) / 450
         username.frame.origin.y = (screenHeight * 135) / 450

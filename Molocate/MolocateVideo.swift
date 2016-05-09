@@ -65,7 +65,7 @@ public class MolocateVideo {
                 do {
                     //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
                     let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String:AnyObject]
-                    if let _ = result["results"] {
+                    if result.indexForKey("results") != nil {
                         let commentdata = result["results"] as!  NSArray
                         let count: Int = result["count"] as! Int
                         let next =  result["next"] is NSNull ? nil:result["next"] as? String
@@ -124,7 +124,7 @@ public class MolocateVideo {
                 
                 do {
                     let result = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers ) as! [String: AnyObject]
-                    if let _ =  result["results"]  {
+                    if result.indexForKey("results") != nil {
                         
                         let videos = result["results"] as! NSArray
                         var nexturl: NSURL?
@@ -202,7 +202,7 @@ public class MolocateVideo {
                 do {
                     
                     let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String:AnyObject]
-                    if let _ = result["results"] {
+                    if result.indexForKey("results") != nil {
                       
                         let count: Int = result["count"] as! Int
                         let next =  result["next"] is NSNull ? nil:result["next"] as? String
@@ -268,7 +268,7 @@ public class MolocateVideo {
                 let nsError = error
                 do {
                     let result = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers) as! [String:AnyObject]
-                    if let _ = result["results"]{
+                    if result.indexForKey("results") != nil{
                         
                         switch(type){
                         case "user":
@@ -357,28 +357,33 @@ public class MolocateVideo {
             let nsError = error
                 do {
                     let item = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers) as![String: AnyObject]
-                    var videoStr = MoleVideoInformation()
-                    let owner_user = item["owner_user"] as! [String:AnyObject]
-                    let placeTaken = item["place_taken"] as! [String:String]
-                    
-                    videoStr.id = item["video_id"] as! String
-                    videoStr.urlSta = NSURL(string:  item["video_url"] as! String)!
-                    videoStr.username = owner_user["username"] as! String
-                    videoStr.location = placeTaken["name"]!
-                    videoStr.locationID = placeTaken["place_id"]!
-                    videoStr.caption = item["caption"] as! String
-                    videoStr.likeCount = item["like_count"] as! Int
-                    videoStr.commentCount = item["comment_count"] as! Int
-                    videoStr.category = item["category"] as! String
-                    videoStr.isLiked = item["is_liked"] as! Int
-                    videoStr.isFollowing = owner_user["is_following"] as! Int
-                    videoStr.userpic = owner_user["picture_url"] is NSNull ? NSURL():NSURL(string: owner_user["picture_url"] as! String)!
-                    videoStr.dateStr = item["date_str"] as! String
-                    videoStr.taggedUsers = item["tagged_users"] as! [String]
-                    videoStr.deletable = item["is_deletable"] as! Bool
-                    videoStr.thumbnailURL = NSURL(string:item["thumbnail"] as! String)!
-                    
-                    completionHandler(data: videoStr, response: response, error: nsError)
+                    if item.indexForKey("owner_user") != nil {
+                        var videoStr = MoleVideoInformation()
+                        let owner_user = item["owner_user"] as! [String:AnyObject]
+                        let placeTaken = item["place_taken"] as! [String:String]
+                        
+                        videoStr.id = item["video_id"] as! String
+                        videoStr.urlSta = NSURL(string:  item["video_url"] as! String)!
+                        videoStr.username = owner_user["username"] as! String
+                        videoStr.location = placeTaken["name"]!
+                        videoStr.locationID = placeTaken["place_id"]!
+                        videoStr.caption = item["caption"] as! String
+                        videoStr.likeCount = item["like_count"] as! Int
+                        videoStr.commentCount = item["comment_count"] as! Int
+                        videoStr.category = item["category"] as! String
+                        videoStr.isLiked = item["is_liked"] as! Int
+                        videoStr.isFollowing = owner_user["is_following"] as! Int
+                        videoStr.userpic = owner_user["picture_url"] is NSNull ? NSURL():NSURL(string: owner_user["picture_url"] as! String)!
+                        videoStr.dateStr = item["date_str"] as! String
+                        videoStr.taggedUsers = item["tagged_users"] as! [String]
+                        videoStr.deletable = item["is_deletable"] as! Bool
+                        videoStr.thumbnailURL = NSURL(string:item["thumbnail"] as! String)!
+                        
+                        completionHandler(data: videoStr, response: response, error: nsError)
+                    }else{
+                        completionHandler(data: MoleVideoInformation(), response: NSURLResponse(), error: nsError)
+                        if debug {print("ServerDataError: in MolocateVideo.getVideo")}
+                    }
                 }catch{
                     completionHandler(data: MoleVideoInformation(), response: NSURLResponse(), error: nsError)
                     if debug {print("JsonError: in MolocateVideo.getVideo")}
@@ -408,7 +413,12 @@ public class MolocateVideo {
                 
                 do {
                     let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String: AnyObject]
-                    completionHandler(data: result["result"] as! String , response: response , error: nsError  )
+                    if result.indexForKey("result") != nil{
+                        completionHandler(data: result["result"] as! String , response: response , error: nsError  )
+                    }else{
+                        completionHandler(data: "fail" , response: nil , error: nsError  )
+                        if debug {print("ServerDataError:: in MolocateVideo.likeAVideo()")}
+                    }
                 } catch{
                     completionHandler(data: "fail" , response: nil , error: nsError  )
                     if debug {print("Error:: in MolocateVideo.likeAVideo()")}
@@ -436,7 +446,12 @@ public class MolocateVideo {
                 
                 do {
                     let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String:AnyObject]
-                    completionHandler(data: result["result"] as! String , response: response , error: nsError  )
+                    if result.indexForKey("result") != nil{
+                        completionHandler(data: result["result"] as! String , response: response , error: nsError  )
+                    }else{
+                        completionHandler(data: "fail" , response: nil , error: nsError  )
+                        if debug {print("ServerDataError:: in MolocateVideo.reportAVideo()")}
+                    }
                 } catch{
                     completionHandler(data: "fail" , response: nil , error: nsError  )
                     if debug {print("JsonError:: in MolocateVideo.reportAVideo()")}
@@ -464,7 +479,12 @@ public class MolocateVideo {
                 
                 do {
                     let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String:AnyObject]
-                    completionHandler(data: result["result"] as! String , response: response , error: nsError  )
+                    if result.indexForKey("result") != nil{
+                        completionHandler(data: result["result"] as! String , response: response , error: nsError  )
+                    }else{
+                        completionHandler(data: "fail" , response: nil , error: nsError  )
+                        if debug {print("ServerDataError:: in MolocateVideo.unLikeAVideo()")}
+                    }
                 } catch{
                     completionHandler(data: "fail" , response: nil , error: nsError  )
                     if debug {print("JsonError:: in MolocateVideo.unLikeAVideo()")}
@@ -494,7 +514,13 @@ public class MolocateVideo {
                 
                 do {
                     let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String:AnyObject]
-                    completionHandler(data: result["result"] as! String , response: response , error: nsError  )
+                    if result.indexForKey("result") != nil{
+                        completionHandler(data: result["result"] as! String , response: response , error: nsError  )
+                    }else{
+                        completionHandler(data: "fail" , response: nil , error: nsError  )
+                        if debug {print("ServerDataError:: in MolocateVideo.deleteAVideo()")}
+
+                    }
                 } catch{
                     completionHandler(data: "fail" , response: nil , error: nsError  )
                     if debug {print("JsonError:: in MolocateVideo.deleteAVideo()")}
@@ -535,10 +561,11 @@ public class MolocateVideo {
                         
                         let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String:AnyObject]
                         //print(result)
-                        if result["result"] as! String == "success" {
-                        completionHandler(data: result["comment_id"] as! String , response: response , error: nsError  )
+                        if result.indexForKey("result") != nil{
+                            completionHandler(data: result["comment_id"] as! String , response: response , error: nsError  )
                         } else {
-                        completionHandler(data: "fail" , response: nil , error: nsError  )
+                            completionHandler(data: "fail" , response: nil , error: nsError  )
+                            if debug { print("ServerDataError:: in MolocateVideo.commentAVideo()")}
                         }
                     } catch{
                         completionHandler(data: "fail" , response: nil , error: nsError  )
@@ -576,7 +603,13 @@ public class MolocateVideo {
                     do {
                         
                         let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String:AnyObject]
-                        completionHandler(data: result["result"] as! String , response: response , error: nsError  )
+                        if result.indexForKey("result") != nil{
+                           completionHandler(data: result["result"] as! String , response: response , error: nsError  )
+                        }else{
+                            completionHandler(data: "fail" , response: nil , error: nsError  )
+                            if debug {print("ServerDataError:: in mole.deleteComment()")}
+                        }
+                       
                     } catch{
                         completionHandler(data: "fail" , response: nil , error: nsError  )
                         if debug {print("JsonError:: in mole.deleteComment()")}
