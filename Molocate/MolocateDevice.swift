@@ -8,7 +8,8 @@ import UIKit
 
 public class MolocateDevice{
    
-    static let size = UIScreen.mainScreen().bounds
+    static let size = UIScreen.mainScreen().bounds.size
+    static let bounds = UIScreen.mainScreen().bounds
     
     class func isConnectedToNetwork() -> Bool {
         var zeroAddress = sockaddr_in()

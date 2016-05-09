@@ -25,7 +25,7 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
     var classUser = MoleUser()
     var classPlace = MolePlace()
     var userRelations = MoleUserRelations()
-    let screenSize: CGRect = MolocateDevice.size
+    let screenSize: CGRect = MolocateDevice.bounds
     var myTable: UITableView!
     var follower = true
     var relationNextUrl = ""

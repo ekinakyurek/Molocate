@@ -237,8 +237,8 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
         scrollView.addSubview(AVc.view);
         AVc.didMoveToParentViewController(self)
         
-        origin = screenWidth
-        scrollWidth = origin*2
+       
+        scrollWidth = screenWidth*2
         self.scrollView!.contentSize.width = scrollWidth
         
         AVc.view.frame.origin.x = 0
@@ -382,7 +382,6 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
             videoIndex = 0
             isUploaded = true
             choosedIndex = 100
-            origin = 0.0
             frame = CGRect()
             MoleCurrentUser = MoleUser()
             MoleUserToken = nil

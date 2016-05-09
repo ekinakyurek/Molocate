@@ -42,7 +42,7 @@ class ContainerViewController: UIViewController,UIScrollViewDelegate {
         //self.scrollView!.addSubview(CVc.view);
         //CVc.didMoveToParentViewController(self);
         
-        origin = frame.width
+       
         self.scrollView!.contentSize = CGSizeMake(scrollWidth*2/3, scrollHeight);
        
         
