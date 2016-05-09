@@ -748,16 +748,12 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
             dispatch_async(dispatch_get_main_queue()){
                 user = data
                 let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
+                controller.classUser = data
                 controller.view.frame = self.view.bounds;
                 controller.willMoveToParentViewController(self)
                 self.view.addSubview(controller.view)
                 self.addChildViewController(controller)
                 controller.didMoveToParentViewController(self)
-                controller.username.text = user.username
-                controller.followingsCount.setTitle("\(data.following_count)", forState: .Normal)
-                controller.followersCount.setTitle("\(data.follower_count)", forState: .Normal)
-                controller.AVc.username = user.username
-                controller.BVc.username = user.username
                 choosedIndex = 0
                 self.activityIndicator.removeFromSuperview()
             }

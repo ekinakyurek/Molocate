@@ -19,11 +19,11 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
     var pressedLike: Bool = false
     var pressedFollow: Bool = false
     var videoArray = [MoleVideoInformation]()
-    var username = ""
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     var tableView = UITableView()
     var likeHeart = UIImageView()
     var player1Turn = false
+    var classUser = MoleUser()
     override func viewDidLoad() {
         super.viewDidLoad()
           try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
@@ -49,7 +49,7 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
         // Do any additional setup after loading the view.
         
         //print(self.username)
-        MolocateVideo.getUserVideos(user.username, type: "tagged", completionHandler: { (data, response, error) in
+        MolocateVideo.getUserVideos(classUser.username, type: "tagged", completionHandler: { (data, response, error) in
             dispatch_async(dispatch_get_main_queue()) {
                 self.videoArray = data!
                 self.tableView.reloadData()
@@ -687,6 +687,7 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
         self.presentViewController(actionSheetController, animated: true, completion: nil)
         
     }
+    
     func pressedUsername(sender: UIButton) {
         let buttonRow = sender.tag
         //print("username e basıldı at index path: \(buttonRow)")
@@ -696,18 +697,17 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
             dispatch_async(dispatch_get_main_queue()){
                 user = data
                 let controller:profileOther = self.parentViewController!.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
+                controller.classUser = data
+                //controller.username.text = user.username
+                // controller.AVc.username = user.username
+               // controller.BVc.username = user.username
+                controller.leftButton = "back"
                 controller.view.frame = self.parentViewController!.view.bounds;
                 controller.willMoveToParentViewController(self.parentViewController!)
                 self.parentViewController!.view.addSubview(controller.view)
                 self.parentViewController!.addChildViewController(controller)
                 controller.didMoveToParentViewController(self.parentViewController!)
-                controller.username.text = user.username
-                controller.followingsCount.setTitle("\(user.following_count)", forState: .Normal)
-                controller.followersCount.setTitle("\(user.follower_count)", forState: .Normal)
-                controller.classUser = data
-                controller.AVc.username = user.username
-                controller.BVc.username = user.username
-                controller.leftButton = "back"
+                
                 //controller.BVc.username = user.username
                 
             }

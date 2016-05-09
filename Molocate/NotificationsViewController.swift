@@ -227,16 +227,14 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
             dispatch_async(dispatch_get_main_queue()){
                 user = data
                 let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
+                controller.classUser = data
                 controller.view.frame = self.view.bounds;
                 controller.willMoveToParentViewController(self)
                 self.view.addSubview(controller.view)
                 self.addChildViewController(controller)
                 controller.didMoveToParentViewController(self)
-                controller.username.text = user.username
-                controller.followingsCount.setTitle("\(data.following_count)", forState: .Normal)
-                controller.followersCount.setTitle("\(data.follower_count)", forState: .Normal)
-                controller.AVc.username = user.username
-                controller.BVc.username = user.username
+              
+          
                 choosedIndex = 2
                 self.activityIndicator.removeFromSuperview()
             }
@@ -259,16 +257,17 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
 
         MolocateAccount.getUser(notificationArray[buttonRow].actor) { (data, response, error) -> () in
             dispatch_async(dispatch_get_main_queue()){
-        user = data
-        let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
-        controller.view.frame = self.view.bounds
-        controller.willMoveToParentViewController(self)
-                controller.username.text = self.notificationArray[buttonRow].actor
-        self.view.addSubview(controller.view)
-        self.addChildViewController(controller)
-        controller.didMoveToParentViewController(self)
-                self.activityIndicator.stopAnimating()
-            }}
+                user = data
+                let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
+                controller.classUser = data
+                controller.view.frame = self.view.bounds
+                controller.willMoveToParentViewController(self)
+                self.view.addSubview(controller.view)
+                self.addChildViewController(controller)
+                controller.didMoveToParentViewController(self)
+                        self.activityIndicator.stopAnimating()
+            }
+        }
         
     }
     

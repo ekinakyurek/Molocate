@@ -1,14 +1,4 @@
-//
-//  Followers.swift
-//  Molocate
-//
-//  Created by Kagan Cenan on 11.12.2015.
-//  Copyright © 2015 MellonApp. All rights reserved.
-//
-
 import UIKit
-
-
 
 class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
     
@@ -23,10 +13,8 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
     var relationNextUrl = ""
     var followersclicked: Bool = true
     
-    
     @IBOutlet weak var TitleLabel: UILabel!
     @IBOutlet var toolBar: UINavigationBar!
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -108,14 +96,12 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
+    
         let cell = TableViewCellFollowerFollowing(style: UITableViewCellStyle.Default, reuseIdentifier: "myIdentifier2")
         
         cell.myButton1.tag = indexPath.row
         cell.myButton1.setTitle("\(userRelations.relations[indexPath.row].username)", forState: .Normal)
-    
-        cell.myLabel1.hidden = true
-        cell.myLabel1.enabled = false
+       
         cell.myLabel1.tag = indexPath.row
         
         cell.fotoButton.tag = indexPath.row
@@ -123,12 +109,11 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
         if(userRelations.relations[indexPath.row].picture_url.absoluteString != ""){
             cell.fotoButton.sd_setImageWithURL(userRelations.relations[indexPath.row].picture_url, forState: UIControlState.Normal)
         }else{
-            cell.fotoButton.setImage(UIImage(named: "profilepic"), forState: .Normal)
+            cell.fotoButton.setImage(UIImage(named: "profile"), forState: .Normal)
         }
 
-
         if followersclicked {
-            
+    
             if(classUser.username == MoleCurrentUser.username && !userRelations.relations[indexPath.row].is_following){
                 cell.myLabel1.hidden = false
                 cell.myLabel1.enabled = true
@@ -227,12 +212,11 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
         MolocateAccount.getUser(username) { (data, response, error) -> () in
             dispatch_async(dispatch_get_main_queue()){
                 user = data
-                user.printUser()
+                
                 let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
-
+                controller.classUser = data
                 controller.view.frame = self.view.bounds;
                 controller.willMoveToParentViewController(self)
-                controller.classUser = data
                 controller.username.text = user.username
                 
                 //add animation

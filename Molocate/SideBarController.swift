@@ -93,6 +93,7 @@ class SideBarController: UITableViewController {
                     MolocateAccount.getCurrentUser({ (data, response, error) in
                     })
                 }
+                
                 self.parentViewController?.childViewControllers[1].childViewControllers[0].tabBarController?.selectedViewController?.viewDidLoad()
         default:
             break;
