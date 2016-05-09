@@ -44,6 +44,8 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
         }else{
             if(classUser.isFollowing){
                 FollowButton.image = UIImage(named: "unfollow")
+            }else if classUser.username == MoleCurrentUser.username{
+                FollowButton.image = UIImage(named: "settings")
             }else{
                 FollowButton.image = UIImage(named: "follow")
             }
