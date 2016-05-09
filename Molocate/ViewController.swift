@@ -95,11 +95,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDe
         email.hidden = true
         
         username.attributedPlaceholder = NSAttributedString(string:"Kullanıcı Adı",
-                                                            attributes:[NSForegroundColorAttributeName: UIColor.lightTextColor()])
+                                                            attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])
         email.attributedPlaceholder = NSAttributedString(string:"E-mail",
-                                                         attributes:[NSForegroundColorAttributeName: UIColor.lightTextColor()])
+                                                         attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])
         password.attributedPlaceholder = NSAttributedString(string:"Şifre",
-                                                            attributes:[NSForegroundColorAttributeName: UIColor.lightTextColor()])
+                                                            attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])
         username.delegate = self
         password.delegate = self
         
