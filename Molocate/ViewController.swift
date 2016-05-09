@@ -367,16 +367,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDe
     func textFieldDidEndEditing(textField: UITextField) {
         if(username.text == ""){
             username.attributedPlaceholder = NSAttributedString(string:"Kullanıcı Adı",
-                                                                attributes:[NSForegroundColorAttributeName: UIColor.lightTextColor()])
+                                                                attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])
         }
         
         if(email.text == ""){
             email.attributedPlaceholder = NSAttributedString(string:"E-mail",
-                                                             attributes:[NSForegroundColorAttributeName: UIColor.lightTextColor()])
+                                                             attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])
         }
         if(password.text == ""){
             password.attributedPlaceholder = NSAttributedString(string:"Şifre",
-                                                                attributes:[NSForegroundColorAttributeName: UIColor.lightTextColor()])
+                                                                attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])
             
         }
     }
