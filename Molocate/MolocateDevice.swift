@@ -4,9 +4,12 @@
 
 import Foundation
 import SystemConfiguration
-
+import UIKit
 
 public class MolocateDevice{
+   
+    static let size = UIScreen.mainScreen().bounds
+    
     class func isConnectedToNetwork() -> Bool {
         var zeroAddress = sockaddr_in()
         zeroAddress.sin_len = UInt8(sizeofValue(zeroAddress))
@@ -23,4 +26,5 @@ public class MolocateDevice{
         let needsConnection = (flags.rawValue & UInt32(kSCNetworkFlagsConnectionRequired)) != 0
         return (isReachable && !needsConnection)
     }
+
 }
