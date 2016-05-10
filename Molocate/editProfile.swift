@@ -13,27 +13,27 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
     
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     
-    var name : UILabel = UILabel()
-    var notification : UILabel = UILabel()
-    var gender : UILabel = UILabel()
-    var birthday : UILabel = UILabel()
-    var konum : UILabel = UILabel()
-    var nameText : UITextField =  UITextField()
-    var surnameText : UITextField = UITextField()
-    var switchDemo : UISwitch = UISwitch()
-    var erkek : UILabel = UILabel()
-    var kadın : UILabel = UILabel()
-    var photo : UIImageView = UIImageView()
-    var saveButton : UIButton = UIButton()
-    var password : UIButton = UIButton()
-    var changePhoto : UIButton = UIButton()
-    var datepicker: UIDatePicker = UIDatePicker()
+    let name : UILabel = UILabel()
+    let notification : UILabel = UILabel()
+    let gender : UILabel = UILabel()
+    let birthday : UILabel = UILabel()
+    let konum : UILabel = UILabel()
+    let nameText : UITextField =  UITextField()
+    let surnameText : UITextField = UITextField()
+    let switchDemo : UISwitch = UISwitch()
+    let erkek : UILabel = UILabel()
+    let kadın : UILabel = UILabel()
+    let photo : UIImageView = UIImageView()
+    let saveButton : UIButton = UIButton()
+    let password : UIButton = UIButton()
+    let changePhoto : UIButton = UIButton()
+    let datepicker: UIDatePicker = UIDatePicker()
     var user: MoleUser!
-    var maleButton : UIButton = UIButton()
-    var femaleButton : UIButton = UIButton()
+    let maleButton : UIButton = UIButton()
+    let femaleButton : UIButton = UIButton()
     let imagePicker = UIImagePickerController()
-    var erkekimage : UILabel = UILabel()
-    var kadınimage :UILabel = UILabel()
+    let erkekimage : UILabel = UILabel()
+    let kadınimage :UILabel = UILabel()
     
     
     @IBAction func back(sender: AnyObject) {
@@ -109,7 +109,7 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
         let xvalue : CGFloat = (screenWidth - screenWidth / 3 ) / 2 + screenWidth / 3 - 20
         let yvalue : CGFloat = 60 + (scr * (46 / 120))
         
-        switchDemo = UISwitch()
+  
         switchDemo.center.x = xvalue
         switchDemo.center.y = yvalue
         switchDemo.transform = CGAffineTransformMakeScale( screenHeight / 667 , screenHeight / 667 )
@@ -193,7 +193,7 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
         name.font = UIFont (name: "AvenirNext-Regular", size: 16)
         self.view.addSubview(name)
         
-        nameText = UITextField()
+    
         nameText.frame = CGRectMake(screenWidth / 3 + 10 , 60 + (scr * (33 / 120)), (screenWidth - (screenWidth / 3) - 20) / 2 - 5, (scr * 6) / 120)
         nameText.borderStyle = .RoundedRect
         nameText.textColor = UIColor.blackColor()
@@ -203,7 +203,7 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
         nameText.text = user.first_name
         self.view.addSubview(nameText)
         
-        surnameText = UITextField()
+      
         surnameText.frame = CGRectMake(2 * screenWidth / 3 + 10  , 60 + (scr * (33 / 120)), (screenWidth - (screenWidth / 3) - 20) / 2 - 5 , (scr * 6) / 120)
         surnameText.font = UIFont(name: "AvenirNext-Regular", size: 14)
         surnameText.borderStyle = .RoundedRect
@@ -380,16 +380,7 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
         
     }
     
-    
-    func displayAlert(title: String, message: String) {
-        
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction((UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
-            //self.dismissViewControllerAnimated(true, completion: nil)
-        })))
-        self.presentViewController(alert, animated: true, completion: nil)
-    }
-    
+
     
     func changePassword(sender:UIButton!)
     {
@@ -431,9 +422,6 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
     }
     
     
-    
-    
-    
     //buradan  cinsiyeti yolla
     func switchValueDidChange(sender:UISwitch!)
     {
@@ -447,15 +435,21 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
     }
     
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func displayAlert(title: String, message: String) {
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction((UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
+            //self.dismissViewControllerAnimated(true, completion: nil)
+        })))
+        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     
     
-    
-    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
     
     
     func dismissKeyboard() {
