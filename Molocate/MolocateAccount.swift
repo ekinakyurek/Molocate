@@ -838,9 +838,11 @@ public class MolocateAccount {
                     do {
                         //check result if it is succed
                         let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String:AnyObject]
-                        if result.indexForKey("result") != nil {
-                            //print(result)
-                            completionHandler(data: result["result"] as! String , response: response , error: nsError  )
+                    
+                        if result.indexForKey("following_count") != nil {
+                            
+                            completionHandler(data:"success"  , response: response , error: nsError  )
+                            
                         }else{
                             completionHandler(data: "ServerError" , response: nil , error: nsError  )
                             if debug {print("ServerDataError:: in MolocateAccount.EditUser()")}

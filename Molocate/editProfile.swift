@@ -113,7 +113,7 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
         nameText.borderStyle = .RoundedRect
         nameText.textColor = UIColor.blackColor()
         nameText.keyboardType = .Default
-        user.printUser()
+        //user.printUser()
         nameText.font = UIFont(name: "AvenirNext-Regular", size: 14)
         nameText.text = user.first_name
         view.addSubview(nameText)
@@ -251,14 +251,14 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
     
     
     func femaleSelected(sender:UIButton!){
-        print("female selected")
+       // print("female selected")
         kadınimage.text = "🔳"
         erkekimage.text = "◽️"
         user.gender = "female"
         
     }
     func maleSelected(sender:UIButton!){
-        print("male selected")
+      //  print("male selected")
         kadınimage.text = "◽️"
         erkekimage.text = "🔳"
         user.gender = "male"
@@ -266,6 +266,9 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
     
     func buttonAction(sender:UIButton!)
     {
+        
+        sender.hidden = true
+        
         user.first_name = nameText.text!
         user.last_name = surnameText.text!
         
@@ -273,38 +276,58 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
         dateFormatter.dateFormat = "yyyy-MM-dd"
         
         user.birthday = dateFormatter.stringFromDate(datepicker.date)
-        user.printUser()
-        
         MoleCurrentUser = user
-
         
         let imageData = UIImageJPEGRepresentation(photo.image!, 0.5)
         activityIndicator.frame = sender.frame
         activityIndicator.center = sender.center
-        sender.hidden = true
         self.view.addSubview(activityIndicator)
         activityIndicator.startAnimating()
+        
+        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+        
         MolocateAccount.uploadProfilePhoto(imageData!) { (data, response, error) -> () in
             dispatch_async(dispatch_get_main_queue()) { () -> Void in
-                
-                SDImageCache.sharedImageCache().removeImageForKey(data!)
-                SDImageCache.sharedImageCache().storeImage(self.photo.image!, forKey: data!)
-                MoleCurrentUser.profilePic = NSURL(string: data!)!
-                MolocateAccount.EditUser { (data, response, error) -> () in
-                    dispatch_async(dispatch_get_main_queue()) { () -> Void in
-                        self.activityIndicator.stopAnimating()
-                        self.performSegueWithIdentifier("goBackProfile", sender: self)
+                if data[0] == "h"{
+                    SDImageCache.sharedImageCache().removeImageForKey(data!)
+                    SDImageCache.sharedImageCache().storeImage(self.photo.image!, forKey: data!)
+                    MoleCurrentUser.profilePic = NSURL(string: data!)!
+                    MolocateAccount.EditUser { (data, response, error) -> () in
+                        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+                            self.activityIndicator.stopAnimating()
+                            UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                            if data == "success"{
+                                self.performSegueWithIdentifier("goBackProfile", sender: self)
+                            }else{
+                                self.displayAlert("Tamam", message: "Kullanıcı bilgileri değiştirilirken bir hata oluştu")
+                                sender.hidden = false
+                            }
+                           
+                        }
                     }
+                }else{
+                    self.activityIndicator.stopAnimating()
+                    UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                    self.displayAlert("Tamam", message: "Profil fotosu yüklenirken bir hata oluştu")
+                    sender.hidden = false
                 }
+                
+               
             }
+                
         }
         
-        
-        
-        print("Button tapped")
     }
     
     
+    func displayAlert(title: String, message: String) {
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction((UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
+            //self.dismissViewControllerAnimated(true, completion: nil)
+        })))
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
     
     
     func changePassword(sender:UIButton!)
@@ -316,13 +339,13 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
         self.view.addSubview(controller.view)
         self.addChildViewController(controller)
         controller.didMoveToParentViewController(self)
-        print("şifre değiştirecek")
+        //print("şifre değiştirecek")
         
     }
     func changePhoto(sender:UIButton!)
     {
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.PhotoLibrary){
-            print("Button capture")
+            //print("Button capture")
             let imag = UIImagePickerController()
             imag.delegate = self
             imag.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
@@ -336,14 +359,14 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
         let selectedImage : UIImage = image
         photo.image = MolocateUtility.RBSquareImageTo(selectedImage, size: CGSize(width: 192, height: 192))
         
-        print("new image")
+        //print("new image")
         self.dismissViewControllerAnimated(true, completion: nil)
         
     }
     func imagePickerControllerDidCancel(picker: UIImagePickerController)
     {
         self.dismissViewControllerAnimated(true, completion: nil)
-        print("picker cancel.")
+        //print("picker cancel.")
     }
     
     
