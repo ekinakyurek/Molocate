@@ -7,16 +7,31 @@ import MapKit
 class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSource , UICollectionViewDelegateFlowLayout,NSURLConnectionDataDelegate,PlayerDelegate {
     
     var lastOffset:CGPoint!
-    var lastOffsetCapture:NSTimeInterval!
-    var isScrollingFast:Bool = false
     var pointNow:CGFloat!
-    var isSearching = false
+    var lastOffsetCapture:NSTimeInterval!
     var direction = 0
-    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
-    var refreshControl:UIRefreshControl!
-    var player1Turn = false
+    
+    let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    let refreshControl:UIRefreshControl! = UIRefreshControl()
+  
     var classPlace = MolePlace()
     var videoArray = [MoleVideoInformation]()
+    
+    var videoData:NSMutableData!
+    var connection:NSURLConnection!
+    var response:NSHTTPURLResponse!
+    var pendingRequests:NSMutableArray!
+    
+    var player1:Player!
+    var player2: Player!
+    
+    var player1Turn = false
+    var isScrollingFast:Bool = false
+    var isSearching:Bool = false
+    var pressedLike: Bool = false
+    var pressedFollow: Bool = false
+    var refreshing: Bool = false
+    let screenSize: CGRect = UIScreen.mainScreen().bounds
     
     @IBOutlet var LocationTitle: UILabel!
     @IBOutlet var map: MKMapView!
@@ -127,16 +142,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
         
     }
     
-    var videoData:NSMutableData!
-    var connection:NSURLConnection!
-    var response:NSHTTPURLResponse!
-    var pendingRequests:NSMutableArray!
-    var player1:Player!
-    var player2: Player!
-    var pressedLike: Bool = false
-    var pressedFollow: Bool = false
-    var refreshing: Bool = false
-    let screenSize: CGRect = UIScreen.mainScreen().bounds
+
     @IBOutlet var profilePhoto: UIImageView!
     var likeHeart = UIImageView()
     override func viewDidLoad() {
@@ -162,7 +168,6 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
         self.player2.delegate = self
         self.player2.playbackLoops = true
         
-        self.refreshControl = UIRefreshControl()
         self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         self.refreshControl.addTarget(self, action: #selector(profileLocation.refresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
         self.tableView.addSubview(refreshControl)
