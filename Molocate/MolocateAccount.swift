@@ -247,7 +247,7 @@ public class MolocateAccount {
                             
                         }else {
                             completionHandler(data: "Hata", response: response , error: nsError  )
-                            if debug { print( (result["result"] as! String) + "::in MolocateAccount.Login() ") }
+                            if debug { print("Wrong password or username::in MolocateAccount.Login() ") }
                             
                         }
                         
