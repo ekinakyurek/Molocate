@@ -492,7 +492,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
         player1.stop()
         player2.stop()
         MolocateAccount.getUser(videoArray[buttonRow].username) { (data, response, error) -> () in
-            user.printUser()
+            //user.printUser()
             dispatch_async(dispatch_get_main_queue()){
                 mine = false
                 user = data

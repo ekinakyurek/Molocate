@@ -48,7 +48,7 @@ class likeVideo: UIViewController, UITableViewDelegate, UITableViewDataSource  {
             dispatch_async(dispatch_get_main_queue()){
                 for thing in data{
                     self.users.append(thing)
-                    thing.printUser()
+                    //thing.printUser()
                 }
                 self.tableView.reloadData()
             }
