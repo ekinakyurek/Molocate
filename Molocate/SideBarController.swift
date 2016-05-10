@@ -75,6 +75,12 @@ class SideBarController: UITableViewController {
        
         choosedIndex = indexPath.row
         
+        if(choosedIndex == 3){
+            mine = true
+        }else{
+            mine = false
+        }
+        
         self.parentViewController?.childViewControllers[1].childViewControllers[0].tabBarController?.selectedIndex = choosedIndex
         
         NSNotificationCenter.defaultCenter().postNotificationName("closeSideBar", object: nil )
@@ -89,11 +95,11 @@ class SideBarController: UITableViewController {
         case 2:
             self.parentViewController?.childViewControllers[1].childViewControllers[0].tabBarController?.selectedViewController?.viewDidLoad()
         case 3:
+            
                 if MoleUserToken != nil{
                     MolocateAccount.getCurrentUser({ (data, response, error) in
                     })
                 }
-                
                 self.parentViewController?.childViewControllers[1].childViewControllers[0].tabBarController?.selectedViewController?.viewDidLoad()
         default:
             break;

@@ -696,19 +696,16 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
         MolocateAccount.getUser(videoArray[buttonRow].username) { (data, response, error) -> () in
             dispatch_async(dispatch_get_main_queue()){
                 user = data
+                mine = false
                 let controller:profileOther = self.parentViewController!.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
                 controller.classUser = data
-                //controller.username.text = user.username
-                // controller.AVc.username = user.username
-               // controller.BVc.username = user.username
-                controller.leftButton = "back"
+               
                 controller.view.frame = self.parentViewController!.view.bounds;
                 controller.willMoveToParentViewController(self.parentViewController!)
                 self.parentViewController!.view.addSubview(controller.view)
                 self.parentViewController!.addChildViewController(controller)
                 controller.didMoveToParentViewController(self.parentViewController!)
-                
-                //controller.BVc.username = user.username
+
                 
             }
         }

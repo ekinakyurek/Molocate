@@ -12,11 +12,24 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
     var pointNow:CGFloat!
     var isSearching = false
     var direction = 0
-    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
-    var refreshControl:UIRefreshControl!
+    
+    let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    let refreshControl:UIRefreshControl = UIRefreshControl()
     var player1Turn = false
     var classPlace = MolePlace()
     var videoArray = [MoleVideoInformation]()
+    var videoData:NSMutableData!
+    var connection:NSURLConnection!
+    var response:NSHTTPURLResponse!
+    var pendingRequests:NSMutableArray!
+    var player1:Player!
+    var player2: Player!
+    var pressedLike: Bool = false
+    var pressedFollow: Bool = false
+    var refreshing: Bool = false
+    let screenSize: CGRect = UIScreen.mainScreen().bounds
+    var likeHeart = UIImageView()
+    
     
     @IBOutlet var LocationTitle: UILabel!
     @IBOutlet var map: MKMapView!
@@ -27,7 +40,107 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
     @IBOutlet var videoCount: UILabel!
     @IBOutlet var followButton: UIBarButtonItem!
     @IBOutlet var toolBar: UIToolbar!
+    @IBOutlet var profilePhoto: UIImageView!
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        initGui()
+        try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
+        UIApplication.sharedApplication().endIgnoringInteractionEvents()
+        lastOffset = CGPoint(x: 0, y: 0)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(profileLocation.scrollToTop), name: "scrollToTop", object: nil)
+    }
     
+    func initGui(){
+        
+        likeHeart.image = UIImage(named: "favorite")
+        likeHeart.alpha = 1.0
+     
+        self.view.backgroundColor = swiftColor3
+        toolBar.clipsToBounds = true
+        toolBar.translucent = false
+        toolBar.barTintColor = swiftColor
+        followerCount.setTitle("\(thePlace.follower_count)", forState: UIControlState.Normal)
+        locationName.text = thePlace.name
+        LocationTitle.text = thePlace.name
+        address.text = thePlace.address
+        videoCount.text = "Videos(\(thePlace.video_count))"
+        videoArray = thePlace.videoArray
+        player1 = Player()
+        player1.delegate = self
+        player1.playbackLoops = true
+        
+        player2 = Player()
+        player2.delegate = self
+        player2.playbackLoops = true
+        
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(profileLocation.refresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
+        tableView.addSubview(refreshControl)
+        
+        address.sizeToFit()
+        
+        if(thePlace.is_following==0 ){
+            
+        }else{
+            followButton.image = UIImage(named: "unfollow");
+        }
+        if(thePlace.picture_url.absoluteString != ""){
+            profilePhoto.sd_setImageWithURL(thePlace.picture_url)
+        }else{
+            profilePhoto.image = UIImage(named: "pin")!
+        }
+        
+        if self.videoArray.count == 0 {
+            tableView.hidden = true
+            followButton.tintColor = UIColor.clearColor()
+            followButton.enabled = false
+        }
+
+        //mekanın koordinatları eklenecek
+        let longitude :CLLocationDegrees = thePlace.lon
+        let latitude :CLLocationDegrees = thePlace.lat
+        let span = MKCoordinateSpanMake(0.005, 0.005)
+        let location:CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        let region:MKCoordinateRegion = MKCoordinateRegion(center: location, span: span)
+        map.setRegion(region, animated: false)
+        map.userInteractionEnabled = false
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = location
+        map.addAnnotation(annotation)
+    }
+    
+    func tableView(atableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        if atableView == tableView{
+            
+            
+            if((indexPath.row%10 == 7)&&(MoleNextPlaceVideos != nil)&&(!IsExploreInProcess)){
+                IsExploreInProcess = true
+                MolocateVideo.getExploreVideos(MoleNextPlaceVideos, completionHandler: { (data, response, error,next) -> () in
+                    MoleNextPlaceVideos = next
+                    dispatch_async(dispatch_get_main_queue()){
+                        
+                        for item in data!{
+                            self.videoArray.append(item)
+                            let newIndexPath = NSIndexPath(forRow: self.videoArray.count-1, inSection: 0)
+                            atableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Bottom)
+                            
+                        }
+                        
+                        IsExploreInProcess = false
+                    }
+                    
+                })
+                
+                
+            }
+        }
+        else {
+            
+        }
+        
+        
+    }
     
     @IBAction func backButton(sender: AnyObject) {
         self.willMoveToParentViewController(nil)
@@ -125,81 +238,6 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
         
         
         
-    }
-    
-    var videoData:NSMutableData!
-    var connection:NSURLConnection!
-    var response:NSHTTPURLResponse!
-    var pendingRequests:NSMutableArray!
-    var player1:Player!
-    var player2: Player!
-    var pressedLike: Bool = false
-    var pressedFollow: Bool = false
-    var refreshing: Bool = false
-    let screenSize: CGRect = UIScreen.mainScreen().bounds
-    @IBOutlet var profilePhoto: UIImageView!
-    var likeHeart = UIImageView()
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        likeHeart.image = UIImage(named: "favorite")
-        likeHeart.alpha = 1.0
-        try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
-        self.view.backgroundColor = swiftColor3
-        self.toolBar.clipsToBounds = true
-        self.toolBar.translucent = false
-        self.toolBar.barTintColor = swiftColor
-        self.followerCount.setTitle("\(thePlace.follower_count)", forState: UIControlState.Normal)
-        self.locationName.text = thePlace.name
-        self.LocationTitle.text = thePlace.name
-        self.address.text = thePlace.address
-        self.videoCount.text = "Videos(\(thePlace.video_count))"
-        self.videoArray = thePlace.videoArray
-        self.player1 = Player()
-        self.player1.delegate = self
-        self.player1.playbackLoops = true
-        
-        self.player2 = Player()
-        self.player2.delegate = self
-        self.player2.playbackLoops = true
-        
-        self.refreshControl = UIRefreshControl()
-        self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        self.refreshControl.addTarget(self, action: #selector(profileLocation.refresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
-        self.tableView.addSubview(refreshControl)
-        
-        self.address.sizeToFit()
-        
-        if(thePlace.is_following==0 ){
-            
-        }else{
-            followButton.image = UIImage(named: "unfollow");
-        }
-        if(thePlace.picture_url.absoluteString != ""){
-            profilePhoto.sd_setImageWithURL(thePlace.picture_url)
-        }else{
-            profilePhoto.image = UIImage(named: "pin")!
-        }
-        
-        if self.videoArray.count == 0 {
-            tableView.hidden = true
-            followButton.tintColor = UIColor.clearColor()
-            followButton.enabled = false
-        }
-        
-        UIApplication.sharedApplication().endIgnoringInteractionEvents()
-        lastOffset = CGPoint(x: 0, y: 0)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(profileLocation.scrollToTop), name: "scrollToTop", object: nil)
-        //mekanın koordinatları eklenecek
-        let longitude :CLLocationDegrees = thePlace.lon
-        let latitude :CLLocationDegrees = thePlace.lat
-        let span = MKCoordinateSpanMake(0.005, 0.005)
-        let location:CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-        let region:MKCoordinateRegion = MKCoordinateRegion(center: location, span: span)
-        map.setRegion(region, animated: false)
-        map.userInteractionEnabled = false
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = location
-        map.addAnnotation(annotation)
     }
     
     func openMapForPlace() {
@@ -454,7 +492,9 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
         player1.stop()
         player2.stop()
         MolocateAccount.getUser(videoArray[buttonRow].username) { (data, response, error) -> () in
+            user.printUser()
             dispatch_async(dispatch_get_main_queue()){
+                mine = false
                 user = data
                 let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
                 controller.classUser = data
@@ -463,10 +503,6 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
                 self.view.addSubview(controller.view)
                 self.addChildViewController(controller)
                 controller.didMoveToParentViewController(self)
-                controller.username.text = user.username
-                controller.followingsCount.setTitle("\(data.following_count)", forState: .Normal)
-                controller.followersCount.setTitle("\(data.follower_count)", forState: .Normal)
-                
             }
         }
         
@@ -856,36 +892,5 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
         }
         pressedLike = false
     }
-    
-    func tableView(atableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        if atableView == tableView{
-            
-            
-            if((indexPath.row%10 == 7)&&(MoleNextPlaceVideos != nil)&&(!IsExploreInProcess)){
-                IsExploreInProcess = true
-                MolocateVideo.getExploreVideos(MoleNextPlaceVideos, completionHandler: { (data, response, error,next) -> () in
-                    MoleNextPlaceVideos = next
-                    dispatch_async(dispatch_get_main_queue()){
-                        
-                        for item in data!{
-                            self.videoArray.append(item)
-                            let newIndexPath = NSIndexPath(forRow: self.videoArray.count-1, inSection: 0)
-                            atableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Bottom)
-                            
-                        }
-                        
-                        IsExploreInProcess = false
-                    }
-                    
-                })
-                
-                
-            }
-        }
-        else {
-            
-        }
-        
-        
-    }
+  
 }

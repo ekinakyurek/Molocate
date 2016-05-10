@@ -1,4 +1,5 @@
 import UIKit
+var mine = false
 
 class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource {
     //true ise kendi false başkası
@@ -35,7 +36,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
     
     func initGui(){
         
-        if(choosedIndex==3 ){
+        if(choosedIndex==3 && mine){
             user = MoleCurrentUser
             classUser = MoleCurrentUser
             FollowButton.image = UIImage(named: "settings")

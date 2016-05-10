@@ -211,6 +211,7 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
       
         MolocateAccount.getUser(username) { (data, response, error) -> () in
             dispatch_async(dispatch_get_main_queue()){
+                mine = false
                 user = data
                 
                 let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
