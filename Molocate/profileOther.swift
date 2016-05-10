@@ -39,7 +39,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
             user = MoleCurrentUser
             classUser = MoleCurrentUser
             FollowButton.image = UIImage(named: "settings")
-            choosedIndex = 4 //??WHY
+            //choosedIndex = 4 //??WHY
             back.image = UIImage(named:"sideMenu")
         }else{
             if(classUser.isFollowing){
