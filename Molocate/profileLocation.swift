@@ -6,7 +6,7 @@ import MapKit
 
 class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSource , UICollectionViewDelegateFlowLayout,NSURLConnectionDataDelegate,PlayerDelegate {
     
-    var lastOffset:CGPoint!
+    var lastOffset:CGPoint = CGPoint(x: 0, y: 0)
     var pointNow:CGFloat!
     var lastOffsetCapture:NSTimeInterval!
     var direction = 0
@@ -49,43 +49,54 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
     
     override func viewDidLoad() {
         super.viewDidLoad()
+       
+        //When the user close the sound switch, sound is turned of via this property
+        do {
+            try  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
+        }catch{
+            if debug {print("AVAudioSession error:: in profileLocation")}
+        }
+
+        UIApplication.sharedApplication().endIgnoringInteractionEvents()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(profileLocation.scrollToTop), name: "scrollToTop", object: nil)
+       
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        SDImageCache.sharedImageCache().cleanDisk()
+        SDImageCache.sharedImageCache().clearMemory()
+        player1.stop()
+        player1.removeFromParentViewController()
+        player2.stop()
+        player2.removeFromParentViewController()
+    }
+
+    
+    func initGui(){
         likeHeart.image = UIImage(named: "favorite")
         likeHeart.alpha = 1.0
-        try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
-        self.view.backgroundColor = swiftColor3
-        self.toolBar.clipsToBounds = true
-        self.toolBar.translucent = false
-        self.toolBar.barTintColor = swiftColor
-        self.followerCount.setTitle("\(thePlace.follower_count)", forState: UIControlState.Normal)
-        self.locationName.text = thePlace.name
-        self.LocationTitle.text = thePlace.name
-        self.address.text = thePlace.address
-        self.videoCount.text = "Videos(\(thePlace.video_count))"
-        self.videoArray = thePlace.videoArray
-        self.player1 = Player()
-        self.player1.delegate = self
-        self.player1.playbackLoops = true
-        
-        self.player2 = Player()
-        self.player2.delegate = self
-        self.player2.playbackLoops = true
-        
-        self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        self.refreshControl.addTarget(self, action: #selector(profileLocation.refresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
-        self.tableView.addSubview(refreshControl)
-        
-        self.address.sizeToFit()
+        address.sizeToFit()
+       
         
         if(thePlace.is_following==0 ){
-            
+            followButton.image = UIImage(named: "follow");
         }else{
             followButton.image = UIImage(named: "unfollow");
         }
+        
         if(thePlace.picture_url.absoluteString != ""){
             profilePhoto.sd_setImageWithURL(thePlace.picture_url)
         }else{
             profilePhoto.image = UIImage(named: "pin")!
         }
+        
+        toolBar.clipsToBounds = true
+        toolBar.translucent = false
+        toolBar.barTintColor = swiftColor
+        
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(profileLocation.refresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
         
         if self.videoArray.count == 0 {
             tableView.hidden = true
@@ -93,9 +104,12 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
             followButton.enabled = false
         }
         
-        UIApplication.sharedApplication().endIgnoringInteractionEvents()
-        lastOffset = CGPoint(x: 0, y: 0)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(profileLocation.scrollToTop), name: "scrollToTop", object: nil)
+        
+        self.view.backgroundColor = swiftColor3
+        
+        tableView.tableFooterView = UIView()
+        tableView.addSubview(refreshControl)
+        
         //mekanın koordinatları eklenecek
         let longitude :CLLocationDegrees = thePlace.lon
         let latitude :CLLocationDegrees = thePlace.lat
@@ -107,15 +121,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
         let annotation = MKPointAnnotation()
         annotation.coordinate = location
         map.addAnnotation(annotation)
-    }
-    
-    override func viewDidDisappear(animated: Bool) {
-        SDImageCache.sharedImageCache().cleanDisk()
-        SDImageCache.sharedImageCache().clearMemory()
-        player1.stop()
-        player1.removeFromParentViewController()
-        player2.stop()
-        player2.removeFromParentViewController()
+
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
