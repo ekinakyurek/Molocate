@@ -6,33 +6,17 @@ import MapKit
 
 class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSource , UICollectionViewDelegateFlowLayout,NSURLConnectionDataDelegate,PlayerDelegate {
     
-    var lastOffset:CGPoint = CGPoint(x: 0, y: 0)
-    var pointNow:CGFloat!
+    var lastOffset:CGPoint!
     var lastOffsetCapture:NSTimeInterval!
+    var isScrollingFast:Bool = false
+    var pointNow:CGFloat!
+    var isSearching = false
     var direction = 0
-    
-    let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
-    let refreshControl:UIRefreshControl! = UIRefreshControl()
-    
-    var likeHeart = UIImageView()
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    var refreshControl:UIRefreshControl!
+    var player1Turn = false
     var classPlace = MolePlace()
     var videoArray = [MoleVideoInformation]()
-    
-    var videoData:NSMutableData!
-    var connection:NSURLConnection!
-    var response:NSHTTPURLResponse!
-    var pendingRequests:NSMutableArray!
-    
-    var player1:Player!
-    var player2: Player!
-    
-    var player1Turn = false
-    var isScrollingFast:Bool = false
-    var isSearching:Bool = false
-    var pressedLike: Bool = false
-    var pressedFollow: Bool = false
-    var refreshing: Bool = false
-    let screenSize: CGRect = UIScreen.mainScreen().bounds
     
     @IBOutlet var LocationTitle: UILabel!
     @IBOutlet var map: MKMapView!
@@ -43,60 +27,158 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
     @IBOutlet var videoCount: UILabel!
     @IBOutlet var followButton: UIBarButtonItem!
     @IBOutlet var toolBar: UIToolbar!
+    
+    
+    @IBAction func backButton(sender: AnyObject) {
+        self.willMoveToParentViewController(nil)
+        self.view.removeFromSuperview()
+        self.removeFromParentViewController()
+    }
+    
+    @IBAction func followButton(sender: AnyObject) {
+        
+        if(thePlace.is_following == 0){
+            thePlace.is_following = 1
+            followButton.image = UIImage(named: "unfollow");
+            MolocatePlace.followAPlace(thePlace.id) { (data, response, error) in
+                MoleCurrentUser.following_count += 1
+                dispatch_async(dispatch_get_main_queue()) {
+                    thePlace.follower_count += 1
+                    self.followerCount.setTitle("\(thePlace.follower_count)", forState: .Normal)
+                }
+            }
+            
+        }else{ let actionSheetController: UIAlertController = UIAlertController(title: nil, message: "Takibi bırakmak istediğine emin misin?", preferredStyle: .ActionSheet)
+            
+            
+            let cancelAction: UIAlertAction = UIAlertAction(title: "Vazgeç", style: .Cancel) { action -> Void in
+                //Just dismiss the action sheet
+            }
+            actionSheetController.addAction(cancelAction)
+            //Create and add first option action
+            let takePictureAction: UIAlertAction = UIAlertAction(title: "Takibi Bırak", style: .Default)
+            { action -> Void in
+                self.followButton.image = UIImage(named: "follow");
+                thePlace.is_following = 0
+                MoleCurrentUser.following_count -= 1
+                MolocatePlace.unfollowAPlace(thePlace.id) { (data, response, error) in
+                    dispatch_async(dispatch_get_main_queue()) {
+                        thePlace.follower_count -= 1
+                        self.followerCount.setTitle("\(thePlace.follower_count)", forState: .Normal)
+                    }
+                    
+                }
+                
+            }
+            actionSheetController.addAction(takePictureAction)
+            //We need to provide a popover sourceView when using it on iPad
+            actionSheetController.popoverPresentationController?.sourceView = sender as? UIView
+            
+            //Present the AlertController
+            self.presentViewController(actionSheetController, animated: true, completion: nil)
+            
+        }
+        
+    }
+    @IBAction func launchMap(sender: AnyObject) {
+        
+        let actionSheetController: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        
+        
+        let cancelAction: UIAlertAction = UIAlertAction(title: "Vazgeç", style: .Cancel) { action -> Void in
+            //Just dismiss the action sheet
+        }
+        actionSheetController.addAction(cancelAction)
+        //Create and add first option action
+        let takePictureAction: UIAlertAction = UIAlertAction(title: "Haritaya Yönlendir", style: .Default)
+        { action -> Void in
+            
+            self.openMapForPlace()
+            
+        }
+        actionSheetController.addAction(takePictureAction)
+        //We need to provide a popover sourceView when using it on iPad
+        actionSheetController.popoverPresentationController?.sourceView = sender as? UIView
+        
+        //Present the AlertController
+        self.presentViewController(actionSheetController, animated: true, completion: nil)
+        
+    }
     @IBOutlet var followerCount: UIButton!
+    
+    
+    @IBAction func followersButton(sender: AnyObject) {
+        player1.stop()
+        player2.stop()
+        
+        user = MoleCurrentUser
+        let controller:Followers = self.storyboard!.instantiateViewControllerWithIdentifier("Followers") as! Followers
+        controller.classPlace = thePlace
+        controller.classUser = MoleCurrentUser
+        controller.followersclicked = true
+        //print(thePlace)
+        controller.view.frame = self.view.bounds;
+        controller.willMoveToParentViewController(self)
+        self.view.addSubview(controller.view)
+        self.addChildViewController(controller)
+        controller.didMoveToParentViewController(self)
+        
+        
+        
+    }
+    
+    var videoData:NSMutableData!
+    var connection:NSURLConnection!
+    var response:NSHTTPURLResponse!
+    var pendingRequests:NSMutableArray!
+    var player1:Player!
+    var player2: Player!
+    var pressedLike: Bool = false
+    var pressedFollow: Bool = false
+    var refreshing: Bool = false
+    let screenSize: CGRect = UIScreen.mainScreen().bounds
     @IBOutlet var profilePhoto: UIImageView!
-    
-    
+    var likeHeart = UIImageView()
     override func viewDidLoad() {
         super.viewDidLoad()
-       
-        //When the user close the sound switch, sound is turned of via this property
-        do {
-            try  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
-        }catch{
-            if debug {print("AVAudioSession error:: in profileLocation")}
-        }
-
-        UIApplication.sharedApplication().endIgnoringInteractionEvents()
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(profileLocation.scrollToTop), name: "scrollToTop", object: nil)
-       
-    }
-    
-    override func viewDidDisappear(animated: Bool) {
-        SDImageCache.sharedImageCache().cleanDisk()
-        SDImageCache.sharedImageCache().clearMemory()
-        player1.stop()
-        player1.removeFromParentViewController()
-        player2.stop()
-        player2.removeFromParentViewController()
-    }
-
-    
-    func initGui(){
         likeHeart.image = UIImage(named: "favorite")
         likeHeart.alpha = 1.0
-        address.sizeToFit()
-       
+        try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
+        self.view.backgroundColor = swiftColor3
+        self.toolBar.clipsToBounds = true
+        self.toolBar.translucent = false
+        self.toolBar.barTintColor = swiftColor
+        self.followerCount.setTitle("\(thePlace.follower_count)", forState: UIControlState.Normal)
+        self.locationName.text = thePlace.name
+        self.LocationTitle.text = thePlace.name
+        self.address.text = thePlace.address
+        self.videoCount.text = "Videos(\(thePlace.video_count))"
+        self.videoArray = thePlace.videoArray
+        self.player1 = Player()
+        self.player1.delegate = self
+        self.player1.playbackLoops = true
+        
+        self.player2 = Player()
+        self.player2.delegate = self
+        self.player2.playbackLoops = true
+        
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        self.refreshControl.addTarget(self, action: #selector(profileLocation.refresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
+        self.tableView.addSubview(refreshControl)
+        
+        self.address.sizeToFit()
         
         if(thePlace.is_following==0 ){
-            followButton.image = UIImage(named: "follow");
+            
         }else{
             followButton.image = UIImage(named: "unfollow");
         }
-        
         if(thePlace.picture_url.absoluteString != ""){
             profilePhoto.sd_setImageWithURL(thePlace.picture_url)
         }else{
             profilePhoto.image = UIImage(named: "pin")!
         }
-        
-        toolBar.clipsToBounds = true
-        toolBar.translucent = false
-        toolBar.barTintColor = swiftColor
-        
-        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        refreshControl.addTarget(self, action: #selector(profileLocation.refresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
         
         if self.videoArray.count == 0 {
             tableView.hidden = true
@@ -104,12 +186,9 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
             followButton.enabled = false
         }
         
-        
-        self.view.backgroundColor = swiftColor3
-        
-        tableView.tableFooterView = UIView()
-        tableView.addSubview(refreshControl)
-        
+        UIApplication.sharedApplication().endIgnoringInteractionEvents()
+        lastOffset = CGPoint(x: 0, y: 0)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(profileLocation.scrollToTop), name: "scrollToTop", object: nil)
         //mekanın koordinatları eklenecek
         let longitude :CLLocationDegrees = thePlace.lon
         let latitude :CLLocationDegrees = thePlace.lat
@@ -121,9 +200,41 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
         let annotation = MKPointAnnotation()
         annotation.coordinate = location
         map.addAnnotation(annotation)
-
     }
-
+    
+    func openMapForPlace() {
+        let regionDistance: CLLocationDistance = 10000
+        //mekanın koordinatları eklenecek
+        
+        let coordinates = CLLocationCoordinate2DMake(thePlace.lat , thePlace.lon)
+        let regionSpan = MKCoordinateRegionMakeWithDistance(coordinates, regionDistance, regionDistance)
+        let options = [
+            MKLaunchOptionsMapCenterKey: NSValue(MKCoordinate: regionSpan.center),
+            MKLaunchOptionsMapSpanKey: NSValue(MKCoordinateSpan: regionSpan.span)
+        ]
+        
+        let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
+        let mapItem = MKMapItem(placemark: placemark)
+        //mekanın adı eklenecek
+        mapItem.name = thePlace.name
+        
+        MKMapItem.openMapsWithItems([mapItem], launchOptions: options)
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    func scrollToTop() {
+        self.tableView.setContentOffset(CGPoint(x:0,y:0), animated: true)
+    }
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
+        return screenSize.width + 150
+    }
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return videoArray.count
+    }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if !pressedLike && !pressedFollow {
             let cell = videoCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "customCell")
@@ -228,170 +339,6 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
         
         
     }
-
-    func tableView(atableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        if atableView == tableView{
-            
-            
-            if((indexPath.row%10 == 7)&&(MoleNextPlaceVideos != nil)&&(!IsExploreInProcess)){
-                IsExploreInProcess = true
-                MolocateVideo.getExploreVideos(MoleNextPlaceVideos, completionHandler: { (data, response, error,next) -> () in
-                    MoleNextPlaceVideos = next
-                    dispatch_async(dispatch_get_main_queue()){
-                        
-                        for item in data!{
-                            self.videoArray.append(item)
-                            let newIndexPath = NSIndexPath(forRow: self.videoArray.count-1, inSection: 0)
-                            atableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Bottom)
-                            
-                        }
-                        
-                        IsExploreInProcess = false
-                    }
-                    
-                })
-                
-                
-            }
-        }
-        else {
-            
-        }
-        
-    }
-   
-    @IBAction func backButton(sender: AnyObject) {
-        self.willMoveToParentViewController(nil)
-        self.view.removeFromSuperview()
-        self.removeFromParentViewController()
-    }
-    
-    @IBAction func followButton(sender: AnyObject) {
-        
-        if(thePlace.is_following == 0){
-            thePlace.is_following = 1
-            followButton.image = UIImage(named: "unfollow");
-            MolocatePlace.followAPlace(thePlace.id) { (data, response, error) in
-                MoleCurrentUser.following_count += 1
-                dispatch_async(dispatch_get_main_queue()) {
-                 thePlace.follower_count += 1
-                 self.followerCount.setTitle("\(thePlace.follower_count)", forState: .Normal)
-                }
-            }
-           
-        }else{ let actionSheetController: UIAlertController = UIAlertController(title: nil, message: "Takibi bırakmak istediğine emin misin?", preferredStyle: .ActionSheet)
-            
-            
-            let cancelAction: UIAlertAction = UIAlertAction(title: "Vazgeç", style: .Cancel) { action -> Void in
-                //Just dismiss the action sheet
-            }
-            actionSheetController.addAction(cancelAction)
-            //Create and add first option action
-            let takePictureAction: UIAlertAction = UIAlertAction(title: "Takibi Bırak", style: .Default)
-            { action -> Void in
-                self.followButton.image = UIImage(named: "follow");
-                thePlace.is_following = 0
-                MoleCurrentUser.following_count -= 1
-                MolocatePlace.unfollowAPlace(thePlace.id) { (data, response, error) in
-                    dispatch_async(dispatch_get_main_queue()) {
-                    thePlace.follower_count -= 1
-                    self.followerCount.setTitle("\(thePlace.follower_count)", forState: .Normal)
-                    }
-
-                }
-                
-            }
-            actionSheetController.addAction(takePictureAction)
-            //We need to provide a popover sourceView when using it on iPad
-            actionSheetController.popoverPresentationController?.sourceView = sender as? UIView
-            
-            //Present the AlertController
-            self.presentViewController(actionSheetController, animated: true, completion: nil)
-            
-        }
-        
-    }
-    @IBAction func launchMap(sender: AnyObject) {
-        
-        let actionSheetController: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-        
-        
-        let cancelAction: UIAlertAction = UIAlertAction(title: "Vazgeç", style: .Cancel) { action -> Void in
-            //Just dismiss the action sheet
-        }
-        actionSheetController.addAction(cancelAction)
-        //Create and add first option action
-        let takePictureAction: UIAlertAction = UIAlertAction(title: "Haritaya Yönlendir", style: .Default)
-        { action -> Void in
-            
-            self.openMapForPlace()
-            
-        }
-        actionSheetController.addAction(takePictureAction)
-        //We need to provide a popover sourceView when using it on iPad
-        actionSheetController.popoverPresentationController?.sourceView = sender as? UIView
-        
-        //Present the AlertController
-        self.presentViewController(actionSheetController, animated: true, completion: nil)
-        
-    }
-
-    
-    
-    @IBAction func followersButton(sender: AnyObject) {
-        player1.stop()
-        player2.stop()
-       
-        user = MoleCurrentUser
-        let controller:Followers = self.storyboard!.instantiateViewControllerWithIdentifier("Followers") as! Followers
-        controller.classPlace = thePlace
-        controller.classUser = MoleCurrentUser
-        controller.followersclicked = true
-        //print(thePlace)
-        controller.view.frame = self.view.bounds;
-        controller.willMoveToParentViewController(self)
-        self.view.addSubview(controller.view)
-        self.addChildViewController(controller)
-        controller.didMoveToParentViewController(self)
-        
-        
-        
-    }
-    
-   
-    func openMapForPlace() {
-        let regionDistance: CLLocationDistance = 10000
-        //mekanın koordinatları eklenecek 
-        
-        let coordinates = CLLocationCoordinate2DMake(thePlace.lat , thePlace.lon)
-        let regionSpan = MKCoordinateRegionMakeWithDistance(coordinates, regionDistance, regionDistance)
-        let options = [
-            MKLaunchOptionsMapCenterKey: NSValue(MKCoordinate: regionSpan.center),
-            MKLaunchOptionsMapSpanKey: NSValue(MKCoordinateSpan: regionSpan.span)
-        ]
-        
-        let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
-        let mapItem = MKMapItem(placemark: placemark)
-        //mekanın adı eklenecek
-        mapItem.name = thePlace.name
-        
-        MKMapItem.openMapsWithItems([mapItem], launchOptions: options)
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    func scrollToTop() {
-        self.tableView.setContentOffset(CGPoint(x:0,y:0), animated: true)
-    }
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        
-        return screenSize.width + 150
-    }
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return videoArray.count
-    }
     
     func playTapped(sender: UITapGestureRecognizer) {
         let row = sender.view!.tag
@@ -432,7 +379,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
                 }
             }
         }
-
+        
     }
     
     
@@ -496,10 +443,10 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
         }
     }
     
-
-
     
-
+    
+    
+    
     
     func pressedUsername(sender: UIButton) {
         let buttonRow = sender.tag
@@ -519,7 +466,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
                 controller.username.text = user.username
                 controller.followingsCount.setTitle("\(data.following_count)", forState: .Normal)
                 controller.followersCount.setTitle("\(data.follower_count)", forState: .Normal)
-          
+                
             }
         }
         
@@ -545,7 +492,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
         }
         
     }
-  
+    
     func pressedFollow(sender: UIButton) {
         let buttonRow = sender.tag
         pressedFollow = true
@@ -611,7 +558,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
                 }
             }
         }
-               pressedLike = false
+        pressedLike = false
     }
     func pressedComment(sender: UIButton) {
         let buttonRow = sender.tag
@@ -653,7 +600,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
             
             let deleteVideo: UIAlertAction = UIAlertAction(title: "Videoyu Sil", style: .Default) { action -> Void in
                 let index = NSIndexPath(forRow: buttonRow, inSection: 0)
-       
+                
                 
                 MolocateVideo.deleteAVideo(self.videoArray[buttonRow].id, completionHandler: { (data, response, error) in
                     
@@ -683,13 +630,20 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
         self.presentViewController(actionSheetController, animated: true, completion: nil)
         
     }
-
+    override func viewDidDisappear(animated: Bool) {
+        SDImageCache.sharedImageCache().cleanDisk()
+        SDImageCache.sharedImageCache().clearMemory()
+        player1.stop()
+        player1.removeFromParentViewController()
+        player2.stop()
+        player2.removeFromParentViewController()
+    }
     
     func refresh(sender:AnyObject){
         
         
         refreshing = true
-     
+        
         self.player1.stop()
         self.player2.stop()
         
@@ -725,10 +679,10 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
     
     func playerPlaybackDidEnd(player: Player) {
     }
-    
     override func viewDidAppear(animated: Bool) {
         self.player2.playFromBeginning()
     }
+    
     
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         pointNow = scrollView.contentOffset.y
@@ -771,7 +725,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
                 if ipArray.count != 0 {
                     self.tableView.reloadRowsAtIndexPaths(ipArray, withRowAnimation: .None)
                 }
-
+                
                 
             }
             
@@ -800,7 +754,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
                         if self.player1.playbackState.description != "Playing" {
                             self.player2.stop()
                             if !isScrollingFast {
-                            self.player1.playFromBeginning()
+                                self.player1.playFromBeginning()
                             }
                             player1Turn = true
                             ////print(self.tableView.indexPathsForVisibleRows![0].row)
@@ -810,7 +764,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
                         if self.player2.playbackState.description != "Playing"{
                             self.player1.stop()
                             if !isScrollingFast {
-                            self.player2.playFromBeginning()
+                                self.player2.playFromBeginning()
                             }
                             player1Turn = false
                             ////////print("player2")
@@ -833,7 +787,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
                         if self.player1.playbackState.description != "Playing" {
                             self.player2.stop()
                             if !isScrollingFast {
-                            self.player1.playFromBeginning()
+                                self.player1.playFromBeginning()
                             }
                             player1Turn = true
                             ////////print("player1")
@@ -842,7 +796,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
                         if self.player2.playbackState.description != "Playing"{
                             self.player1.stop()
                             if !isScrollingFast {
-                            self.player2.playFromBeginning()
+                                self.player2.playFromBeginning()
                             }
                             player1Turn = false
                             ////////print("player2")
@@ -889,19 +843,49 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
         }else{
             
             
-//            self.videoArray[buttonRow].isLiked=0
-//            self.videoArray[buttonRow].likeCount-=1
-//            self.tableView.reloadRowsAtIndexPaths(indexes, withRowAnimation: UITableViewRowAnimation.None)
-//            
-//            
-//            MolocateVideo.unLikeAVideo(videoArray[buttonRow].id){ (data, response, error) -> () in
-//                dispatch_async(dispatch_get_main_queue()){
-//                    ////print(data)
-//                }
-//            }
+            //            self.videoArray[buttonRow].isLiked=0
+            //            self.videoArray[buttonRow].likeCount-=1
+            //            self.tableView.reloadRowsAtIndexPaths(indexes, withRowAnimation: UITableViewRowAnimation.None)
+            //
+            //
+            //            MolocateVideo.unLikeAVideo(videoArray[buttonRow].id){ (data, response, error) -> () in
+            //                dispatch_async(dispatch_get_main_queue()){
+            //                    ////print(data)
+            //                }
+            //            }
         }
-          pressedLike = false
+        pressedLike = false
     }
-
- 
+    
+    func tableView(atableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        if atableView == tableView{
+            
+            
+            if((indexPath.row%10 == 7)&&(MoleNextPlaceVideos != nil)&&(!IsExploreInProcess)){
+                IsExploreInProcess = true
+                MolocateVideo.getExploreVideos(MoleNextPlaceVideos, completionHandler: { (data, response, error,next) -> () in
+                    MoleNextPlaceVideos = next
+                    dispatch_async(dispatch_get_main_queue()){
+                        
+                        for item in data!{
+                            self.videoArray.append(item)
+                            let newIndexPath = NSIndexPath(forRow: self.videoArray.count-1, inSection: 0)
+                            atableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Bottom)
+                            
+                        }
+                        
+                        IsExploreInProcess = false
+                    }
+                    
+                })
+                
+                
+            }
+        }
+        else {
+            
+        }
+        
+        
+    }
 }
