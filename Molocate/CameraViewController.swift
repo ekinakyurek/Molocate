@@ -83,39 +83,12 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
     override func viewDidLoad() {
         super.viewDidLoad()
         locationMeasurements = NSMutableArray()
-        videoDone.enabled = false
-        toolbar.barTintColor = swiftColor
-        toolbar.translucent = false
-        toolbar.clipsToBounds = true
         placesArray.removeAll()
-        
         placeOrder = NSMutableDictionary()
         placeOrder.removeAllObjects()
-        
-        bottomToolbar.barTintColor = swiftColor
-        bottomToolbar.translucent = false
-        bottomToolbar.clipsToBounds = true
-        
+
         locationDict = [[String:locationss]]()
-        
-        let width = self.view.frame.width
-        let height = (self.view.frame.height-self.view.frame.width-2*self.toolbar.frame.height-self.toolbarYancı.frame.height)
-        let topRect = CGRect(x: 0, y: self.view.frame.width+self.toolbar.frame.height+self.toolbarYancı.frame.height, width: width, height: height)
-        let nview = UIView(frame: topRect)
-        
-        recordButton = RecordButton(frame: CGRectMake(0,0,2*topRect.height/3,2*topRect.height/3))
-        recordButton.center = nview.center
-        recordButton.progressColor = .redColor()
-        recordButton.closeWhenFinished = false
-        recordButton.buttonColor = swiftColor
-        recordButton.addTarget(self, action: #selector(CameraViewController.holdDown), forControlEvents: .TouchDown)
-        recordButton.addTarget(self, action: #selector(CameraViewController.holdRelease), forControlEvents: .TouchUpInside)
-        recordButton.addTarget(self, action: #selector(CameraViewController.holdRelease), forControlEvents: UIControlEvents.TouchDragExit)
-        recordButton.addTarget(self, action: #selector(CameraViewController.holdDown), forControlEvents: UIControlEvents.TouchDragEnter)
-        
-        recordButton.center.x = self.view.center.x
-        view.addSubview(recordButton)
-        
+
         self.captureSession = AVCaptureSession()
         
         self.sessionQueue = dispatch_queue_create("session queue", DISPATCH_QUEUE_SERIAL)
@@ -181,41 +154,8 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                 self.captureSession!.addInput(videoDeviceInput)
                 self.videoDeviceInput = videoDeviceInput
                 dispatch_async(dispatch_get_main_queue()) {
-                    
-                    // This part is for the square shaped capture. Actually our capture is on all screen like normal camera but we are reducing that into square shaped with the two cover layer.
-                    let newFrame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
-                    self.previewLayer!.frame = newFrame
-                   // let y = (self.view.frame.height+self.view.frame.width)/2
-                    let width = self.view.frame.width
-                    let height = (self.view.frame.height-self.view.frame.width-2*self.toolbar.frame.height-self.toolbarYancı.frame.height)
-                    let topRect = CGRect(x: 0, y: self.view.frame.width+self.toolbar.frame.height+self.toolbarYancı.frame.height, width: width, height: height)
-                    //let bottomRect = CGRect(x: 0, y: 0, width: width , height: height)
-                    self.topLayer.frame = topRect
-                    //self.bottomLayer.frame = bottomRect
-                    self.topLayer.backgroundColor = UIColor.whiteColor().CGColor
-                    //self.bottomLayer.backgroundColor = UIColor.whiteColor().CGColor
-                    self.topLayer.opacity = 1
-                    self.bottomLayer.opacity = 1
-                    self.toolbar.layer.opacity = 1
-                    self.toolbarYancı.layer.opacity = 1
-                    self.bottomToolbar.layer.opacity = 1
-                    
-                    self.view.layer.addSublayer(self.previewLayer!)
-                    self.view.layer.addSublayer(self.bottomLayer)
-                    self.view.layer.addSublayer(self.bottomToolbar.layer)
-                    self.view.layer.addSublayer(self.topLayer)
-                    self.view.layer.addSublayer(self.toolbar.layer)
-                    self.view.layer.addSublayer(self.toolbarYancı.layer)
-                    self.view.layer.addSublayer(self.recordButton.layer)
-                    self.view.layer.addSublayer(self.flashButton.layer)
-
-                    //self.view.layer.addSublayer(self.videoDoneOutlet.layer)
-                  //  let statusBarOrientation = UIApplication.sharedApplication().statusBarOrientation
-//                    var initialVideoOrientation = AVCaptureVideoOrientation.Portrait
-//                    if statusBarOrientation != UIInterfaceOrientation.Unknown {
-//                        initialVideoOrientation = AVCaptureVideoOrientation(rawValue: statusBarOrientation.rawValue)!
-//                    }
-                    self.previewLayer?.connection.videoOrientation
+                self.initGui()
+                self.previewLayer?.connection.videoOrientation
                     
                 }
             } else {
@@ -270,15 +210,119 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
      
         // Do any additional setup after loading the view.
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        dispatch_async(self.sessionQueue!) {
+            switch self.setupResult {
+            case .Success:
+                // Only setup observers and start the session running if setup succeeded.
+                self.addObservers()
+                self.captureSession!.startRunning()
+                self.sessionRunning = self.captureSession!.running
+                
+            case .CameraNotAuthorized:
+                dispatch_async(dispatch_get_main_queue()){
+                    if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
+                        UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                    }
+                    let message = NSLocalizedString("Molocate'in kamera kullanmasına izin vermediniz. Lütfen ayarları değiştiriniz.", comment: "" )
+                    let alertController = UIAlertController(title: "Molocate Kamera", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+                    let cancelAction = UIAlertAction(title: NSLocalizedString("OK", comment: "Alert OK button"), style: UIAlertActionStyle.Cancel, handler: nil)
+                    alertController.addAction(cancelAction)
+                    // Provide quick access to Settings.
+                    let settingsAction = UIAlertAction(title: NSLocalizedString("Ayarlar", comment: "Alert button to open Settings"), style: UIAlertActionStyle.Default) {action in
+                        UIApplication.sharedApplication().openURL(NSURL(string:UIApplicationOpenSettingsURLString)!)
+                        
+                    }
+                    alertController.addAction(settingsAction)
+                    self.presentViewController(alertController, animated: true, completion: nil)
+                }
+            case .SessionConfigurationFailed:
+                dispatch_async(dispatch_get_main_queue()) {
+                    let message = NSLocalizedString("Çekim için uygun değil", comment: "Alert message when something goes wrong during capture session configuration")
+                    let alertController = UIAlertController(title: "Hata", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+                    let cancelAction = UIAlertAction(title: NSLocalizedString("OK", comment: "Alert OK button"), style: UIAlertActionStyle.Cancel, handler: nil)
+                    alertController.addAction(cancelAction)
+                    self.presentViewController(alertController, animated: true, completion: nil)
+                }
+            }
+        }
+        dispatch_async(dispatch_get_main_queue()) {
+            self.locationManager = CLLocationManager()
+            self.locationManager.delegate = self
+            self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+            self.locationManager.requestWhenInUseAuthorization()
+            self.locationManager.startUpdatingLocation()
+            let seconds = 5.0
+            let delay = seconds * Double(NSEC_PER_SEC)  // nanoseconds per seconds
+            let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+            
+            dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+                
+                self.displayLocationInfo(self.bestEffortAtLocation)
+                
+            })
+            
+        }
+    }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewDidAppear(animated: Bool) {
-      
+    func initGui(){
+        videoDone.enabled = false
+        toolbar.barTintColor = swiftColor
+        toolbar.translucent = false
+        toolbar.clipsToBounds = true
+        let width = self.view.frame.width
+        let height = (self.view.frame.height-self.view.frame.width-2*self.toolbar.frame.height-self.toolbarYancı.frame.height)
+        let topRect = CGRect(x: 0, y: self.view.frame.width+self.toolbar.frame.height+self.toolbarYancı.frame.height, width: width, height: height)
+        let nview = UIView(frame: topRect)
+        bottomToolbar.barTintColor = swiftColor
+        bottomToolbar.translucent = false
+        bottomToolbar.clipsToBounds = true
+        recordButton = RecordButton(frame: CGRectMake(0,0,2*topRect.height/3,2*topRect.height/3))
+        recordButton.center = nview.center
+        recordButton.progressColor = .redColor()
+        recordButton.closeWhenFinished = false
+        recordButton.buttonColor = swiftColor
+        recordButton.addTarget(self, action: #selector(CameraViewController.holdDown), forControlEvents: .TouchDown)
+        recordButton.addTarget(self, action: #selector(CameraViewController.holdRelease), forControlEvents: .TouchUpInside)
+        recordButton.addTarget(self, action: #selector(CameraViewController.holdRelease), forControlEvents: UIControlEvents.TouchDragExit)
+        recordButton.addTarget(self, action: #selector(CameraViewController.holdDown), forControlEvents: UIControlEvents.TouchDragEnter)
+        
+        recordButton.center.x = self.view.center.x
+        view.addSubview(recordButton)
+        // This part is for the square shaped capture. Actually our capture is on all screen like normal camera but we are reducing that into square shaped with the two cover layer.
+        let newFrame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
+        self.previewLayer!.frame = newFrame
+        // let y = (self.view.frame.height+self.view.frame.width)/2
+        //let bottomRect = CGRect(x: 0, y: 0, width: width , height: height)
+        self.topLayer.frame = topRect
+        //self.bottomLayer.frame = bottomRect
+        self.topLayer.backgroundColor = UIColor.whiteColor().CGColor
+        //self.bottomLayer.backgroundColor = UIColor.whiteColor().CGColor
+        self.topLayer.opacity = 1
+        self.bottomLayer.opacity = 1
+        self.toolbar.layer.opacity = 1
+        self.toolbarYancı.layer.opacity = 1
+        self.bottomToolbar.layer.opacity = 1
+        
+        self.view.layer.addSublayer(self.previewLayer!)
+        self.view.layer.addSublayer(self.bottomLayer)
+        self.view.layer.addSublayer(self.bottomToolbar.layer)
+        self.view.layer.addSublayer(self.topLayer)
+        self.view.layer.addSublayer(self.toolbar.layer)
+        self.view.layer.addSublayer(self.toolbarYancı.layer)
+        self.view.layer.addSublayer(self.recordButton.layer)
+        self.view.layer.addSublayer(self.flashButton.layer)
 
+        
+    
     }
     
     func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
@@ -397,61 +441,6 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
     }
 
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        dispatch_async(self.sessionQueue!) {
-            switch self.setupResult {
-            case .Success:
-                // Only setup observers and start the session running if setup succeeded.
-                self.addObservers()
-                self.captureSession!.startRunning()
-                self.sessionRunning = self.captureSession!.running
-                
-            case .CameraNotAuthorized:
-                dispatch_async(dispatch_get_main_queue()){
-                    if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
-                    UIApplication.sharedApplication().endIgnoringInteractionEvents()
-                    }
-                    let message = NSLocalizedString("Molocate'in kamera kullanmasına izin vermediniz. Lütfen ayarları değiştiriniz.", comment: "" )
-                    let alertController = UIAlertController(title: "Molocate Kamera", message: message, preferredStyle: UIAlertControllerStyle.Alert)
-                    let cancelAction = UIAlertAction(title: NSLocalizedString("OK", comment: "Alert OK button"), style: UIAlertActionStyle.Cancel, handler: nil)
-                    alertController.addAction(cancelAction)
-                    // Provide quick access to Settings.
-                    let settingsAction = UIAlertAction(title: NSLocalizedString("Ayarlar", comment: "Alert button to open Settings"), style: UIAlertActionStyle.Default) {action in
-                        UIApplication.sharedApplication().openURL(NSURL(string:UIApplicationOpenSettingsURLString)!)
-                        
-                    }
-                    alertController.addAction(settingsAction)
-                    self.presentViewController(alertController, animated: true, completion: nil)
-                }
-            case .SessionConfigurationFailed:
-                dispatch_async(dispatch_get_main_queue()) {
-                    let message = NSLocalizedString("Çekim için uygun değil", comment: "Alert message when something goes wrong during capture session configuration")
-                    let alertController = UIAlertController(title: "Hata", message: message, preferredStyle: UIAlertControllerStyle.Alert)
-                    let cancelAction = UIAlertAction(title: NSLocalizedString("OK", comment: "Alert OK button"), style: UIAlertActionStyle.Cancel, handler: nil)
-                    alertController.addAction(cancelAction)
-                    self.presentViewController(alertController, animated: true, completion: nil)
-                }
-            }
-        }
-        dispatch_async(dispatch_get_main_queue()) {
-        self.locationManager = CLLocationManager()
-        self.locationManager.delegate = self
-        self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
-        self.locationManager.requestWhenInUseAuthorization()
-        self.locationManager.startUpdatingLocation()
-            let seconds = 5.0
-            let delay = seconds * Double(NSEC_PER_SEC)  // nanoseconds per seconds
-            let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
-            
-            dispatch_after(dispatchTime, dispatch_get_main_queue(), {
-                
-                self.displayLocationInfo(self.bestEffortAtLocation)
-                
-            })
-
-        }
-           }
     
 
     
@@ -480,7 +469,6 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
     
     @IBOutlet var topView: UIView!
     @IBOutlet var bottomView: UIView!
-
     @IBOutlet var cameraChange: UIBarButtonItem!
     @IBAction func cameraChange(sender: AnyObject) {
         
@@ -605,12 +593,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
             
                 let merge = AVMutableComposition()
                 let firstTrack = merge.addMutableTrackWithMediaType(AVMediaTypeVideo, preferredTrackID: kCMPersistentTrackID_Invalid)
-                _ = merge.addMutableTrackWithMediaType(AVMediaTypeVideo, preferredTrackID: kCMPersistentTrackID_Invalid)
                 let firstTrackAudio = merge.addMutableTrackWithMediaType(AVMediaTypeAudio, preferredTrackID: kCMPersistentTrackID_Invalid)
-                
-                
-                
-                
                 
                 do {
                         try firstTrack.insertTimeRange(CMTimeRange(start: kCMTimeZero, duration: firstAsset.duration), ofTrack: firstAsset.tracksWithMediaType(AVMediaTypeVideo)[0], atTime: kCMTimeZero)
@@ -789,12 +772,8 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         let instruction = AVMutableVideoCompositionInstruction()
         instruction.timeRange = CMTimeRangeMake(kCMTimeZero, CMTimeMakeWithSeconds(60, 30))
         let transformer = AVMutableVideoCompositionLayerInstruction(assetTrack: clipVideoTrack)
-       // let cropRect = CGRect(x: 0, y: clipVideoTrack.naturalSize.width*(self.toolbar.frame.height+self.toolbarYancı.frame.height)/self.view.frame.height, width: clipVideoTrack.naturalSize.height, height: clipVideoTrack.naturalSize.height)
-        
-        let t1 = CGAffineTransformMakeTranslation(clipVideoTrack.naturalSize.height, -4*(self.toolbar.frame.height+self.toolbarYancı.frame.height))
-        
+        let t1 = CGAffineTransformMakeTranslation(clipVideoTrack.naturalSize.height, -(clipVideoTrack.naturalSize.width*(self.toolbar.frame.height+self.toolbarYancı.frame.height)/self.view.frame.height))
         let t2 = CGAffineTransformRotate(t1, 3.141593/2)
-        
         transformer.setTransform(t2, atTime: kCMTimeZero)
         instruction.layerInstructions = NSArray(object: transformer) as! [AVVideoCompositionLayerInstruction]
         videoComposition.instructions = NSArray(object: instruction) as! [AVVideoCompositionInstructionProtocol]
@@ -806,14 +785,9 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         exporter?.videoComposition = videoComposition
         exporter?.outputURL = exportURl
         exporter?.outputFileType = AVFileTypeMPEG4
-
         exporter?.exportAsynchronouslyWithCompletionHandler({ () -> Void in
         
-            
-
             videoPath = exportPath
-            
-            
             
                 do {
                     try NSFileManager.defaultManager().removeItemAtURL(fakeoutputFileURL!)
