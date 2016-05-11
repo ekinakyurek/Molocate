@@ -1248,6 +1248,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                 }
 
             } else {
+                self.tableView.scrollEnabled = true
                 self.cameraButton.image = UIImage(named: "Camera")
                 self.cameraButton.title = nil
                 self.searchText.text = ""
@@ -1560,6 +1561,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         
         player1.stop()
         player2.stop()
+        tableView.scrollEnabled = false
         isSearching = true
         cameraButton.image = nil
         cameraButton.title = "Vazgeç"
@@ -1574,6 +1576,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         self.view.layer.addSublayer(backgroundLabel.layer)
         self.view.layer.addSublayer(venueButton2.layer)
         self.view.layer.addSublayer(usernameButton2.layer)
+     
         
     }
 
