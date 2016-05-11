@@ -1,7 +1,3 @@
-//  likeVideo.swift
-//  Molocate
-
-
 import UIKit
 
 class likeVideo: UIViewController, UITableViewDelegate, UITableViewDataSource  {
@@ -9,7 +5,6 @@ class likeVideo: UIViewController, UITableViewDelegate, UITableViewDataSource  {
     let cellIdentifier = "cell5"
     var users = [MoleUser]()
     
-
     @IBOutlet var toolBar: UIToolbar!
     @IBOutlet var tableView: UITableView!
     
@@ -134,11 +129,8 @@ class likeVideo: UIViewController, UITableViewDelegate, UITableViewDataSource  {
         })
     }
     
-    //
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     @IBAction func backButton(sender: AnyObject) {

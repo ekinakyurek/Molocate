@@ -5,65 +5,48 @@
 import UIKit
 
 class oneVideo: UIViewController,PlayerDelegate {
+    
     var player = Player()
     var pressedLike: Bool = false
     var pressedFollow: Bool = false
-    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    var likeHeart = UIImageView()
+    let screenSize: CGRect = UIScreen.mainScreen().bounds
+    
+    @IBOutlet var toolBar: UIToolbar!
+    @IBOutlet var tableView: UITableView!
     @IBAction func backButton(sender: AnyObject) {
         
         self.willMoveToParentViewController(nil)
         self.view.removeFromSuperview()
         self.removeFromParentViewController()
     }
-    @IBOutlet var toolBar: UIToolbar!
-    @IBOutlet var tableView: UITableView!
-    var likeHeart = UIImageView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        likeHeart.image = UIImage(named: "favorite")
-        likeHeart.alpha = 1.0
-        UIApplication.sharedApplication().endIgnoringInteractionEvents()
-        self.toolBar.clipsToBounds = true
-        self.toolBar.translucent = false
-        self.toolBar.barTintColor = swiftColor
-        tableView.allowsSelection = false
-        self.player = Player()
-        self.player.delegate = self
-        self.player.playbackLoops = true
+             UIApplication.sharedApplication().endIgnoringInteractionEvents()
+       
         // Do any additional setup after loading the view.
     }
     
-    
-    
-    func playerReady(player: Player) {
-            //self.player.playFromBeginning()
+    override func viewDidDisappear(animated: Bool) {
+        
     }
     
-    func playerPlaybackStateDidChange(player: Player) {
+    func initGui(){
+        likeHeart.image = UIImage(named: "favorite")
+        likeHeart.alpha = 1.0
+        
+        toolBar.clipsToBounds = true
+        toolBar.translucent = false
+        toolBar.barTintColor = swiftColor
+        tableView.allowsSelection = false
+        
+        player = Player()
+        player.delegate = self
+        player.playbackLoops = true
     }
     
-    func playerBufferingStateDidChange(player: Player) {
-    }
-    
-    func playerPlaybackWillStartFromBeginning(player: Player) {
-    }
-    
-    func playerPlaybackDidEnd(player: Player) {
-    }
-    let screenSize: CGRect = UIScreen.mainScreen().bounds
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-       
-        return screenSize.width + 150
-    }
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if !pressedLike && !pressedFollow {
         
@@ -89,14 +72,14 @@ class oneVideo: UIViewController,PlayerDelegate {
         cell.reportButton.addTarget(self, action: #selector(oneVideo.pressedReport(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         cell.likeCount.addTarget(self, action: #selector(oneVideo.pressedLikeCount(_:)), forControlEvents: UIControlEvents.TouchUpInside)
      
-            let tap = UITapGestureRecognizer(target: self, action:#selector(MainController.doubleTapped(_:) ));
-            tap.numberOfTapsRequired = 2
-            cell.contentView.addGestureRecognizer(tap)
-            let playtap = UITapGestureRecognizer(target: self, action:#selector(MainController.playTapped(_:) ));
-            playtap.numberOfTapsRequired = 1
-            cell.contentView.addGestureRecognizer(playtap)
-            
-            playtap.requireGestureRecognizerToFail(tap)
+        let tap = UITapGestureRecognizer(target: self, action:#selector(MainController.doubleTapped(_:) ));
+        tap.numberOfTapsRequired = 2
+        cell.contentView.addGestureRecognizer(tap)
+        let playtap = UITapGestureRecognizer(target: self, action:#selector(MainController.playTapped(_:) ));
+        playtap.numberOfTapsRequired = 1
+        cell.contentView.addGestureRecognizer(playtap)
+        
+        playtap.requireGestureRecognizerToFail(tap)
         
         
         self.player.setUrl(MoleGlobalVideo.urlSta)
@@ -131,6 +114,15 @@ class oneVideo: UIViewController,PlayerDelegate {
         }
     }
     
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
+        return screenSize.width + 150
+    }
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
     func pressedUsername(sender: UIButton) {
         let buttonRow = sender.tag
         print("username e basıldı at index path: \(buttonRow)")
@@ -139,7 +131,9 @@ class oneVideo: UIViewController,PlayerDelegate {
         MolocateAccount.getUser(MoleGlobalVideo.username) { (data, response, error) -> () in
             dispatch_async(dispatch_get_main_queue()){
                 user = data
+                mine = false
                 let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
+                controller.classUser = data
                 controller.view.frame = self.view.bounds;
                 controller.willMoveToParentViewController(self)
                 self.view.addSubview(controller.view)
@@ -298,7 +292,6 @@ class oneVideo: UIViewController,PlayerDelegate {
     func pressedComment(sender: UIButton) {
         let buttonRow = sender.tag
         player.stop()
-        
         videoIndex = buttonRow
         video_id = MoleGlobalVideo.id
         myViewController = "oneVideo"
@@ -315,11 +308,7 @@ class oneVideo: UIViewController,PlayerDelegate {
                 //print("comment e basıldı at index path: \(buttonRow)")
             }
         }
-        
-        
-        
     }
-    
     
     func pressedReport(sender: UIButton) {
         let buttonRow = sender.tag
@@ -345,5 +334,26 @@ class oneVideo: UIViewController,PlayerDelegate {
         
         self.presentViewController(actionSheetController, animated: true, completion: nil)
         
+    }
+    
+    func playerReady(player: Player) {
+        //self.player.playFromBeginning()
+    }
+    
+    func playerPlaybackStateDidChange(player: Player) {
+    }
+    
+    func playerBufferingStateDidChange(player: Player) {
+    }
+    
+    func playerPlaybackWillStartFromBeginning(player: Player) {
+    }
+    
+    func playerPlaybackDidEnd(player: Player) {
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
 }

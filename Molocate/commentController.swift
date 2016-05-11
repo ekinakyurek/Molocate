@@ -130,8 +130,6 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
             }
             
             
-        }else{
-            //DO NOTHING
         }
     }
     
@@ -281,13 +279,11 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
+
     func dismissKeyboard() {
         //Causes the view (or one of its embedded text fields) to resign the first responder status.
         view.endEditing(true)
     }
-    
     
     func keyboardNotification(notification: NSNotification) {
         
@@ -321,8 +317,7 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
             let animationCurveRaw = animationCurveRawNSN?.unsignedLongValue ?? UIViewAnimationOptions.CurveEaseInOut.rawValue
             let animationCurve:UIViewAnimationOptions = UIViewAnimationOptions(rawValue: animationCurveRaw)
             self.bottomConstraint?.constant = isShowing ? endFrameHeight : 0
-            
-            
+    
             UIView.animateWithDuration(duration,
                                        delay: NSTimeInterval(0),
                                        options: animationCurve,
