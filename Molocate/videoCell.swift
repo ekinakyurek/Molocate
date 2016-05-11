@@ -14,32 +14,31 @@ import UIKit
 
 class videoCell: UITableViewCell {
     
-    var Username: UIButton!
-    var followButton : UIButton!
-    var placeName : UIButton!
-    var reportButton: UIButton!
-    var commentButton : UIButton!
-    var likeButton : UIButton!
-    var profilePhoto : UIButton!
-    var likeCount : UIButton!
-    var commentCount : UIButton!
-    var videoComment : UILabel!
-    var videoTime : UILabel!
-    var label1 : UILabel!
-    var label2 : UILabel!
-    var label3 : UILabel!
-    var myLabel3: UILabel!
-    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
-    var tableVideoURL: NSURL!
-    var y:CGFloat!
-    var newRect:CGRect!
+    let Username: UIButton = UIButton()
+    let followButton : UIButton = UIButton()
+    let placeName : UIButton = UIButton()
+    let reportButton: UIButton = UIButton()
+    let commentButton : UIButton = UIButton()
+    let likeButton : UIButton = UIButton()
+    let profilePhoto : UIButton = UIButton()
+    let likeCount : UIButton = UIButton()
+    let commentCount : UIButton = UIButton()
+    let videoComment : UILabel = UILabel()
+    let videoTime : UILabel = UILabel()
+    let label1 : UILabel = UILabel()
+    let label2 : UILabel = UILabel()
+    let label3 : UILabel = UILabel()
+    let myLabel3: UILabel = UILabel()
+    var cellthumbnail = UIImageView()
     let gap : CGFloat = 10
     let labelHeight: CGFloat = 30
     let labelWidth: CGFloat = 140
-    var screenSize:CGRect!
-    //var player: Videos!
+    var newRect:CGRect!
+    let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    
+    var tableVideoURL: NSURL!
+    var y:CGFloat!
     var hasPlayer = false
-    var cellthumbnail = UIImageView()
     
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:)")
@@ -47,17 +46,13 @@ class videoCell: UITableViewCell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        //player = Videos()
         initUI()
-        
-        
     }
     
     func initUI(){
-        //player = Videos()
-        screenSize = UIScreen.mainScreen().bounds
+        let  screenSize = MolocateDevice.size
         
-        profilePhoto = UIButton()
+     
         profilePhoto.frame = CGRectMake(5, 5, 44, 44)
         //photo ata
         
@@ -69,9 +64,8 @@ class videoCell: UITableViewCell {
         profilePhoto.layer.cornerRadius = profilePhoto.frame.height/2
         profilePhoto.clipsToBounds = true
         profilePhoto.setBackgroundImage(image, forState: UIControlState.Normal)
-        contentView.addSubview(profilePhoto)
-        
-        Username = UIButton()
+        self.contentView.addSubview(profilePhoto)
+    
         Username.frame = CGRectMake(59 , 5, screenSize.width - 100, 22)
         Username.titleLabel?.sizeToFit()
         Username.setTitleColor(swiftColor, forState: .Normal)
@@ -79,9 +73,8 @@ class videoCell: UITableViewCell {
         Username.setTitle("kcenan", forState: .Normal)
         Username.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size:17)
         //Username.addTarget(self, action: "pressedUsername:", forControlEvents:UIControlEvents.TouchUpInside)
-        contentView.addSubview(Username)
+        self.contentView.addSubview(Username)
         
-        placeName = UIButton()
         placeName.frame = CGRectMake(59 , 27, screenSize.width - 100, 22)
         placeName.setTitleColor(swiftColor2, forState: .Normal)
         placeName.titleLabel?.sizeToFit()
@@ -89,26 +82,23 @@ class videoCell: UITableViewCell {
         placeName.setTitle("koç university", forState: .Normal)
         placeName.titleLabel?.font = UIFont(name: "AvenirNext-Medium", size: 14)
         placeName.titleLabel?.lineBreakMode = NSLineBreakMode.ByTruncatingTail
-        contentView.addSubview(placeName)
+        self.contentView.addSubview(placeName)
         
-        videoComment = UILabel()
         videoComment.frame = CGRectMake( 10 , 59 + screenSize.width , screenSize.width - 50 , 50)
         videoComment.textAlignment = .Left
         // videoComment.textColor = UIColor.blackColor()
         videoComment.numberOfLines = 2
         videoComment.lineBreakMode = .ByWordWrapping
-        contentView.addSubview(videoComment)
+        self.contentView.addSubview(videoComment)
         
-        label3 = UILabel()
         label3.frame = CGRectMake( 12 , 104 + screenSize.width , screenSize.width - 45 , 1)
         label3.backgroundColor = UIColor.lightGrayColor()
         label3.text = "  "
         label3.font = UIFont(name: "AvenirNext-Regular", size: 10)
         label3.textAlignment = .Center
         
-        contentView.addSubview(label3)
+        self.contentView.addSubview(label3)
         
-        videoTime = UILabel()
         videoTime.frame = CGRectMake( screenSize.width - 30  , 59 + screenSize.width , 25 , 25)
         //yazı ortalama ekle
         videoTime.text = "2s"
@@ -116,85 +106,70 @@ class videoCell: UITableViewCell {
         videoTime.textAlignment = .Right
         videoTime.textColor = UIColor.blackColor()
         //videoTime.sizeToFit()
-        contentView.addSubview(videoTime)
+        self.contentView.addSubview(videoTime)
         
         
-        followButton = UIButton()
+     
         followButton.frame = CGRectMake(screenSize.width - 41 , 9 , 32 , 32)
         followButton.setBackgroundImage(UIImage(named: "follow"), forState: UIControlState.Normal)
-        contentView.addSubview(followButton)
+        self.contentView.addSubview(followButton)
         
-        likeButton = UIButton()
+        
         likeButton.frame = CGRectMake( 5 , 108 + screenSize.width , 36, 36)
         let likeImage = UIImage(named: "likeunfilled")! as UIImage
         likeButton.setBackgroundImage(likeImage, forState: UIControlState.Normal)
-        contentView.addSubview(likeButton)
+        self.contentView.addSubview(likeButton)
         
         
-        label1 = UILabel()
+  
         label1.frame = CGRectMake( 42 , 110 + screenSize.width , 44 , 18)
         //yazı ortalama
         label1.text = "BEĞENİ"
         label1.font = UIFont(name: "AvenirNext-Regular", size: 10)
         label1.textAlignment = .Center
         label1.textColor = UIColor.blackColor()
-        contentView.addSubview(label1)
+        self.contentView.addSubview(label1)
         
-        likeCount = UIButton()
+       
         likeCount.frame = CGRectMake( 42 , 106 + screenSize.width , 44 , 36)
         likeCount.contentHorizontalAlignment = .Center
         likeCount.contentVerticalAlignment = .Bottom
         likeCount.setTitle("0", forState: .Normal)
         likeCount.setTitleColor(swiftColor, forState: .Normal)
         likeCount.titleLabel!.font = UIFont(name: "AvenirNext-Medium", size: 14)
-        contentView.addSubview(likeCount)
+        self.contentView.addSubview(likeCount)
         
-        
-        
-        commentButton = UIButton()
         commentButton.frame = CGRectMake( 93 , 108 + screenSize.width , 36 , 36)
         let commentImage = UIImage(named: "comment")! as UIImage
     
         commentButton.setBackgroundImage(commentImage, forState: UIControlState.Normal)
-        contentView.addSubview(commentButton)
+        self.contentView.addSubview(commentButton)
         
-        label2 = UILabel()
+       
         label2.frame = CGRectMake( 130 , 110 + screenSize.width , 44 , 18)
         label2.text = "YORUM"
         label2.font = UIFont(name: "AvenirNext-Regular", size: 10)
         label2.textAlignment = .Center
         label2.textColor = UIColor.blackColor()
-        contentView.addSubview(label2)
+        self.contentView.addSubview(label2)
         
-        commentCount = UIButton()
+    
         commentCount.frame = CGRectMake( 130 , 123 + screenSize.width , 44 , 18)
         commentCount.setTitle("0", forState: .Normal)
         commentCount.titleLabel!.font = UIFont(name: "AvenirNext-Medium", size: 14)
         commentCount.contentHorizontalAlignment = .Center
         commentCount.setTitleColor(swiftColor, forState: .Normal)
-        contentView.addSubview(commentCount)
+        self.contentView.addSubview(commentCount)
         
-        reportButton = UIButton()
         reportButton.frame = CGRectMake(screenSize.width - 49, 109 + screenSize.width  , 34, 34)
         let reportImage = UIImage(named: "sign-2.png")! as UIImage
         reportButton.setBackgroundImage(reportImage, forState: UIControlState.Normal)
-        contentView.addSubview(reportButton)
-        
-        
-        if videoComment.text == "" {
-            
-        }
-        else {
-            
-        }
+        self.contentView.addSubview(reportButton)
         
         newRect = CGRectMake(0, 54, screenSize.width, screenSize.width)
         cellthumbnail = UIImageView(frame: newRect)
-        contentView.layer.addSublayer(cellthumbnail.layer)
-        
-
-        
-
+        self.contentView.layer.addSublayer(cellthumbnail.layer)
+    
     }
     
     func getStringHeight(mytext: String, fontSize: CGFloat, width: CGFloat)->CGFloat {
@@ -260,40 +235,18 @@ class videoCell: UITableViewCell {
             self.profilePhoto.sd_setImageWithURL(videoInfo.userpic, forState: UIControlState.Normal)
 
         }
-        activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
-        
+        activityIndicator.frame = CGRectMake(0, 0, 50, 50)
         activityIndicator.center = CGPoint(x: newRect.midX, y: newRect.midY)
         activityIndicator.transform = CGAffineTransformMakeScale(1.2, 1.2)
         activityIndicator.hidesWhenStopped = true
         activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.White
-        contentView.addSubview(activityIndicator)
+        self.contentView.addSubview(activityIndicator)
         activityIndicator.startAnimating()
-
-    
     }
     
     
     deinit {
-        
-             Username = nil
-            followButton = nil
-             placeName = nil
-             reportButton = nil
-            commentButton = nil
-           likeButton = nil
-             profilePhoto = nil
-             likeCount = nil
-             commentCount = nil
-             videoComment = nil
-             videoTime = nil
-             label1 = nil
-             label2 = nil
-             label3 = nil
-              myLabel3 = nil
-             tableVideoURL = nil
-             y = nil
-            newRect = nil
-        
+        //DBG: Research about deinit
     }
     
     
