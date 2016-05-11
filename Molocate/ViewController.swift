@@ -31,6 +31,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDe
     }
     
     override func viewWillAppear(animated: Bool) {
+        
         scrollWidth = 3 * self.view.frame.size.width
         scrollHeight  = self.view.frame.size.height
         adjustViewLayout(MolocateDevice.size)

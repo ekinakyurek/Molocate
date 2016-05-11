@@ -56,7 +56,6 @@
 		C68872881C8CF74600BDBE00 /* right-chevron.png in Resources */ = {isa = PBXBuildFile; fileRef = C68872871C8CF74600BDBE00 /* right-chevron.png */; };
 		C68956281C4EC3D500D391F2 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C68956271C4EC3D500D391F2 /* Social.framework */; };
 		C689562A1C4EC3E200D391F2 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C68956291C4EC3E200D391F2 /* Accounts.framework */; };
-		C68956301C50441C00D391F2 /* notificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C689562F1C50441C00D391F2 /* notificationCell.swift */; };
 		C6917F921BFA60B700CA501A /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6917F911BFA60B700CA501A /* CameraViewController.swift */; };
 		C69B823F1CA0D6F5008658CF /* oneVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69B823E1CA0D6F5008658CF /* oneVideo.swift */; };
 		C69B824B1CA1102D008658CF /* sign-2.png in Resources */ = {isa = PBXBuildFile; fileRef = C69B824A1CA1102D008658CF /* sign-2.png */; };
@@ -176,7 +175,6 @@
 		C68872871C8CF74600BDBE00 /* right-chevron.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "right-chevron.png"; sourceTree = "<group>"; };
 		C68956271C4EC3D500D391F2 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		C68956291C4EC3E200D391F2 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
-		C689562F1C50441C00D391F2 /* notificationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = notificationCell.swift; sourceTree = "<group>"; };
 		C6917F911BFA60B700CA501A /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		C69B823E1CA0D6F5008658CF /* oneVideo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = oneVideo.swift; sourceTree = "<group>"; };
 		C69B824A1CA1102D008658CF /* sign-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sign-2.png"; sourceTree = "<group>"; };
@@ -289,7 +287,6 @@
 				C6E92F771CCFD0F900CAE237 /* searchVenue.swift */,
 				C638AFF61C9C80B3003085E8 /* likeVideoCell.swift */,
 				3871AAA21C9488BA00DDD83E /* sideCell.swift */,
-				C689562F1C50441C00D391F2 /* notificationCell.swift */,
 				E3F4673C1CC03F02005F8434 /* molocateNotificationCell.swift */,
 				C68872851C8CED2800BDBE00 /* optionCell.swift */,
 				C6D0CDF21C44200F006AAFF0 /* TableViewCellFollowerFollowing.swift */,
@@ -720,7 +717,6 @@
 				C638AFF31C9C7E74003085E8 /* likeVideo.swift in Sources */,
 				388173F51C97AACB0064EBB5 /* commentController.swift in Sources */,
 				C6B7C9EB1C7BE7EF005607EC /* profileLocation.swift in Sources */,
-				C68956301C50441C00D391F2 /* notificationCell.swift in Sources */,
 				388173F71C97ABE20064EBB5 /* commentCell.swift in Sources */,
 				C609053C1C48145700614C7F /* SideBarController.swift in Sources */,
 				C67C444F1C75D69700FCB157 /* myCollectionViewCell.swift in Sources */,

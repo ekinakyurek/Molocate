@@ -11,5 +11,4 @@ import UIKit
 class molocateNotificationCell: UITableViewCell {
     @IBOutlet var myLabel: UILabel!
     @IBOutlet var fotoButton: UIButton!
-
 }

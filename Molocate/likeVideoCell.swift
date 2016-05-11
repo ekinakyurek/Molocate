@@ -21,8 +21,8 @@ class likeVideoCell: UITableViewCell {
     }
     
     deinit{
-        username = nil
-        profileImage = nil
-        followLike = nil
+//        username = nil
+//        profileImage = nil
+//        followLike = nil
     }
 }

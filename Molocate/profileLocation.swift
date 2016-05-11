@@ -15,6 +15,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
     
     let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     let refreshControl:UIRefreshControl = UIRefreshControl()
+    
     var player1Turn = false
     var classPlace = MolePlace()
     var videoArray = [MoleVideoInformation]()
@@ -875,18 +876,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
                 }
             }
         }else{
-            
-            
-            //            self.videoArray[buttonRow].isLiked=0
-            //            self.videoArray[buttonRow].likeCount-=1
-            //            self.tableView.reloadRowsAtIndexPaths(indexes, withRowAnimation: UITableViewRowAnimation.None)
-            //
-            //
-            //            MolocateVideo.unLikeAVideo(videoArray[buttonRow].id){ (data, response, error) -> () in
-            //                dispatch_async(dispatch_get_main_queue()){
-            //                    ////print(data)
-            //                }
-            //            }
+            //CHECK: If we need to do smothing here
         }
         pressedLike = false
     }

@@ -82,7 +82,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
         if(notificationArray[indexPath.row].picture_url.absoluteString != ""){
             cell.fotoButton.sd_setImageWithURL(notificationArray[indexPath.row].picture_url, forState: UIControlState.Normal)
         } else {
-            cell.fotoButton.imageView?.image = UIImage(named: "profile")
+            cell.fotoButton.setImage(UIImage(named: "profile"), forState: .Normal)
         }
         
         var multipleAttributes = [String : NSObject]()
