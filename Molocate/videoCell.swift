@@ -51,10 +51,8 @@ class videoCell: UITableViewCell {
     
     func initUI(){
         let  screenSize = MolocateDevice.size
-        
      
         profilePhoto.frame = CGRectMake(5, 5, 44, 44)
-        //photo ata
         
         let image = UIImage(named: "profile")! as UIImage
         profilePhoto.layer.borderWidth = 0.1
@@ -70,23 +68,20 @@ class videoCell: UITableViewCell {
         Username.titleLabel?.sizeToFit()
         Username.setTitleColor(swiftColor, forState: .Normal)
         Username.contentHorizontalAlignment = .Left
-        Username.setTitle("kcenan", forState: .Normal)
         Username.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size:17)
-        //Username.addTarget(self, action: "pressedUsername:", forControlEvents:UIControlEvents.TouchUpInside)
         self.contentView.addSubview(Username)
         
         placeName.frame = CGRectMake(59 , 27, screenSize.width - 100, 22)
         placeName.setTitleColor(swiftColor2, forState: .Normal)
         placeName.titleLabel?.sizeToFit()
         placeName.contentHorizontalAlignment = .Left
-        placeName.setTitle("koç university", forState: .Normal)
+        //placeName.setTitle("koç university", forState: .Normal)
         placeName.titleLabel?.font = UIFont(name: "AvenirNext-Medium", size: 14)
         placeName.titleLabel?.lineBreakMode = NSLineBreakMode.ByTruncatingTail
         self.contentView.addSubview(placeName)
         
         videoComment.frame = CGRectMake( 10 , 59 + screenSize.width , screenSize.width - 50 , 50)
         videoComment.textAlignment = .Left
-        // videoComment.textColor = UIColor.blackColor()
         videoComment.numberOfLines = 2
         videoComment.lineBreakMode = .ByWordWrapping
         self.contentView.addSubview(videoComment)
@@ -100,12 +95,10 @@ class videoCell: UITableViewCell {
         self.contentView.addSubview(label3)
         
         videoTime.frame = CGRectMake( screenSize.width - 30  , 59 + screenSize.width , 25 , 25)
-        //yazı ortalama ekle
-        videoTime.text = "2s"
+        //videoTime.text = "2s"
         videoTime.font = UIFont(name: "AvenirNext-UltraLight", size: 13)
         videoTime.textAlignment = .Right
         videoTime.textColor = UIColor.blackColor()
-        //videoTime.sizeToFit()
         self.contentView.addSubview(videoTime)
         
         
@@ -134,7 +127,7 @@ class videoCell: UITableViewCell {
         likeCount.frame = CGRectMake( 42 , 106 + screenSize.width , 44 , 36)
         likeCount.contentHorizontalAlignment = .Center
         likeCount.contentVerticalAlignment = .Bottom
-        likeCount.setTitle("0", forState: .Normal)
+        //likeCount.setTitle("0", forState: .Normal)
         likeCount.setTitleColor(swiftColor, forState: .Normal)
         likeCount.titleLabel!.font = UIFont(name: "AvenirNext-Medium", size: 14)
         self.contentView.addSubview(likeCount)
@@ -155,7 +148,7 @@ class videoCell: UITableViewCell {
         
     
         commentCount.frame = CGRectMake( 130 , 123 + screenSize.width , 44 , 18)
-        commentCount.setTitle("0", forState: .Normal)
+        //commentCount.setTitle("0", forState: .Normal)
         commentCount.titleLabel!.font = UIFont(name: "AvenirNext-Medium", size: 14)
         commentCount.contentHorizontalAlignment = .Center
         commentCount.setTitleColor(swiftColor, forState: .Normal)
@@ -187,54 +180,59 @@ class videoCell: UITableViewCell {
     }
     
     func initialize(row: Int , videoInfo: MoleVideoInformation){
-        self.Username.tag = row
-        self.Username.setTitle(videoInfo.username, forState: .Normal)
-        self.placeName.tag = row
-        self.placeName.setTitle(videoInfo.location, forState: .Normal)
-        //placeDictionary.setValue(videoArray[indexPath.row].locationID, forKey: placename)
-        self.profilePhoto.tag = row
-        self.followButton.tag = row
-        self.likeButton.tag = row
-        self.likeCount.setTitle("\(likeCount)", forState: .Normal)
-        self.likeCount.tag = row
-        self.commentButton.tag = row
-        self.commentCount.tag = row
-        self.commentCount.setTitle("\(commentCount)", forState: .Normal)
-        self.reportButton.tag = row
+        Username.setTitle(videoInfo.username, forState: .Normal)
+        Username.tag = row
+        
+        likeButton.tag = row
+        
+        likeCount.setTitle("\(likeCount)", forState: .Normal)
+        likeCount.tag = row
+        
+        placeName.setTitle(videoInfo.location, forState: .Normal)
+        placeName.tag = row
+        
+        profilePhoto.tag = row
+        
+        followButton.tag = row
+        
+        commentButton.tag = row
+        commentCount.tag = row
+        commentCount.setTitle("\(commentCount)", forState: .Normal)
+       
+        reportButton.tag = row
      
         self.videoTime.text = videoInfo.dateStr
+        
         if(videoInfo.isLiked==1){
             self.likeButton.setBackgroundImage(UIImage(named: "likefilled"), forState: UIControlState.Normal)
         }
         
         var textstring = " "
-        //print(videoInfo.taggedUsers)
+        
         for user in videoInfo.taggedUsers{
             textstring +=  "@" + user
         }
+        
         var multipleAttributes = [String : NSObject]()
         multipleAttributes[NSForegroundColorAttributeName] = swiftColor2
         multipleAttributes[NSFontAttributeName] =  UIFont(name: "AvenirNext-Medium", size: 12.5)
-        
         let tags =  NSAttributedString(string: textstring, attributes: multipleAttributes)
         
         var multipleAttributes2 = [String : NSObject]()
         multipleAttributes2[NSFontAttributeName] =  UIFont(name: "AvenirNext-Medium", size: 12.5)
         multipleAttributes2[NSForegroundColorAttributeName] = UIColor.blackColor()
-
-
         let commentext = NSMutableAttributedString(string: videoInfo.caption, attributes:  multipleAttributes2)
-        //print(videoInfo.caption+"--------------")
+
         commentext.appendAttributedString(tags)
        
         videoComment.attributedText = commentext
         
-       // print(profilePic.absoluteString)
         if(videoInfo.userpic.absoluteString != ""){
-            
             self.profilePhoto.sd_setImageWithURL(videoInfo.userpic, forState: UIControlState.Normal)
-
+        }else{
+            self.profilePhoto.setImage(UIImage(named: "profile"), forState: .Normal)
         }
+        
         activityIndicator.frame = CGRectMake(0, 0, 50, 50)
         activityIndicator.center = CGPoint(x: newRect.midX, y: newRect.midY)
         activityIndicator.transform = CGAffineTransformMakeScale(1.2, 1.2)

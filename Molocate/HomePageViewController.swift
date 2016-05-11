@@ -568,13 +568,13 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
     func tableView(atableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if !pressedLike && !pressedFollow {
             let cell = videoCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "customCell")
-            
             cell.initialize(indexPath.row, videoInfo:  videoArray[indexPath.row])
             
             cell.Username.addTarget(self, action: #selector(HomePageViewController.pressedUsername(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             cell.placeName.addTarget(self, action: #selector(HomePageViewController.pressedPlace(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             cell.profilePhoto.addTarget(self, action: #selector(HomePageViewController.pressedUsername(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             cell.commentCount.addTarget(self, action: #selector(HomePageViewController.pressedComment(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+            
             if(videoArray[indexPath.row].isFollowing==0 && videoArray[indexPath.row].username != MoleCurrentUser.username){
                 cell.followButton.addTarget(self, action: #selector(HomePageViewController.pressedFollow(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             }else{
@@ -610,6 +610,7 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
             
             
             let thumbnailURL = self.videoArray[indexPath.row].thumbnailURL
+            
             if(thumbnailURL.absoluteString != ""){
                 cell.cellthumbnail.sd_setImageWithURL(thumbnailURL)
                 //////print("burda")
