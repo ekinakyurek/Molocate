@@ -10,5 +10,4 @@ import UIKit
 
 class captureCollectionCell: UICollectionViewCell {
     @IBOutlet var label: UILabel!
-
 }

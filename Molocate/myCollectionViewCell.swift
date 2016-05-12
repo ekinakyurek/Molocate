@@ -10,8 +10,5 @@ import UIKit
 
 class myCollectionViewCell: UICollectionViewCell {
     @IBOutlet var myLabel: UILabel!
-    
-   
-    
 }
 

@@ -26,13 +26,14 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NotificationsViewController.scrollToTop), name: "scrollToTop", object: nil)
         
-        //IMP: Delete unnecessary endIgnoringEvents
+        //DBG: Delete unnecessary endIgnoringEvents
         if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
             UIApplication.sharedApplication().endIgnoringInteractionEvents()
         }
     }
     
     func getData(){
+        //DBG: What should we do when error occurs
         MolocateNotifications.getNotifications(NSURL()) { (data, response, error) -> () in
             dispatch_async(dispatch_get_main_queue()){
                 self.notificationArray = data!

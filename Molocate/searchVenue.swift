@@ -10,12 +10,12 @@ import UIKit
 
 class searchVenue: UITableViewCell {
 
-    var profilePhoto: UIButton!
-    var usernameLabel: UILabel!
-    var nameLabel: UILabel!
-    var followButton: UIButton!
-    var addressNameLabel: UILabel!
-    var distanceLabel: UILabel!
+    let profilePhoto: UIButton = UIButton()
+    let usernameLabel: UILabel = UILabel()
+    let nameLabel: UILabel = UILabel()
+    let followButton: UIButton = UIButton()
+    let addressNameLabel: UILabel = UILabel()
+    let distanceLabel: UILabel = UILabel()
     
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:)")
@@ -24,10 +24,10 @@ class searchVenue: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        let screenSize = MolocateDevice.size
         
         
-        nameLabel = UILabel()
+   
         nameLabel.frame = CGRectMake(10 , 4 , screenSize.width - 100, 20)
         nameLabel.textColor = UIColor.blackColor()
         nameLabel.textAlignment = .Left
@@ -36,7 +36,7 @@ class searchVenue: UITableViewCell {
         contentView.addSubview(nameLabel)
         
         
-        addressNameLabel = UILabel()
+
         addressNameLabel.frame = CGRectMake(10 , 26 , screenSize.width - 100, 14)
         addressNameLabel.textColor = UIColor.grayColor()
         addressNameLabel.textAlignment = .Left
@@ -45,7 +45,6 @@ class searchVenue: UITableViewCell {
         contentView.addSubview(addressNameLabel)
         
         
-        distanceLabel = UILabel()
         distanceLabel.frame = CGRectMake(10 , 42 , screenSize.width - 100, 14)
         distanceLabel.textColor = UIColor.grayColor()
         distanceLabel.textAlignment = .Left
@@ -58,10 +57,10 @@ class searchVenue: UITableViewCell {
     deinit{
         
         
-        profilePhoto = nil
-        usernameLabel = nil
-        nameLabel = nil
-        followButton = nil
+//        profilePhoto = nil
+//        usernameLabel = nil
+//        nameLabel = nil
+//        followButton = nil
         
         
     }

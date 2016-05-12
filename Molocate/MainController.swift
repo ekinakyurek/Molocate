@@ -75,6 +75,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         venueTable.separatorColor = UIColor.lightGrayColor()
         venueTable.tableFooterView = UIView()
         try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
@@ -744,7 +745,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                  var detailText = ""
                 if let distance = venueLocation["distance"] as? CLLocationDistance {
                          detailText = distanceFormatter.stringFromDistance(distance)
-                         cell.distanceLabel?.text = detailText
+                         cell.distanceLabel.text = detailText
                  }
                 if let address = venueLocation["address"] as? String {
                          cell.addressNameLabel.text = address
@@ -771,6 +772,8 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                 }
                 if(searchedUsers[indexPath.row].profilePic.absoluteString != ""){
                     cell.profilePhoto.sd_setImageWithURL(searchedUsers[indexPath.row].profilePic, forState: UIControlState.Normal)
+                }else{
+                    cell.profilePhoto.setImage(UIImage(named: "profile"), forState: .Normal)
                 }
                 
                 cell.profilePhoto.addTarget(self, action: #selector(MainController.pressedProfileSearch(_:)), forControlEvents: UIControlEvents.TouchUpInside)
@@ -1195,6 +1198,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     
     override func viewDidAppear(animated: Bool) {
         player2.playFromBeginning()
+        tableView.scrollEnabled = true
         NSNotificationCenter.defaultCenter().postNotificationName("closeSideBar", object: nil)
         
         
