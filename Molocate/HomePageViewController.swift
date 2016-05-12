@@ -747,6 +747,7 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
         MolocateAccount.getUser(videoArray[buttonRow].username) { (data, response, error) -> () in
             dispatch_async(dispatch_get_main_queue()){
+                //DBG: If it is mine profile?
                 mine = false
                 user = data
                 let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
@@ -1050,7 +1051,9 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
                 let controller:commentController = self.storyboard!.instantiateViewControllerWithIdentifier("commentController") as! commentController
                 controller.view.frame = self.view.bounds;
                 controller.willMoveToParentViewController(self)
-                self.view.addSubview(controller.view)
+                UIView.transitionWithView(self.view, duration: 0.5, options: .TransitionCrossDissolve , animations: { _ in
+                    self.view.addSubview(controller.view)
+                }, completion: nil)
                 self.addChildViewController(controller)
                 controller.didMoveToParentViewController(self)
                 

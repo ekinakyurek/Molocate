@@ -141,8 +141,9 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
         controller.followersclicked = false
         controller.view.frame = self.view.bounds;
         controller.willMoveToParentViewController(self)
-        
-        self.view.addSubview(controller.view)
+        UIView.transitionWithView(self.view, duration: 0.5, options: .TransitionCrossDissolve , animations: { _ in
+            self.view.addSubview(controller.view)
+        }, completion: nil)
         self.addChildViewController(controller)
         controller.didMoveToParentViewController(self)
     }
@@ -229,7 +230,9 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
         controller.followersclicked = true
         controller.view.frame = self.view.bounds;
         controller.willMoveToParentViewController(self)
-        self.view.addSubview(controller.view)
+        UIView.transitionWithView(self.view, duration: 0.5, options: .TransitionCrossDissolve , animations: { _ in
+            self.view.addSubview(controller.view)
+        }, completion: nil)
         self.addChildViewController(controller)
         controller.didMoveToParentViewController(self)
     }

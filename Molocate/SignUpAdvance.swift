@@ -3,7 +3,7 @@
 import UIKit
 
 class SignUpAdvance: UIViewController , UITextFieldDelegate {
-    let screenSize: CGRect = MolocateDevice.bounds
+    let screenSize: CGSize = MolocateDevice.size
     let sendName :String = ""
     
     var username : UITextField!

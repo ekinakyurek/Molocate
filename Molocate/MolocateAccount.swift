@@ -943,16 +943,16 @@ public class MolocateAccount {
                         
                         completionHandler(data: MoleCurrentUser, response: response , error: nsError  )
                     }else{
-                        completionHandler(data: MoleUser() , response: nil , error: nsError  )
+                        completionHandler(data: MoleCurrentUser , response: nil , error: nsError  )
                         if debug {print("ServerDataError:: in MolocateAccount.getCurrentUser()")}
                     }
                     
                 } catch{
-                    completionHandler(data: MoleUser() , response: nil , error: nsError  )
+                    completionHandler(data: MoleCurrentUser , response: nil , error: nsError  )
                     if debug {print("JsonError:: in MolocateAccount.getCurrentUser()")}
                 }
             }else{
-                completionHandler(data: MoleUser() , response: nil , error: error  )
+                completionHandler(data: MoleCurrentUser , response: nil , error: error  )
                 if debug {print("RequestError:: in MolocateAccount.getCurrentUser()")}
             }
             
