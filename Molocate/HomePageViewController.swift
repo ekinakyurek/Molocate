@@ -13,6 +13,15 @@ var dictionary = NSMutableDictionary()
 var myCache = Shared.dataCache
 var progressBar: UIProgressView?
 
+
+extension UIView
+{
+    func copyView() -> AnyObject
+    {
+        return NSKeyedUnarchiver.unarchiveObjectWithData(NSKeyedArchiver.archivedDataWithRootObject(self))!
+    }
+}
+
 class HomePageViewController: UIViewController,UITableViewDelegate , UITableViewDataSource ,UIToolbarDelegate , UICollectionViewDelegate  ,CLLocationManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,NSURLConnectionDataDelegate,PlayerDelegate, UITextFieldDelegate {
     var isRequested:NSMutableDictionary!
     var lastOffset:CGPoint!
@@ -732,10 +741,11 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
         }
     }
     
-
+    
+    
     func pressedUsername(sender: UIButton) {
         let buttonRow = sender.tag
-        //////////print("username e basıldı at index path: \(buttonRow)")
+        //////print("username e basıldı at index path: \(buttonRow)")
         player1.stop()
         player2.stop()
         activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
@@ -744,25 +754,80 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
         activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
         view.addSubview(activityIndicator)
         activityIndicator.startAnimating()
+        
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+        
+        if videoArray[buttonRow].username != MoleCurrentUser.username{
+            mine = false
+        }else{
+            mine = true
+        }
+        
+        let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
+        controller.classUser = MoleUser()
+        controller.view.frame = CGRectMake(0+MolocateDevice.size.width, 0, MolocateDevice.size.width, MolocateDevice.size.height)
+        controller.willMoveToParentViewController(self.parentViewController?.parentViewController)
+   
+        self.view.addSubview(controller.view)
+        
+        UIView.transitionWithView(self.view, duration: 0.5, options: .CurveEaseInOut , animations: { _ in
+                controller.view.frame = self.view.frame
+            }, completion: { (finished: Bool) -> () in
+            controller.viewDidLoad()
+                UIApplication.sharedApplication().endIgnoringInteractionEvents()
+            
+        })
+        
+        self.addChildViewController(controller)
+        controller.didMoveToParentViewController(self.parentViewController!.parentViewController!)
+        
         MolocateAccount.getUser(videoArray[buttonRow].username) { (data, response, error) -> () in
             dispatch_async(dispatch_get_main_queue()){
-                //DBG: If it is mine profile?
-                mine = false
+                
                 user = data
-                let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
                 controller.classUser = data
-                controller.view.frame = self.view.bounds;
-                controller.willMoveToParentViewController(self)
-                self.view.addSubview(controller.view)
-                self.addChildViewController(controller)
-                controller.didMoveToParentViewController(self)
-                choosedIndex = 0
-                self.activityIndicator.removeFromSuperview()
+                controller.AVc.classUser = data
+                controller.BVc.classUser = data
+                controller.viewDidLoad()
+                controller.AVc.viewDidLoad()
+                controller.BVc.viewDidLoad()
+                UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                self.activityIndicator.stopAnimating()
             }
         }
         
     }
+
+//    func pressedUsername(sender: UIButton) {
+//        let buttonRow = sender.tag
+//        //////////print("username e basıldı at index path: \(buttonRow)")
+//        player1.stop()
+//        player2.stop()
+//        activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
+//        activityIndicator.center = self.view.center
+//        activityIndicator.hidesWhenStopped = true
+//        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+//        view.addSubview(activityIndicator)
+//        activityIndicator.startAnimating()
+//        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+//        MolocateAccount.getUser(videoArray[buttonRow].username) { (data, response, error) -> () in
+//            dispatch_async(dispatch_get_main_queue()){
+//                //DBG: If it is mine profile?
+//                mine = false
+//                user = data
+//                let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
+//                controller.classUser = data
+//                controller.view.frame = self.view.bounds;
+//                controller.willMoveToParentViewController(self)
+//                self.view.addSubview(controller.view)
+//                self.addChildViewController(controller)
+//                controller.didMoveToParentViewController(self)
+//                choosedIndex = 0
+//                self.activityIndicator.removeFromSuperview()
+//            }
+//        }
+//        
+//    }
     var resendButton = UIButton()
     var deleteButton = UIButton()
     var blackView = UIView()

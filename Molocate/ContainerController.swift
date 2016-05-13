@@ -84,7 +84,10 @@ class ContainerController: UIViewController,UIScrollViewDelegate {
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
         adjustViewLayout(size)
     }
-
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return false
+    }
     func adjustViewLayout(size: CGSize) {
         
         
