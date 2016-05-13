@@ -29,6 +29,18 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
     
     override func viewDidLoad() {
         try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
+
+            // Do any additional setup after loading the view.
+        initGui()
+        getData()
+        //print(self.username)
+     
+        
+        
+     
+    }
+    
+    func initGui(){
         view.frame = CGRectMake(0, 0, screenSize.width, screenSize.height-190)
         likeHeart.image = UIImage(named: "favorite")
         likeHeart.alpha = 1.0
@@ -50,17 +62,10 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
         tableView.allowsSelection = false
         tableView.tableFooterView = UIView()
         self.view.addSubview(tableView)
-            // Do any additional setup after loading the view.
-        getData()
-        //print(self.username)
-     
-        
-        
         lastOffset = CGPoint(x: 0, y: 0)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(Tagged.scrollToTop), name: "scrollToTop", object: nil)
         
-         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(Tagged.scrollToTop), name: "scrollToTop", object: nil)
     }
-    
     func getData(){
         MolocateVideo.getUserVideos(classUser.username, type: "tagged", completionHandler: { (data, response, error) in
             dispatch_async(dispatch_get_main_queue()) {

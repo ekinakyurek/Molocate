@@ -6,8 +6,8 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
    
     var leftButton = "side"
     var classUser = MoleUser()
-    var AVc :Added =  Added(nibName: "Added", bundle: nil);
-    var BVc :Tagged =  Tagged(nibName: "Tagged", bundle: nil);
+    let AVc :Added =  Added(nibName: "Added", bundle: nil);
+    let BVc :Tagged =  Tagged(nibName: "Tagged", bundle: nil);
     let names = ["AYARLAR","PROFİLİ DÜZENLE", "ÇIKIŞ YAP"]
     
     @IBOutlet var settings: UITableView!
