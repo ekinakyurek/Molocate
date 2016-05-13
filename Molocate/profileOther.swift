@@ -206,7 +206,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
     @IBAction func backButton(sender: AnyObject) {
         if(choosedIndex < 3 || (self.parentViewController?.parentViewController?.parentViewController != nil)){
             
-            UIView.transitionWithView(self.view, duration:1, options: .TransitionCrossDissolve , animations: { _ in
+            UIView.transitionWithView(self.view, duration:0.2, options: .TransitionCrossDissolve , animations: { _ in
                          self.view.hidden = true
                     //self.view.frame = CGRectMake(0-MolocateDevice.size.width, 0, MolocateDevice.size.width, MolocateDevice.size.height)
                 }, completion: { (finished: Bool) -> () in

@@ -765,12 +765,12 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
         
         let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
         controller.classUser = MoleUser()
-        controller.view.frame = CGRectMake(0+MolocateDevice.size.width, 0, MolocateDevice.size.width, MolocateDevice.size.height)
+        controller.view.frame = CGRectMake(0, 0+MolocateDevice.size.height, MolocateDevice.size.width, MolocateDevice.size.height)
         controller.willMoveToParentViewController(self.parentViewController?.parentViewController)
    
         self.view.addSubview(controller.view)
         
-        UIView.transitionWithView(self.view, duration: 0.5, options: .CurveEaseInOut , animations: { _ in
+        UIView.transitionWithView(self.view, duration: 0.2, options: .CurveEaseInOut , animations: { _ in
                 controller.view.frame = self.view.frame
             }, completion: { (finished: Bool) -> () in
             controller.viewDidLoad()
@@ -1110,19 +1110,25 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
         videoIndex = buttonRow
         video_id = videoArray[videoIndex].id
         myViewController = "HomeController"
+        
+        let controller:commentController = self.storyboard!.instantiateViewControllerWithIdentifier("commentController") as! commentController
+        comments.removeAll()
+        controller.view.frame = CGRectMake(0, 0+MolocateDevice.size.height, MolocateDevice.size.width, MolocateDevice.size.height)
+        
+        controller.willMoveToParentViewController(self)
+        self.view.addSubview(controller.view)
+        UIView.transitionWithView(self.view, duration: 0.15, options: .CurveEaseInOut , animations: { _ in
+            controller.view.frame = self.view.frame
+            }, completion: nil)
+        self.addChildViewController(controller)
+        controller.didMoveToParentViewController(self)
+        
+
         MolocateVideo.getComments(videoArray[buttonRow].id) { (data, response, error, count, next, previous) -> () in
             dispatch_async(dispatch_get_main_queue()){
                 comments = data
-                let controller:commentController = self.storyboard!.instantiateViewControllerWithIdentifier("commentController") as! commentController
-                controller.view.frame = self.view.bounds;
-                controller.willMoveToParentViewController(self)
-                UIView.transitionWithView(self.view, duration: 0.5, options: .TransitionCrossDissolve , animations: { _ in
-                    self.view.addSubview(controller.view)
-                }, completion: nil)
-                self.addChildViewController(controller)
-                controller.didMoveToParentViewController(self)
-                
-                ////////print("comment e basıldı at index path: \(buttonRow)")
+                controller.tableView.reloadData()
+                              ////////print("comment e basıldı at index path: \(buttonRow)")
             }
         }
         
