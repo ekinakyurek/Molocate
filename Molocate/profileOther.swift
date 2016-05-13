@@ -359,7 +359,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
             MoleUserToken = nil
             isRegistered = false
             MoleGlobalVideo = nil
-//
+            GlobalVideoUploadRequest = nil
            
             self.parentViewController!.performSegueWithIdentifier("logout", sender: self)
         }

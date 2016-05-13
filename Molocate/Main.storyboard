@@ -2248,7 +2248,7 @@ bir video bulunmamaktadır :(</string>
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Qm-0t-BEd">
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Qm-0t-BEd">
                                 <rect key="frame" x="-4" y="579" width="383" height="44"/>
                                 <color key="backgroundColor" red="0.78823529410000004" green="0.14117647059999999" blue="0.31764705879999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -2835,8 +2835,8 @@ bir video bulunmamaktadır :(</string>
         <image name="switch" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="cGX-Xw-vdc"/>
         <segue reference="RSN-Ei-cwL"/>
-        <segue reference="t1e-tq-FhG"/>
         <segue reference="SSw-BD-nTD"/>
     </inferredMetricsTieBreakers>
 </document>

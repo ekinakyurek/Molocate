@@ -779,13 +779,15 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
         }
         controller.view.frame = CGRectMake(0, 0+MolocateDevice.size.height, MolocateDevice.size.width, MolocateDevice.size.height)
         controller.willMoveToParentViewController(self)
+        self.view.addSubview(controller.view)
+        controller.didMoveToParentViewController(self)
+        self.addChildViewController(controller)
+
         
-        UIView.transitionWithView(self.view, duration: 0.25, options: .CurveEaseInOut , animations: { _ in
+        UIView.transitionWithView(self.view, duration: 0.2, options: .CurveEaseInOut , animations: { _ in
             controller.view.frame = self.view.bounds
             }, completion: { (finished: Bool) -> () in
-                self.view.addSubview(controller.view)
-                self.addChildViewController(controller)
-                controller.didMoveToParentViewController(self)
+                
                 
         })
 
