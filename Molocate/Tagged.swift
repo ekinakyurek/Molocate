@@ -7,6 +7,7 @@ import Haneke
 import SDWebImage
 import AVFoundation
 class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,PlayerDelegate {
+    
     var lastOffset:CGPoint!
     var lastOffsetCapture:NSTimeInterval!
     var isScrollingFast:Bool = false
@@ -21,15 +22,18 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
     var videoArray = [MoleVideoInformation]()
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     var tableView = UITableView()
+    var on = true
     var likeHeart = UIImageView()
     var player1Turn = false
     var classUser = MoleUser()
+    
     override func viewDidLoad() {
-        super.viewDidLoad()
-          try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
+        try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
         view.frame = CGRectMake(0, 0, screenSize.width, screenSize.height-190)
         likeHeart.image = UIImage(named: "favorite")
         likeHeart.alpha = 1.0
+        
+        
         self.player1 = Player()
         self.player1.delegate = self
         self.player1.playbackLoops = true
@@ -46,16 +50,10 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
         tableView.allowsSelection = false
         tableView.tableFooterView = UIView()
         self.view.addSubview(tableView)
-        // Do any additional setup after loading the view.
-        
+            // Do any additional setup after loading the view.
+        getData()
         //print(self.username)
-        MolocateVideo.getUserVideos(classUser.username, type: "tagged", completionHandler: { (data, response, error) in
-            dispatch_async(dispatch_get_main_queue()) {
-                self.videoArray = data!
-                self.tableView.reloadData()
-            }
-        })
-        
+     
         
         
         lastOffset = CGPoint(x: 0, y: 0)
@@ -63,6 +61,15 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
          NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(Tagged.scrollToTop), name: "scrollToTop", object: nil)
     }
     
+    func getData(){
+        MolocateVideo.getUserVideos(classUser.username, type: "tagged", completionHandler: { (data, response, error) in
+            dispatch_async(dispatch_get_main_queue()) {
+                self.videoArray = data!
+                self.tableView.reloadData()
+            }
+        })
+        
+    }
     
     func scrollToTop() {
         self.tableView.setContentOffset(CGPoint(x:0,y:0), animated: true)

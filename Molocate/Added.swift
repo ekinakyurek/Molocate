@@ -52,8 +52,19 @@ import AVFoundation
         tableView.tableFooterView = UIView()
         self.view.addSubview(tableView)
         // Do any additional setup after loading the view.
-        
+        getData()
         //print(user.username)
+
+        lastOffset = CGPoint(x: 0, y: 0)
+         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(Added.scrollToTop), name: "scrollToTop", object: nil)
+        
+        
+        
+        
+    }
+    
+    
+    func getData(){
         MolocateVideo.getUserVideos(classUser.username, type: "user", completionHandler: { (data, response, error) in
             dispatch_async(dispatch_get_main_queue()) {
                 if GlobalVideoUploadRequest == nil {
@@ -79,15 +90,7 @@ import AVFoundation
                 self.tableView.reloadData()
             }
         })
-        lastOffset = CGPoint(x: 0, y: 0)
-         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(Added.scrollToTop), name: "scrollToTop", object: nil)
-        
-        
-        
-        
     }
-    
-    
     func scrollToTop() {
         self.tableView.setContentOffset(CGPoint(x:0,y:0), animated: true)
     }

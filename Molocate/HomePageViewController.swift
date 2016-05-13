@@ -745,7 +745,7 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
     
     func pressedUsername(sender: UIButton) {
         let buttonRow = sender.tag
-        //////print("username e basıldı at index path: \(buttonRow)")
+        //////////print("username e basıldı at index path: \(buttonRow)")
         player1.stop()
         player2.stop()
         activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
@@ -763,38 +763,38 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
             mine = true
         }
         
+        
         let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
-        controller.classUser = MoleUser()
-        controller.view.frame = CGRectMake(0, 0+MolocateDevice.size.height, MolocateDevice.size.width, MolocateDevice.size.height)
-        controller.willMoveToParentViewController(self.parentViewController?.parentViewController)
-   
-        self.view.addSubview(controller.view)
-        
-        UIView.transitionWithView(self.view, duration: 0.2, options: .CurveEaseInOut , animations: { _ in
-                controller.view.frame = self.view.frame
-            }, completion: { (finished: Bool) -> () in
-            controller.viewDidLoad()
-                UIApplication.sharedApplication().endIgnoringInteractionEvents()
-            
-        })
-        
-        self.addChildViewController(controller)
-        controller.didMoveToParentViewController(self.parentViewController!.parentViewController!)
-        
         MolocateAccount.getUser(videoArray[buttonRow].username) { (data, response, error) -> () in
             dispatch_async(dispatch_get_main_queue()){
+                //DBG: If it is mine profile?
                 
                 user = data
                 controller.classUser = data
-                controller.AVc.classUser = data
-                controller.BVc.classUser = data
-                controller.viewDidLoad()
-                controller.AVc.viewDidLoad()
-                controller.BVc.viewDidLoad()
-                UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                controller.RefreshGuiWithData()
+                
+                //choosedIndex = 0
                 self.activityIndicator.stopAnimating()
             }
         }
+        controller.view.frame = CGRectMake(0, 0+MolocateDevice.size.height, MolocateDevice.size.width, MolocateDevice.size.height)
+        controller.willMoveToParentViewController(self)
+        
+        UIView.transitionWithView(self.view, duration: 0.25, options: .CurveEaseInOut , animations: { _ in
+            controller.view.frame = self.view.bounds
+            }, completion: { (finished: Bool) -> () in
+                self.view.addSubview(controller.view)
+                self.addChildViewController(controller)
+                controller.didMoveToParentViewController(self)
+                
+        })
+
+        
+   
+        
+
+        
+
         
     }
 

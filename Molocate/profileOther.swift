@@ -6,8 +6,8 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
    
     var leftButton = "side"
     var classUser = MoleUser()
-    let AVc :Added =  Added(nibName: "Added", bundle: nil);
-    let BVc :Tagged =  Tagged(nibName: "Tagged", bundle: nil);
+    var AVc :Added =  Added(nibName: "Added", bundle: nil);
+    var BVc :Tagged =  Tagged(nibName: "Tagged", bundle: nil);
     let names = ["AYARLAR","PROFİLİ DÜZENLE", "ÇIKIŞ YAP"]
     
     @IBOutlet var settings: UITableView!
@@ -107,6 +107,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
         adminFrame.origin.x = MolocateDevice.size.width
         var deneme :CGRect = AVc.view.frame;
         deneme.origin.x = 0
+        
         BVc.classUser = classUser
         BVc.view.frame = adminFrame;
         self.addChildViewController(BVc);
@@ -118,6 +119,48 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
         scrollWidth = MolocateDevice.size.width*2
         scrollView.contentSize.width = scrollWidth
         scrollView.delegate = self
+    }
+    
+    func RefreshGuiWithData(){
+        addedButton.setTitle("▶︎GÖNDERİ(\(classUser.post_count))", forState: .Normal)
+        taggedButton.setTitle("@ETİKET(\(classUser.tag_count))", forState: .Normal)
+       
+        if(classUser.profilePic.absoluteString != ""){
+            profilePhoto.sd_setImageWithURL(user.profilePic)
+            
+        }else{
+            profilePhoto.image = UIImage(named: "profile")!
+            ProfileButton.enabled = false
+        }
+        
+        if(choosedIndex==3 && mine){
+            FollowButton.image = UIImage(named: "settings")
+            //choosedIndex = 4 //??WHY
+            back.image = UIImage(named:"sideMenu")
+        }else{
+            if(classUser.isFollowing){
+                FollowButton.image = UIImage(named: "unfollow")
+            }else if classUser.username == MoleCurrentUser.username{
+                FollowButton.image = UIImage(named: "settings")
+            }else{
+                FollowButton.image = UIImage(named: "follow")
+            }
+        }
+        
+        if(classUser.post_count != 0 ){
+            errorMessage.hidden = true
+        }
+        
+        username.text = classUser.username
+        followingsCount.setTitle("\(classUser.following_count)", forState: .Normal)
+        followersCount.setTitle("\(classUser.follower_count)", forState: .Normal)
+        
+        
+        AVc.classUser = classUser
+        BVc.classUser = classUser
+        AVc.getData()
+        BVc.getData()
+
     }
     
     @IBAction func addedButton(sender: AnyObject) {
@@ -238,7 +281,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
         controller.followersclicked = true
         controller.view.frame = self.view.bounds;
         controller.willMoveToParentViewController(self)
-        UIView.transitionWithView(self.view, duration: 0.5, options: .TransitionCrossDissolve , animations: { _ in
+        UIView.transitionWithView(self.view, duration: 0.15, options: .TransitionCrossDissolve , animations: { _ in
             self.view.addSubview(controller.view)
         }, completion: nil)
         self.addChildViewController(controller)
