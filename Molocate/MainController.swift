@@ -23,11 +23,12 @@ var myViewController = "MainController"
 var thePlace:MolePlace!
 
 
-class MainController: UIViewController,UITableViewDelegate , UITableViewDataSource ,UIToolbarDelegate , UICollectionViewDelegate  ,CLLocationManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,NSURLConnectionDataDelegate,PlayerDelegate, UITextFieldDelegate {
+class MainController: UIViewController,UITableViewDelegate , UITableViewDataSource ,UIToolbarDelegate , UICollectionViewDelegate  ,CLLocationManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,NSURLConnectionDataDelegate,PlayerDelegate, UITextFieldDelegate, UISearchBarDelegate {
+    
     var lastOffset:CGPoint!
     var lastOffsetCapture:NSTimeInterval!
     var isScrollingFast:Bool = false
-    var pointNow:CGFloat!
+    var pointNow:CGFloat = CGFloat()
     var isSearching = false
     var direction = 0
     var locationManager: CLLocationManager!
@@ -59,8 +60,8 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     var on = true
     @IBOutlet var tableView: UITableView!
     @IBOutlet var rightArrow: UIImageView!
-    @IBOutlet var toolBar: UIToolbar!
-    @IBOutlet var searchText: UITextField!
+    //@IBOutlet var toolBar: UIToolbar!
+    var searchText = UISearchBar(frame: CGRectZero)
     var refreshing = false
     var refreshURL = NSURL(string: "http://molocate-py3.hm5xmcabvz.eu-central-1.elasticbeanstalk.com/video/api/explore/?category=all")
     var refreshControl:UIRefreshControl!
@@ -74,6 +75,11 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     var likeHeart = UIImageView()
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.automaticallyAdjustsScrollViewInsets = false
+        searchText.frame = CGRect(x: 0, y: 0, width: MolocateDevice.size.width/2, height: 36)
+      //  searchText.showsCancelButton = true
+//        searchText.searchBarStyle = UISearchBarStyle.Minimal
+        self.navigationItem.titleView = searchText
         
         
         venueTable.separatorColor = UIColor.lightGrayColor()
@@ -88,6 +94,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         venueTable.hidden = true
         searchText.delegate = self
         
+    
         self.player1 = Player()
         self.player1.delegate = self
         self.player1.playbackLoops = true
@@ -97,21 +104,21 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         self.player2.playbackLoops = true
         
         self.tabBarController?.tabBar.hidden = true
-        toolBar.barTintColor = swiftColor
-        toolBar.translucent = false
-        toolBar.clipsToBounds = true
+        self.navigationController?.navigationBar.barTintColor = swiftColor
+        self.navigationController?.navigationBar.translucent = false
+        //toolBar.clipsToBounds = true
         
         backgroundLabel = UILabel()
-        backgroundLabel.frame = CGRectMake( 0 , 60 , screenSize.width , 44)
+        backgroundLabel.frame = CGRectMake( 0 , 0 , screenSize.width , 44)
         backgroundLabel.backgroundColor = UIColor.whiteColor()
-        backgroundLabel.layer.borderWidth = 0.7
+        backgroundLabel.layer.borderWidth = 0.2
         backgroundLabel.layer.masksToBounds = false
         backgroundLabel.layer.borderColor = swiftColor.CGColor
         view.addSubview(backgroundLabel)
     
         
         usernameButton2 = UIButton()
-        usernameButton2.frame = CGRectMake(screenSize.width / 2  ,67 , screenSize.width / 2 - 20, 30)
+        usernameButton2.frame = CGRectMake(screenSize.width / 2  ,7 , screenSize.width / 2 - 20, 30)
         usernameButton2.setTitleColor(UIColor.blackColor(), forState: .Normal)
         usernameButton2.contentHorizontalAlignment = .Center
         usernameButton2.setTitle("KİŞİLER", forState: .Normal)
@@ -120,7 +127,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         view.addSubview(usernameButton2)
         
         venueButton2 = UIButton()
-        venueButton2.frame = CGRectMake(20 ,67 , screenSize.width / 2 - 20, 30)
+        venueButton2.frame = CGRectMake(20 ,7 , screenSize.width / 2 - 20, 30)
         venueButton2.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         venueButton2.contentHorizontalAlignment = .Center
         venueButton2.setTitle("KONUMLAR", forState: .Normal)
@@ -157,18 +164,32 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
 
         
         
-        searchText.font = UIFont(name: "AvenirNext-Regular", size: 14)
-//        searchText.textColor = UIColor.whiteColor()
+
+        let bartextField = searchText.valueForKey("searchField") as! UITextField
+        bartextField.backgroundColor = swiftColor2
+        bartextField.font = UIFont(name: "AvenirNext-Regular", size: 14)
+        bartextField.textColor = UIColor.whiteColor()
+        bartextField.attributedPlaceholder =  NSAttributedString(string: "Ara", attributes: [NSForegroundColorAttributeName:UIColor.whiteColor(), NSFontAttributeName: UIFont(name: "AvenirNext-Regular", size: 14)! ])
+    
+        let magnifyingGlass = bartextField.leftView as! UIImageView
+        magnifyingGlass.image = magnifyingGlass.image?.imageWithRenderingMode(.AlwaysTemplate)
+        magnifyingGlass.tintColor = UIColor.whiteColor()
+       
+        //searchText.barTintColor = UIColor.whiteColor()
+        let clearButton = bartextField.valueForKey("clearButton") as! UIButton
+        clearButton.setImage(clearButton.imageView?.image?.imageWithRenderingMode(.AlwaysTemplate), forState: .Normal)
+        clearButton.tintColor = UIColor.whiteColor()
+        
+        //searchText.tintColor = UIColor.whiteColor()
+      
         //searchText.layer.borderColor = swiftColor.CGColor
         //searchText.layer.borderWidth = 0.5
-        searchText.backgroundColor = swiftColor2
         //searchText.layer.masksToBounds = true
-        searchText.borderStyle = UITextBorderStyle.None
+        //searchText.borderStyle = UITextBorderStyle.None
         searchText.layer.borderWidth = 0
         searchText.layer.cornerRadius = 5
-        let str = NSAttributedString(string: "Ara", attributes: [NSForegroundColorAttributeName:UIColor.whiteColor()])
-        searchText.attributedPlaceholder = str
-        searchText.textAlignment = .Center
+       
+        //searchText.textAlignment = .Center
 //        let border2 = CALayer()
 //        border2.frame = searchText.frame
 //        border2.borderColor = UIColor.whiteColor().CGColor
@@ -400,7 +421,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        
+        print("helooo")
         if(!refreshing) {
             
             if (scrollView.contentOffset.y<pointNow) {
@@ -1216,7 +1237,8 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         }
     }
     
-    @IBOutlet var cameraButton: UIBarButtonItem!
+    @IBOutlet weak var cameraButton: UIBarButtonItem!
+  
     
     @IBAction func openCamera(sender: AnyObject) {
         locationManager.startUpdatingLocation()
@@ -1561,8 +1583,13 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
 
     }
     
-    func textFieldDidBeginEditing(textField: UITextField) {
-        
+    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
+    
+
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+    
         player1.stop()
         player2.stop()
         tableView.scrollEnabled = false
@@ -1574,33 +1601,29 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         usernameButton2.hidden = false
         backgroundLabel.hidden = false
         collectionView.hidden = true
-
-
+        
+        
         self.view.layer.addSublayer(venueTable.layer)
         self.view.layer.addSublayer(backgroundLabel.layer)
         self.view.layer.addSublayer(venueButton2.layer)
         self.view.layer.addSublayer(usernameButton2.layer)
-     
         
-    }
 
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
     }
     
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
-    {
+    
+    
+    func searchBar(searchBar: UISearchBar, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         self.venueTable.hidden = false
         self.venueButton2.hidden = false
         self.usernameButton2.hidden = false
         self.backgroundLabel.hidden = false
         self.collectionView.hidden = true
-
+        
         let whitespaceCharacterSet = NSCharacterSet.symbolCharacterSet()
         let strippedString = searchText.text!.stringByTrimmingCharactersInSet(whitespaceCharacterSet)
         
-
+        
         if venueoruser {
             locationManager.startUpdatingLocation()
             if self.bestEffortAtLocation == nil {
@@ -1615,50 +1638,148 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                 }
                 alertController.addAction(settingsAction)
                 self.presentViewController(alertController, animated: true, completion: nil)
-
+                
                 return true
             }
-        currentTask?.cancel()
-        var parameters = [Parameter.query:strippedString]
-        parameters += self.bestEffortAtLocation.parameters()
-        currentTask = session.venues.search(parameters) {
-            (result) -> Void in
-            if let response = result.response {
-                var tempVenues = [JSONParameters]()
-                let venueItems = response["venues"] as? [JSONParameters]
-                for item in venueItems! {
-                    let isVerified = item["verified"] as! Bool
-                    let checkinsCount = item["stats"]!["checkinsCount"] as! NSInteger
-                    let enoughCheckin:Bool = (checkinsCount > 700)
-                    if (isVerified||enoughCheckin){
-                        tempVenues.append(item)
+            currentTask?.cancel()
+            var parameters = [Parameter.query:strippedString]
+            parameters += self.bestEffortAtLocation.parameters()
+            currentTask = session.venues.search(parameters) {
+                (result) -> Void in
+                if let response = result.response {
+                    var tempVenues = [JSONParameters]()
+                    let venueItems = response["venues"] as? [JSONParameters]
+                    for item in venueItems! {
+                        let isVerified = item["verified"] as! Bool
+                        let checkinsCount = item["stats"]!["checkinsCount"] as! NSInteger
+                        let enoughCheckin:Bool = (checkinsCount > 700)
+                        if (isVerified||enoughCheckin){
+                            tempVenues.append(item)
+                            
+                        }
+                        
                         
                     }
-                    
-                    
+                    self.venues = tempVenues
+                    self.venueTable.reloadData()
                 }
-                self.venues = tempVenues
-                self.venueTable.reloadData()
             }
-        }
-        currentTask?.start()
-                
+            currentTask?.start()
+            
         } else {
             
             if searchText.text?.characters.count > 1 {
-            MolocateAccount.searchUser(strippedString, completionHandler: { (data, response, error) in
-                dispatch_async(dispatch_get_main_queue()){
-                 self.searchedUsers = data
-                 self.venueTable.reloadData()
-                }
-                
-            })
+                MolocateAccount.searchUser(strippedString, completionHandler: { (data, response, error) in
+                    dispatch_async(dispatch_get_main_queue()){
+                        self.searchedUsers = data
+                        self.venueTable.reloadData()
+                    }
+                    
+                })
             }
         }
         
         return true
     }
+//    
+//    func textFieldDidBeginEditing(textField: UITextField) {
+//        
+//        player1.stop()
+//        player2.stop()
+//        tableView.scrollEnabled = false
+//        isSearching = true
+//        cameraButton.image = nil
+//        cameraButton.title = "Vazgeç"
+//        venueTable.hidden = false
+//        venueButton2.hidden = false
+//        usernameButton2.hidden = false
+//        backgroundLabel.hidden = false
+//        collectionView.hidden = true
+//
+//
+//        self.view.layer.addSublayer(venueTable.layer)
+//        self.view.layer.addSublayer(backgroundLabel.layer)
+//        self.view.layer.addSublayer(venueButton2.layer)
+//        self.view.layer.addSublayer(usernameButton2.layer)
+//     
+//        
+//    }
+
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
     
+//    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
+//    {
+//        self.venueTable.hidden = false
+//        self.venueButton2.hidden = false
+//        self.usernameButton2.hidden = false
+//        self.backgroundLabel.hidden = false
+//        self.collectionView.hidden = true
+//
+//        let whitespaceCharacterSet = NSCharacterSet.symbolCharacterSet()
+//        let strippedString = searchText.text!.stringByTrimmingCharactersInSet(whitespaceCharacterSet)
+//        
+//
+//        if venueoruser {
+//            locationManager.startUpdatingLocation()
+//            if self.bestEffortAtLocation == nil {
+//                let message = NSLocalizedString("Molocate'in konum servislerini kullanmasına izin vermediniz. Lütfen ayarları değiştiriniz.", comment: "" )
+//                let alertController = UIAlertController(title: "Molocate Konum", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+//                let cancelAction = UIAlertAction(title: NSLocalizedString("OK", comment: "Alert OK button"), style: UIAlertActionStyle.Cancel, handler: nil)
+//                alertController.addAction(cancelAction)
+//                // Provide quick access to Settings.
+//                let settingsAction = UIAlertAction(title: NSLocalizedString("Ayarlar", comment: "Alert button to open Settings"), style: UIAlertActionStyle.Default) {action in
+//                    UIApplication.sharedApplication().openURL(NSURL(string:UIApplicationOpenSettingsURLString)!)
+//                    
+//                }
+//                alertController.addAction(settingsAction)
+//                self.presentViewController(alertController, animated: true, completion: nil)
+//
+//                return true
+//            }
+//        currentTask?.cancel()
+//        var parameters = [Parameter.query:strippedString]
+//        parameters += self.bestEffortAtLocation.parameters()
+//        currentTask = session.venues.search(parameters) {
+//            (result) -> Void in
+//            if let response = result.response {
+//                var tempVenues = [JSONParameters]()
+//                let venueItems = response["venues"] as? [JSONParameters]
+//                for item in venueItems! {
+//                    let isVerified = item["verified"] as! Bool
+//                    let checkinsCount = item["stats"]!["checkinsCount"] as! NSInteger
+//                    let enoughCheckin:Bool = (checkinsCount > 700)
+//                    if (isVerified||enoughCheckin){
+//                        tempVenues.append(item)
+//                        
+//                    }
+//                    
+//                    
+//                }
+//                self.venues = tempVenues
+//                self.venueTable.reloadData()
+//            }
+//        }
+//        currentTask?.start()
+//                
+//        } else {
+//            
+//            if searchText.text?.characters.count > 1 {
+//            MolocateAccount.searchUser(strippedString, completionHandler: { (data, response, error) in
+//                dispatch_async(dispatch_get_main_queue()){
+//                 self.searchedUsers = data
+//                 self.venueTable.reloadData()
+//                }
+//                
+//            })
+//            }
+//        }
+//        
+//        return true
+//    }
+//    
     
     
 }

@@ -11,7 +11,6 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
     var notificationArray = [MoleUserNotifications]()
   
     @IBOutlet var tableView: UITableView!
-    @IBOutlet var toolBar: UIToolbar!
 
     
     override func viewDidLoad() {
@@ -48,10 +47,11 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.separatorColor = UIColor.lightGrayColor()
         tabBarController?.tabBar.hidden = true
-        toolBar.clipsToBounds = true
-        toolBar.translucent = false
-        toolBar.barTintColor = swiftColor
-        self.view.backgroundColor = swiftColor
+       
+        self.navigationController?.navigationBarHidden = false
+   
+       
+        // self.view.backgroundColor = swiftColor
     }
     func scrollToTop() {
         self.tableView.setContentOffset(CGPoint(x:0,y:0), animated: true)

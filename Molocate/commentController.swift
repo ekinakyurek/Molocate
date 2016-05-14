@@ -3,7 +3,7 @@ import UIKit
 class commentController: UIViewController,UITableViewDelegate , UITableViewDataSource, UITextViewDelegate, UIGestureRecognizerDelegate{
  
     @IBOutlet var bottomConstraint: NSLayoutConstraint!
-    @IBOutlet var toolBar: UIToolbar!
+//    @IBOutlet var toolBar: UIToolbar!
     
     @IBOutlet var sendImage: UIImageView!
     @IBOutlet var sendButton: UIButton!
@@ -13,6 +13,7 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         initGui()
         UIApplication.sharedApplication().endIgnoringInteractionEvents()
     }
@@ -21,7 +22,13 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
         //comments.removeAll()
     }
     
+    
+    
     func initGui(){
+        self.automaticallyAdjustsScrollViewInsets = false
+        navigationController?.navigationBarHidden = false
+        navigationController?.hidesBarsOnSwipe = false
+        navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         newComment.text = "Yorumunu buradan yazabilirsin"
         newComment.textColor = UIColor.lightGrayColor()
         newComment.layer.cornerRadius = 5
@@ -34,9 +41,9 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
         
         sendImage.layer.zPosition = 3
         
-        toolBar.clipsToBounds = true
-        toolBar.translucent = false
-        toolBar.barTintColor = swiftColor
+//        toolBar.clipsToBounds = true
+//        toolBar.translucent = false
+//        toolBar.barTintColor = swiftColor
         
         sendButton.layer.zPosition = 2
         sendButton.layer.cornerRadius = 5
@@ -202,42 +209,42 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
         let i = plus ? 1:-1
         
         if(myViewController == "MainController"){
-            (self.parentViewController as! MainController).videoArray[videoIndex].commentCount += i
-            (self.parentViewController as! MainController).tableView.reloadRowsAtIndexPaths(
+            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! MainController).videoArray[videoIndex].commentCount += i
+            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! MainController).tableView.reloadRowsAtIndexPaths(
                 [NSIndexPath(forRow: videoIndex, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Left)
         }else if myViewController == "HomeController"{
-            (self.parentViewController as! HomePageViewController).videoArray[videoIndex].commentCount += i
-            (self.parentViewController as! HomePageViewController).tableView.reloadRowsAtIndexPaths(
+            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! HomePageViewController).videoArray[videoIndex].commentCount += i
+            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! HomePageViewController).tableView.reloadRowsAtIndexPaths(
                 [NSIndexPath(forRow: videoIndex, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Left)
-            (self.parentViewController as! HomePageViewController).player1.stop()
-            (self.parentViewController as! HomePageViewController).player2.stop()
-            //(self.parentViewController as! profileOther).AVc.player2.stop()
+            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! HomePageViewController).player1.stop()
+            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! HomePageViewController).player2.stop()
+            //(navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! profileOther).AVc.player2.stop()
         }else if myViewController == "Added"{
-            (self.parentViewController as! profileOther).AVc.videoArray[videoIndex].commentCount += i
-            (self.parentViewController as! profileOther).AVc.tableView.reloadRowsAtIndexPaths(
+            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! profileOther).AVc.videoArray[videoIndex].commentCount += i
+            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! profileOther).AVc.tableView.reloadRowsAtIndexPaths(
                 [NSIndexPath(forRow: videoIndex, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Left)
-            (self.parentViewController as! profileOther).AVc.player1.stop()
-            (self.parentViewController as! profileOther).AVc.player2.stop()
+            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! profileOther).AVc.player1.stop()
+            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! profileOther).AVc.player2.stop()
         }else if myViewController == "Tagged"{
-            (self.parentViewController as! profileOther).BVc.videoArray[videoIndex].commentCount += i
-            (self.parentViewController as! profileOther).BVc.tableView.reloadRowsAtIndexPaths(
+            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! profileOther).BVc.videoArray[videoIndex].commentCount += i
+            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! profileOther).BVc.tableView.reloadRowsAtIndexPaths(
                 [NSIndexPath(forRow: videoIndex, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Left)
-            (self.parentViewController as! profileOther).BVc.player1.stop()
-            (self.parentViewController as! profileOther).BVc.player2.stop()
+            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! profileOther).BVc.player1.stop()
+            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! profileOther).BVc.player2.stop()
             
             
             
         }else if myViewController == "profileLocation"{
-            (self.parentViewController as! profileLocation).videoArray[videoIndex].commentCount += i
-            (self.parentViewController as! profileLocation).tableView.reloadRowsAtIndexPaths(
+            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! profileLocation).videoArray[videoIndex].commentCount += i
+            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! profileLocation).tableView.reloadRowsAtIndexPaths(
                 [NSIndexPath(forRow: videoIndex, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Left)
-            (self.parentViewController as! profileLocation).player1.stop()
-            (self.parentViewController as! profileLocation).player2.stop()
+            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! profileLocation).player1.stop()
+            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! profileLocation).player2.stop()
         }else if myViewController == "oneVideo"{
             MoleGlobalVideo.commentCount += i
-            (self.parentViewController as! oneVideo).tableView.reloadRowsAtIndexPaths(
+            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! oneVideo).tableView.reloadRowsAtIndexPaths(
                 [NSIndexPath(forRow: videoIndex, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Left)
-            (self.parentViewController as! oneVideo).player.stop()
+            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! oneVideo).player.stop()
         }
         
     }

@@ -43,11 +43,8 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
     @IBOutlet var nofollowings: UILabel!
     var direction = 0 // 0 is down and 1 is up
     @IBOutlet var tableView: UITableView!
-    @IBOutlet var toolBar: UIToolbar!
     var refreshControl:UIRefreshControl!
-    @IBOutlet var searchText: UITextField!
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
-    @IBOutlet var collectionView: UICollectionView!
     var location:CLLocation!
     var locationManager:CLLocationManager!
     var videoArray = [MoleVideoInformation]()
@@ -55,10 +52,18 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
     var Ekran : CGFloat = 0.0
     var categories = ["Hepsi","Eğlence","Yemek","Gezinti","Moda" , "Güzellik", "Spor","Etkinlik","Kampüs"]
     var likeHeart = UIImageView()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         likeHeart.image = UIImage(named: "favorite")
         likeHeart.alpha = 1.0
+        self.automaticallyAdjustsScrollViewInsets = false
+        navigationController?.hidesBarsOnSwipe = true
+        
+        self.navigationItem.titleView = UIImageView(image:  UIImage(named: "molocate"))
+        self.navigationItem.titleView?.tintColor = UIColor.whiteColor()
+        
+        
         
         try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
         self.nofollowings.hidden = true
@@ -69,7 +74,7 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
         view.addSubview(activityIndicator)
         activityIndicator.startAnimating()
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
-
+ 
         
         MolocateAccount.getCurrentUser({ (data, response, error) -> () in
             
@@ -85,14 +90,13 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
         self.player2.playbackLoops = true
         
         self.tabBarController?.tabBar.hidden = true
-        toolBar.barTintColor = swiftColor
-        toolBar.translucent = false
-        toolBar.clipsToBounds = true
         tableView.separatorColor = UIColor.clearColor()
         tableView.allowsSelection = false
         tableView.tableFooterView = UIView()
         
-        Ekran = self.view.frame.height - self.toolBar.frame.maxY
+        self.tabBarController?.tabBar.hidden = true
+              
+        Ekran = self.view.frame.height - (self.navigationController?.navigationBar.frame.maxY)!
         
        isRequested = NSMutableDictionary()
         
@@ -155,6 +159,7 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MainController.prepareForRetry), name: "prepareForRetry", object: nil)
     }
     
+ 
     func refresh(sender:AnyObject){
         
         
@@ -763,8 +768,12 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
             mine = true
         }
         
+        navigationController?.navigationBarHidden = false
+        
         
         let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
+        
+        self.navigationController?.pushViewController(controller, animated: true)
         MolocateAccount.getUser(videoArray[buttonRow].username) { (data, response, error) -> () in
             dispatch_async(dispatch_get_main_queue()){
                 //DBG: If it is mine profile?
@@ -777,19 +786,19 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
                 self.activityIndicator.stopAnimating()
             }
         }
-        controller.view.frame = CGRectMake(0, 0+MolocateDevice.size.height, MolocateDevice.size.width, MolocateDevice.size.height)
-        controller.willMoveToParentViewController(self)
-        self.view.addSubview(controller.view)
-        controller.didMoveToParentViewController(self)
-        self.addChildViewController(controller)
+//        controller.view.frame = CGRectMake(0, 0+MolocateDevice.size.height, MolocateDevice.size.width, MolocateDevice.size.height)
+//        controller.willMoveToParentViewController(self)
+//        self.view.addSubview(controller.view)
+//        controller.didMoveToParentViewController(self)
+//        self.addChildViewController(controller)
 
-        
-        UIView.transitionWithView(self.view, duration: 0.2, options: .CurveEaseInOut , animations: { _ in
-            controller.view.frame = self.view.bounds
-            }, completion: { (finished: Bool) -> () in
-                
-                
-        })
+//        
+//        UIView.transitionWithView(self.view, duration: 0.2, options: .CurveEaseInOut , animations: { _ in
+//            controller.view.frame = self.view.bounds
+//            }, completion: { (finished: Bool) -> () in
+//                
+//                
+//        })
 
         
    
@@ -989,19 +998,7 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
         pressedFollow = false
     }
     
-    
-    func pressedLikeCount(sender: UIButton) {
-        player1.stop()
-        player2.stop()
-        video_id = videoArray[sender.tag].id
-        videoIndex = sender.tag
-        let controller:likeVideo = self.storyboard!.instantiateViewControllerWithIdentifier("likeVideo") as! likeVideo
-        controller.view.frame = self.view.bounds;
-        controller.willMoveToParentViewController(self)
-        self.view.addSubview(controller.view)
-        self.addChildViewController(controller)
-        controller.didMoveToParentViewController(self)
-    }
+   
     
     func doubleTapped(sender: UITapGestureRecognizer) {
         let buttonRow = sender.view!.tag
@@ -1105,6 +1102,19 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
         }
                pressedLike = false
     }
+    
+    
+    func pressedLikeCount(sender: UIButton) {
+        player1.stop()
+        player2.stop()
+        video_id = videoArray[sender.tag].id
+        videoIndex = sender.tag
+        let controller:likeVideo = self.storyboard!.instantiateViewControllerWithIdentifier("likeVideo") as! likeVideo
+        
+        self.navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    
     func pressedComment(sender: UIButton) {
         let buttonRow = sender.tag
         player1.stop()
@@ -1114,17 +1124,19 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
         myViewController = "HomeController"
         
         let controller:commentController = self.storyboard!.instantiateViewControllerWithIdentifier("commentController") as! commentController
-        comments.removeAll()
-        controller.view.frame = CGRectMake(0, 0+MolocateDevice.size.height, MolocateDevice.size.width, MolocateDevice.size.height)
         
-        controller.willMoveToParentViewController(self)
-        self.view.addSubview(controller.view)
-        UIView.transitionWithView(self.view, duration: 0.15, options: .CurveEaseInOut , animations: { _ in
-            controller.view.frame = self.view.frame
-            }, completion: nil)
-        self.addChildViewController(controller)
-        controller.didMoveToParentViewController(self)
-        
+        self.navigationController?.pushViewController(controller, animated: true)
+//        comments.removeAll()
+//        controller.view.frame = CGRectMake(0, 0+MolocateDevice.size.height, MolocateDevice.size.width, MolocateDevice.size.height)
+//        
+//        controller.willMoveToParentViewController(self)
+//        self.view.addSubview(controller.view)
+//        UIView.transitionWithView(self.view, duration: 0.15, options: .CurveEaseInOut , animations: { _ in
+//            controller.view.frame = self.view.frame
+//            }, completion: nil)
+//        self.addChildViewController(controller)
+//        controller.didMoveToParentViewController(self)
+//        
 
         MolocateVideo.getComments(videoArray[buttonRow].id) { (data, response, error, count, next, previous) -> () in
             dispatch_async(dispatch_get_main_queue()){
@@ -1272,19 +1284,19 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
         //////////print(indexPath.row)
         
     }
-    func changeFrame() {
-        
-        switch(choosedIndex){
-        case 1:
-            self.tableView.frame = CGRectMake(0, 44, screenSize.width, screenSize.height - 44)
-            self.collectionView.hidden = true
-            
-            break;
-        default:
-            self.tableView.frame = CGRectMake(0, 100, screenSize.width, screenSize.height - 100)
-            self.collectionView.hidden = false
-        }
-    }
+//    func changeFrame() {
+//        
+//        switch(choosedIndex){
+//        case 1:
+//            self.tableView.frame = CGRectMake(0, 44, screenSize.width, screenSize.height - 44)
+//            self.collectionView.hidden = true
+//            
+//            break;
+//        default:
+//            self.tableView.frame = CGRectMake(0, 100, screenSize.width, screenSize.height - 100)
+//            self.collectionView.hidden = false
+//        }
+//    }
     
     
     func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
@@ -1302,6 +1314,9 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
     }
     
     override func viewWillAppear(animated: Bool) {
+       
+         navigationController?.hidesBarsOnSwipe = true
+        
         dispatch_async(dispatch_get_main_queue()) {
             self.locationManager = CLLocationManager()
             self.locationManager.delegate = self

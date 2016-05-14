@@ -89,9 +89,10 @@ class SideBarController: UITableViewController {
         
         switch (choosedIndex){
         case 0:
-            (self.parentViewController?.childViewControllers[1].childViewControllers[0].tabBarController?.selectedViewController as! HomePageViewController).tableView.setContentOffset(CGPoint(x: 0,y: 0), animated: true)
-        case 1:
-            (self.parentViewController?.childViewControllers[1].childViewControllers[0].tabBarController?.selectedViewController as! MainController).tableView.setContentOffset(CGPoint(x: 0,y: 0), animated: true)
+//            (self.parentViewController?.childViewControllers[1].childViewControllers[0].tabBarController?.selectedViewController as! HomePageViewController).tableView.setContentOffset(CGPoint(x: 0,y: 0), animated: true)
+            print("haci")
+//        case 1:
+//            (self.parentViewController?.childViewControllers[1].childViewControllers[0].tabBarController?.selectedViewController as! MainController).tableView.setContentOffset(CGPoint(x: 0,y: 0), animated: true)
         case 2:
             self.parentViewController?.childViewControllers[1].childViewControllers[0].tabBarController?.selectedViewController?.viewDidLoad()
         case 3:

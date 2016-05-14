@@ -18,17 +18,16 @@ class likeVideo: UIViewController, UITableViewDelegate, UITableViewDataSource  {
     }
     
     func initGui(){
-        toolBar.barTintColor = swiftColor
-        toolBar.translucent = false
-        toolBar.clipsToBounds = true
-        
+        self.automaticallyAdjustsScrollViewInsets = false
+        navigationController?.navigationBarHidden = false
+        navigationController?.hidesBarsOnSwipe = false
+        navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         tableView.delegate      =   self
         tableView.dataSource    =   self
         
         tableView.allowsSelection = false
         tableView.tableFooterView = UIView()
-        
-        self.navigationController?.navigationBar.hidden = false
+   
     }
     
     func getData(){

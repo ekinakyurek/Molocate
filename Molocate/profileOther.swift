@@ -16,7 +16,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
   
     @IBOutlet weak var ProfileButton: UIButton!
     
-    @IBOutlet var errorMessage: UILabel!
+    //errormessage: UILabel!
     @IBOutlet var username: UILabel!
     
     @IBOutlet var profilePhoto: UIImageView!
@@ -41,8 +41,12 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
             classUser = MoleCurrentUser
             FollowButton.image = UIImage(named: "settings")
             //choosedIndex = 4 //??WHY
+            
+            
             back.image = UIImage(named:"sideMenu")
         }else{
+            
+            back.image = UIImage(named: "leftArrow")
             if(classUser.isFollowing){
                 FollowButton.image = UIImage(named: "unfollow")
             }else if classUser.username == MoleCurrentUser.username{
@@ -52,7 +56,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
             }
         }
         if(classUser.post_count != 0 ){
-            errorMessage.hidden = true
+            ////errormessage.hidden = true
         }
         
         username.text = classUser.username
@@ -65,7 +69,6 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
         settings.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.width, self.view.frame.width)
         settings.layer.cornerRadius = 0
         settings.tintColor = UIColor.clearColor()
-        
         profilePhoto.layer.borderWidth = 0.5
         profilePhoto.layer.masksToBounds = false
         profilePhoto.layer.borderColor = profileBackgroundColor.CGColor
@@ -88,9 +91,8 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
         taggedButton.setTitle("@ETİKET(\(classUser.tag_count))", forState: .Normal)
         taggedButton.backgroundColor = swiftColor3
         
-        toolBar.clipsToBounds = true
-        toolBar.translucent = false
-        toolBar.barTintColor = swiftColor
+    
+        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
   
         scrollView.frame.origin.y = 190
         scrollView.frame.size.height = MolocateDevice.size.height - 190
@@ -119,6 +121,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
         scrollWidth = MolocateDevice.size.width*2
         scrollView.contentSize.width = scrollWidth
         scrollView.delegate = self
+        scrollView.scrollEnabled = true
     }
     
     func RefreshGuiWithData(){
@@ -138,6 +141,9 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
             //choosedIndex = 4 //??WHY
             back.image = UIImage(named:"sideMenu")
         }else{
+
+            
+            back.image = UIImage(named: "leftArrow")
             if(classUser.isFollowing){
                 FollowButton.image = UIImage(named: "unfollow")
             }else if classUser.username == MoleCurrentUser.username{
@@ -148,7 +154,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
         }
         
         if(classUser.post_count != 0 ){
-            errorMessage.hidden = true
+            //errormessage.hidden = true
         }
         
         username.text = classUser.username
@@ -247,19 +253,9 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
 
     
     @IBAction func backButton(sender: AnyObject) {
-        if(choosedIndex < 3 || (self.parentViewController?.parentViewController?.parentViewController != nil)){
+        if(choosedIndex == 3 ){
             
-            UIView.transitionWithView(self.view, duration:0.2, options: .TransitionCrossDissolve , animations: { _ in
-                         self.view.hidden = true
-                    //self.view.frame = CGRectMake(0-MolocateDevice.size.width, 0, MolocateDevice.size.width, MolocateDevice.size.height)
-                }, completion: { (finished: Bool) -> () in
-                    self.view.removeFromSuperview()
-                    self.willMoveToParentViewController(nil)
-                    self.removeFromParentViewController()
-            })
             
-    
-        } else {
             if(sideClicked == false){
                 sideClicked = true
                 NSNotificationCenter.defaultCenter().postNotificationName("openSideBar", object: nil)
@@ -267,6 +263,20 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
                 sideClicked = false
                 NSNotificationCenter.defaultCenter().postNotificationName("closeSideBar", object: nil)
             }
+         
+        } else {
+            
+            navigationController?.popViewControllerAnimated(true)
+//            UIView.transitionWithView(self.view, duration:0.2, options: .TransitionCrossDissolve , animations: { _ in
+//                self.view.hidden = true
+//                //self.view.frame = CGRectMake(0-MolocateDevice.size.width, 0, MolocateDevice.size.width, MolocateDevice.size.height)
+//                }, completion: { (finished: Bool) -> () in
+//                    self.view.removeFromSuperview()
+//                    self.willMoveToParentViewController(nil)
+//                    self.removeFromParentViewController()
+//            })
+            
+            
         }
         
     }
@@ -295,7 +305,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
             BVc.player1.stop()
             BVc.player2.stop()
             if(classUser.post_count != 0 || classUser.tag_count != 0 ) {
-                errorMessage.hidden = true
+                //errormessage.hidden = true
             }
             addedButton.backgroundColor = swiftColor
             taggedButton.backgroundColor = swiftColor3
@@ -307,7 +317,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
             AVc.player1.stop()
             AVc.player2.stop()
             if(classUser.tag_count != 0  && classUser.post_count != 0) {
-                errorMessage.hidden = true
+                //errormessage.hidden = true
             }
             addedButton.backgroundColor = swiftColor3
             taggedButton.backgroundColor = swiftColor
@@ -326,13 +336,20 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
+       
+        self.addedButton.enabled = true
+        self.taggedButton.enabled = true
+        self.scrollView.scrollEnabled = true
         //???What is doing that animation
         if(indexPath.row == 0){
             UIView.animateWithDuration(0.75) { () -> Void in
                 self.scrollView.userInteractionEnabled = true
                 self.scrollView.alpha = 1
                 self.settings.hidden = true
+             
+                self.navigationController?.navigationBarHidden = false
+
+
             }
         }
         if indexPath.row == 1 {
@@ -416,7 +433,10 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
     
     func showTable(){
         UIView.animateWithDuration(0.25) { () -> Void in
-            
+            self.navigationController?.navigationBarHidden = true
+            self.addedButton.enabled = false
+            self.taggedButton.enabled = false
+            self.scrollView.scrollEnabled = false
             self.settings.hidden = false
             self.settings.frame = CGRectMake(self.view.frame.origin.x,self.view.frame.origin.y,self.view.frame.width,self.view.frame.size.width)
             self.scrollView.alpha = 0.4
