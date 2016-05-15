@@ -1109,7 +1109,8 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
         video_id = videoArray[sender.tag].id
         videoIndex = sender.tag
         let controller:likeVideo = self.storyboard!.instantiateViewControllerWithIdentifier("likeVideo") as! likeVideo
-        
+        //DBG: Burda  likeları çağır,
+        //Her gectigimiz ekranda activity indicatorı goster
         self.navigationController?.pushViewController(controller, animated: true)
     }
     
