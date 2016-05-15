@@ -20,7 +20,7 @@ var user: MoleUser = MoleUser()
 var videoIndex = 0
 var isUploaded = true
 var myViewController = "MainController"
-var thePlace:MolePlace!
+var thePlace:MolePlace = MolePlace()
 
 class MainController: UIViewController,UITableViewDelegate , UITableViewDataSource ,UIToolbarDelegate , UICollectionViewDelegate  ,CLLocationManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,NSURLConnectionDataDelegate,PlayerDelegate, UISearchBarDelegate {
 
@@ -425,9 +425,6 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         
-     
-            
-            if scrollView == tableView {
                 if(!refreshing) {
                     
                     if (scrollView.contentOffset.y<pointNow) {
@@ -570,7 +567,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                     
                     
                 }
-            }
+        
      
         
     }
