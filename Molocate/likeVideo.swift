@@ -12,7 +12,7 @@ class likeVideo: UIViewController, UITableViewDelegate, UITableViewDataSource  {
         super.viewDidLoad()
         
         initGui()
-        getData()
+        //getData()
         
         UIApplication.sharedApplication().endIgnoringInteractionEvents()
     }
@@ -134,14 +134,15 @@ class likeVideo: UIViewController, UITableViewDelegate, UITableViewDataSource  {
     
     @IBAction func backButton(sender: AnyObject) {
         
-        dispatch_async(dispatch_get_main_queue()) {
-            
-            self.willMoveToParentViewController(nil)
-            self.view.removeFromSuperview()
-            self.removeFromParentViewController()
-            
-            
-        }
+        navigationController?.popViewControllerAnimated(true)
+//        dispatch_async(dispatch_get_main_queue()) {
+//            
+//            self.willMoveToParentViewController(nil)
+//            self.view.removeFromSuperview()
+//            self.removeFromParentViewController()
+//            
+//            
+//        }
         
     }
     
