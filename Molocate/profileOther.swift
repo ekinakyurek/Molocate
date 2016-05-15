@@ -336,7 +336,8 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-       
+        tableView.deselectRowAtIndexPath(indexPath, animated: false)
+        
         self.addedButton.enabled = true
         self.taggedButton.enabled = true
         self.scrollView.scrollEnabled = true
@@ -378,7 +379,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
             MoleGlobalVideo = nil
             GlobalVideoUploadRequest = nil
            
-            self.parentViewController!.parentViewController!.parentViewController!.performSegueWithIdentifier("logout", sender: self)
+            self.parentViewController!.parentViewController!.performSegueWithIdentifier("logout", sender: self)
         }
         
         

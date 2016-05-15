@@ -2338,6 +2338,7 @@
                         <segue destination="NJ6-v5-a2W" kind="relationship" relationship="viewControllers" id="IJg-eB-vfW"/>
                         <segue destination="ZzN-fS-FBy" kind="relationship" relationship="viewControllers" id="uAZ-Ht-cvp"/>
                         <segue destination="Dn3-N1-dKx" kind="relationship" relationship="viewControllers" id="ZVv-oz-cbD"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="logout" id="LcP-AQ-PTn"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mSC-4o-IAj" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2707,6 +2708,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="1yU-cO-5h3"/>
-        <segue reference="t1e-tq-FhG"/>
+        <segue reference="LcP-AQ-PTn"/>
+        <segue reference="cGX-Xw-vdc"/>
     </inferredMetricsTieBreakers>
 </document>

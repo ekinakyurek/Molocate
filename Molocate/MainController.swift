@@ -424,7 +424,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        print("helooo")
+   
         if(!refreshing) {
             
             if (scrollView.contentOffset.y<pointNow) {
