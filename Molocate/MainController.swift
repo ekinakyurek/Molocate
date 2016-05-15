@@ -20,9 +20,9 @@ var user: MoleUser = MoleUser()
 var videoIndex = 0
 var isUploaded = true
 var myViewController = "MainController"
-var thePlace:MolePlace = MolePlace()
+var thePlace:MolePlace!
 
-
+var isInsetsAdjusted = false
 class MainController: UIViewController,UITableViewDelegate , UITableViewDataSource ,UIToolbarDelegate , UICollectionViewDelegate  ,CLLocationManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,NSURLConnectionDataDelegate,PlayerDelegate, UISearchBarDelegate {
     
     var lastOffset:CGPoint!
@@ -71,19 +71,20 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     
     var categories = ["Hepsi","Eğlence","Yemek","Gezi","Moda" , "Güzellik", "Spor","Etkinlik","Kampüs"]
-
+    
     var likeHeart = UIImageView()
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.automaticallyAdjustsScrollViewInsets = false
+        self.navigationController?.hidesBarsOnTap = true
+        self.automaticallyAdjustsScrollViewInsets = true
+        //self.navigationController!.navigationBar.translucent = false
         searchText.frame = CGRect(x: 0, y: 0, width: MolocateDevice.size.width/2, height: 36)
-      //  searchText.showsCancelButton = true
-//        searchText.searchBarStyle = UISearchBarStyle.Minimal
+        //  searchText.showsCancelButton = true
+        //        searchText.searchBarStyle = UISearchBarStyle.Minimal
         self.navigationItem.titleView = searchText
-        self.navigationController?.hidesBarsOnSwipe = true
         
-        
+        //self.collectionView.contentInset = UIEdgeInsetsMake(10, 0, 0, 0)
         venueTable.separatorColor = UIColor.lightGrayColor()
         venueTable.tableFooterView = UIView()
         try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
@@ -92,11 +93,11 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         likeHeart.image = UIImage(named: "favorite")
         likeHeart.alpha = 1.0
         tableView.separatorColor = UIColor.clearColor()
-
+        
         venueTable.hidden = true
         searchText.delegate = self
         
-    
+        
         self.player1 = Player()
         self.player1.delegate = self
         self.player1.playbackLoops = true
@@ -117,7 +118,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         backgroundLabel.layer.masksToBounds = false
         backgroundLabel.layer.borderColor = swiftColor.CGColor
         view.addSubview(backgroundLabel)
-    
+        
         
         usernameButton2 = UIButton()
         usernameButton2.frame = CGRectMake(screenSize.width / 2  ,7 , screenSize.width / 2 - 20, 30)
@@ -134,7 +135,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         venueButton2.contentHorizontalAlignment = .Center
         venueButton2.setTitle("KONUMLAR", forState: .Normal)
         venueButton2.titleLabel?.font = UIFont(name: "AvenirNext-Medium", size:13)
-       
+        
         venueButton2.addTarget(self, action: #selector(MainController.pressedVenue(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         view.addSubview(venueButton2)
         venueButton2.backgroundColor = swiftColor2
@@ -163,41 +164,41 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         self.venueButton2.layer.backgroundColor = swiftColor2.CGColor
         //Here I'm masking the textView's layer with rectShape layer
         self.venueButton2.layer.mask = rectShape2
-
         
         
-
+        
+        
         let bartextField = searchText.valueForKey("searchField") as! UITextField
         bartextField.backgroundColor = swiftColor2
         bartextField.font = UIFont(name: "AvenirNext-Regular", size: 14)
         bartextField.textColor = UIColor.whiteColor()
         bartextField.attributedPlaceholder =  NSAttributedString(string: "Ara", attributes: [NSForegroundColorAttributeName:UIColor.whiteColor(), NSFontAttributeName: UIFont(name: "AvenirNext-Regular", size: 14)! ])
-    
+        
         let magnifyingGlass = bartextField.leftView as! UIImageView
         magnifyingGlass.image = magnifyingGlass.image?.imageWithRenderingMode(.AlwaysTemplate)
         magnifyingGlass.tintColor = UIColor.whiteColor()
-       
+        
         //searchText.barTintColor = UIColor.whiteColor()
         let clearButton = bartextField.valueForKey("clearButton") as! UIButton
         clearButton.setImage(clearButton.imageView?.image?.imageWithRenderingMode(.AlwaysTemplate), forState: .Normal)
         clearButton.tintColor = UIColor.whiteColor()
         
         //searchText.tintColor = UIColor.whiteColor()
-      
+        
         //searchText.layer.borderColor = swiftColor.CGColor
         //searchText.layer.borderWidth = 0.5
         //searchText.layer.masksToBounds = true
         //searchText.borderStyle = UITextBorderStyle.None
         searchText.layer.borderWidth = 0
         searchText.layer.cornerRadius = 5
-       
+        
         //searchText.textAlignment = .Center
-//        let border2 = CALayer()
-//        border2.frame = searchText.frame
-//        border2.borderColor = UIColor.whiteColor().CGColor
-//        border2.borderWidth = 2
-//        searchText.layer.addSublayer(border2)
-
+        //        let border2 = CALayer()
+        //        border2.frame = searchText.frame
+        //        border2.borderColor = UIColor.whiteColor().CGColor
+        //        border2.borderWidth = 2
+        //        searchText.layer.addSublayer(border2)
+        
         
         let index = NSIndexPath(forRow: 0, inSection: 0)
         self.collectionView.selectItemAtIndexPath(index, animated: false, scrollPosition: UICollectionViewScrollPosition.None)
@@ -290,10 +291,10 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         
     }
     
-
+    
     
     func pressedVenue(sender: UIButton) {
-
+        
         venueoruser = true
         self.venueButton2.backgroundColor = swiftColor2
         self.usernameButton2.backgroundColor = swiftColor3
@@ -304,7 +305,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         
         
     }
-
+    
     func pressedUsernameButton(sender: UIButton) {
         venueoruser = false
         self.venueButton2.backgroundColor = swiftColor3
@@ -408,11 +409,11 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         else{
             rightArrow.hidden = false
         }
-
+        
     }
     
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
-    
+        
         pointNow = scrollView.contentOffset.y
         lastOffsetCapture = NSDate().timeIntervalSinceReferenceDate
         //print(collectionView.contentOffset.x)
@@ -424,132 +425,156 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
-   
-        if(!refreshing) {
-            
-            if (scrollView.contentOffset.y<pointNow) {
-                navigationController?.setNavigationBarHidden(false, animated: true)
-
-                direction = 0
-            } else if (scrollView.contentOffset.y>pointNow) {
-                
-                navigationController?.setNavigationBarHidden(true, animated: true)
-
-                direction = 1
-                
-            }
-            
-            let currentOffset = scrollView.contentOffset
-            let currentTime = NSDate().timeIntervalSinceReferenceDate   // [NSDate timeIntervalSinceReferenceDate];
-            
-            let timeDiff = currentTime - lastOffsetCapture;
-            if(timeDiff > 0.1) {
-                let distance = currentOffset.y - lastOffset.y;
-                //The multiply by 10, / 1000 isn't really necessary.......
-                let scrollSpeedNotAbs = (distance * 10) / 1000 //in pixels per millisecond
-                
-                let scrollSpeed = fabsf(Float(scrollSpeedNotAbs));
-                if (scrollSpeed > 0.1) {
-                    isScrollingFast = true
-                    //////print("hızlı")
-                    
-                } else {
-                    isScrollingFast = false
-                    var ipArray = [NSIndexPath]()
-                    for item in self.tableView.indexPathsForVisibleRows!{
-                        let cell = self.tableView.cellForRowAtIndexPath(item) as! videoCell
-                        if !cell.hasPlayer {
-                            ipArray.append(item)
-                        }
-                    }
-                    if ipArray.count != 0 {
-                        self.tableView.reloadRowsAtIndexPaths(ipArray, withRowAnimation: .None)
-                    }
-
-                    
-                }
-                
-                lastOffset = currentOffset;
-                lastOffsetCapture = currentTime;
-            }
-            
-            if (scrollView.contentOffset.y > 10) && (scrollView.contentOffset.y+scrollView.frame.height < scrollView.contentSize.height
-                )
-            {
-                if self.tableView.visibleCells.count > 2 {
-                    (self.tableView.visibleCells[0] as! videoCell).hasPlayer = false
-                    (self.tableView.visibleCells[2] as! videoCell).hasPlayer = false
-                }
-                let longest = scrollView.contentOffset.y + scrollView.frame.height
-                if direction == 1 {
-                    //////////print("down")
-                    let cellap = scrollView.contentOffset.y - self.tableView.visibleCells[0].center.y
-                    //////////print(cellap)
-                    let row = self.tableView.indexPathsForVisibleRows![0].row+1
-                    if cellap > 0 {
-                        
-                        if (row) % 2 == 1{
-                            //self.tableView.visibleCells[1].reloadInputViews()
-                            if self.player1.playbackState.description != "Playing" {
-                                self.player2.stop()
-                                if !isScrollingFast {
-                                self.player1.playFromBeginning()
-                                }
-                                player1Turn = true
-                                //////print(self.tableView.indexPathsForVisibleRows![0].row)
-                                //////////print("player1")
-                            }
-                        }else{
-                            if self.player2.playbackState.description != "Playing"{
-                                self.player1.stop()
-                                if !isScrollingFast {
-                                self.player2.playFromBeginning()
-                                }
-                                player1Turn = false
-                                //////////print("player2")
-                            }
-                        }
-                    }
-                }
-                    
-                    
-                else {
-                    //////////print("up")
-                    
-                    let cellap = longest - self.tableView.visibleCells[0].center.y-150-self.view.frame.width
-                    ////////print(cellap)
-                    let row = self.tableView.indexPathsForVisibleRows![0].row
-                    if cellap < 0 {
-                        
-                        if (row) % 2 == 1{
-                            
-                            if self.player1.playbackState.description != "Playing" {
-                                self.player2.stop()
-                                if !isScrollingFast {
-                                self.player1.playFromBeginning()
-                                }
-                                player1Turn = true
-                                //////////print("player1")
-                            }
-                        }else{
-                            if self.player2.playbackState.description != "Playing"{
-                                self.player1.stop()
-                                if !isScrollingFast {
-                                self.player2.playFromBeginning()
-                                }
-                                player1Turn = false
-                                
-                                //////////print("player2")
-                            }
-                        }
-                    }
-                }
-            }
-            
-            
-            
-        }
         
+        if isInsetsAdjusted {
+            
+            if scrollView == tableView {
+                if(!refreshing) {
+                    
+                    if (scrollView.contentOffset.y<pointNow) {
+                        
+                        
+                        
+                        navigationController?.setNavigationBarHidden(false, animated: true)
+                        
+                        UIView.animateWithDuration(0.25, animations: {
+                            self.collectionView.frame.origin.y = 0
+                        })
+                        
+                        
+                        //UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: UIStatusBarAnimation.Fade )r
+                        
+                        
+                        direction = 0
+                    } else if (scrollView.contentOffset.y>pointNow) {
+                        
+                        navigationController?.setNavigationBarHidden(true, animated: true)
+                        
+                        UIView.animateWithDuration(0.25, animations: {
+                            self.collectionView.frame.origin.y = 16
+                        })
+                        
+                        
+                        //UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: UIStatusBarAnimation.Fade )
+                        //collectionView.contentInset = UIEdgeInsets(top: 10,left: 0,bottom: 0,right: 0)
+                        direction = 1
+                        
+                    }
+                    
+                    let currentOffset = scrollView.contentOffset
+                    let currentTime = NSDate().timeIntervalSinceReferenceDate   // [NSDate timeIntervalSinceReferenceDate];
+                    
+                    let timeDiff = currentTime - lastOffsetCapture;
+                    if(timeDiff > 0.1) {
+                        let distance = currentOffset.y - lastOffset.y;
+                        //The multiply by 10, / 1000 isn't really necessary.......
+                        let scrollSpeedNotAbs = (distance * 10) / 1000 //in pixels per millisecond
+                        
+                        let scrollSpeed = fabsf(Float(scrollSpeedNotAbs));
+                        if (scrollSpeed > 0.1) {
+                            isScrollingFast = true
+                            //////print("hızlı")
+                            
+                        } else {
+                            isScrollingFast = false
+                            var ipArray = [NSIndexPath]()
+                            for item in self.tableView.indexPathsForVisibleRows!{
+                                let cell = self.tableView.cellForRowAtIndexPath(item) as! videoCell
+                                if !cell.hasPlayer {
+                                    ipArray.append(item)
+                                }
+                            }
+                            if ipArray.count != 0 {
+                                self.tableView.reloadRowsAtIndexPaths(ipArray, withRowAnimation: .None)
+                            }
+                            
+                            
+                        }
+                        
+                        lastOffset = currentOffset;
+                        lastOffsetCapture = currentTime;
+                    }
+                    
+                    if (scrollView.contentOffset.y > 10) && (scrollView.contentOffset.y+scrollView.frame.height < scrollView.contentSize.height
+                        )
+                    {
+                        if self.tableView.visibleCells.count > 2 {
+                            (self.tableView.visibleCells[0] as! videoCell).hasPlayer = false
+                            (self.tableView.visibleCells[2] as! videoCell).hasPlayer = false
+                        }
+                        let longest = scrollView.contentOffset.y + scrollView.frame.height
+                        if direction == 1 {
+                            //////////print("down")
+                            let cellap = scrollView.contentOffset.y - self.tableView.visibleCells[0].center.y
+                            //////////print(cellap)
+                            let row = self.tableView.indexPathsForVisibleRows![0].row+1
+                            if cellap > 0 {
+                                
+                                if (row) % 2 == 1{
+                                    //self.tableView.visibleCells[1].reloadInputViews()
+                                    if self.player1.playbackState.description != "Playing" {
+                                        self.player2.stop()
+                                        if !isScrollingFast {
+                                            self.player1.playFromBeginning()
+                                        }
+                                        player1Turn = true
+                                        //////print(self.tableView.indexPathsForVisibleRows![0].row)
+                                        //////////print("player1")
+                                    }
+                                }else{
+                                    if self.player2.playbackState.description != "Playing"{
+                                        self.player1.stop()
+                                        if !isScrollingFast {
+                                            self.player2.playFromBeginning()
+                                        }
+                                        player1Turn = false
+                                        //////////print("player2")
+                                    }
+                                }
+                            }
+                        }
+                            
+                            
+                        else {
+                            //////////print("up")
+                            
+                            let cellap = longest - self.tableView.visibleCells[0].center.y-150-self.view.frame.width
+                            ////////print(cellap)
+                            let row = self.tableView.indexPathsForVisibleRows![0].row
+                            if cellap < 0 {
+                                
+                                if (row) % 2 == 1{
+                                    
+                                    if self.player1.playbackState.description != "Playing" {
+                                        self.player2.stop()
+                                        if !isScrollingFast {
+                                            self.player1.playFromBeginning()
+                                        }
+                                        player1Turn = true
+                                        //////////print("player1")
+                                    }
+                                }else{
+                                    if self.player2.playbackState.description != "Playing"{
+                                        self.player1.stop()
+                                        if !isScrollingFast {
+                                            self.player2.playFromBeginning()
+                                        }
+                                        player1Turn = false
+                                        
+                                        //////////print("player2")
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                    
+                    
+                }
+            }
+        }else{
+            isInsetsAdjusted = true
+        }
         
     }
     
@@ -622,8 +647,8 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
             return videoArray.count
         } else {
             if venueoruser {
-            if let venues = self.venues {
-                return venues.count}
+                if let venues = self.venues {
+                    return venues.count}
             }
             else {
                 if let searchedUsers = self.searchedUsers {
@@ -637,7 +662,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     func tableView(atableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         if atableView == tableView {
-
+            
             if !pressedLike && !pressedFollow {
                 let cell = videoCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "customCell")
                 let index = indexPath.row
@@ -681,7 +706,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                 
                 
                 if videoArray[indexPath.row].isUploading {
-                   
+                    
                     let myprogress = progressBar==nil ? 0.0:(progressBar?.progress)!
                     progressBar = UIProgressView(frame: cell.label3.frame)
                     progressBar?.progress = myprogress
@@ -693,55 +718,55 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                 
                 //print(videoArray[indexPath.row].location)
                 //print(videoArray[indexPath.row].urlSta )
+                
+                if !isScrollingFast {
                     
-                   if !isScrollingFast {
-                    
-                if dictionary.objectForKey(self.videoArray[indexPath.row].id) != nil {
-                    trueURL = dictionary.objectForKey(self.videoArray[indexPath.row].id) as! NSURL
-                } else {
-                    let url = self.videoArray[indexPath.row].urlSta.absoluteString
-                    if(url[0] == "h") {
-                        trueURL = self.videoArray[indexPath.row].urlSta
-                        dispatch_async(dispatch_get_main_queue()) {
-                            myCache.fetch(URL:self.videoArray[indexPath.row].urlSta ).onSuccess{ NSData in
-                                ////print("hop")
-                                let url = self.videoArray[indexPath.row].urlSta.absoluteString
-                                let path = NSURL(string: DiskCache.basePath())!.URLByAppendingPathComponent("shared-data/original")
-                                let cached = DiskCache(path: path.absoluteString).pathForKey(url)
-                                let file = NSURL(fileURLWithPath: cached)
-                                dictionary.setObject(file, forKey: self.videoArray[indexPath.row].id)
-                                
+                    if dictionary.objectForKey(self.videoArray[indexPath.row].id) != nil {
+                        trueURL = dictionary.objectForKey(self.videoArray[indexPath.row].id) as! NSURL
+                    } else {
+                        let url = self.videoArray[indexPath.row].urlSta.absoluteString
+                        if(url[0] == "h") {
+                            trueURL = self.videoArray[indexPath.row].urlSta
+                            dispatch_async(dispatch_get_main_queue()) {
+                                myCache.fetch(URL:self.videoArray[indexPath.row].urlSta ).onSuccess{ NSData in
+                                    ////print("hop")
+                                    let url = self.videoArray[indexPath.row].urlSta.absoluteString
+                                    let path = NSURL(string: DiskCache.basePath())!.URLByAppendingPathComponent("shared-data/original")
+                                    let cached = DiskCache(path: path.absoluteString).pathForKey(url)
+                                    let file = NSURL(fileURLWithPath: cached)
+                                    dictionary.setObject(file, forKey: self.videoArray[indexPath.row].id)
+                                    
+                                }
                             }
+                        }else{
+                            trueURL = self.videoArray[indexPath.row].urlSta
                         }
-                    }else{
-                        trueURL = self.videoArray[indexPath.row].urlSta
                     }
-                }
-                 if !cell.hasPlayer {
-                    
-                if indexPath.row % 2 == 1 {
-                    
-                    self.player1.setUrl(trueURL)
-                    self.player1.view.frame = cell.newRect
-                    cell.contentView.addSubview(self.player1.view)
-                    cell.hasPlayer = true
-                    
-                }else{
-                    
-                    self.player2.setUrl(trueURL)
-                    self.player2.view.frame = cell.newRect
-                    cell.contentView.addSubview(self.player2.view)
-                    cell.hasPlayer = true
-                }
-                    
+                    if !cell.hasPlayer {
+                        
+                        if indexPath.row % 2 == 1 {
+                            
+                            self.player1.setUrl(trueURL)
+                            self.player1.view.frame = cell.newRect
+                            cell.contentView.addSubview(self.player1.view)
+                            cell.hasPlayer = true
+                            
+                        }else{
+                            
+                            self.player2.setUrl(trueURL)
+                            self.player2.view.frame = cell.newRect
+                            cell.contentView.addSubview(self.player2.view)
+                            cell.hasPlayer = true
+                        }
+                        
                     }
-                if indexPath.row == 0 && on {
-                    self.player2.playFromBeginning()
-                    on = false
-                }
+                    if indexPath.row == 0 && on {
+                        self.player2.playFromBeginning()
+                        on = false
+                    }
                     
                 }
-
+                
                 return cell
             }else{
                 let cell = tableView.cellForRowAtIndexPath(indexPath) as! videoCell
@@ -763,42 +788,42 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                 }
                 return cell
             }
-
-          
-           
+            
+            
+            
         } else {
             if venueoruser {
-            let cell = searchVenue(style: UITableViewCellStyle.Default, reuseIdentifier: "cell")
-//            let cell = venueTable.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)  
-            let venue = venues[indexPath.row]
-              if let venueLocation = venue["location"] as? JSONParameters {
-                 var detailText = ""
-                if let distance = venueLocation["distance"] as? CLLocationDistance {
-                         detailText = distanceFormatter.stringFromDistance(distance)
-                         cell.distanceLabel.text = detailText
-                 }
-                if let address = venueLocation["address"] as? String {
-                         cell.addressNameLabel.text = address
-                 }
-                
-              
-              }
-            cell.nameLabel.text = venue["name"] as? String
-            return cell
+                let cell = searchVenue(style: UITableViewCellStyle.Default, reuseIdentifier: "cell")
+                //            let cell = venueTable.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
+                let venue = venues[indexPath.row]
+                if let venueLocation = venue["location"] as? JSONParameters {
+                    var detailText = ""
+                    if let distance = venueLocation["distance"] as? CLLocationDistance {
+                        detailText = distanceFormatter.stringFromDistance(distance)
+                        cell.distanceLabel.text = detailText
+                    }
+                    if let address = venueLocation["address"] as? String {
+                        cell.addressNameLabel.text = address
+                    }
+                    
+                    
+                }
+                cell.nameLabel.text = venue["name"] as? String
+                return cell
             } else {
                 let cell = searchUsername(style: UITableViewCellStyle.Default, reuseIdentifier: "cell")
                 if searchedUsers[indexPath.row].isFollowing {
-                cell.followButton.hidden = true
+                    cell.followButton.hidden = true
                 } else {
                     
                     cell.followButton.addTarget(self, action: #selector(MainController.pressedFollowSearch(_:)), forControlEvents: .TouchUpInside)
                 }
                 cell.usernameLabel.text = "@\(searchedUsers[indexPath.row].username)"
                 if searchedUsers[indexPath.row].first_name == "" {
-                cell.nameLabel.text = "\(searchedUsers[indexPath.row].username)"
+                    cell.nameLabel.text = "\(searchedUsers[indexPath.row].username)"
                 }
                 else{
-                cell.nameLabel.text = "\(searchedUsers[indexPath.row].first_name) \(searchedUsers[indexPath.row].last_name)"
+                    cell.nameLabel.text = "\(searchedUsers[indexPath.row].first_name) \(searchedUsers[indexPath.row].last_name)"
                 }
                 if(searchedUsers[indexPath.row].profilePic.absoluteString != ""){
                     cell.profilePhoto.sd_setImageWithURL(searchedUsers[indexPath.row].profilePic, forState: UIControlState.Normal)
@@ -810,10 +835,10 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                 //cell.followButton.addTarget(self, action: Selector("pressedFollowSearch"), forControlEvents: .TouchUpInside)
                 cell.followButton.tag = indexPath.row
                 cell.profilePhoto.tag = indexPath.row
-
+                
                 return cell
             }
-        
+            
         }
     }
     
@@ -840,12 +865,12 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                 user = data
                 controller.classUser = data
                 controller.RefreshGuiWithData()
-//                controller.view.frame = self.view.bounds;
-//                controller.willMoveToParentViewController(self)
-//                self.view.addSubview(controller.view)
-//                self.addChildViewController(controller)
-//                controller.didMoveToParentViewController(self)
-               
+                //                controller.view.frame = self.view.bounds;
+                //                controller.willMoveToParentViewController(self)
+                //                self.view.addSubview(controller.view)
+                //                self.addChildViewController(controller)
+                //                controller.didMoveToParentViewController(self)
+                
                 self.activityIndicator.stopAnimating()
             }
         }
@@ -854,40 +879,40 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     
     func tableView(atableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if atableView == tableView {
-        atableView.deselectRowAtIndexPath(indexPath, animated: false)
+            atableView.deselectRowAtIndexPath(indexPath, animated: false)
         } else {
             if venueoruser {
-            activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
-            activityIndicator.center = self.view.center
-            activityIndicator.hidesWhenStopped = true
-            activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-            view.addSubview(activityIndicator)
-            activityIndicator.startAnimating()
-            UIApplication.sharedApplication().beginIgnoringInteractionEvents()
-            MolocatePlace.getPlace(self.venues[indexPath.row]["id"] as! String) { (data, response, error) -> () in
-                dispatch_async(dispatch_get_main_queue()){
-                    thePlace = data
-                    let controller:profileLocation = self.storyboard!.instantiateViewControllerWithIdentifier("profileLocation") as! profileLocation
-                    if thePlace.name == "notExist"{
-                    thePlace.name = self.venues[indexPath.row]["name"] as! String
-                    let addressArr = self.venues[indexPath.row]["location"]!["formattedAddress"] as! [String]
-                        for item in addressArr{
-                            thePlace.address = thePlace.address + item
+                activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
+                activityIndicator.center = self.view.center
+                activityIndicator.hidesWhenStopped = true
+                activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+                view.addSubview(activityIndicator)
+                activityIndicator.startAnimating()
+                UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+                MolocatePlace.getPlace(self.venues[indexPath.row]["id"] as! String) { (data, response, error) -> () in
+                    dispatch_async(dispatch_get_main_queue()){
+                        thePlace = data
+                        let controller:profileLocation = self.storyboard!.instantiateViewControllerWithIdentifier("profileLocation") as! profileLocation
+                        if thePlace.name == "notExist"{
+                            thePlace.name = self.venues[indexPath.row]["name"] as! String
+                            let addressArr = self.venues[indexPath.row]["location"]!["formattedAddress"] as! [String]
+                            for item in addressArr{
+                                thePlace.address = thePlace.address + item
+                            }
+                            controller.followButton = nil
+                            
                         }
-                        controller.followButton = nil
                         
-                     }
-                    
-                    controller.view.frame = self.view.bounds;
-                    controller.willMoveToParentViewController(self)
-                    self.view.addSubview(controller.view)
-                    self.addChildViewController(controller)
-                    controller.didMoveToParentViewController(self)
-                    self.activityIndicator.removeFromSuperview()
+                        controller.view.frame = self.view.bounds;
+                        controller.willMoveToParentViewController(self)
+                        self.view.addSubview(controller.view)
+                        self.addChildViewController(controller)
+                        controller.didMoveToParentViewController(self)
+                        self.activityIndicator.removeFromSuperview()
+                    }
                 }
-            }
-            
-            self.searchText.resignFirstResponder()
+                
+                self.searchText.resignFirstResponder()
             } else {
                 activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
                 activityIndicator.center = self.view.center
@@ -906,7 +931,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                         self.view.addSubview(controller.view)
                         self.addChildViewController(controller)
                         controller.didMoveToParentViewController(self)
-                     
+                        
                         choosedIndex = 1
                         self.activityIndicator.removeFromSuperview()
                     }
@@ -948,7 +973,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     }
     func pressedPlace(sender: UIButton) {
         let buttonRow = sender.tag
-
+        
         player1.stop()
         player2.stop()
         
@@ -990,7 +1015,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         self.tableView.reloadRowsAtIndexPaths(indexes, withRowAnimation: .None)
         
         MolocateAccount.follow(videoArray[buttonRow].username){ (data, response, error) -> () in
-          MoleCurrentUser.following_count += 1
+            MoleCurrentUser.following_count += 1
         }
         pressedFollow = false
     }
@@ -1011,7 +1036,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         }
         pressedFollow = false
     }
-
+    
     func pressedLikeCount(sender: UIButton) {
         player1.stop()
         player2.stop()
@@ -1101,8 +1126,8 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                 }
             }
         }else{
-          
-
+            
+            
         }
         pressedLike = false
     }
@@ -1130,7 +1155,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                     //////print(data)
                 }
             }
-
+            
         }else{
             sender.highlighted = false
             
@@ -1252,25 +1277,25 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     }
     
     @IBOutlet weak var cameraButton: UIBarButtonItem!
-  
+    
     
     @IBAction func openCamera(sender: AnyObject) {
         locationManager.startUpdatingLocation()
         
-            player1.stop()
-            player2.stop()
+        player1.stop()
+        player2.stop()
         if (isUploaded) {
             CaptionText = ""
             if isSearching != true {
                 if(bestEffortAtLocation != nil){
-                activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
-                activityIndicator.center = self.view.center
-                activityIndicator.hidesWhenStopped = true
-                activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-                view.addSubview(activityIndicator)
-                activityIndicator.startAnimating()
-                UIApplication.sharedApplication().beginIgnoringInteractionEvents()
-                self.parentViewController!.parentViewController!.performSegueWithIdentifier("goToCamera", sender: self.parentViewController)
+                    activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
+                    activityIndicator.center = self.view.center
+                    activityIndicator.hidesWhenStopped = true
+                    activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+                    view.addSubview(activityIndicator)
+                    activityIndicator.startAnimating()
+                    UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+                    self.parentViewController!.parentViewController!.performSegueWithIdentifier("goToCamera", sender: self.parentViewController)
                 } else {
                     let message = NSLocalizedString("Molocate'in konum servislerini kullanmasına izin vermediniz. Lütfen ayarları değiştiriniz.", comment: "" )
                     let alertController = UIAlertController(title: "Molocate Konum", message: message, preferredStyle: UIAlertControllerStyle.Alert)
@@ -1286,7 +1311,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                     
                     
                 }
-
+                
             } else {
                 self.tableView.scrollEnabled = true
                 self.cameraButton.image = UIImage(named: "Camera")
@@ -1303,8 +1328,8 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
             }
             self.activityIndicator.removeFromSuperview()
         }
-            
-           }
+        
+    }
     
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         isScrollingFast = false
@@ -1320,7 +1345,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         }
         
     }
-//    
+    //
     func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if !decelerate {
             if self.player1.playbackState.description != "Playing" || self.player2.playbackState.description != "Playing" {
@@ -1347,7 +1372,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
             }
         }
         if scrollView == collectionView {
-        rightArrow.hidden = false
+            rightArrow.hidden = false
         }
     }
     
@@ -1435,14 +1460,14 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         
         if (bestEffortAtLocation == nil) || (bestEffortAtLocation.horizontalAccuracy > newLocation.horizontalAccuracy) {
             self.bestEffortAtLocation = newLocation
-           
+            
         }
     }
-
+    
     
     override func viewWillAppear(animated: Bool) {
         
-
+        
         dispatch_async(dispatch_get_main_queue()) {
             self.locationManager = CLLocationManager()
             self.locationManager.delegate = self
@@ -1464,7 +1489,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     override func viewDidDisappear(animated: Bool) {
         //self.tableView.removeFromSuperview()
         //SDImageCache.sharedImageCache().cleanDisk()
-         SDImageCache.sharedImageCache().clearMemory()
+        SDImageCache.sharedImageCache().clearMemory()
         player1.stop()
         player1.removeFromParentViewController()
         player2.stop()
@@ -1526,7 +1551,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
             resendButton.enabled = true
             deleteButton.enabled = true
         }
-    
+        
     }
     func retryRequest(){
         resendButton.enabled = false
@@ -1539,7 +1564,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
             if  HomePage?.videoArray.count != 0 {
                 
                 if HomePage?.videoArray[0].urlSta.absoluteString[0] != "h"{
-                     print("home  siliniyor")
+                    print("home  siliniyor")
                     HomePage?.resendButton.removeFromSuperview()
                     HomePage?.blackView.removeFromSuperview()
                     HomePage?.deleteButton.removeFromSuperview()
@@ -1595,17 +1620,17 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         } catch _ {
             print("eroor")
         }
-
-
+        
+        
     }
     
     func searchBarTextDidEndEditing(searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
     }
     
-
-    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
     
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        
         player1.stop()
         player2.stop()
         tableView.scrollEnabled = false
@@ -1624,7 +1649,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         self.view.layer.addSublayer(venueButton2.layer)
         self.view.layer.addSublayer(usernameButton2.layer)
         
-
+        
     }
     
     
@@ -1697,105 +1722,105 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         
         return true
     }
-//    
-//    func textFieldDidBeginEditing(textField: UITextField) {
-//        
-//        player1.stop()
-//        player2.stop()
-//        tableView.scrollEnabled = false
-//        isSearching = true
-//        cameraButton.image = nil
-//        cameraButton.title = "Vazgeç"
-//        venueTable.hidden = false
-//        venueButton2.hidden = false
-//        usernameButton2.hidden = false
-//        backgroundLabel.hidden = false
-//        collectionView.hidden = true
-//
-//
-//        self.view.layer.addSublayer(venueTable.layer)
-//        self.view.layer.addSublayer(backgroundLabel.layer)
-//        self.view.layer.addSublayer(venueButton2.layer)
-//        self.view.layer.addSublayer(usernameButton2.layer)
-//     
-//        
-//    }
-
+    //
+    //    func textFieldDidBeginEditing(textField: UITextField) {
+    //
+    //        player1.stop()
+    //        player2.stop()
+    //        tableView.scrollEnabled = false
+    //        isSearching = true
+    //        cameraButton.image = nil
+    //        cameraButton.title = "Vazgeç"
+    //        venueTable.hidden = false
+    //        venueButton2.hidden = false
+    //        usernameButton2.hidden = false
+    //        backgroundLabel.hidden = false
+    //        collectionView.hidden = true
+    //
+    //
+    //        self.view.layer.addSublayer(venueTable.layer)
+    //        self.view.layer.addSublayer(backgroundLabel.layer)
+    //        self.view.layer.addSublayer(venueButton2.layer)
+    //        self.view.layer.addSublayer(usernameButton2.layer)
+    //
+    //
+    //    }
+    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
     
-//    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
-//    {
-//        self.venueTable.hidden = false
-//        self.venueButton2.hidden = false
-//        self.usernameButton2.hidden = false
-//        self.backgroundLabel.hidden = false
-//        self.collectionView.hidden = true
-//
-//        let whitespaceCharacterSet = NSCharacterSet.symbolCharacterSet()
-//        let strippedString = searchText.text!.stringByTrimmingCharactersInSet(whitespaceCharacterSet)
-//        
-//
-//        if venueoruser {
-//            locationManager.startUpdatingLocation()
-//            if self.bestEffortAtLocation == nil {
-//                let message = NSLocalizedString("Molocate'in konum servislerini kullanmasına izin vermediniz. Lütfen ayarları değiştiriniz.", comment: "" )
-//                let alertController = UIAlertController(title: "Molocate Konum", message: message, preferredStyle: UIAlertControllerStyle.Alert)
-//                let cancelAction = UIAlertAction(title: NSLocalizedString("OK", comment: "Alert OK button"), style: UIAlertActionStyle.Cancel, handler: nil)
-//                alertController.addAction(cancelAction)
-//                // Provide quick access to Settings.
-//                let settingsAction = UIAlertAction(title: NSLocalizedString("Ayarlar", comment: "Alert button to open Settings"), style: UIAlertActionStyle.Default) {action in
-//                    UIApplication.sharedApplication().openURL(NSURL(string:UIApplicationOpenSettingsURLString)!)
-//                    
-//                }
-//                alertController.addAction(settingsAction)
-//                self.presentViewController(alertController, animated: true, completion: nil)
-//
-//                return true
-//            }
-//        currentTask?.cancel()
-//        var parameters = [Parameter.query:strippedString]
-//        parameters += self.bestEffortAtLocation.parameters()
-//        currentTask = session.venues.search(parameters) {
-//            (result) -> Void in
-//            if let response = result.response {
-//                var tempVenues = [JSONParameters]()
-//                let venueItems = response["venues"] as? [JSONParameters]
-//                for item in venueItems! {
-//                    let isVerified = item["verified"] as! Bool
-//                    let checkinsCount = item["stats"]!["checkinsCount"] as! NSInteger
-//                    let enoughCheckin:Bool = (checkinsCount > 700)
-//                    if (isVerified||enoughCheckin){
-//                        tempVenues.append(item)
-//                        
-//                    }
-//                    
-//                    
-//                }
-//                self.venues = tempVenues
-//                self.venueTable.reloadData()
-//            }
-//        }
-//        currentTask?.start()
-//                
-//        } else {
-//            
-//            if searchText.text?.characters.count > 1 {
-//            MolocateAccount.searchUser(strippedString, completionHandler: { (data, response, error) in
-//                dispatch_async(dispatch_get_main_queue()){
-//                 self.searchedUsers = data
-//                 self.venueTable.reloadData()
-//                }
-//                
-//            })
-//            }
-//        }
-//        
-//        return true
-//    }
-//    
+    //    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
+    //    {
+    //        self.venueTable.hidden = false
+    //        self.venueButton2.hidden = false
+    //        self.usernameButton2.hidden = false
+    //        self.backgroundLabel.hidden = false
+    //        self.collectionView.hidden = true
+    //
+    //        let whitespaceCharacterSet = NSCharacterSet.symbolCharacterSet()
+    //        let strippedString = searchText.text!.stringByTrimmingCharactersInSet(whitespaceCharacterSet)
+    //
+    //
+    //        if venueoruser {
+    //            locationManager.startUpdatingLocation()
+    //            if self.bestEffortAtLocation == nil {
+    //                let message = NSLocalizedString("Molocate'in konum servislerini kullanmasına izin vermediniz. Lütfen ayarları değiştiriniz.", comment: "" )
+    //                let alertController = UIAlertController(title: "Molocate Konum", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+    //                let cancelAction = UIAlertAction(title: NSLocalizedString("OK", comment: "Alert OK button"), style: UIAlertActionStyle.Cancel, handler: nil)
+    //                alertController.addAction(cancelAction)
+    //                // Provide quick access to Settings.
+    //                let settingsAction = UIAlertAction(title: NSLocalizedString("Ayarlar", comment: "Alert button to open Settings"), style: UIAlertActionStyle.Default) {action in
+    //                    UIApplication.sharedApplication().openURL(NSURL(string:UIApplicationOpenSettingsURLString)!)
+    //
+    //                }
+    //                alertController.addAction(settingsAction)
+    //                self.presentViewController(alertController, animated: true, completion: nil)
+    //
+    //                return true
+    //            }
+    //        currentTask?.cancel()
+    //        var parameters = [Parameter.query:strippedString]
+    //        parameters += self.bestEffortAtLocation.parameters()
+    //        currentTask = session.venues.search(parameters) {
+    //            (result) -> Void in
+    //            if let response = result.response {
+    //                var tempVenues = [JSONParameters]()
+    //                let venueItems = response["venues"] as? [JSONParameters]
+    //                for item in venueItems! {
+    //                    let isVerified = item["verified"] as! Bool
+    //                    let checkinsCount = item["stats"]!["checkinsCount"] as! NSInteger
+    //                    let enoughCheckin:Bool = (checkinsCount > 700)
+    //                    if (isVerified||enoughCheckin){
+    //                        tempVenues.append(item)
+    //                        
+    //                    }
+    //                    
+    //                    
+    //                }
+    //                self.venues = tempVenues
+    //                self.venueTable.reloadData()
+    //            }
+    //        }
+    //        currentTask?.start()
+    //                
+    //        } else {
+    //            
+    //            if searchText.text?.characters.count > 1 {
+    //            MolocateAccount.searchUser(strippedString, completionHandler: { (data, response, error) in
+    //                dispatch_async(dispatch_get_main_queue()){
+    //                 self.searchedUsers = data
+    //                 self.venueTable.reloadData()
+    //                }
+    //                
+    //            })
+    //            }
+    //        }
+    //        
+    //        return true
+    //    }
+    //    
     
     
 }
