@@ -1236,7 +1236,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="mekan adresi" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WKk-GX-c8W">
-                                <rect key="frame" x="98" y="96" width="86" height="55"/>
+                                <rect key="frame" x="98" y="96" width="167" height="55"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="55" id="KzK-Da-t4g"/>
                                 </constraints>
@@ -1250,6 +1250,7 @@
                             <constraint firstItem="WKk-GX-c8W" firstAttribute="top" secondItem="x8r-Pu-U4I" secondAttribute="bottom" constant="3" id="2rP-6T-2sG"/>
                             <constraint firstItem="NgR-iF-VhF" firstAttribute="leading" secondItem="av1-qZ-kKJ" secondAttribute="trailing" constant="5" id="3SQ-Ia-o23"/>
                             <constraint firstItem="MX9-rF-oMu" firstAttribute="top" secondItem="3dl-Ra-DXK" secondAttribute="bottom" id="9wC-cG-wDf"/>
+                            <constraint firstItem="av1-qZ-kKJ" firstAttribute="leading" secondItem="WKk-GX-c8W" secondAttribute="trailing" constant="8" id="B0A-TJ-ERG"/>
                             <constraint firstItem="0Lc-TG-GG8" firstAttribute="top" secondItem="3dl-Ra-DXK" secondAttribute="bottom" id="CNM-nQ-Z42"/>
                             <constraint firstItem="NgR-iF-VhF" firstAttribute="leading" secondItem="av1-qZ-kKJ" secondAttribute="trailing" id="D3Q-Wy-mGb"/>
                             <constraint firstItem="4TG-FI-9yr" firstAttribute="centerX" secondItem="NgR-iF-VhF" secondAttribute="centerX" id="ElX-b6-YGT"/>
