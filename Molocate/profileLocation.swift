@@ -32,21 +32,21 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
     var likeHeart = UIImageView()
     
     
-    @IBOutlet var LocationTitle: UILabel!
+  //  @IBOutlet var LocationTitle: UILabel!
     @IBOutlet var map: MKMapView!
     @IBOutlet var videosTitle: UILabel!
     @IBOutlet var address: UILabel!
     @IBOutlet var locationName: UILabel!
     @IBOutlet var tableView: UITableView!
     @IBOutlet var videoCount: UILabel!
+    
     @IBOutlet var followButton: UIBarButtonItem!
-    @IBOutlet var toolBar: UIToolbar!
-    @IBOutlet var profilePhoto: UIImageView!
+
     @IBOutlet var followerCount: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        thePlace = MolePlace()
         initGui()
         
         try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
@@ -72,12 +72,11 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
         likeHeart.image = UIImage(named: "favorite")
         likeHeart.alpha = 1.0
        
-        toolBar.clipsToBounds = true
-        toolBar.translucent = false
-        toolBar.barTintColor = swiftColor
+
         followerCount.setTitle("\(thePlace.follower_count)", forState: UIControlState.Normal)
         locationName.text = thePlace.name
-        LocationTitle.text = thePlace.name
+        self.navigationController!.topViewController!.title = thePlace.name
+        //LocationTitle.text = thePlace.name
         address.text = thePlace.address
         videoCount.text = "Videos(\(thePlace.video_count))"
         videoArray = thePlace.videoArray
@@ -100,16 +99,16 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
         }else{
             followButton.image = UIImage(named: "unfollow");
         }
-        if(thePlace.picture_url.absoluteString != ""){
-            profilePhoto.sd_setImageWithURL(thePlace.picture_url)
-        }else{
-            profilePhoto.image = UIImage(named: "pin")!
-        }
+//        if(thePlace.picture_url.absoluteString != ""){
+//            profilePhoto.sd_setImageWithURL(thePlace.picture_url)
+//        }else{
+//            profilePhoto.image = UIImage(named: "pin")!
+//        }
         
         if self.videoArray.count == 0 {
             tableView.hidden = true
-            followButton.tintColor = UIColor.clearColor()
-            followButton.enabled = false
+          //  followButton.tintColor = UIColor.clearColor()
+            //followButton.enabled = false
         }
 
         //mekanın koordinatları eklenecek
@@ -127,6 +126,50 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
         
         self.view.backgroundColor = swiftColor3
     }
+    func RefreshGuiWithData(){
+        followerCount.setTitle("\(thePlace.follower_count)", forState: UIControlState.Normal)
+        locationName.text = thePlace.name
+        self.navigationController!.topViewController!.title = thePlace.name
+        address.text = thePlace.address
+        videoCount.text = "Videos(\(thePlace.video_count))"
+        videoArray = thePlace.videoArray
+        if(thePlace.is_following==0 ){
+            
+        }else{
+            followButton.image = UIImage(named: "unfollow");
+        }
+//        if(thePlace.picture_url.absoluteString != ""){
+//            profilePhoto.sd_setImageWithURL(thePlace.picture_url)
+//        }else{
+//            profilePhoto.image = UIImage(named: "pin")!
+//        }
+        
+        if self.videoArray.count == 0 {
+            tableView.hidden = true
+            followButton.tintColor = UIColor.clearColor()
+            followButton.enabled = false
+        }else{
+            followButton.tintColor = UIColor.whiteColor()
+            followButton.enabled = true
+            tableView.hidden = false
+        }
+        
+        //mekanın koordinatları eklenecek
+        let longitude :CLLocationDegrees = thePlace.lon
+        let latitude :CLLocationDegrees = thePlace.lat
+        let span = MKCoordinateSpanMake(0.005, 0.005)
+        let location:CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        let region:MKCoordinateRegion = MKCoordinateRegion(center: location, span: span)
+        map.setRegion(region, animated: false)
+        map.userInteractionEnabled = false
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = location
+        map.addAnnotation(annotation)
+        
+        tableView.reloadData()
+        
+    }
+
  
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if !pressedLike && !pressedFollow {
@@ -879,10 +922,5 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
             //CHECK: If we need to do smothing here
         }
         pressedLike = false
-    }
-    @IBAction func backButton(sender: AnyObject) {
-        self.willMoveToParentViewController(nil)
-        self.view.removeFromSuperview()
-        self.removeFromParentViewController()
     }
 }

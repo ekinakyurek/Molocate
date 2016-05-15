@@ -962,20 +962,19 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
         activityIndicator.startAnimating()
         
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+        self.navigationController?.navigationBarHidden = false
+        
+        
+        let controller:profileLocation = self.storyboard!.instantiateViewControllerWithIdentifier("profileLocation") as! profileLocation
+        self.navigationController?.pushViewController(controller, animated: true)
+        
         
         MolocatePlace.getPlace(videoArray[buttonRow].locationID) { (data, response, error) -> () in
             dispatch_async(dispatch_get_main_queue()){
                 thePlace = data
-                
-                let controller:profileLocation = self.storyboard!.instantiateViewControllerWithIdentifier("profileLocation") as! profileLocation
                 controller.classPlace = data
-                controller.view.frame = self.view.bounds;
-                controller.willMoveToParentViewController(self)
+                controller.RefreshGuiWithData()
                 
-                self.view.addSubview(controller.view)
-                self.addChildViewController(controller)
-                controller.didMoveToParentViewController(self)
-               
                 UIApplication.sharedApplication().endIgnoringInteractionEvents()
                 self.activityIndicator.stopAnimating()
             }
