@@ -860,7 +860,9 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
     
     
     func pressedUsername(sender: UIButton) {
-        navigationController?.navigationBarHidden = false
+    
+    
+        navigationController?.setNavigationBarHidden(false, animated: false)
         let buttonRow = sender.tag
         //////////print("username e basıldı at index path: \(buttonRow)")
         player1.stop()

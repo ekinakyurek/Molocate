@@ -450,6 +450,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
         BVc.player1.stop()
         BVc.player2.stop()
     }
+    
 
     
 }
