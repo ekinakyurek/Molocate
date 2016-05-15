@@ -75,7 +75,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.hidesBarsOnTap = true
+        //self.navigationController?.hidesBarsOnTap = true
         self.automaticallyAdjustsScrollViewInsets = false
         //self.navigationController!.navigationBar.translucent = false
         searchText.frame = CGRect(x: 0, y: 0, width: MolocateDevice.size.width/2, height: 36)
