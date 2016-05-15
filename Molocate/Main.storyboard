@@ -2071,7 +2071,18 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" title="Bildirimler" id="vCc-Tn-Lgj"/>
+                    <navigationItem key="navigationItem" title="Bildirimler" id="vCc-Tn-Lgj">
+                        <barButtonItem key="leftBarButtonItem" image="sideMenu" id="ybu-Zc-HLG">
+                            <connections>
+                                <action selector="sideBar:" destination="oAY-wX-J6m" id="qGY-Zy-sOJ"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="Camera" id="WHb-OA-GTh">
+                            <connections>
+                                <action selector="openCamera:" destination="oAY-wX-J6m" id="IIt-yN-DIY"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>

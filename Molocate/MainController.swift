@@ -1303,36 +1303,40 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     
     
     @IBAction func openCamera(sender: AnyObject) {
-        locationManager.startUpdatingLocation()
         
         player1.stop()
         player2.stop()
         if (isUploaded) {
             CaptionText = ""
             if isSearching != true {
-                if(bestEffortAtLocation != nil){
-                    activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
-                    activityIndicator.center = self.view.center
-                    activityIndicator.hidesWhenStopped = true
-                    activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-                    view.addSubview(activityIndicator)
-                    activityIndicator.startAnimating()
-                    UIApplication.sharedApplication().beginIgnoringInteractionEvents()
-                    self.parentViewController!.parentViewController!.performSegueWithIdentifier("goToCamera", sender: self.parentViewController)
-                } else {
-                    let message = NSLocalizedString("Molocate'in konum servislerini kullanmasına izin vermediniz. Lütfen ayarları değiştiriniz.", comment: "" )
-                    let alertController = UIAlertController(title: "Molocate Konum", message: message, preferredStyle: UIAlertControllerStyle.Alert)
-                    let cancelAction = UIAlertAction(title: NSLocalizedString("OK", comment: "Alert OK button"), style: UIAlertActionStyle.Cancel, handler: nil)
-                    alertController.addAction(cancelAction)
-                    // Provide quick access to Settings.
-                    let settingsAction = UIAlertAction(title: NSLocalizedString("Ayarlar", comment: "Alert button to open Settings"), style: UIAlertActionStyle.Default) {action in
-                        UIApplication.sharedApplication().openURL(NSURL(string:UIApplicationOpenSettingsURLString)!)
+                if CLLocationManager.locationServicesEnabled() {
+                    switch(CLLocationManager.authorizationStatus()) {
+                    case .NotDetermined, .Restricted, .Denied:
+                        let message = NSLocalizedString("Molocate'in konum servislerini kullanmasına izin vermediniz. Lütfen ayarları değiştiriniz.", comment: "" )
+                        let alertController = UIAlertController(title: "Molocate Konum", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+                        let cancelAction = UIAlertAction(title: NSLocalizedString("OK", comment: "Alert OK button"), style: UIAlertActionStyle.Cancel, handler: nil)
+                        alertController.addAction(cancelAction)
+                        let settingsAction = UIAlertAction(title: NSLocalizedString("Ayarlar", comment: "Alert button to open Settings"), style: UIAlertActionStyle.Default) {action in
+                            UIApplication.sharedApplication().openURL(NSURL(string:UIApplicationOpenSettingsURLString)!)
+                        }
+                        alertController.addAction(settingsAction)
+                        self.presentViewController(alertController, animated: true, completion: nil)
+                        
+                    case .AuthorizedAlways, .AuthorizedWhenInUse:
+                        activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
+                        activityIndicator.center = self.view.center
+                        activityIndicator.hidesWhenStopped = true
+                        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+                        view.addSubview(activityIndicator)
+                        activityIndicator.startAnimating()
+                        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+                        self.parentViewController!.parentViewController!.performSegueWithIdentifier("goToCamera", sender: self.parentViewController)
                         
                     }
-                    alertController.addAction(settingsAction)
-                    self.presentViewController(alertController, animated: true, completion: nil)
-                    
-                    
+                } else {
+                    displayAlert("Tamam", message: "Konum servisleriniz aktif değil.")
+                
+                
                 }
                 
             } else {
@@ -1745,105 +1749,20 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         
         return true
     }
-    //
-    //    func textFieldDidBeginEditing(textField: UITextField) {
-    //
-    //        player1.stop()
-    //        player2.stop()
-    //        tableView.scrollEnabled = false
-    //        isSearching = true
-    //        cameraButton.image = nil
-    //        cameraButton.title = "Vazgeç"
-    //        venueTable.hidden = false
-    //        venueButton2.hidden = false
-    //        usernameButton2.hidden = false
-    //        backgroundLabel.hidden = false
-    //        collectionView.hidden = true
-    //
-    //
-    //        self.view.layer.addSublayer(venueTable.layer)
-    //        self.view.layer.addSublayer(backgroundLabel.layer)
-    //        self.view.layer.addSublayer(venueButton2.layer)
-    //        self.view.layer.addSublayer(usernameButton2.layer)
-    //
-    //
-    //    }
+
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
-    
-    //    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
-    //    {
-    //        self.venueTable.hidden = false
-    //        self.venueButton2.hidden = false
-    //        self.usernameButton2.hidden = false
-    //        self.backgroundLabel.hidden = false
-    //        self.collectionView.hidden = true
-    //
-    //        let whitespaceCharacterSet = NSCharacterSet.symbolCharacterSet()
-    //        let strippedString = searchText.text!.stringByTrimmingCharactersInSet(whitespaceCharacterSet)
-    //
-    //
-    //        if venueoruser {
-    //            locationManager.startUpdatingLocation()
-    //            if self.bestEffortAtLocation == nil {
-    //                let message = NSLocalizedString("Molocate'in konum servislerini kullanmasına izin vermediniz. Lütfen ayarları değiştiriniz.", comment: "" )
-    //                let alertController = UIAlertController(title: "Molocate Konum", message: message, preferredStyle: UIAlertControllerStyle.Alert)
-    //                let cancelAction = UIAlertAction(title: NSLocalizedString("OK", comment: "Alert OK button"), style: UIAlertActionStyle.Cancel, handler: nil)
-    //                alertController.addAction(cancelAction)
-    //                // Provide quick access to Settings.
-    //                let settingsAction = UIAlertAction(title: NSLocalizedString("Ayarlar", comment: "Alert button to open Settings"), style: UIAlertActionStyle.Default) {action in
-    //                    UIApplication.sharedApplication().openURL(NSURL(string:UIApplicationOpenSettingsURLString)!)
-    //
-    //                }
-    //                alertController.addAction(settingsAction)
-    //                self.presentViewController(alertController, animated: true, completion: nil)
-    //
-    //                return true
-    //            }
-    //        currentTask?.cancel()
-    //        var parameters = [Parameter.query:strippedString]
-    //        parameters += self.bestEffortAtLocation.parameters()
-    //        currentTask = session.venues.search(parameters) {
-    //            (result) -> Void in
-    //            if let response = result.response {
-    //                var tempVenues = [JSONParameters]()
-    //                let venueItems = response["venues"] as? [JSONParameters]
-    //                for item in venueItems! {
-    //                    let isVerified = item["verified"] as! Bool
-    //                    let checkinsCount = item["stats"]!["checkinsCount"] as! NSInteger
-    //                    let enoughCheckin:Bool = (checkinsCount > 700)
-    //                    if (isVerified||enoughCheckin){
-    //                        tempVenues.append(item)
-    //                        
-    //                    }
-    //                    
-    //                    
-    //                }
-    //                self.venues = tempVenues
-    //                self.venueTable.reloadData()
-    //            }
-    //        }
-    //        currentTask?.start()
-    //                
-    //        } else {
-    //            
-    //            if searchText.text?.characters.count > 1 {
-    //            MolocateAccount.searchUser(strippedString, completionHandler: { (data, response, error) in
-    //                dispatch_async(dispatch_get_main_queue()){
-    //                 self.searchedUsers = data
-    //                 self.venueTable.reloadData()
-    //                }
-    //                
-    //            })
-    //            }
-    //        }
-    //        
-    //        return true
-    //    }
-    //    
-    
+
+    func displayAlert(title: String, message: String) {
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction((UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
+            //self.dismissViewControllerAnimated(true, completion: nil)
+        })))
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
     
 }

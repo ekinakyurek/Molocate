@@ -132,7 +132,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
                 view.addSubview(activityIndicator)
                 activityIndicator.startAnimating()
                 UIApplication.sharedApplication().beginIgnoringInteractionEvents()
-                self.parentViewController!.performSegueWithIdentifier("goToCamera", sender: self.parentViewController)
+                self.parentViewController!.parentViewController!.performSegueWithIdentifier("goToCamera", sender: self.parentViewController)
                 
             }
         } else {

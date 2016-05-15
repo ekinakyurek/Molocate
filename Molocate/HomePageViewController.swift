@@ -46,7 +46,7 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
     var refreshControl:UIRefreshControl!
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     var location:CLLocation!
-    var locationManager:CLLocationManager!
+    
     var videoArray = [MoleVideoInformation]()
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     var Ekran : CGFloat = 0.0
@@ -1194,36 +1194,34 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
     @IBOutlet var cameraButton: UIBarButtonItem!
     
     @IBAction func openCamera(sender: AnyObject) {
-        if (bestEffortAtLocation != nil) {
-        player1.stop()
-        player2.stop()
-        activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
-        activityIndicator.center = self.view.center
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-        view.addSubview(activityIndicator)
-        activityIndicator.startAnimating()
-        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
-        if (isUploaded) {
-            CaptionText = ""
-            self.parentViewController!.parentViewController!.performSegueWithIdentifier("goToCamera", sender: self.parentViewController)
-            self.activityIndicator.removeFromSuperview()
+        if CLLocationManager.locationServicesEnabled() {
+            switch(CLLocationManager.authorizationStatus()) {
+            case .NotDetermined, .Restricted, .Denied:
+                let message = NSLocalizedString("Molocate'in konum servislerini kullanmasına izin vermediniz. Lütfen ayarları değiştiriniz.", comment: "" )
+                let alertController = UIAlertController(title: "Molocate Konum", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+                let cancelAction = UIAlertAction(title: NSLocalizedString("OK", comment: "Alert OK button"), style: UIAlertActionStyle.Cancel, handler: nil)
+                alertController.addAction(cancelAction)
+                let settingsAction = UIAlertAction(title: NSLocalizedString("Ayarlar", comment: "Alert button to open Settings"), style: UIAlertActionStyle.Default) {action in
+                    UIApplication.sharedApplication().openURL(NSURL(string:UIApplicationOpenSettingsURLString)!)
+                }
+                alertController.addAction(settingsAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
+                
+            case .AuthorizedAlways, .AuthorizedWhenInUse:
+                activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
+                activityIndicator.center = self.view.center
+                activityIndicator.hidesWhenStopped = true
+                activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+                view.addSubview(activityIndicator)
+                activityIndicator.startAnimating()
+                UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+                self.parentViewController!.parentViewController!.performSegueWithIdentifier("goToCamera", sender: self.parentViewController)
+                
+            }
+        } else {
+            displayAlert("Dikkat", message: "Konum servisleriniz aktif değil.")
         }
-    } else {
-    let message = NSLocalizedString("Molocate'in konum servislerini kullanmasına izin vermediniz. Lütfen ayarları değiştiriniz.", comment: "" )
-    let alertController = UIAlertController(title: "Molocate Konum", message: message, preferredStyle: UIAlertControllerStyle.Alert)
-    let cancelAction = UIAlertAction(title: NSLocalizedString("OK", comment: "Alert OK button"), style: UIAlertActionStyle.Cancel, handler: nil)
-    alertController.addAction(cancelAction)
-    // Provide quick access to Settings.
-    let settingsAction = UIAlertAction(title: NSLocalizedString("Ayarlar", comment: "Alert button to open Settings"), style: UIAlertActionStyle.Default) {action in
-    UIApplication.sharedApplication().openURL(NSURL(string:UIApplicationOpenSettingsURLString)!)
     
-    }
-    alertController.addAction(settingsAction)
-    self.presentViewController(alertController, animated: true, completion: nil)
-    
-    
-    }
 
     }
 
@@ -1272,42 +1270,10 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
 //        }
 //    }
     
-    
-    func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
-        let locationAge = newLocation.timestamp.timeIntervalSinceNow
-        
-        //print(locationAge)
-        if locationAge > 5 {
-            return
-        }
-        
-        if (bestEffortAtLocation == nil) || (bestEffortAtLocation.horizontalAccuracy > newLocation.horizontalAccuracy) {
-            self.bestEffortAtLocation = newLocation
-            
-        }
-    }
-    
     override func viewWillAppear(animated: Bool) {
        
          navigationController?.hidesBarsOnSwipe = true
-        
-        dispatch_async(dispatch_get_main_queue()) {
-            self.locationManager = CLLocationManager()
-            self.locationManager.delegate = self
-            self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
-            self.locationManager.requestWhenInUseAuthorization()
-            self.locationManager.startUpdatingLocation()
-            let seconds = 5.0
-            let delay = seconds * Double(NSEC_PER_SEC)  // nanoseconds per seconds
-            let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
-            
-            dispatch_after(dispatchTime, dispatch_get_main_queue(), {
-                
-                self.locationManager.stopUpdatingLocation()
-                
-            })
-            
-        }
+
         
     }
     override func viewDidDisappear(animated: Bool) {
@@ -1325,6 +1291,14 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
         cameraButton.image = nil
         cameraButton.title = "Cancel"
         
+    }
+    func displayAlert(title: String, message: String) {
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction((UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
+            //self.dismissViewControllerAnimated(true, completion: nil)
+        })))
+        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     
