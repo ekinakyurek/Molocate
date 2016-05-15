@@ -23,7 +23,7 @@ var myViewController = "MainController"
 var thePlace:MolePlace!
 
 
-class MainController: UIViewController,UITableViewDelegate , UITableViewDataSource ,UIToolbarDelegate , UICollectionViewDelegate  ,CLLocationManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,NSURLConnectionDataDelegate,PlayerDelegate, UITextFieldDelegate, UISearchBarDelegate {
+class MainController: UIViewController,UITableViewDelegate , UITableViewDataSource ,UIToolbarDelegate , UICollectionViewDelegate  ,CLLocationManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,NSURLConnectionDataDelegate,PlayerDelegate, UISearchBarDelegate {
     
     var lastOffset:CGPoint!
     var lastOffsetCapture:NSTimeInterval!
@@ -75,11 +75,13 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     var likeHeart = UIImageView()
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.automaticallyAdjustsScrollViewInsets = false
         searchText.frame = CGRect(x: 0, y: 0, width: MolocateDevice.size.width/2, height: 36)
       //  searchText.showsCancelButton = true
 //        searchText.searchBarStyle = UISearchBarStyle.Minimal
         self.navigationItem.titleView = searchText
+        self.navigationController?.hidesBarsOnSwipe = true
         
         
         venueTable.separatorColor = UIColor.lightGrayColor()
@@ -288,6 +290,8 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         
     }
     
+
+    
     func pressedVenue(sender: UIButton) {
 
         venueoruser = true
@@ -300,8 +304,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         
         
     }
-    
-    
+
     func pressedUsernameButton(sender: UIButton) {
         venueoruser = false
         self.venueButton2.backgroundColor = swiftColor3
@@ -425,9 +428,15 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         if(!refreshing) {
             
             if (scrollView.contentOffset.y<pointNow) {
+                navigationController?.setNavigationBarHidden(false, animated: true)
+
                 direction = 0
             } else if (scrollView.contentOffset.y>pointNow) {
+                
+                navigationController?.setNavigationBarHidden(true, animated: true)
+
                 direction = 1
+                
             }
             
             let currentOffset = scrollView.contentOffset
@@ -820,19 +829,24 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         view.addSubview(activityIndicator)
         activityIndicator.startAnimating()
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+        
+        let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
+        
+        self.navigationController?.pushViewController(controller, animated: true)
+        
         MolocateAccount.getUser(videoArray[buttonRow].username) { (data, response, error) -> () in
             dispatch_async(dispatch_get_main_queue()){
                 mine = false
                 user = data
-                let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
                 controller.classUser = data
-                controller.view.frame = self.view.bounds;
-                controller.willMoveToParentViewController(self)
-                self.view.addSubview(controller.view)
-                self.addChildViewController(controller)
-                controller.didMoveToParentViewController(self)
-                choosedIndex = 1
-                self.activityIndicator.removeFromSuperview()
+                controller.RefreshGuiWithData()
+//                controller.view.frame = self.view.bounds;
+//                controller.willMoveToParentViewController(self)
+//                self.view.addSubview(controller.view)
+//                self.addChildViewController(controller)
+//                controller.didMoveToParentViewController(self)
+               
+                self.activityIndicator.stopAnimating()
             }
         }
         
@@ -1427,6 +1441,8 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
 
     
     override func viewWillAppear(animated: Bool) {
+        
+
         dispatch_async(dispatch_get_main_queue()) {
             self.locationManager = CLLocationManager()
             self.locationManager.delegate = self

@@ -9,8 +9,6 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
     
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     
-    @IBOutlet var toolBar: UIToolbar!
-    
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     
     let name : UILabel = UILabel()
@@ -36,12 +34,9 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
     let kadınimage :UILabel = UILabel()
     
     
-    @IBAction func back(sender: AnyObject) {
-        self.performSegueWithIdentifier("goBackProfile", sender: self)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.navigationBarHidden = false
         user = MoleCurrentUser
         initGui()
     }
@@ -65,9 +60,6 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
         activityIndicator.hidesWhenStopped = true
         activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
         
-        toolBar.clipsToBounds = true
-        toolBar.translucent = false
-        toolBar.barTintColor = swiftColor
 
     }
     

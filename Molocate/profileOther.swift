@@ -378,7 +378,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
             MoleGlobalVideo = nil
             GlobalVideoUploadRequest = nil
            
-            self.parentViewController!.performSegueWithIdentifier("logout", sender: self)
+            self.parentViewController!.parentViewController!.parentViewController!.performSegueWithIdentifier("logout", sender: self)
         }
         
         
