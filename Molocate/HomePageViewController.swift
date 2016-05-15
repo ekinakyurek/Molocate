@@ -749,6 +749,7 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
     
     
     func pressedUsername(sender: UIButton) {
+        navigationController?.navigationBarHidden = false
         let buttonRow = sender.tag
         //////////print("username e basıldı at index path: \(buttonRow)")
         player1.stop()
@@ -768,7 +769,7 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
             mine = true
         }
         
-        navigationController?.navigationBarHidden = false
+
         
         
         let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
@@ -1104,11 +1105,32 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
     
     
     func pressedLikeCount(sender: UIButton) {
+        navigationController?.navigationBarHidden = false
         player1.stop()
         player2.stop()
         video_id = videoArray[sender.tag].id
         videoIndex = sender.tag
+        activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+        view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+        
+        
         let controller:likeVideo = self.storyboard!.instantiateViewControllerWithIdentifier("likeVideo") as! likeVideo
+        
+        MolocateVideo.getLikes(video_id) { (data, response, error, count, next, previous) -> () in
+            dispatch_async(dispatch_get_main_queue()){
+                controller.users = data
+                controller.tableView.reloadData()
+                UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                self.activityIndicator.removeFromSuperview()
+            }
+            
+        }
+
         //DBG: Burda  likeları çağır,
         //Her gectigimiz ekranda activity indicatorı goster
         self.navigationController?.pushViewController(controller, animated: true)
@@ -1116,38 +1138,38 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
     
     
     func pressedComment(sender: UIButton) {
+        navigationController?.navigationBarHidden = false
         let buttonRow = sender.tag
+       
         player1.stop()
         player2.stop()
+        
         videoIndex = buttonRow
         video_id = videoArray[videoIndex].id
+        
         myViewController = "HomeController"
         
-        let controller:commentController = self.storyboard!.instantiateViewControllerWithIdentifier("commentController") as! commentController
         
-        self.navigationController?.pushViewController(controller, animated: true)
-//        comments.removeAll()
-//        controller.view.frame = CGRectMake(0, 0+MolocateDevice.size.height, MolocateDevice.size.width, MolocateDevice.size.height)
-//        
-//        controller.willMoveToParentViewController(self)
-//        self.view.addSubview(controller.view)
-//        UIView.transitionWithView(self.view, duration: 0.15, options: .CurveEaseInOut , animations: { _ in
-//            controller.view.frame = self.view.frame
-//            }, completion: nil)
-//        self.addChildViewController(controller)
-//        controller.didMoveToParentViewController(self)
-//        
-
+        activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+        view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+        
+        let controller:commentController = self.storyboard!.instantiateViewControllerWithIdentifier("commentController") as! commentController
+        comments.removeAll()
         MolocateVideo.getComments(videoArray[buttonRow].id) { (data, response, error, count, next, previous) -> () in
             dispatch_async(dispatch_get_main_queue()){
                 comments = data
                 controller.tableView.reloadData()
-                              ////////print("comment e basıldı at index path: \(buttonRow)")
+                UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                self.activityIndicator.removeFromSuperview()
             }
         }
-        
-        
-        
+        self.navigationController?.pushViewController(controller, animated: true)
+ 
     }
     
     
