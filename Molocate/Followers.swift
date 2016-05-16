@@ -24,26 +24,20 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
     
     func initGui(){
         
-        toolBar.barTintColor = swiftColor
-        toolBar.translucent = false
-        toolBar.clipsToBounds = true
-        
         self.navigationController?.navigationBar.hidden = false
         
         myTable =   UITableView()
-        myTable.frame =  CGRectMake(0, 60, MolocateDevice.size.width, MolocateDevice.size.height-60);
+        myTable.frame =  CGRectMake(0, 0, MolocateDevice.size.width, MolocateDevice.size.height-60);
         myTable.tableFooterView = UIView()
         myTable.allowsSelection = false
         myTable.delegate      =   self
         myTable.dataSource    =   self
         self.view.addSubview(myTable)
-       
-        TitleLabel.textColor = UIColor.whiteColor()
-        TitleLabel.font = UIFont(name: "AvenirNext-Regular", size: (self.TitleLabel.font?.pointSize)!)
+
         if followersclicked {
-            TitleLabel.text = "Takipçi"
+            navigationController?.topViewController?.title = "Takipçi"
         }else{
-            TitleLabel.text = "Takip"
+            navigationController?.topViewController?.title = "Takip"
         }
         
         UIApplication.sharedApplication().endIgnoringInteractionEvents()

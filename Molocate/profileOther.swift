@@ -188,13 +188,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
         let controller:Followers = self.storyboard!.instantiateViewControllerWithIdentifier("Followers") as! Followers
         controller.classUser = classUser
         controller.followersclicked = false
-        controller.view.frame = self.view.bounds;
-        controller.willMoveToParentViewController(self)
-        UIView.transitionWithView(self.view, duration: 0.5, options: .TransitionCrossDissolve , animations: { _ in
-            self.view.addSubview(controller.view)
-        }, completion: nil)
-        self.addChildViewController(controller)
-        controller.didMoveToParentViewController(self)
+        navigationController?.pushViewController(controller, animated: true)
     }
     
     
@@ -289,13 +283,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
         let controller:Followers = self.storyboard!.instantiateViewControllerWithIdentifier("Followers") as! Followers
         controller.classUser = classUser
         controller.followersclicked = true
-        controller.view.frame = self.view.bounds;
-        controller.willMoveToParentViewController(self)
-        UIView.transitionWithView(self.view, duration: 0.15, options: .TransitionCrossDissolve , animations: { _ in
-            self.view.addSubview(controller.view)
-        }, completion: nil)
-        self.addChildViewController(controller)
-        controller.didMoveToParentViewController(self)
+        navigationController?.pushViewController(controller, animated: true)
     }
     
    
