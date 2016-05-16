@@ -339,6 +339,7 @@
         <!--One Video-->
         <scene sceneID="iSm-dK-OVS">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7BG-eV-yxE" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="oneVideo" id="kkX-Pp-p0O" customClass="oneVideo" customModule="Molocate" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="rDJ-jQ-Arc"/>
@@ -348,55 +349,47 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5SL-Nl-Qco">
-                                <rect key="frame" x="16" y="16" width="343" height="44"/>
-                                <items>
-                                    <barButtonItem image="leftArrow" id="xrU-zo-tgU">
-                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <connections>
-                                            <action selector="backButton:" destination="kkX-Pp-p0O" id="TWX-sq-hYy"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="Ylo-jF-TXN"/>
-                                </items>
-                            </toolbar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="5dL-hu-vOx">
-                                <rect key="frame" x="16" y="60" width="343" height="607"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="wiW-Fa-1ee">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" id="gdb-DX-sTd">
-                                        <rect key="frame" x="0.0" y="28" width="343" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" id="qE0-pW-Mlr" customClass="videoCell" customModule="Molocate" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="92" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gdb-DX-sTd" id="LP0-bj-tOF">
-                                            <rect key="frame" x="0.0" y="0.0" width="343" height="43"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qE0-pW-Mlr" id="TSz-ZN-cBr">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
-                                    <outlet property="dataSource" destination="kkX-Pp-p0O" id="auA-DB-Bw3"/>
-                                    <outlet property="delegate" destination="kkX-Pp-p0O" id="6FS-sY-9ix"/>
+                                    <outlet property="dataSource" destination="kkX-Pp-p0O" id="WU8-EQ-QMW"/>
+                                    <outlet property="delegate" destination="kkX-Pp-p0O" id="6LX-AY-Cqb"/>
                                 </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" red="0.92156862745098034" green="0.16862745098039217" blue="0.36470588235294116" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="5SL-Nl-Qco" firstAttribute="top" secondItem="is4-rj-odw" secondAttribute="topMargin" constant="16" id="3tV-ee-ZbO"/>
-                            <constraint firstItem="5dL-hu-vOx" firstAttribute="leading" secondItem="is4-rj-odw" secondAttribute="leadingMargin" id="9Nh-zA-irx"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="5SL-Nl-Qco" secondAttribute="trailing" id="ZmL-3a-Fg5"/>
-                            <constraint firstItem="5SL-Nl-Qco" firstAttribute="leading" secondItem="is4-rj-odw" secondAttribute="leadingMargin" id="dlV-h9-NqG"/>
-                            <constraint firstItem="WwO-tr-2zk" firstAttribute="top" secondItem="5dL-hu-vOx" secondAttribute="bottom" id="dvx-yV-Gvt"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="5dL-hu-vOx" secondAttribute="trailing" id="fLv-KV-HIc"/>
-                            <constraint firstItem="5dL-hu-vOx" firstAttribute="top" secondItem="5SL-Nl-Qco" secondAttribute="bottom" id="poz-Tm-0rG"/>
+                            <constraint firstItem="WwO-tr-2zk" firstAttribute="top" secondItem="wiW-Fa-1ee" secondAttribute="bottom" id="BJ0-w7-UFl"/>
+                            <constraint firstItem="wiW-Fa-1ee" firstAttribute="top" secondItem="rDJ-jQ-Arc" secondAttribute="bottom" id="R3v-xO-cDP"/>
+                            <constraint firstItem="wiW-Fa-1ee" firstAttribute="centerX" secondItem="is4-rj-odw" secondAttribute="centerX" id="faE-j4-l0v"/>
+                            <constraint firstItem="wiW-Fa-1ee" firstAttribute="width" secondItem="is4-rj-odw" secondAttribute="width" id="hUU-b5-fyZ"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="u0c-uh-e2W">
+                        <barButtonItem key="leftBarButtonItem" image="leftArrow" id="x2V-U8-mCr">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="backButton:" destination="kkX-Pp-p0O" id="CeY-PF-xS9"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
-                        <outlet property="tableView" destination="5dL-hu-vOx" id="aXI-og-DpW"/>
-                        <outlet property="toolBar" destination="5SL-Nl-Qco" id="dBV-uQ-KPz"/>
+                        <outlet property="tableView" destination="wiW-Fa-1ee" id="1VE-jh-JHa"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="7BG-eV-yxE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3180.5" y="-1674.5"/>
         </scene>

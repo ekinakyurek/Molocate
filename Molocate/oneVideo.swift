@@ -12,14 +12,11 @@ class oneVideo: UIViewController,PlayerDelegate {
     let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     var likeHeart = UIImageView()
     let screenSize: CGRect = UIScreen.mainScreen().bounds
-    
-    @IBOutlet var toolBar: UIToolbar!
+
     @IBOutlet var tableView: UITableView!
     @IBAction func backButton(sender: AnyObject) {
         
-        self.willMoveToParentViewController(nil)
-        self.view.removeFromSuperview()
-        self.removeFromParentViewController()
+        navigationController?.popViewControllerAnimated(true)
     }
     
     override func viewDidLoad() {
@@ -36,10 +33,7 @@ class oneVideo: UIViewController,PlayerDelegate {
     func initGui(){
         likeHeart.image = UIImage(named: "favorite")
         likeHeart.alpha = 1.0
-        
-        toolBar.clipsToBounds = true
-        toolBar.translucent = false
-        toolBar.barTintColor = swiftColor
+
         tableView.allowsSelection = false
         
         player = Player()
