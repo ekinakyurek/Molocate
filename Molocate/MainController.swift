@@ -1062,14 +1062,14 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
         
-        if videoArray[buttonRow].username != MoleCurrentUser.username{
-            mine = false
-        }else{
-            mine = true
-        }
+      
         
         let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
-        
+        if videoArray[buttonRow].username != MoleCurrentUser.username{
+            controller.isItMyProfile = false
+        }else{
+            controller.isItMyProfile = true
+        }
         self.navigationController?.pushViewController(controller, animated: true)
         MolocateAccount.getUser(videoArray[buttonRow].username) { (data, response, error) -> () in
             dispatch_async(dispatch_get_main_queue()){
@@ -1163,7 +1163,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         videoIndex = buttonRow
         video_id = videoArray[videoIndex].id
         
-        myViewController = "HomeController"
+        myViewController = "MainController"
         
         
         activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))

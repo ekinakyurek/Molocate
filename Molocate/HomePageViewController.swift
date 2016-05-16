@@ -876,13 +876,13 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
         
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
         
-        if videoArray[buttonRow].username != MoleCurrentUser.username{
-            mine = false
-        }else{
-            mine = true
-        }
-        
+       
         let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
+        if videoArray[buttonRow].username != MoleCurrentUser.username{
+            controller.isItMyProfile = false
+        }else{
+            controller.isItMyProfile = true
+        }
         
         self.navigationController?.pushViewController(controller, animated: true)
         MolocateAccount.getUser(videoArray[buttonRow].username) { (data, response, error) -> () in

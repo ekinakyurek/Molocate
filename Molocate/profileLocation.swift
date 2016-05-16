@@ -13,7 +13,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
     var isSearching = false
     var direction = 0
     
-    let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     let refreshControl:UIRefreshControl = UIRefreshControl()
     
     var player1Turn = false
@@ -526,50 +526,153 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
         }
     }
     
-    
+
     func pressedUsername(sender: UIButton) {
+        
+        
+        navigationController?.setNavigationBarHidden(false, animated: false)
         let buttonRow = sender.tag
-        ////print("username e basıldı at index path: \(buttonRow)")
+        //////////print("username e basıldı at index path: \(buttonRow)")
         player1.stop()
         player2.stop()
+        activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+        view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+        
+        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+        
+   
+        
+        let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
+        if videoArray[buttonRow].username != MoleCurrentUser.username{
+            controller.isItMyProfile = false
+        }else{
+            controller.isItMyProfile = true
+        }
+        self.navigationController?.pushViewController(controller, animated: true)
         MolocateAccount.getUser(videoArray[buttonRow].username) { (data, response, error) -> () in
-            //user.printUser()
             dispatch_async(dispatch_get_main_queue()){
-                mine = false
+                //DBG: If it is mine profile?
+                
                 user = data
-                let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
                 controller.classUser = data
-                controller.view.frame = self.view.bounds;
-                controller.willMoveToParentViewController(self)
-                self.view.addSubview(controller.view)
-                self.addChildViewController(controller)
-                controller.didMoveToParentViewController(self)
+                controller.RefreshGuiWithData()
+                
+                //choosedIndex = 0
+                self.activityIndicator.removeFromSuperview()
             }
         }
-        
     }
-    
     
     func pressedPlace(sender: UIButton) {
         let buttonRow = sender.tag
+        
         player1.stop()
         player2.stop()
-        ////print("place e basıldı at index path: \(buttonRow) ")
-        ////print("================================" )
+        
+        activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+        view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+        
+        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+        self.navigationController?.navigationBarHidden = false
+        
+        
+        let controller:profileLocation = self.storyboard!.instantiateViewControllerWithIdentifier("profileLocation") as! profileLocation
+        self.navigationController?.pushViewController(controller, animated: true)
+        
+        
         MolocatePlace.getPlace(videoArray[buttonRow].locationID) { (data, response, error) -> () in
             dispatch_async(dispatch_get_main_queue()){
                 thePlace = data
-                let controller:profileLocation = self.storyboard!.instantiateViewControllerWithIdentifier("profileLocation") as! profileLocation
-                controller.view.frame = self.view.bounds;
-                controller.willMoveToParentViewController(self)
-                self.view.addSubview(controller.view)
-                self.addChildViewController(controller)
-                controller.didMoveToParentViewController(self)
+                controller.classPlace = data
+                controller.RefreshGuiWithData()
+                
+                UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                self.activityIndicator.removeFromSuperview()
             }
         }
         
     }
     
+    
+    func pressedLikeCount(sender: UIButton) {
+        navigationController?.navigationBarHidden = false
+        player1.stop()
+        player2.stop()
+        video_id = videoArray[sender.tag].id
+        videoIndex = sender.tag
+        activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+        view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+        
+        
+        let controller:likeVideo = self.storyboard!.instantiateViewControllerWithIdentifier("likeVideo") as! likeVideo
+        
+        MolocateVideo.getLikes(video_id) { (data, response, error, count, next, previous) -> () in
+            dispatch_async(dispatch_get_main_queue()){
+                controller.users = data
+                controller.tableView.reloadData()
+                UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                self.activityIndicator.removeFromSuperview()
+            }
+            
+        }
+        
+        //DBG: Burda  likeları çağır,
+        //Her gectigimiz ekranda activity indicatorı goster
+        self.navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    
+    func pressedComment(sender: UIButton) {
+        navigationController?.navigationBarHidden = false
+        let buttonRow = sender.tag
+        
+        player1.stop()
+        player2.stop()
+        
+        videoIndex = buttonRow
+        video_id = videoArray[videoIndex].id
+        
+        myViewController = "HomeController"
+        
+        
+        activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+        view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+        
+        let controller:commentController = self.storyboard!.instantiateViewControllerWithIdentifier("commentController") as! commentController
+        comments.removeAll()
+        MolocateVideo.getComments(videoArray[buttonRow].id) { (data, response, error, count, next, previous) -> () in
+            dispatch_async(dispatch_get_main_queue()){
+                comments = data
+                controller.tableView.reloadData()
+                UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                self.activityIndicator.removeFromSuperview()
+            }
+        }
+        self.navigationController?.pushViewController(controller, animated: true)
+        
+    }
+    
+
+    
+ 
     func pressedFollow(sender: UIButton) {
         let buttonRow = sender.tag
         pressedFollow = true
@@ -589,18 +692,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
     }
     
     
-    func pressedLikeCount(sender: UIButton) {
-        video_id = videoArray[sender.tag].id
-        videoIndex = sender.tag
-        player1.stop()
-        player2.stop()
-        let controller:likeVideo = self.storyboard!.instantiateViewControllerWithIdentifier("likeVideo") as! likeVideo
-        controller.view.frame = self.view.bounds;
-        controller.willMoveToParentViewController(self)
-        self.view.addSubview(controller.view)
-        self.addChildViewController(controller)
-        controller.didMoveToParentViewController(self)
-    }
+
     func pressedLike(sender: UIButton) {
         let buttonRow = sender.tag
         ////print("like a basıldı at index path: \(buttonRow) ")
@@ -637,31 +729,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
         }
         pressedLike = false
     }
-    func pressedComment(sender: UIButton) {
-        let buttonRow = sender.tag
-        player1.stop()
-        player2.stop()
-        videoIndex = buttonRow
-        video_id = videoArray[videoIndex].id
-        myViewController = "profileLocation"
-        MolocateVideo.getComments(videoArray[buttonRow].id) { (data, response, error, count, next, previous) -> () in
-            dispatch_async(dispatch_get_main_queue()){
-                comments = data
-                let controller:commentController = self.storyboard!.instantiateViewControllerWithIdentifier("commentController") as! commentController
-                controller.view.frame = self.view.bounds;
-                controller.willMoveToParentViewController(self)
-                self.view.addSubview(controller.view)
-                self.addChildViewController(controller)
-                controller.didMoveToParentViewController(self)
-                
-                ////print("comment e basıldı at index path: \(buttonRow)")
-            }
-        }
-        
-        
-        
-    }
-    
+ 
     
     func pressedReport(sender: UIButton) {
         let buttonRow = sender.tag

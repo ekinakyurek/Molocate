@@ -4,7 +4,7 @@ class likeVideo: UIViewController, UITableViewDelegate, UITableViewDataSource  {
     
     let cellIdentifier = "cell5"
     var users = [MoleUser]()
-    
+    var activityIndicator = UIActivityIndicatorView()
     @IBOutlet var toolBar: UIToolbar!
     @IBOutlet var tableView: UITableView!
     
@@ -92,26 +92,42 @@ class likeVideo: UIViewController, UITableViewDelegate, UITableViewDataSource  {
     }
     
     func pressedProfile(sender: UIButton) {
-        let buttonRow = sender.tag
-        //print("pressed profile")
         
+        self.parentViewController!.navigationController?.setNavigationBarHidden(false, animated: false)
+        let buttonRow = sender.tag
+      
+        activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+        view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+        
+        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+        
+        if users[buttonRow].username != MoleCurrentUser.username{
+            mine = false
+        }else{
+            mine = true
+        }
+        
+        let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
+        
+        self.navigationController?.pushViewController(controller, animated: true)
         MolocateAccount.getUser(users[buttonRow].username) { (data, response, error) -> () in
             dispatch_async(dispatch_get_main_queue()){
+                //DBG: If it is mine profile?
+                
                 user = data
-                mine = false
-                let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
                 controller.classUser = data
-                controller.view.frame = self.view.bounds;
-                controller.willMoveToParentViewController(self)
-                controller.username.text = user.username
+                controller.RefreshGuiWithData()
                 
-                self.view.addSubview(controller.view)
-                
-                self.addChildViewController(controller)
-                controller.didMoveToParentViewController(self)
+                //choosedIndex = 0
+                self.activityIndicator.removeFromSuperview()
             }
         }
     }
+  
     
     func pressedFollow(sender: UIButton) {
         //print("pressedfollow")

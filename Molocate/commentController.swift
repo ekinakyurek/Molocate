@@ -9,7 +9,7 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
     @IBOutlet var sendButton: UIButton!
     @IBOutlet var tableView: UITableView!
     @IBOutlet var newComment: UITextView!
-   
+    var activityIndicator = UIActivityIndicatorView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -190,21 +190,45 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
         
     }
     func pressedUsername(sender: UIButton) {
+        self.parentViewController!.navigationController?.setNavigationBarHidden(false, animated: false)
         let buttonRow = sender.tag
+        
+        activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+        view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+        
+        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+     
+        let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
+        
+        if comments[buttonRow].username != MoleCurrentUser.username{
+             controller.isItMyProfile  = false
+        }else{
+             controller.isItMyProfile = true
+        }
+        
+       
+        self.navigationController?.pushViewController(controller, animated: true)
         MolocateAccount.getUser(comments[buttonRow].username) { (data, response, error) -> () in
             dispatch_async(dispatch_get_main_queue()){
+                //DBG: If it is mine profile?
+                
                 user = data
-                let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
                 controller.classUser = data
-                controller.view.frame = self.view.bounds;
-                controller.willMoveToParentViewController(self)
-                self.view.addSubview(controller.view)
-                self.addChildViewController(controller)
-                controller.didMoveToParentViewController(self)
+                controller.RefreshGuiWithData()
+                
+                //choosedIndex = 0
+                self.activityIndicator.removeFromSuperview()
             }
         }
         
     }
+    
+   
+    
     func updateParentController(plus: Bool){
         let i = plus ? 1:-1
         

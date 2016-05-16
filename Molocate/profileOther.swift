@@ -9,7 +9,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
     let AVc :Added =  Added(nibName: "Added", bundle: nil);
     let BVc :Tagged =  Tagged(nibName: "Tagged", bundle: nil);
     let names = ["AYARLAR","PROFİLİ DÜZENLE", "ÇIKIŞ YAP"]
-    
+    var isItMyProfile = true
     @IBOutlet var settings: UITableView!
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var toolBar: UIToolbar!
@@ -36,7 +36,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
     
     func initGui(){
         
-        if(choosedIndex==3 && mine){
+        if(isItMyProfile && choosedIndex == 3){
             user = MoleCurrentUser
             classUser = MoleCurrentUser
             FollowButton.image = UIImage(named: "settings")
@@ -98,6 +98,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
         scrollView.frame.size.height = MolocateDevice.size.height - 190
         
         AVc.classUser = classUser
+        AVc.isItMyProfile = isItMyProfile
         AVc.view.frame.origin.x = 0
         AVc.view.frame.origin.y = 0
         AVc.view.frame.size.width = MolocateDevice.size.width
@@ -136,7 +137,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
             ProfileButton.enabled = false
         }
         
-        if(choosedIndex==3 && mine){
+        if(isItMyProfile && choosedIndex==3){
             FollowButton.image = UIImage(named: "settings")
             //choosedIndex = 4 //??WHY
             back.image = UIImage(named:"sideMenu")
@@ -163,6 +164,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
         
         
         AVc.classUser = classUser
+        AVc.isItMyProfile = self.isItMyProfile
         BVc.classUser = classUser
         AVc.getData()
         BVc.getData()
@@ -247,7 +249,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
 
     
     @IBAction func backButton(sender: AnyObject) {
-        if(choosedIndex == 3 ){
+        if(choosedIndex == 3 && isItMyProfile ){
             
             
             if(sideClicked == false){
@@ -261,16 +263,6 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
         } else {
             
             navigationController?.popViewControllerAnimated(true)
-//            UIView.transitionWithView(self.view, duration:0.2, options: .TransitionCrossDissolve , animations: { _ in
-//                self.view.hidden = true
-//                //self.view.frame = CGRectMake(0-MolocateDevice.size.width, 0, MolocateDevice.size.width, MolocateDevice.size.height)
-//                }, completion: { (finished: Bool) -> () in
-//                    self.view.removeFromSuperview()
-//                    self.willMoveToParentViewController(nil)
-//                    self.removeFromParentViewController()
-//            })
-            
-            
         }
         
     }
@@ -428,6 +420,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
         }
         
     }
+  
     override func viewWillDisappear(animated: Bool) {
         AVc.player1.stop()
         AVc.player2.stop()
