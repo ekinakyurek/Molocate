@@ -24,8 +24,8 @@ class oneVideo: UIViewController,PlayerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-             UIApplication.sharedApplication().endIgnoringInteractionEvents()
-       
+        UIApplication.sharedApplication().endIgnoringInteractionEvents()
+        
         // Do any additional setup after loading the view.
     }
     
@@ -48,48 +48,53 @@ class oneVideo: UIViewController,PlayerDelegate {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if !pressedLike && !pressedFollow {
-        
-        let cell = videoCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "cell")
-        
-        cell.initialize(indexPath.row, videoInfo:  MoleGlobalVideo)
-        
-        cell.Username.addTarget(self, action: #selector(oneVideo.pressedUsername(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-        cell.placeName.addTarget(self, action: #selector(oneVideo.pressedPlace(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-        cell.profilePhoto.addTarget(self, action: #selector(oneVideo.pressedUsername(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-        cell.commentCount.addTarget(self, action: #selector(oneVideo.pressedComment(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-        if(MoleGlobalVideo.isFollowing==0 && MoleGlobalVideo.username != MoleCurrentUser.username){
-            cell.followButton.addTarget(self, action: #selector(oneVideo.pressedFollow(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-        }else{
-            cell.followButton.hidden = true
+        if (MoleGlobalVideo == nil){
+            MoleGlobalVideo = MoleVideoInformation()
         }
-        
-        cell.likeButton.addTarget(self, action: #selector(oneVideo.pressedLike(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-        
-        cell.likeCount.setTitle("\(MoleGlobalVideo.likeCount)", forState: .Normal)
-        cell.commentCount.setTitle("\(MoleGlobalVideo.commentCount)", forState: .Normal)
-        cell.commentButton.addTarget(self, action: #selector(oneVideo.pressedComment(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-        cell.reportButton.addTarget(self, action: #selector(oneVideo.pressedReport(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-        cell.likeCount.addTarget(self, action: #selector(oneVideo.pressedLikeCount(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-     
-        let tap = UITapGestureRecognizer(target: self, action:#selector(MainController.doubleTapped(_:) ));
-        tap.numberOfTapsRequired = 2
-        cell.contentView.addGestureRecognizer(tap)
-        let playtap = UITapGestureRecognizer(target: self, action:#selector(MainController.playTapped(_:) ));
-        playtap.numberOfTapsRequired = 1
-        cell.contentView.addGestureRecognizer(playtap)
-        
-        playtap.requireGestureRecognizerToFail(tap)
-        
-        
-        self.player.setUrl(MoleGlobalVideo.urlSta)
-        
-        self.player.view.frame = cell.newRect
-        
-        cell.contentView.addSubview(self.player.view)
-
-        self.player.playFromBeginning()
-        
+        if !pressedLike && !pressedFollow {
+            
+            let cell = videoCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "cell")
+            
+            cell.initialize(indexPath.row, videoInfo:  MoleGlobalVideo)
+            
+            cell.Username.addTarget(self, action: #selector(oneVideo.pressedUsername(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+            cell.placeName.addTarget(self, action: #selector(oneVideo.pressedPlace(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+            cell.profilePhoto.addTarget(self, action: #selector(oneVideo.pressedUsername(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+            cell.commentCount.addTarget(self, action: #selector(oneVideo.pressedComment(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+            if(MoleGlobalVideo.isFollowing==0 && MoleGlobalVideo.username != MoleCurrentUser.username){
+                cell.followButton.addTarget(self, action: #selector(oneVideo.pressedFollow(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+            }else{
+                cell.followButton.hidden = true
+            }
+            
+            cell.likeButton.addTarget(self, action: #selector(oneVideo.pressedLike(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+            
+            cell.likeCount.setTitle("\(MoleGlobalVideo.likeCount)", forState: .Normal)
+            cell.commentCount.setTitle("\(MoleGlobalVideo.commentCount)", forState: .Normal)
+            cell.commentButton.addTarget(self, action: #selector(oneVideo.pressedComment(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+            cell.reportButton.addTarget(self, action: #selector(oneVideo.pressedReport(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+            cell.likeCount.addTarget(self, action: #selector(oneVideo.pressedLikeCount(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+            
+            let tap = UITapGestureRecognizer(target: self, action:#selector(MainController.doubleTapped(_:) ));
+            tap.numberOfTapsRequired = 2
+            cell.contentView.addGestureRecognizer(tap)
+            let playtap = UITapGestureRecognizer(target: self, action:#selector(MainController.playTapped(_:) ));
+            playtap.numberOfTapsRequired = 1
+            cell.contentView.addGestureRecognizer(playtap)
+            
+            playtap.requireGestureRecognizerToFail(tap)
+            
+            if(MoleGlobalVideo.urlSta.absoluteString != ""){
+                self.player.setUrl(MoleGlobalVideo.urlSta)
+                self.player.playFromBeginning()
+                
+            }
+            
+            self.player.view.frame = cell.newRect
+            
+            cell.contentView.addSubview(self.player.view)
+            
+            
             return cell
         }else{
             let cell = tableView.cellForRowAtIndexPath(indexPath) as! videoCell
@@ -110,7 +115,7 @@ class oneVideo: UIViewController,PlayerDelegate {
                 
             }
             return cell
-
+            
         }
     }
     
@@ -210,7 +215,7 @@ class oneVideo: UIViewController,PlayerDelegate {
     
     func doubleTapped(sender: UITapGestureRecognizer) {
         let buttonRow = sender.view!.tag
-       // print("like a basıldı at index path: \(buttonRow) ")
+        // print("like a basıldı at index path: \(buttonRow) ")
         pressedLike = true
         let indexpath = NSIndexPath(forRow: buttonRow, inSection: 0)
         let  cell = tableView.cellForRowAtIndexPath(indexpath)
@@ -261,7 +266,7 @@ class oneVideo: UIViewController,PlayerDelegate {
         var indexes = [NSIndexPath]()
         indexes.append(indexpath)
         
-              if(MoleGlobalVideo.isLiked == 0){
+        if(MoleGlobalVideo.isLiked == 0){
             sender.highlighted = true
             
             MoleGlobalVideo.isLiked=1

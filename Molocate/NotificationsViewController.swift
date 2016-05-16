@@ -9,13 +9,13 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
     var location:CLLocation!
     var bestEffortAtLocation:CLLocation!
     var notificationArray = [MoleUserNotifications]()
-  
+    
     @IBOutlet var tableView: UITableView!
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        
         initGui()
         getData()
         
@@ -47,16 +47,16 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.separatorColor = UIColor.lightGrayColor()
         tabBarController?.tabBar.hidden = true
-       
+        
         self.navigationController?.navigationBarHidden = false
-   
-       
+        
+        
         // self.view.backgroundColor = swiftColor
     }
     func scrollToTop() {
         self.tableView.setContentOffset(CGPoint(x:0,y:0), animated: true)
     }
-
+    
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
         return UITableViewAutomaticDimension
@@ -96,7 +96,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
         multipleAttributes2[NSForegroundColorAttributeName] = UIColor.blackColor()
         let notificationAttributedString = NSAttributedString(string:  notificationArray[indexPath.row].sentence, attributes:  multipleAttributes2)
         usernameAttributedString.appendAttributedString(notificationAttributedString)
-    
+        
         
         cell.myLabel.textAlignment = .Left
         cell.myLabel.attributedText = usernameAttributedString
@@ -104,7 +104,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
         let labeltap = UITapGestureRecognizer(target: self, action:#selector(NotificationsViewController.labelTapped(_:) ));
         labeltap.numberOfTapsRequired = 1
         cell.myLabel.addGestureRecognizer(labeltap)
-     
+        
         return cell
     }
     
@@ -149,27 +149,91 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
         activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
         view.addSubview(activityIndicator)
         activityIndicator.startAnimating()
-        
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+        mine = false
+        
+        let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
+        
+        self.navigationController?.pushViewController(controller, animated: true)
+        MolocateAccount.getUser(notificationArray[buttonRow].actor) { (data, response, error) -> () in
+            dispatch_async(dispatch_get_main_queue()){
+                user = data
+                controller.classUser = data
+                controller.RefreshGuiWithData()
+                self.activityIndicator.removeFromSuperview()
+            }
+        }
+        
+    }
+    
+    
+    func pressedUsername(sender: UITapGestureRecognizer) {
+        let buttonRow = sender.view!.tag
+        
+        activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+        view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+        mine = false
+        
+        let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
+        
+        self.navigationController?.pushViewController(controller, animated: true)
         
         MolocateAccount.getUser(notificationArray[buttonRow].actor) { (data, response, error) -> () in
             dispatch_async(dispatch_get_main_queue()){
                 user = data
-                let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
                 controller.classUser = data
-                controller.view.frame = self.view.bounds;
-                controller.willMoveToParentViewController(self)
-                self.view.addSubview(controller.view)
-                self.addChildViewController(controller)
-                controller.didMoveToParentViewController(self)
-                choosedIndex = 2
-                self.activityIndicator.stopAnimating()
+                controller.RefreshGuiWithData()
+                self.activityIndicator.removeFromSuperview()
                 UIApplication.sharedApplication().endIgnoringInteractionEvents()
             }
         }
         
     }
-
+    
+    
+    func pressedCell(sender: UITapGestureRecognizer){
+        let buttonRow = sender.view?.tag
+        //print(notificationArray[buttonRow!].action )
+        if notificationArray[buttonRow!].action != "follow" &&  notificationArray[buttonRow!].action != "friend" {
+            
+            activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
+            activityIndicator.center = self.view.center
+            activityIndicator.hidesWhenStopped = true
+            activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+            self.view.addSubview(activityIndicator)
+            activityIndicator.startAnimating()
+            mine = false
+            
+            UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+            
+            let controller:oneVideo = self.storyboard!.instantiateViewControllerWithIdentifier("oneVideo") as! oneVideo
+            
+            self.navigationController?.pushViewController(controller, animated: true)
+            
+            
+            
+            MolocateVideo.getVideo(notificationArray[buttonRow!].target, completionHandler: { (data, response, error) in
+                dispatch_async(dispatch_get_main_queue()){
+                    MoleGlobalVideo = data!
+                    controller.tableView.reloadData()
+                    self.activityIndicator.stopAnimating()
+                    UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                }
+            })
+            
+        }else {
+            pressedUsername(sender)
+        }
+        
+    }
+    
+    
+    
     func labelTapped(sender: UITapGestureRecognizer){
         //print("play")
         let buttonRow = sender.view!.tag
@@ -190,68 +254,6 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
             pressedUsername(sender)
         }else{
             pressedCell(sender)
-        }
-
-    }
-    
-    func pressedCell(sender: UITapGestureRecognizer){
-        let buttonRow = sender.view?.tag
-        //print(notificationArray[buttonRow!].action )
-        if notificationArray[buttonRow!].action != "follow" &&  notificationArray[buttonRow!].action != "friend" {
-            
-            activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
-            activityIndicator.center = self.view.center
-            activityIndicator.hidesWhenStopped = true
-            activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-            self.view.addSubview(activityIndicator)
-            activityIndicator.startAnimating()
-           
-            UIApplication.sharedApplication().beginIgnoringInteractionEvents()
-            
-            MolocateVideo.getVideo(notificationArray[buttonRow!].target, completionHandler: { (data, response, error) in
-                dispatch_async(dispatch_get_main_queue()){
-                    MoleGlobalVideo = data
-                    let controller:oneVideo = self.storyboard!.instantiateViewControllerWithIdentifier("oneVideo") as! oneVideo
-                    controller.view.frame = self.view.bounds
-                    controller.willMoveToParentViewController(self)
-                    self.view.addSubview(controller.view)
-                    self.addChildViewController(controller)
-                    controller.didMoveToParentViewController(self)
-                    self.activityIndicator.stopAnimating()
-                }
-            })
-            
-        }else {
-            pressedUsername(sender)
-        }
-
-    }
-    
-    func pressedUsername(sender: UITapGestureRecognizer) {
-        let buttonRow = sender.view!.tag
-       
-        activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
-        activityIndicator.center = self.view.center
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-        view.addSubview(activityIndicator)
-        activityIndicator.startAnimating()
-        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
-
-        MolocateAccount.getUser(notificationArray[buttonRow].actor) { (data, response, error) -> () in
-            dispatch_async(dispatch_get_main_queue()){
-                user = data
-                let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
-                controller.classUser = data
-                controller.view.frame = self.view.bounds
-                controller.willMoveToParentViewController(self)
-                self.view.addSubview(controller.view)
-                self.addChildViewController(controller)
-                controller.didMoveToParentViewController(self)
-                self.activityIndicator.stopAnimating()
-                 UIApplication.sharedApplication().endIgnoringInteractionEvents()
-                
-            }
         }
         
     }
@@ -277,8 +279,8 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
         }
     }
     
-
-
+    
+    
     func displayAlert(title: String, message: String) {
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
@@ -289,8 +291,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
     }
     
     override func viewWillAppear(animated: Bool) {
-    
+        
     }
-
+    
 }
-
