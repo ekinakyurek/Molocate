@@ -1536,51 +1536,7 @@
             </objects>
             <point key="canvasLocation" x="5217.5" y="556.5"/>
         </scene>
-        <!--Followings-->
-        <scene sceneID="Pot-1b-pyt">
-            <objects>
-                <viewController storyboardIdentifier="Followings" title="Followings" id="7RQ-q3-OTP" customClass="Followings" customModule="Molocate" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="8u9-cZ-IoG"/>
-                        <viewControllerLayoutGuide type="bottom" id="2WJ-3a-2Kc"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Dji-Uu-3x6">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TPu-OW-7hv">
-                                <rect key="frame" x="16" y="36" width="343" height="44"/>
-                                <color key="backgroundColor" red="1" green="0.1751300314" blue="0.43602620959999999" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="1Bu-ul-vyt"/>
-                                </constraints>
-                                <items>
-                                    <navigationItem title="Followings" id="1PY-PT-j3j">
-                                        <barButtonItem key="leftBarButtonItem" image="profile" id="d6Z-Ro-LR7">
-                                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                            <connections>
-                                                <action selector="backButton:" destination="7RQ-q3-OTP" id="3b6-36-v1e"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="TPu-OW-7hv" firstAttribute="leading" secondItem="Dji-Uu-3x6" secondAttribute="leadingMargin" id="0Lc-61-RGi"/>
-                            <constraint firstItem="TPu-OW-7hv" firstAttribute="top" secondItem="8u9-cZ-IoG" secondAttribute="bottom" constant="16" id="0vz-qj-fFN"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="TPu-OW-7hv" secondAttribute="trailing" id="NMd-jc-Jfm"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" title="Followings" id="I3D-TO-Ueb"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Qd8-Dk-R1L" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="6099.5" y="556.5"/>
-        </scene>
-        <!--One Photo-->
+        <!--Title-->
         <scene sceneID="VJu-BD-Med">
             <objects>
                 <viewController storyboardIdentifier="onePhoto" id="sOp-Nz-cSG" customClass="onePhoto" customModule="Molocate" customModuleProvider="target" sceneMemberID="viewController">
@@ -1592,41 +1548,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ydK-ki-ZRz">
-                                <rect key="frame" x="16" y="16" width="343" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="Khj-bj-VBa"/>
-                                </constraints>
-                                <items>
-                                    <barButtonItem image="leftArrow" id="n4e-5N-a0D">
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <connections>
-                                            <action selector="backButton:" destination="sOp-Nz-cSG" id="Rxt-MX-d23"/>
-                                        </connections>
-                                    </barButtonItem>
-                                </items>
-                            </toolbar>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wdy-QW-2EB">
-                                <rect key="frame" x="16" y="0.0" width="343" height="16"/>
-                                <color key="backgroundColor" red="0.92156862745098034" green="0.16862745098039217" blue="0.36470588235294116" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="16" id="NKb-hV-F9y"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S5c-Xc-hPN">
-                                <rect key="frame" x="76" y="27" width="223" height="22"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="22" id="y7c-OD-E8u"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="15"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TLE-gT-Imq">
-                                <rect key="frame" x="16" y="192" width="343" height="343"/>
+                                <rect key="frame" x="16" y="162" width="343" height="343"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="TLE-gT-Imq" secondAttribute="height" multiplier="1:1" id="oxO-Rs-pky"/>
                                 </constraints>
@@ -1634,33 +1557,29 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="ydK-ki-ZRz" secondAttribute="trailing" id="4Uw-ml-YoW"/>
-                            <constraint firstItem="Wdy-QW-2EB" firstAttribute="leading" secondItem="pnf-Yg-N2K" secondAttribute="leadingMargin" id="5fB-Of-XG2"/>
                             <constraint firstItem="TLE-gT-Imq" firstAttribute="leading" secondItem="pnf-Yg-N2K" secondAttribute="leadingMargin" id="Bay-rW-BV5"/>
-                            <constraint firstItem="S5c-Xc-hPN" firstAttribute="top" secondItem="Wdy-QW-2EB" secondAttribute="bottom" constant="11" id="Wlx-VV-Cvo"/>
-                            <constraint firstItem="Wdy-QW-2EB" firstAttribute="top" secondItem="pnf-Yg-N2K" secondAttribute="topMargin" id="X5s-np-Kcg"/>
-                            <constraint firstItem="ydK-ki-ZRz" firstAttribute="top" secondItem="Wdy-QW-2EB" secondAttribute="bottom" id="ZKm-yU-D5A"/>
-                            <constraint firstItem="TLE-gT-Imq" firstAttribute="centerY" secondItem="pnf-Yg-N2K" secondAttribute="centerY" constant="30" id="gmy-Lo-2Ed"/>
-                            <constraint firstItem="S5c-Xc-hPN" firstAttribute="centerX" secondItem="pnf-Yg-N2K" secondAttribute="centerX" id="iSF-90-h8Z"/>
                             <constraint firstAttribute="trailingMargin" secondItem="TLE-gT-Imq" secondAttribute="trailing" id="ngI-Fh-or4"/>
                             <constraint firstItem="TLE-gT-Imq" firstAttribute="centerX" secondItem="pnf-Yg-N2K" secondAttribute="centerX" id="oGB-Lu-76j"/>
-                            <constraint firstItem="S5c-Xc-hPN" firstAttribute="leading" secondItem="pnf-Yg-N2K" secondAttribute="leadingMargin" constant="60" id="qBG-hS-B5v"/>
-                            <constraint firstItem="S5c-Xc-hPN" firstAttribute="top" secondItem="p6w-NP-Rkf" secondAttribute="bottom" constant="11" id="ude-Pc-emf"/>
-                            <constraint firstItem="ydK-ki-ZRz" firstAttribute="leading" secondItem="pnf-Yg-N2K" secondAttribute="leadingMargin" id="yC2-d8-Yn0"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Wdy-QW-2EB" secondAttribute="trailing" id="zqh-SI-vTO"/>
+                            <constraint firstItem="TLE-gT-Imq" firstAttribute="centerY" secondItem="pnf-Yg-N2K" secondAttribute="centerY" id="re3-NS-649"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="ude-Pc-emf"/>
                                 <exclude reference="oGB-Lu-76j"/>
                             </mask>
                         </variation>
                     </view>
+                    <navigationItem key="navigationItem" title="Title" id="ko6-zG-Y7V">
+                        <barButtonItem key="leftBarButtonItem" image="leftArrow" id="FAa-4u-a7b">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="backButton:" destination="sOp-Nz-cSG" id="dLH-h1-Cbe"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="profilePhoto" destination="TLE-gT-Imq" id="gYQ-Ym-zKc"/>
-                        <outlet property="toolBar" destination="ydK-ki-ZRz" id="FUX-Af-BLJ"/>
-                        <outlet property="usernameLabel" destination="S5c-Xc-hPN" id="8Lu-HO-Fr2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OCW-x7-kV5" userLabel="First Responder" sceneMemberID="firstResponder"/>

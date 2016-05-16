@@ -397,12 +397,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
         controller.classPlace = thePlace
         controller.classUser = MoleCurrentUser
         controller.followersclicked = true
-        //print(thePlace)
-        controller.view.frame = self.view.bounds;
-        controller.willMoveToParentViewController(self)
-        self.view.addSubview(controller.view)
-        self.addChildViewController(controller)
-        controller.didMoveToParentViewController(self)
+        navigationController?.pushViewController(controller, animated: true)
     }
     
     func openMapForPlace() {

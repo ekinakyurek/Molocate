@@ -412,12 +412,8 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
     @IBAction func pressedPhoto(sender: AnyObject) {
         let controller:onePhoto = self.storyboard!.instantiateViewControllerWithIdentifier("onePhoto") as! onePhoto
         controller.classUser = classUser
-        controller.view.frame = self.view.bounds;
-        controller.willMoveToParentViewController(self)
-        controller.profilePhoto.sd_setImageWithURL(classUser.profilePic)
-        self.view.addSubview(controller.view)
-        self.addChildViewController(controller)
-        controller.didMoveToParentViewController(self)
+        navigationController?.pushViewController(controller, animated: true)
+        
     }
     
     func showTable(){
