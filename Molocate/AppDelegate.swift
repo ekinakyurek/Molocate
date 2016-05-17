@@ -64,7 +64,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
         
         if let _ = launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey] as? [String: AnyObject] {
-            choosedIndex = 2
+            choosedIndex = 3
             NSNotificationCenter.defaultCenter().postNotificationName("pushNotification", object: nil)
             UIApplication.sharedApplication().applicationIconBadgeNumber = 0
             
@@ -210,7 +210,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         if (UIApplication.sharedApplication().applicationState == UIApplicationState.Inactive || UIApplication.sharedApplication().applicationState == UIApplicationState.Background) {
             
-            choosedIndex = 2
+            choosedIndex = 3
             NSNotificationCenter.defaultCenter().postNotificationName("pushNotification", object: nil)
             UIApplication.sharedApplication().applicationIconBadgeNumber = 0
           

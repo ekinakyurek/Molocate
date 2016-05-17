@@ -353,7 +353,7 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
                             self.activityIndicator.stopAnimating()
                             UIApplication.sharedApplication().endIgnoringInteractionEvents()
                             if data == "success"{
-                                choosedIndex = 3
+                                choosedIndex = 0
                                 self.performSegueWithIdentifier("goBackProfile", sender: self)
                             }else{
                                 self.displayAlert("Tamam", message: "Kullanıcı bilgileri değiştirilirken bir hata oluştu")

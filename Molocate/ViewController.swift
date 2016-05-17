@@ -149,7 +149,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDe
     
     @IBAction func loginButton(sender: AnyObject) {
         if(MolocateDevice.isConnectedToNetwork()){
-            choosedIndex = 1
+            choosedIndex = 2
             if username.text == "" || password.text == "" {
                 displayAlert("Hata", message: "lütfen kullanıcı adı ve parola giriniz.")
             }else {

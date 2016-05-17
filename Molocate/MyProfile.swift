@@ -36,8 +36,8 @@ class MyProfile: UIViewController , UIScrollViewDelegate, UITableViewDelegate, U
     }
     
     func initGui(){
-        
-        if(isItMyProfile && choosedIndex == 3){
+        print("calıstı")
+        if(isItMyProfile && choosedIndex == 0){
             user = MoleCurrentUser
             classUser = MoleCurrentUser
             FollowButton.image = UIImage(named: "settings")
@@ -139,7 +139,7 @@ class MyProfile: UIViewController , UIScrollViewDelegate, UITableViewDelegate, U
             ProfileButton.enabled = false
         }
         
-        if(isItMyProfile && choosedIndex==3){
+        if(isItMyProfile && choosedIndex==0){
             
             (self.parentViewController?.parentViewController!.parentViewController as! ContainerController).scrollView.scrollEnabled = true
 
@@ -358,7 +358,7 @@ class MyProfile: UIViewController , UIScrollViewDelegate, UITableViewDelegate, U
             user = MoleUser()
             videoIndex = 0
             isUploaded = true
-            choosedIndex = 100
+            choosedIndex = 1
             frame = CGRect()
             MoleCurrentUser = MoleUser()
             MoleUserToken = nil
@@ -426,6 +426,10 @@ class MyProfile: UIViewController , UIScrollViewDelegate, UITableViewDelegate, U
             self.scrollView.alpha = 0.4
         }
         
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.RefreshGuiWithData()
     }
   
     override func viewWillDisappear(animated: Bool) {

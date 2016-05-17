@@ -209,7 +209,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         
         self.view.backgroundColor = swiftColor
         
-        if(choosedIndex != 3 && profileOn == 1){
+        if(choosedIndex != 0 && profileOn == 1){
             NSNotificationCenter.defaultCenter().postNotificationName("closeProfile", object: nil)
         }
         
@@ -217,12 +217,12 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
         tableView.tableFooterView = UIView()
         initGUIforRetry()
         switch(choosedIndex){
-        case 0:
+        case 1:
             tableView.reloadData()
             collectionView.hidden = true
             tableView.frame = CGRectMake(0, 44, screenSize.width, screenSize.height - 44)
             break
-        case 1:
+        case 2:
             collectionView.hidden = false
             tableView.frame = CGRectMake(0, 88, screenSize.width, screenSize.height - 88)
             videoArray.removeAll()
@@ -255,13 +255,13 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                 }
             })
             break
-        case 2:
+        case 3:
             tableView.reloadData()
             collectionView.hidden = true
             tableView.frame = CGRectMake(0, 44, screenSize.width, screenSize.height - 44)
             
             break
-        case 3:
+        case 0:
             
             //NSNotificationCenter.defaultCenter().postNotificationName("openProfile", object: nil)
             profileOn = 1
@@ -577,16 +577,16 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
             var rowHeight:CGFloat = 0
             switch(choosedIndex)
             {
-            case 0:
+            case 1:
                 rowHeight = screenSize.width + 150
                 return rowHeight
                 
-            case 1:
+            case 2:
                 
                 rowHeight = screenSize.width + 150 //screenSize.width + 90
                 return rowHeight
                 
-            case 2:
+            case 3:
                 rowHeight = 44
                 return rowHeight
                 
@@ -890,7 +890,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                         self.addChildViewController(controller)
                         controller.didMoveToParentViewController(self)
                         
-                        choosedIndex = 1
+                        choosedIndex = 2
                         self.activityIndicator.removeFromSuperview()
                     }
                     
@@ -922,7 +922,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                 controller.didMoveToParentViewController(self)
                 
                 
-                choosedIndex = 1
+                choosedIndex = 2
                 self.activityIndicator.removeFromSuperview()
             }
             
@@ -1466,7 +1466,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     func changeFrame() {
         
         switch(choosedIndex){
-        case 1:
+        case 2:
             self.tableView.frame = CGRectMake(0, 44, screenSize.width, screenSize.height - 44)
             self.collectionView.hidden = true
             

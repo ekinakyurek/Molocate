@@ -103,7 +103,7 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
         
         self.view.backgroundColor = swiftColor
         
-        if(choosedIndex != 3 && profileOn == 1){
+        if(choosedIndex != 0 && profileOn == 1){
             NSNotificationCenter.defaultCenter().postNotificationName("closeProfile", object: nil)
         }
         

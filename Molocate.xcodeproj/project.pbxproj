@@ -47,6 +47,7 @@
 		C65A45101C694AFC00E9DA6F /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C65A450D1C694AFC00E9DA6F /* FBSDKShareKit.framework */; };
 		C65A45141C694E8D00E9DA6F /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C65A45131C694E8D00E9DA6F /* Bolts.framework */; };
 		C65C4F751C8E20B300DB5068 /* captureCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65C4F741C8E20B300DB5068 /* captureCollectionCell.swift */; };
+		C66743831CEB84410020D514 /* sideProfilePic.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66743821CEB84410020D514 /* sideProfilePic.swift */; };
 		C67830191C9CC76E00DC969D /* LatoTR-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C67830151C9CC72700DC969D /* LatoTR-Bold.ttf */; };
 		C678301A1C9CC76E00DC969D /* LatoTR-Hairline.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C67830161C9CC72700DC969D /* LatoTR-Hairline.ttf */; };
 		C678301B1C9CC76E00DC969D /* LatoTR-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C67830171C9CC72700DC969D /* LatoTR-Light.ttf */; };
@@ -167,6 +168,7 @@
 		C65A450D1C694AFC00E9DA6F /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = "../../../Downloads/FacebookSDKs-iOS-20160115/FBSDKShareKit.framework"; sourceTree = "<group>"; };
 		C65A45131C694E8D00E9DA6F /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		C65C4F741C8E20B300DB5068 /* captureCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = captureCollectionCell.swift; sourceTree = "<group>"; };
+		C66743821CEB84410020D514 /* sideProfilePic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = sideProfilePic.swift; sourceTree = "<group>"; };
 		C67830151C9CC72700DC969D /* LatoTR-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "LatoTR-Bold.ttf"; sourceTree = "<group>"; };
 		C67830161C9CC72700DC969D /* LatoTR-Hairline.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "LatoTR-Hairline.ttf"; sourceTree = "<group>"; };
 		C67830171C9CC72700DC969D /* LatoTR-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "LatoTR-Light.ttf"; sourceTree = "<group>"; };
@@ -461,6 +463,7 @@
 				E333A2231CEB7B0D0003D781 /* MyProfile.swift */,
 				C69B823E1CA0D6F5008658CF /* oneVideo.swift */,
 				C638AFF21C9C7E74003085E8 /* likeVideo.swift */,
+				C66743821CEB84410020D514 /* sideProfilePic.swift */,
 				388173F41C97AACB0064EBB5 /* commentController.swift */,
 				C69DB1BE1C99079D0042DA03 /* tagComment.swift */,
 				C6CBA4FE1C876EC300AE65AD /* profileOther.swift */,
@@ -732,6 +735,7 @@
 				C6CBA4FF1C876EC300AE65AD /* profileOther.swift in Sources */,
 				C65C4F751C8E20B300DB5068 /* captureCollectionCell.swift in Sources */,
 				C63629491CCCEE210071E6BF /* searchUsername.swift in Sources */,
+				C66743831CEB84410020D514 /* sideProfilePic.swift in Sources */,
 				C6917F921BFA60B700CA501A /* CameraViewController.swift in Sources */,
 				E33DCC6D1CB3FA2D0081C0DF /* MolocateNotifications.swift in Sources */,
 				C64B601E1C81D6A500E510DC /* MolocateAccount.swift in Sources */,

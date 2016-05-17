@@ -34,13 +34,13 @@ class ContainerController: UIViewController,UIScrollViewDelegate {
   
     func pushNotification(){
         if let tabbar = self.childViewControllers[1] as? UITabBarController {
-            choosedIndex = 2
+            choosedIndex = 3
             tabbar.selectedIndex = choosedIndex
             tabbar.viewDidLoad()
         }
     }
     func closeSideBar(){
-        scrollView.setContentOffset(CGPoint(x: self.view.frame.width*0.23, y: 0), animated: true)
+        scrollView.setContentOffset(CGPoint(x: self.view.frame.width*0.4, y: 0), animated: true)
     }
     
     func openSideBar(){
@@ -48,7 +48,7 @@ class ContainerController: UIViewController,UIScrollViewDelegate {
     }
     
     func closeSideBarFast(){
-        scrollView.setContentOffset(CGPoint(x: self.view.frame.width*0.23, y: 0), animated: false)
+        scrollView.setContentOffset(CGPoint(x: self.view.frame.width*0.4, y: 0), animated: false)
     }
 
 
