@@ -206,6 +206,10 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
         
 
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        (self.parentViewController?.parentViewController?.parentViewController as! ContainerController).scrollView.scrollEnabled = false
+    }
     func addGenderPart(screenWidth: CGFloat, screenHeight: CGFloat){
         let scr = screenHeight-0
         

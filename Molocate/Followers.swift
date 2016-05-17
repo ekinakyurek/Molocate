@@ -286,6 +286,9 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
         myTable.reloadData()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        (self.parentViewController?.parentViewController?.parentViewController as! ContainerController).scrollView.scrollEnabled = false
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }

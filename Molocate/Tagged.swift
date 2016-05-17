@@ -26,6 +26,7 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
     var likeHeart = UIImageView()
     var player1Turn = false
     var classUser = MoleUser()
+    var isItMyProfile = true
     
     override func viewDidLoad() {
         try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
@@ -473,8 +474,14 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
         videoIndex = buttonRow
         video_id = videoArray[videoIndex].id
         
-        myViewController = "Tagged"
         
+        
+        if isItMyProfile {
+            myViewController = "MyTagged"
+        }else{
+            myViewController = "Tagged"
+        }
+       
         
         activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
         activityIndicator.center = self.view.center

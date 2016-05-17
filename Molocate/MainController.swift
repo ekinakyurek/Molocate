@@ -1494,7 +1494,8 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
     
     override func viewWillAppear(animated: Bool) {
         
-        
+        (self.parentViewController?.parentViewController?.parentViewController as! ContainerController).scrollView.scrollEnabled = true
+
         dispatch_async(dispatch_get_main_queue()) {
             self.locationManager = CLLocationManager()
             self.locationManager.delegate = self

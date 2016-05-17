@@ -291,7 +291,8 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
     }
     
     override func viewWillAppear(animated: Bool) {
-        
+        (self.parentViewController?.parentViewController?.parentViewController as! ContainerController).scrollView.scrollEnabled = true
+
     }
     
 }

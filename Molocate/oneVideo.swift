@@ -168,6 +168,9 @@ class oneVideo: UIViewController,PlayerDelegate {
         
     }
     
+    override func viewWillAppear(animated: Bool) {
+        (self.parentViewController?.parentViewController?.parentViewController as! ContainerController).scrollView.scrollEnabled = false
+    }
     func pressedPlace(sender: UIButton) {
        
         

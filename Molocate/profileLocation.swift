@@ -830,6 +830,11 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
         lastOffsetCapture = NSDate().timeIntervalSinceReferenceDate
         
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        (self.parentViewController?.parentViewController?.parentViewController as! ContainerController).scrollView.scrollEnabled = false
+
+    }
     func scrollViewDidScroll(scrollView: UIScrollView) {
         
         

@@ -88,6 +88,7 @@
 		C6F9B5CA1C80DDF400C7E9FC /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F9B5C91C80DDF400C7E9FC /* NotificationsViewController.swift */; };
 		C6F9F5511C12574500E62856 /* capturePreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F9F5501C12574500E62856 /* capturePreviewController.swift */; };
 		C6FA823C1C02397D0099D2C8 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6FA823B1C02397D0099D2C8 /* AVFoundation.framework */; };
+		E333A2241CEB7B0D0003D781 /* MyProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E333A2231CEB7B0D0003D781 /* MyProfile.swift */; };
 		E33DCC691CB3F5250081C0DF /* MolocateVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33DCC681CB3F5250081C0DF /* MolocateVideo.swift */; };
 		E33DCC6B1CB3F73C0081C0DF /* MolocatePlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33DCC6A1CB3F73C0081C0DF /* MolocatePlace.swift */; };
 		E33DCC6D1CB3FA2D0081C0DF /* MolocateNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33DCC6C1CB3FA2C0081C0DF /* MolocateNotifications.swift */; };
@@ -207,6 +208,7 @@
 		C6F9B5C91C80DDF400C7E9FC /* NotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		C6F9F5501C12574500E62856 /* capturePreviewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = capturePreviewController.swift; sourceTree = "<group>"; };
 		C6FA823B1C02397D0099D2C8 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		E333A2231CEB7B0D0003D781 /* MyProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyProfile.swift; sourceTree = "<group>"; };
 		E33DCC681CB3F5250081C0DF /* MolocateVideo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MolocateVideo.swift; sourceTree = "<group>"; };
 		E33DCC6A1CB3F73C0081C0DF /* MolocatePlace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MolocatePlace.swift; sourceTree = "<group>"; };
 		E33DCC6C1CB3FA2C0081C0DF /* MolocateNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MolocateNotifications.swift; sourceTree = "<group>"; };
@@ -456,6 +458,7 @@
 		C6F7B26E1C1351CF0062E408 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				E333A2231CEB7B0D0003D781 /* MyProfile.swift */,
 				C69B823E1CA0D6F5008658CF /* oneVideo.swift */,
 				C638AFF21C9C7E74003085E8 /* likeVideo.swift */,
 				388173F41C97AACB0064EBB5 /* commentController.swift */,
@@ -715,6 +718,7 @@
 				C63FBD091BF3E5B900DBB34C /* ViewController.swift in Sources */,
 				C61023161C1B407600E9CA73 /* Followers.swift in Sources */,
 				C638AFF31C9C7E74003085E8 /* likeVideo.swift in Sources */,
+				E333A2241CEB7B0D0003D781 /* MyProfile.swift in Sources */,
 				388173F51C97AACB0064EBB5 /* commentController.swift in Sources */,
 				C6B7C9EB1C7BE7EF005607EC /* profileLocation.swift in Sources */,
 				388173F71C97ABE20064EBB5 /* commentCell.swift in Sources */,

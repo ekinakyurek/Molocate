@@ -55,6 +55,7 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         likeHeart.image = UIImage(named: "favorite")
         likeHeart.alpha = 1.0
         self.automaticallyAdjustsScrollViewInsets = false
@@ -158,6 +159,8 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
         }
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MainController.prepareForRetry), name: "prepareForRetry", object: nil)
     }
+    
+    
     
  
     func refresh(sender:AnyObject){
@@ -1271,7 +1274,7 @@ class HomePageViewController: UIViewController,UITableViewDelegate , UITableView
 //    }
     
     override func viewWillAppear(animated: Bool) {
-       
+        (self.parentViewController?.parentViewController!.parentViewController as! ContainerController).scrollView.scrollEnabled = true
          navigationController?.hidesBarsOnSwipe = true
 
         

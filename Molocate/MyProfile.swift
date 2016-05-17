@@ -1,7 +1,6 @@
 import UIKit
-var mine = false
 
-class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource {
+class MyProfile: UIViewController , UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource {
     //true ise kendi false başkası
    
     var leftButton = "side"
@@ -10,8 +9,11 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
     let BVc :Tagged =  Tagged(nibName: "Tagged", bundle: nil);
     let names = ["AYARLAR","PROFİLİ DÜZENLE", "ÇIKIŞ YAP"]
     var isItMyProfile = true
+    
+    
     @IBOutlet var settings: UITableView!
     @IBOutlet var scrollView: UIScrollView!
+ 
   
     @IBOutlet weak var ProfileButton: UIButton!
     
@@ -22,7 +24,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
     
     @IBOutlet var addedButton: UIButton!
     @IBOutlet var taggedButton: UIButton!
-  
+    @IBOutlet var back: UIBarButtonItem!
     @IBOutlet var followingsCount: UIButton!
     @IBOutlet var followersCount: UIButton!
     @IBOutlet var FollowButton: UIBarButtonItem!
@@ -41,10 +43,11 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
             FollowButton.image = UIImage(named: "settings")
             //choosedIndex = 4 //??WHY
             
-      
+            
+            back.image = UIImage(named:"sideMenu")
         }else{
             
-           
+            back.image = UIImage(named: "leftArrow")
             if(classUser.isFollowing){
                 FollowButton.image = UIImage(named: "unfollow")
             }else if classUser.username == MoleCurrentUser.username{
@@ -110,7 +113,6 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
         deneme.origin.x = 0
         
         BVc.classUser = classUser
-        BVc.isItMyProfile = isItMyProfile
         BVc.view.frame = adminFrame;
         self.addChildViewController(BVc);
         BVc.didMoveToParentViewController(self)
@@ -142,13 +144,14 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
             (self.parentViewController?.parentViewController!.parentViewController as! ContainerController).scrollView.scrollEnabled = true
 
             FollowButton.image = UIImage(named: "settings")
-          
+            //choosedIndex = 4 //??WHY
+            back.image = UIImage(named:"sideMenu")
         }else{
 
             
             (self.parentViewController?.parentViewController!.parentViewController as! ContainerController).scrollView.scrollEnabled = false
 
-       
+            back.image = UIImage(named: "leftArrow")
             if(classUser.isFollowing){
                 FollowButton.image = UIImage(named: "unfollow")
             }else if classUser.username == MoleCurrentUser.username{
@@ -169,7 +172,6 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
         
         AVc.classUser = classUser
         AVc.isItMyProfile = self.isItMyProfile
-        BVc.isItMyProfile = self.isItMyProfile
         BVc.classUser = classUser
         AVc.getData()
         BVc.getData()
@@ -252,7 +254,26 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
     }
     
 
-       
+    
+    @IBAction func backButton(sender: AnyObject) {
+        if(choosedIndex == 3 && isItMyProfile ){
+            
+            
+            if(sideClicked == false){
+                sideClicked = true
+                NSNotificationCenter.defaultCenter().postNotificationName("openSideBar", object: nil)
+            } else {
+                sideClicked = false
+                NSNotificationCenter.defaultCenter().postNotificationName("closeSideBar", object: nil)
+            }
+         
+        } else {
+            
+            navigationController?.popViewControllerAnimated(true)
+        }
+        
+    }
+    
     @IBAction func followersButton(sender: AnyObject) {
         AVc.player2.stop()
         AVc.player1.stop()

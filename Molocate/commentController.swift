@@ -243,6 +243,19 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
             (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! HomePageViewController).player1.stop()
             (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! HomePageViewController).player2.stop()
             //(navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! profileOther).AVc.player2.stop()
+        }else if myViewController == "MyAdded"{
+            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! MyProfile).AVc.videoArray[videoIndex].commentCount += i
+            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! MyProfile).AVc.tableView.reloadRowsAtIndexPaths(
+                [NSIndexPath(forRow: videoIndex, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Left)
+            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! MyProfile).AVc.player1.stop()
+            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! MyProfile).AVc.player2.stop()
+        }else if myViewController == "MyTagged"{
+            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! MyProfile).BVc.videoArray[videoIndex].commentCount += i
+            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! MyProfile).BVc.tableView.reloadRowsAtIndexPaths(
+                [NSIndexPath(forRow: videoIndex, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Left)
+            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! MyProfile).BVc.player1.stop()
+            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! MyProfile).BVc.player2.stop()
+            
         }else if myViewController == "Added"{
             (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! profileOther).AVc.videoArray[videoIndex].commentCount += i
             (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! profileOther).AVc.tableView.reloadRowsAtIndexPaths(
@@ -255,8 +268,6 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
                 [NSIndexPath(forRow: videoIndex, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Left)
             (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! profileOther).BVc.player1.stop()
             (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! profileOther).BVc.player2.stop()
-            
-            
             
         }else if myViewController == "profileLocation"{
             (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! profileLocation).videoArray[videoIndex].commentCount += i

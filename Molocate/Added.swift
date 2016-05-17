@@ -192,8 +192,7 @@ import AVFoundation
             
             cell.placeName.addTarget(self, action: #selector(Added.pressedPlace(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             
-            let parent = self.parentViewController as! profileOther
-            
+           
             if isItMyProfile {
             cell.Username.addTarget(self, action: #selector(Added.pressedUsername(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             cell.profilePhoto.addTarget(self, action: #selector(Added.pressedUsername(_:)), forControlEvents: UIControlEvents.TouchUpInside)
@@ -739,8 +738,12 @@ import AVFoundation
         
         videoIndex = buttonRow
         video_id = videoArray[videoIndex].id
-        
-        myViewController = "Added"
+    
+        if isItMyProfile {
+            myViewController = "MyAdded"
+        }else{
+             myViewController = "Added"
+        }
         
         
         activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
