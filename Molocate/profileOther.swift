@@ -35,7 +35,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
     
     func initGui(){
         
-        if(isItMyProfile && choosedIndex == 3){
+        if(isItMyProfile && choosedIndex == 0){
             user = MoleCurrentUser
             classUser = MoleCurrentUser
             FollowButton.image = UIImage(named: "settings")
@@ -137,7 +137,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
             ProfileButton.enabled = false
         }
         
-        if(isItMyProfile && choosedIndex==3){
+        if(isItMyProfile && choosedIndex==0){
             
             (self.parentViewController?.parentViewController!.parentViewController as! ContainerController).scrollView.scrollEnabled = true
 

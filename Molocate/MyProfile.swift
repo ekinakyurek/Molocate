@@ -256,7 +256,7 @@ class MyProfile: UIViewController , UIScrollViewDelegate, UITableViewDelegate, U
 
     
     @IBAction func backButton(sender: AnyObject) {
-        if(choosedIndex == 3 && isItMyProfile ){
+        if(choosedIndex == 0 && isItMyProfile ){
             
             
             if(sideClicked == false){

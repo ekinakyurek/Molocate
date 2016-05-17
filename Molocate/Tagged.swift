@@ -215,6 +215,8 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
                 dispatch_async(dispatch_get_main_queue()) {
                         myCache.fetch(URL:self.videoArray[indexPath.row].urlSta ).onSuccess{ NSData in
                         let url = self.videoArray[indexPath.row].urlSta.absoluteString
+                            
+                            //DBG:hata verdi INDEX OUT OF RANGE WHY SO?
                         let path = NSURL(string: DiskCache.basePath())!.URLByAppendingPathComponent("shared-data/original")
                         let cached = DiskCache(path: path.absoluteString).pathForKey(url)
                         let file = NSURL(fileURLWithPath: cached)

@@ -12,7 +12,7 @@ class ContainerController: UIViewController,UIScrollViewDelegate {
         super.viewDidLoad()
         
         scrollView.delegate = self
-        scrollView.setContentOffset(CGPoint(x: self.view.frame.width*0.23, y: 0), animated: false)
+
        
         if let tabbar = self.childViewControllers[1] as? UITabBarController {
             print("tabbar reloaded \(choosedIndex)")
@@ -41,16 +41,34 @@ class ContainerController: UIViewController,UIScrollViewDelegate {
     }
     func closeSideBar(){
         scrollView.setContentOffset(CGPoint(x: self.view.frame.width*0.4, y: 0), animated: true)
+        //setStatusBarBackgroundColor(swiftColor)
     }
     
     func openSideBar(){
         scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+            //setStatusBarBackgroundColor(UIColor.blackColor())
     }
     
     func closeSideBarFast(){
         scrollView.setContentOffset(CGPoint(x: self.view.frame.width*0.4, y: 0), animated: false)
+        
+        //setStatusBarBackgroundColor(swiftColor)
     }
 
+    
+    func setStatusBarBackgroundColor(color: UIColor) {
+        
+        guard  let statusBar = UIApplication.sharedApplication().valueForKey("statusBarWindow")?.valueForKey("statusBar") as? UIView else {
+            return
+        }
+        
+        UIView.animateWithDuration(0.4) {
+            statusBar.backgroundColor = color
+
+        }
+        
+    }
+    
 
 
     override func didReceiveMemoryWarning() {
@@ -63,6 +81,8 @@ class ContainerController: UIViewController,UIScrollViewDelegate {
     
     override func viewWillAppear(animated: Bool) {
         adjustViewLayout(UIScreen.mainScreen().bounds.size)
+        
+       // setStatusBarBackgroundColor(swiftColor)
     }
     
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
@@ -76,8 +96,18 @@ class ContainerController: UIViewController,UIScrollViewDelegate {
     func scrollViewDidScroll(scrollView: UIScrollView) {
         if(scrollView.contentOffset.x == 0) {
             sideClicked = true
+         
         } else{
             sideClicked = false
+        }
+        if(scrollView.contentOffset.x < self.view.frame.width*0.2){
+            setStatusBarBackgroundColor(UIColor.blackColor())
+
+        
+        }
+        else{
+            setStatusBarBackgroundColor(swiftColor)
+
         }
     }
     

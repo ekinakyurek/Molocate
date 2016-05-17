@@ -177,7 +177,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
         view.addSubview(activityIndicator)
         activityIndicator.startAnimating()
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
-        mine = false
+      
         
         let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
         
