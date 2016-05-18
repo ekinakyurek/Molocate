@@ -119,13 +119,10 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
             
         } else {
             
-            if userRelations.relations[indexPath.row].is_place {
-                cell.myButton1.addTarget(self, action: #selector(Followers.pressedPlace(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-                cell.fotoButton.addTarget(self, action: #selector(Followers.pressedPlace(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-            } else {
+        
                 cell.myButton1.addTarget(self, action: #selector(Followers.pressedProfile(_:)), forControlEvents: UIControlEvents.TouchUpInside)
                 cell.fotoButton.addTarget(self, action: #selector(Followers.pressedProfile(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-            }
+            
         }
         return cell
     }
@@ -190,8 +187,10 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
     }
     
     func pressedProfile(sender: UIButton) {
-  
+        
+        self.parentViewController!.navigationController?.setNavigationBarHidden(false, animated: false)
         let buttonRow = sender.tag
+        
         activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
         activityIndicator.center = self.view.center
         activityIndicator.hidesWhenStopped = true
@@ -201,65 +200,32 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
         
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
         
-        let username =  userRelations.relations[buttonRow].username
-      
-        MolocateAccount.getUser(username) { (data, response, error) -> () in
+     
+        let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
+        
+        if userRelations.relations[buttonRow].username  != MoleCurrentUser.username{
+            controller.isItMyProfile = false
+        }else{
+            controller.isItMyProfile = true
+        }
+        
+        
+        self.navigationController?.pushViewController(controller, animated: true)
+        MolocateAccount.getUser(userRelations.relations[buttonRow].username) { (data, response, error) -> () in
             dispatch_async(dispatch_get_main_queue()){
-                mine = false
+                //DBG: If it is mine profile?
+                
                 user = data
-                
-                let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
                 controller.classUser = data
-                controller.view.frame = self.view.bounds;
-                controller.willMoveToParentViewController(self)
-                controller.username.text = user.username
                 
-                //add animation
-                self.view.addSubview(controller.view)
-                self.addChildViewController(controller)
-                controller.didMoveToParentViewController(self)
+                controller.RefreshGuiWithData()
                 
-                self.activityIndicator.stopAnimating()
-                
-                UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                //choosedIndex = 0
+                self.activityIndicator.removeFromSuperview()
             }
         }
     }
     
-
-    
-    func pressedPlace(sender: UIButton) {
-        let buttonRow = sender.tag
-        
-        activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
-        activityIndicator.center = self.view.center
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-        self.view.addSubview(activityIndicator)
-        activityIndicator.startAnimating()
-        
-        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
-       
-        MolocatePlace.getPlace(userRelations.relations[buttonRow].place_id) { (data, response, error) -> () in
-            dispatch_async(dispatch_get_main_queue()){
-                thePlace = data
-                
-                let controller:profileLocation = self.storyboard!.instantiateViewControllerWithIdentifier("profileLocation") as! profileLocation
-               
-                controller.view.frame = self.view.bounds;
-                controller.classPlace = data
-                controller.willMoveToParentViewController(self)
-              
-                self.view.addSubview(controller.view)
-                self.addChildViewController(controller)
-                controller.didMoveToParentViewController(self)
-                
-                self.activityIndicator.stopAnimating()
-                UIApplication.sharedApplication().endIgnoringInteractionEvents()
-            }
-        }
-    
-    }
     
     @IBAction func back(sender: AnyObject) {
         if let parentVC = self.parentViewController {
