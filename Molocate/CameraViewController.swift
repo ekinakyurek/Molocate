@@ -132,7 +132,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
 
             self.backgroundRecordingID = UIBackgroundTaskInvalid
             
-            let videoDevice = CameraViewController.deviceWithMediaType(AVMediaTypeVideo, preferringPosition: AVCaptureDevicePosition.Back)
+            let videoDevice = CameraViewController.deviceWithMediaType(AVMediaTypeVideo, preferringPosition: AVCaptureDevicePosition.Front)
             let videoDeviceInput: AVCaptureDeviceInput!
             do {
                 videoDeviceInput = try AVCaptureDeviceInput(device: videoDevice)
