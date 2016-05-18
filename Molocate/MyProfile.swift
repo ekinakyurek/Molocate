@@ -77,7 +77,8 @@ class MyProfile: UIViewController , UIScrollViewDelegate, UITableViewDelegate, U
         profilePhoto.backgroundColor = profileBackgroundColor
         profilePhoto.clipsToBounds = true
         if(classUser.profilePic.absoluteString != ""){
-            profilePhoto.sd_setImageWithURL(user.profilePic)
+            profilePhoto.sd_setImageWithURL(classUser.profilePic)
+            ProfileButton.enabled = true
            
         }else{
             profilePhoto.image = UIImage(named: "profile")!
@@ -131,7 +132,7 @@ class MyProfile: UIViewController , UIScrollViewDelegate, UITableViewDelegate, U
         taggedButton.setTitle("@ETİKET(\(classUser.tag_count))", forState: .Normal)
        
         if(classUser.profilePic.absoluteString != ""){
-            profilePhoto.sd_setImageWithURL(user.profilePic)
+            profilePhoto.sd_setImageWithURL(classUser.profilePic)
             ProfileButton.enabled = true
             
         }else{
