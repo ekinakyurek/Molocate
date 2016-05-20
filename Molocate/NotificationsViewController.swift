@@ -97,6 +97,11 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
         let notificationAttributedString = NSAttributedString(string:  notificationArray[indexPath.row].sentence, attributes:  multipleAttributes2)
         usernameAttributedString.appendAttributedString(notificationAttributedString)
         
+        var multipleAttributes3 = [String : NSObject]()
+        multipleAttributes3[NSFontAttributeName] =  UIFont(name: "AvenirNext-Medium", size: 10.0)
+        multipleAttributes3[NSForegroundColorAttributeName] = UIColor.darkGrayColor()
+        let timeAttributedString = NSAttributedString(string:  "  " + notificationArray[indexPath.row].date  , attributes:  multipleAttributes3)
+        usernameAttributedString.appendAttributedString(timeAttributedString)
         
         cell.myLabel.textAlignment = .Left
         cell.myLabel.attributedText = usernameAttributedString
