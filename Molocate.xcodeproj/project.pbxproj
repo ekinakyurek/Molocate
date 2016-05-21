@@ -14,6 +14,7 @@
 		38E621061C90D9AB00FB1AD5 /* editProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E621051C90D9AB00FB1AD5 /* editProfile.swift */; };
 		38E6210C1C90E49D00FB1AD5 /* changePassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E6210B1C90E49D00FB1AD5 /* changePassword.swift */; };
 		38EAEA601CF10A5C0053249F /* eventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EAEA5F1CF10A5B0053249F /* eventCell.swift */; };
+		38EAEA621CF111870053249F /* eventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EAEA611CF111870053249F /* eventController.swift */; };
 		38F771041C9505670079FACD /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F771031C9505670079FACD /* Player.swift */; };
 		C60905361C4812A100614C7F /* ContainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60905351C4812A100614C7F /* ContainerController.swift */; };
 		C609053A1C48143C00614C7F /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60905391C48143C00614C7F /* MainController.swift */; };
@@ -128,6 +129,7 @@
 		38E621051C90D9AB00FB1AD5 /* editProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = editProfile.swift; sourceTree = "<group>"; };
 		38E6210B1C90E49D00FB1AD5 /* changePassword.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = changePassword.swift; sourceTree = "<group>"; };
 		38EAEA5F1CF10A5B0053249F /* eventCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = eventCell.swift; sourceTree = "<group>"; };
+		38EAEA611CF111870053249F /* eventController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = eventController.swift; sourceTree = "<group>"; };
 		38F771031C9505670079FACD /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		85240C29B79988CE027A1541 /* Pods-Molocate.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Molocate.release.xcconfig"; path = "Pods/Target Support Files/Pods-Molocate/Pods-Molocate.release.xcconfig"; sourceTree = "<group>"; };
 		C60905351C4812A100614C7F /* ContainerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerController.swift; sourceTree = "<group>"; };
@@ -311,6 +313,7 @@
 				C60905351C4812A100614C7F /* ContainerController.swift */,
 				C609053B1C48145700614C7F /* SideBarController.swift */,
 				C60905391C48143C00614C7F /* MainController.swift */,
+				38EAEA611CF111870053249F /* eventController.swift */,
 				C6F9F5501C12574500E62856 /* capturePreviewController.swift */,
 				C6917F911BFA60B700CA501A /* CameraViewController.swift */,
 				C6F9B5C71C80DD9300C7E9FC /* HomePageViewController.swift */,
@@ -739,6 +742,7 @@
 				C65C4F751C8E20B300DB5068 /* captureCollectionCell.swift in Sources */,
 				C63629491CCCEE210071E6BF /* searchUsername.swift in Sources */,
 				C66743831CEB84410020D514 /* sideProfilePic.swift in Sources */,
+				38EAEA621CF111870053249F /* eventController.swift in Sources */,
 				C6917F921BFA60B700CA501A /* CameraViewController.swift in Sources */,
 				E33DCC6D1CB3FA2D0081C0DF /* MolocateNotifications.swift in Sources */,
 				C64B601E1C81D6A500E510DC /* MolocateAccount.swift in Sources */,
