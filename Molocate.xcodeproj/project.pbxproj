@@ -13,6 +13,7 @@
 		388173F71C97ABE20064EBB5 /* commentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388173F61C97ABE20064EBB5 /* commentCell.swift */; };
 		38E621061C90D9AB00FB1AD5 /* editProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E621051C90D9AB00FB1AD5 /* editProfile.swift */; };
 		38E6210C1C90E49D00FB1AD5 /* changePassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E6210B1C90E49D00FB1AD5 /* changePassword.swift */; };
+		38EAEA601CF10A5C0053249F /* eventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EAEA5F1CF10A5B0053249F /* eventCell.swift */; };
 		38F771041C9505670079FACD /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F771031C9505670079FACD /* Player.swift */; };
 		C60905361C4812A100614C7F /* ContainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60905351C4812A100614C7F /* ContainerController.swift */; };
 		C609053A1C48143C00614C7F /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60905391C48143C00614C7F /* MainController.swift */; };
@@ -126,6 +127,7 @@
 		388173F61C97ABE20064EBB5 /* commentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = commentCell.swift; sourceTree = "<group>"; };
 		38E621051C90D9AB00FB1AD5 /* editProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = editProfile.swift; sourceTree = "<group>"; };
 		38E6210B1C90E49D00FB1AD5 /* changePassword.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = changePassword.swift; sourceTree = "<group>"; };
+		38EAEA5F1CF10A5B0053249F /* eventCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = eventCell.swift; sourceTree = "<group>"; };
 		38F771031C9505670079FACD /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		85240C29B79988CE027A1541 /* Pods-Molocate.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Molocate.release.xcconfig"; path = "Pods/Target Support Files/Pods-Molocate/Pods-Molocate.release.xcconfig"; sourceTree = "<group>"; };
 		C60905351C4812A100614C7F /* ContainerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerController.swift; sourceTree = "<group>"; };
@@ -287,6 +289,7 @@
 		3871AAA11C947F9E00DDD83E /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				38EAEA5F1CF10A5B0053249F /* eventCell.swift */,
 				388173F61C97ABE20064EBB5 /* commentCell.swift */,
 				C6E92F771CCFD0F900CAE237 /* searchVenue.swift */,
 				C638AFF61C9C80B3003085E8 /* likeVideoCell.swift */,
@@ -760,6 +763,7 @@
 				C638AFF71C9C80B3003085E8 /* likeVideoCell.swift in Sources */,
 				C6D0CDF31C44200F006AAFF0 /* TableViewCellFollowerFollowing.swift in Sources */,
 				3871AAA31C9488BA00DDD83E /* sideCell.swift in Sources */,
+				38EAEA601CF10A5C0053249F /* eventCell.swift in Sources */,
 				C61FDAB11BFBD16D007B940E /* FollowingViewController.swift in Sources */,
 				38F771041C9505670079FACD /* Player.swift in Sources */,
 				C642196C1BF92A14000CAD93 /* ExploreViewController.swift in Sources */,
