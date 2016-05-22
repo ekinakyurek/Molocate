@@ -384,6 +384,9 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                     let venues = response["venues"] as! [JSONParameters]?
                     for i in 0..<venues!.count{
                         let item = venues![i]
+//                        print(item["name"])
+//                        print(item["location"]!["distance"])
+//                        print(item["stats"]!["checkinsCount"])
                         let itemlocation = item["location"] as! [String:AnyObject]
                         let itemstats = item["stats"] as! [String:AnyObject]
                         ////print(itemlocation)
@@ -397,8 +400,8 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                         let distance = itemlocation["distance"] as! NSInteger
                         let isVerified = item["verified"] as! Bool
                         let checkinsCount = itemstats["checkinsCount"] as! NSInteger
-                        let enoughCheckin:Bool = (checkinsCount > 500)
-                        if (distance < 200){
+                        let enoughCheckin:Bool = (checkinsCount > 300)
+                        
                             if(isVerified||enoughCheckin){
                                 placeOrder.setObject(placesArray.count , forKey: (item["name"] as! String))
                                 placesArray.append(item["name"] as! String)
@@ -429,7 +432,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                                 
                             }
                         }
-                    }
+                    
                     NSNotificationCenter.defaultCenter().postNotificationName("configurePlace", object: nil)
                     
                 }
@@ -1208,7 +1211,8 @@ extension CLLocation {
         let myllacc = Parameter.llAcc
         let myalt = Parameter.alt
         let myaltAcc = Parameter.altAcc
-        
+        let intent = Parameter.intent
+        let radius = Parameter.radius
         let valuell = "\(self.coordinate.latitude),\(self.coordinate.longitude)"
         let valuellacc = "\(self.horizontalAccuracy)"
         let valuealt = "\(self.altitude)"
@@ -1216,7 +1220,7 @@ extension CLLocation {
 //        //print(self.verticalAccuracy)
 //        //print(self.horizontalAccuracy)
 //        //print(self.coordinate)
-        return [ myll:valuell , myllacc:valuellacc , myalt:valuealt, myaltAcc: valuealtacc]
+        return [ myll:valuell , myllacc:valuellacc , myalt:valuealt, myaltAcc: valuealtacc,intent:"browse",radius:"\(500)"]
     }
     
     
