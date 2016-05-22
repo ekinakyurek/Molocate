@@ -1721,7 +1721,7 @@ class MainController: UIViewController,UITableViewDelegate , UITableViewDataSour
                     for item in venueItems! {
                         let isVerified = item["verified"] as! Bool
                         let checkinsCount = item["stats"]!["checkinsCount"] as! NSInteger
-                        let enoughCheckin:Bool = (checkinsCount > 700)
+                        let enoughCheckin:Bool = (checkinsCount > 300)
                         if (isVerified||enoughCheckin){
                             tempVenues.append(item)
                             

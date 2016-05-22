@@ -7,7 +7,7 @@ import AVFoundation
 import AVKit
 import AWSS3
 import Photos
-
+import QuadratTouch
 var CaptionText = ""
 
 class capturePreviewController: UIViewController, UITextFieldDelegate, UITableViewDelegate ,UITableViewDataSource,UICollectionViewDelegate ,UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,PlayerDelegate, UIScrollViewDelegate {
@@ -15,8 +15,9 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     @IBOutlet var toolBar: UIToolbar!
     
-    
-    
+    var isSearch = true
+    var searchDict:[[String:locationss]]!
+    var searchArray:[String]!
     @IBOutlet var downArrow: UIImageView!
     
         var caption: UIButton!
@@ -465,10 +466,11 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
     func searchAutocompleteEntriesWithSubstring(substring: String)
     {
         autocompleteUrls.removeAll(keepCapacity: false)
-        
-        
+        isSearch = true
+        var n = 0
         for curString in placesArray
         {
+            
             ////print(curString)
             let myString: NSString! = curString as NSString
             let substringRange: NSRange! = myString.rangeOfString(substring)
@@ -476,19 +478,90 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
             if (substringRange.location == 0)
             {
                 autocompleteUrls.append(curString)
+            } else {
+                n = n+1
             }
         }
+        var check = false
+        if n==placesArray.count{
+            check = true
+            isSearch = false
+        } else {
+            check = false
+            isSearch = true
+        }
+        if !isSearch&&check {
+            let parameters = getParameters(substring)
+            searchDict = [[String:locationss]]()
+            searchArray = [String]()
+            let searchTask = Session.sharedSession().venues.search(parameters) {
+                (result) -> Void in
+                dispatch_async(dispatch_get_main_queue(), {
+                    if let response = result.response {
+                        let venues = response["venues"] as! [JSONParameters]?
+                        for i in 0..<venues!.count{
+                            let item = venues![i]
+                            let itemlocation = item["location"] as! [String:AnyObject]
+                            let itemstats = item["stats"] as! [String:AnyObject]
+                            let isVerified = item["verified"] as! Bool
+                            let checkinsCount = itemstats["checkinsCount"] as! NSInteger
+                            let enoughCheckin:Bool = (checkinsCount > 300)
+                        
+                            if(isVerified||enoughCheckin){
+                                self.searchArray.append(item["name"] as! String)
+                                let name = item["name"] as! String
+                                let id = item["id"] as! String
+                                let lat = itemlocation["lat"] as! Float
+                                let lon = itemlocation["lng"] as! Float
+                                let address = itemlocation["formattedAddress"] as! [String]
+                                var loc = locationss()
+                                loc.name = name
+                                loc.id = id
+                                loc.lat = lat
+                                loc.lon = lon
+                                for item in address {
+                                    loc.adress = loc.adress + item
+                                }
+                                ////print(venues?.count)
+                                if item.indexForKey("photo") != nil {
+                                    //////print("foto var")
+                                } else {
+                                    
+                                    //////print("foto yok")
+                                }
+                                
+                                let locationDictitem = [name:loc]
+                                self.searchDict.append(locationDictitem)
+                                self.placeTable.reloadData()
+                            }
+                        }
+                        
+                        
+                        
+                    }
+                    
+                })
+            }
+            searchTask.start()
+        }
         if substring == "" {
+            isSearch = true
             autocompleteUrls = placesArray
         }
         
             placeTable.reloadData()
     }
-    
+    func getParameters(strippedString:String) -> Parameters {
+        return [Parameter.ll:valuell,Parameter.llAcc:valuellacc,Parameter.alt:valuealt,Parameter.altAcc:valuealtacc,Parameter.radius:"\(3000)",Parameter.query:strippedString]
+    }
     
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if isSearch {
         return autocompleteUrls.count
+        } else {
+        return searchArray.count
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
@@ -496,14 +569,19 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
         let autoCompleteRowIdentifier = "AutoCompleteRowIdentifier"
         var cell = tableView.dequeueReusableCellWithIdentifier(autoCompleteRowIdentifier)
         
-        if let _ = cell
-        {
+//        if let _ = cell
+//        {
             let index = indexPath.row as Int
+            if isSearch {
             cell!.textLabel!.text = autocompleteUrls[index]
-        } else
-        {
-            cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: autoCompleteRowIdentifier)
-        }
+            } else {
+            
+            cell?.textLabel?.text = searchArray[index]
+            }
+//        } else
+//        {
+//            cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: autoCompleteRowIdentifier)
+//        }
         return cell!
     }
     
@@ -514,8 +592,12 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
         placeTable.hidden = true
         downArrow.hidden = true
         self.view.endEditing(true)
+        if isSearch {
         let correctedRow = placeOrder.objectForKey((selectedCell.textLabel?.text!)!) as! Int
         videoLocation = locationDict[correctedRow][placesArray[correctedRow]]
+        } else {
+        videoLocation = searchDict[indexPath.row][searchArray[indexPath.row]]
+        }
         //print(videoLocation.name)
         isLocationSelected = true
         if isCategorySelected {

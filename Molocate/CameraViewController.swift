@@ -12,6 +12,10 @@ import CoreLocation
 
 var locationDict:[[String:locationss]]!
 var placeOrder:NSMutableDictionary!
+var valuell:String!
+var valuellacc:String!
+var valuealt:String!
+var valuealtacc:String!
 struct locationss{
     var id = ""
     var name = ""
@@ -366,10 +370,10 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         locationManager.stopUpdatingLocation()
         let session = Session.sharedSession()
         
-        
+    
         //var parameters = [Parameter.query:"moda sahil"]
         let parameters = location.parameters()
-        
+    
         
         let searchTask = session.venues.search(parameters) {
             (result) -> Void in
@@ -1213,13 +1217,12 @@ extension CLLocation {
         let myaltAcc = Parameter.altAcc
         let intent = Parameter.intent
         let radius = Parameter.radius
-        let valuell = "\(self.coordinate.latitude),\(self.coordinate.longitude)"
-        let valuellacc = "\(self.horizontalAccuracy)"
-        let valuealt = "\(self.altitude)"
-        let valuealtacc = "\(self.verticalAccuracy)"
-//        //print(self.verticalAccuracy)
-//        //print(self.horizontalAccuracy)
-//        //print(self.coordinate)
+        valuell = "\(self.coordinate.latitude),\(self.coordinate.longitude)"
+        valuellacc = "\(self.horizontalAccuracy)"
+        valuealt = "\(self.altitude)"
+        valuealtacc = "\(self.verticalAccuracy)"
+
+        
         return [ myll:valuell , myllacc:valuellacc , myalt:valuealt, myaltAcc: valuealtacc,intent:"browse",radius:"\(500)"]
     }
     
