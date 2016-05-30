@@ -233,15 +233,15 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
         let i = plus ? 1:-1
         
         if(myViewController == "MainController"){
-            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! MainController).videoArray[videoIndex].commentCount += i
-            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! MainController).tableView.reloadRowsAtIndexPaths(
+            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! MainController).tableController.videoArray[videoIndex].commentCount += i
+            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! MainController).tableController.tableView.reloadRowsAtIndexPaths(
                 [NSIndexPath(forRow: videoIndex, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Left)
         }else if myViewController == "HomeController"{
-            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! HomePageViewController).videoArray[videoIndex].commentCount += i
-            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! HomePageViewController).tableView.reloadRowsAtIndexPaths(
+            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! HomePageViewController).tableController.videoArray[videoIndex].commentCount += i
+            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! HomePageViewController).tableController.tableView.reloadRowsAtIndexPaths(
                 [NSIndexPath(forRow: videoIndex, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Left)
-            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! HomePageViewController).player1.stop()
-            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! HomePageViewController).player2.stop()
+            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! HomePageViewController).tableController.player1.stop()
+            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! HomePageViewController).tableController.player2.stop()
             //(navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! profileOther).AVc.player2.stop()
         }else if myViewController == "MyAdded"{
             (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! MyProfile).AVc.videoArray[videoIndex].commentCount += i

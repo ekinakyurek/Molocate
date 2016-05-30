@@ -187,11 +187,11 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
                         cell.commentButton.addTarget(self, action: #selector(Tagged.pressedComment(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             cell.reportButton.addTarget(self, action: #selector(Tagged.pressedReport(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             cell.likeCount.addTarget(self, action: #selector(Tagged.pressedLikeCount(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-            let tap = UITapGestureRecognizer(target: self, action:#selector(MainController.doubleTapped(_:) ));
+            let tap = UITapGestureRecognizer(target: self, action:#selector(TimelineController.doubleTapped(_:) ));
             tap.numberOfTapsRequired = 2
             cell.contentView.addGestureRecognizer(tap)
             cell.contentView.tag = indexPath.row
-            let playtap = UITapGestureRecognizer(target: self, action:#selector(MainController.playTapped(_:) ));
+            let playtap = UITapGestureRecognizer(target: self, action:#selector(TimelineController.playTapped(_:) ));
             playtap.numberOfTapsRequired = 1
             cell.contentView.addGestureRecognizer(playtap)
             
