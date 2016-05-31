@@ -16,9 +16,9 @@ protocol TimelineControllerDelegate:class {
     
     func pressedPlace(placeId: String)
     
-    func pressedLikeCount(videoId: String)
+    func pressedLikeCount(videoId: String, Row: Int)
     
-    func pressedComment(videoId: String)
+    func pressedComment(videoId: String, Row: Int)
     
 }
 
@@ -41,7 +41,7 @@ class TimelineController: UITableViewController,PlayerDelegate {
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     var videoArray = [MoleVideoInformation]()
     var likeHeart = UIImageView()
-    
+    var myRefreshControl = UIRefreshControl()
     weak var delegate: TimelineControllerDelegate?
    
     var type = "HomePage"
@@ -64,31 +64,31 @@ class TimelineController: UITableViewController,PlayerDelegate {
         
         likeHeart.image = UIImage(named: "favorite")
         likeHeart.alpha = 1.0
-        
-        
-        activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
-        activityIndicator.center = self.view.center
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-        view.addSubview(activityIndicator)
-        activityIndicator.startAnimating()
-       
-        
+
         if(choosedIndex != 0 && profileOn == 1){
             NSNotificationCenter.defaultCenter().postNotificationName("closeProfile", object: nil)
         }
+        self.myRefreshControl = UIRefreshControl()
+        
         
         let url: NSURL
+        
         
         switch type {
             case "HomePage":
                 url = NSURL(string: MolocateBaseUrl + "video/api/news_feed/?category=all")!
+                self.myRefreshControl.attributedTitle = NSAttributedString(string: "Haber kaynağı güncelleniyor...")
             case "MainController":
                 url = NSURL(string: MolocateBaseUrl + "video/api/explore/?category=all")!
+                self.myRefreshControl.attributedTitle = NSAttributedString(string: "Keşfet güncelleniyor...")
             default:
                 url = NSURL(string: MolocateBaseUrl + "video/api/news_feed/?category=all")!
         }
     
+        self.myRefreshControl.addTarget(self, action: #selector(TimelineController.refresh(_:refreshUrl:)), forControlEvents: UIControlEvents.ValueChanged)
+        self.tableView.addSubview(myRefreshControl)
+        
+        
         MolocateVideo.getExploreVideos(url, completionHandler: { (data, response, error,next) -> () in
             self.nextUrl  = next
             dispatch_async(dispatch_get_main_queue()){
@@ -123,10 +123,7 @@ class TimelineController: UITableViewController,PlayerDelegate {
             }
         })
         
-        self.refreshControl = UIRefreshControl()
-        self.refreshControl!.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        self.refreshControl!.addTarget(self, action: #selector(TimelineController.refresh(_:refreshUrl:)), forControlEvents: UIControlEvents.ValueChanged)
-        self.tableView.addSubview(refreshControl!)
+
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(TimelineController.scrollToTop), name: "scrollToTop", object: nil)
         
@@ -137,6 +134,7 @@ class TimelineController: UITableViewController,PlayerDelegate {
     
     func refresh(sender:AnyObject, refreshUrl: NSURL = NSURL(string: "")!){
         
+
         refreshing = true
         
         
@@ -157,20 +155,14 @@ class TimelineController: UITableViewController,PlayerDelegate {
         self.player1.stop()
         self.player2.stop()
         
-        activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
-        activityIndicator.center = self.view.center
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-        view.addSubview(activityIndicator)
-        activityIndicator.startAnimating()
-        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+
         
         MolocateVideo.getExploreVideos(url, completionHandler: { (data, response, error,next) -> () in
             self.nextUrl = next
             dispatch_async(dispatch_get_main_queue()){
                 
                 self.tableView.hidden = true
-                self.videoArray.removeAll()
+              
                 if GlobalVideoUploadRequest == nil {
                     self.videoArray = data!
                 }else{
@@ -192,10 +184,10 @@ class TimelineController: UITableViewController,PlayerDelegate {
                     
                 }
                 self.tableView.reloadData()
-                self.refreshControl!.endRefreshing()
-                if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
-                    UIApplication.sharedApplication().endIgnoringInteractionEvents()
-                }
+                self.myRefreshControl.endRefreshing()
+              
+                UIApplication.sharedApplication().endIgnoringInteractionEvents()
+               
                 self.tableView.hidden = false
                 self.activityIndicator.removeFromSuperview()
                 self.refreshing = false
@@ -210,7 +202,6 @@ class TimelineController: UITableViewController,PlayerDelegate {
             
             
         })
-        
     }
 
     
@@ -321,14 +312,15 @@ class TimelineController: UITableViewController,PlayerDelegate {
             return cell
         }else{
             let cell = tableView.cellForRowAtIndexPath(indexPath) as! videoCell
-            
+            print("cell created")
             if(videoArray[indexPath.row].isLiked == 0) {
                 cell.likeButton.setBackgroundImage(UIImage(named: "likeunfilled"), forState: UIControlState.Normal)
             }else{
                 cell.likeButton.setBackgroundImage(UIImage(named: "likefilled"), forState: UIControlState.Normal)
                 cell.likeButton.tintColor = UIColor.whiteColor()
             }
-               cell.likeCount.setTitle("\(videoArray[indexPath.row].likeCount)", forState: .Normal)
+            
+            cell.likeCount.setTitle("\(videoArray[indexPath.row].likeCount)", forState: .Normal)
             cell.followButton.hidden = videoArray[indexPath.row].isFollowing == 1 ? true:false
             
             return cell
@@ -633,10 +625,8 @@ class TimelineController: UITableViewController,PlayerDelegate {
         likeorFollowClicked = true
         
         self.videoArray[Row].isFollowing = 1
-        let index = NSIndexPath(forRow: Row, inSection: 0)
-        
-        self.tableView.reloadRowsAtIndexPaths([index], withRowAnimation: .Automatic)
-        
+
+
         let user = videoArray[Row].username
         
         for i in 0..<videoArray.count {
@@ -645,7 +635,7 @@ class TimelineController: UITableViewController,PlayerDelegate {
             }
         }
         
-        tableView.reloadRowsAtIndexPaths(tableView.indexPathsForVisibleRows!, withRowAnimation: .Automatic)
+        tableView.reloadRowsAtIndexPaths(tableView.indexPathsForVisibleRows!, withRowAnimation: .None)
         
         MolocateAccount.follow(videoArray[Row].username){ (data, response, error) -> () in
             MoleCurrentUser.following_count += 1
@@ -867,7 +857,7 @@ class TimelineController: UITableViewController,PlayerDelegate {
         player1.stop()
         player2.stop()
         //stopplayers
-        delegate?.pressedLikeCount(videoId)
+        delegate?.pressedLikeCount(videoId,Row: Row)
     }
     
     func pressedComment(sender: UIButton) {
@@ -877,7 +867,7 @@ class TimelineController: UITableViewController,PlayerDelegate {
         player1.stop()
         player2.stop()
         
-        delegate?.pressedComment(videoId)
+        delegate?.pressedComment(videoId,Row: Row)
     }
     
     func pressedLike(sender: UIButton) {

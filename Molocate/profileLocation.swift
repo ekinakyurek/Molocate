@@ -91,7 +91,7 @@ class profileLocation: UIViewController,UITableViewDelegate , UITableViewDataSou
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl.addTarget(self, action: #selector(profileLocation.refresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
         tableView.addSubview(refreshControl)
-        
+        tableView.allowsSelection = false
         address.sizeToFit()
         
         if(thePlace.is_following==0 ){

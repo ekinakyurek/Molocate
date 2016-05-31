@@ -91,6 +91,10 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
         
     
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        self.navigationController?.hidesBarsOnSwipe = false
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+        
+        
   
         scrollView.frame.origin.y = 190
         scrollView.frame.size.height = MolocateDevice.size.height - 190
@@ -144,11 +148,6 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
             FollowButton.image = UIImage(named: "settings")
           
         }else{
-
-            
-            (self.parentViewController?.parentViewController!.parentViewController as! ContainerController).scrollView.scrollEnabled = false
-
-       
             if(classUser.isFollowing){
                 FollowButton.image = UIImage(named: "unfollow")
             }else if classUser.username == MoleCurrentUser.username{
@@ -407,6 +406,9 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
         
     }
   
+    override func viewWillAppear(animated: Bool) {
+           (self.parentViewController?.parentViewController?.parentViewController as! ContainerController).scrollView.scrollEnabled = false
+    }
     override func viewWillDisappear(animated: Bool) {
         AVc.player1.stop()
         AVc.player2.stop()

@@ -9,7 +9,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
     var location:CLLocation!
     var bestEffortAtLocation:CLLocation!
     var notificationArray = [MoleUserNotifications]()
-    
+    let refreshControl:UIRefreshControl = UIRefreshControl()
     @IBOutlet var tableView: UITableView!
     
     
@@ -24,10 +24,23 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
         }
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NotificationsViewController.scrollToTop), name: "scrollToTop", object: nil)
-        
+     
+        self.refreshControl.attributedTitle = NSAttributedString(string: "Bildirimler güncelleniyor...")
+        self.refreshControl.addTarget(self, action: #selector(NotificationsViewController.refresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
+        self.tableView.addSubview(refreshControl)
         //DBG: Delete unnecessary endIgnoringEvents
         if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
             UIApplication.sharedApplication().endIgnoringInteractionEvents()
+        }
+    }
+    
+    func refresh(sender: AnyObject){
+        MolocateNotifications.getNotifications(NSURL()) { (data, response, error) -> () in
+            dispatch_async(dispatch_get_main_queue()){
+                self.notificationArray = data!
+                self.tableView.reloadData()
+                self.refreshControl.endRefreshing()
+            }
         }
     }
     

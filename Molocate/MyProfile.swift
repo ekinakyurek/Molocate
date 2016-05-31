@@ -431,7 +431,9 @@ class MyProfile: UIViewController , UIScrollViewDelegate, UITableViewDelegate, U
     
     override func viewWillAppear(animated: Bool) {
         self.RefreshGuiWithData()
+        (self.parentViewController?.parentViewController!.parentViewController as! ContainerController).scrollView.scrollEnabled = true
     }
+    
   
     override func viewWillDisappear(animated: Bool) {
         AVc.player1.stop()

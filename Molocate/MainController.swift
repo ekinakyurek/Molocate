@@ -23,7 +23,7 @@ var myViewController = "MainController"
 var thePlace:MolePlace = MolePlace()
 var pressedFollow = false
 
-class MainController: UIViewController, UITableViewDelegate , UITableViewDataSource, UICollectionViewDelegate,CLLocationManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,NSURLConnectionDataDelegate, UISearchBarDelegate, TimelineControllerDelegate {
+class MainController: UIViewController, UITableViewDelegate , UITableViewDataSource, UICollectionViewDelegate,CLLocationManagerDelegate, UICollectionViewDataSource, UISearchBarDelegate, TimelineControllerDelegate {
  
 
     var isSearching = false
@@ -57,6 +57,18 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         
         self.automaticallyAdjustsScrollViewInsets = false
         
+        tableController = self.storyboard?.instantiateViewControllerWithIdentifier("timelineController") as! TimelineController
+        tableController.type = "MainController"
+        tableController.delegate = self
+        tableController.view.frame = CGRectMake(0, 44, MolocateDevice.size
+            .width, MolocateDevice.size.height - 44)
+        
+        tableController.view.layer.zPosition = 0
+        self.view.addSubview(tableController.view)
+        self.addChildViewController(tableController);
+        tableController.didMoveToParentViewController(self)
+        
+        venueTable.layer.zPosition = 10
         tabBarController?.tabBar.hidden = true
         searchText.frame = CGRect(x: 0, y: 0, width: MolocateDevice.size.width/2, height: 36)
         self.navigationItem.titleView = searchText
@@ -73,14 +85,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         self.navigationController?.navigationBar.translucent = false
         
 
-        tableController = self.storyboard?.instantiateViewControllerWithIdentifier("timelineController") as! TimelineController
-        tableController.type = "MainController"
-        tableController.delegate = self
-        tableController.view.frame = CGRectMake(0, 44, MolocateDevice.size
-            .width, MolocateDevice.size.height - 44)
-        self.view.addSubview(tableController.view)
-        self.addChildViewController(tableController);
-        tableController.didMoveToParentViewController(self)
+     
         
         backgroundLabel = UILabel()
         backgroundLabel.frame = CGRectMake( 0 , 0 , MolocateDevice.size.width , 44)
@@ -162,6 +167,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         collectionView.backgroundColor = UIColor.whiteColor()
         collectionView.hidden = false
 
+        
         if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
             UIApplication.sharedApplication().endIgnoringInteractionEvents()
         }
@@ -299,20 +305,21 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
                 return cell
             }
     }
-    func tableView(atableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         //DBG::Searchde push view controller yapmaliyiz
             if venueoruser {
-                activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
-                activityIndicator.center = self.view.center
-                activityIndicator.hidesWhenStopped = true
-                activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-                view.addSubview(activityIndicator)
                 activityIndicator.startAnimating()
                 UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+                navigationController?.setNavigationBarHidden(false, animated: false)
+                
+                let controller:profileLocation = self.storyboard!.instantiateViewControllerWithIdentifier("profileLocation") as! profileLocation
+                
+                self.navigationController?.pushViewController(controller, animated: true)
                 MolocatePlace.getPlace(self.venues[indexPath.row]["id"] as! String) { (data, response, error) -> () in
                     dispatch_async(dispatch_get_main_queue()){
                         thePlace = data
-                        let controller:profileLocation = self.storyboard!.instantiateViewControllerWithIdentifier("profileLocation") as! profileLocation
+                        controller.classPlace = data
+                        controller.RefreshGuiWithData()
                         if thePlace.name == "notExist"{
                             thePlace.name = self.venues[indexPath.row]["name"] as! String
                             let addressArr = self.venues[indexPath.row]["location"]!["formattedAddress"] as! [String]
@@ -320,73 +327,48 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
                                 thePlace.address = thePlace.address + item
                             }
                             controller.followButton = nil
-                            
                         }
-                        
-                        controller.view.frame = self.view.bounds;
-                        controller.willMoveToParentViewController(self)
-                        self.view.addSubview(controller.view)
-                        self.addChildViewController(controller)
-                        controller.didMoveToParentViewController(self)
-                        self.activityIndicator.removeFromSuperview()
                     }
                 }
                 
+                
+                
                 self.searchText.resignFirstResponder()
             } else {
-                activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
-                activityIndicator.center = self.view.center
-                activityIndicator.hidesWhenStopped = true
-                activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-                view.addSubview(activityIndicator)
-                activityIndicator.startAnimating()
-                UIApplication.sharedApplication().beginIgnoringInteractionEvents()
-                MolocateAccount.getUser(self.searchedUsers[indexPath.row].username) { (data, response, error) -> () in
-                    dispatch_async(dispatch_get_main_queue()){
-                        user = data
-                        let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
-                        controller.classUser = data
-                        controller.view.frame = self.view.bounds;
-                        controller.willMoveToParentViewController(self)
-                        self.view.addSubview(controller.view)
-                        self.addChildViewController(controller)
-                        controller.didMoveToParentViewController(self)
-                        
-                        choosedIndex = 2
-                        self.activityIndicator.removeFromSuperview()
-                    }
-                    
-                }
-                self.searchText.resignFirstResponder()
+                let cell = tableView.cellForRowAtIndexPath(indexPath) as! searchUsername
+                pressedProfileSearch(cell.profilePhoto)
                 
             }
     }
     
     func pressedProfileSearch(sender:UIButton){
-        let buttonRow = sender.tag
-        activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
-        activityIndicator.center = self.view.center
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-        view.addSubview(activityIndicator)
+        
+        let username = searchedUsers[sender.tag].username
+        
+        navigationController?.setNavigationBarHidden(false, animated: false)
         activityIndicator.startAnimating()
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
-        MolocateAccount.getUser(self.searchedUsers[buttonRow].username) { (data, response, error) -> () in
+        
+        let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
+        if username != MoleCurrentUser.username{
+            controller.isItMyProfile = false
+        }else{
+            controller.isItMyProfile = true
+        }
+        
+        self.navigationController?.pushViewController(controller, animated: true)
+        
+        MolocateAccount.getUser(username) { (data, response, error) -> () in
             dispatch_async(dispatch_get_main_queue()){
+                //DBG: If it is mine profile?
+                
                 user = data
-                let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
                 controller.classUser = data
-                controller.view.frame = self.view.bounds;
-                controller.willMoveToParentViewController(self)
-                self.view.addSubview(controller.view)
-                self.addChildViewController(controller)
-                controller.didMoveToParentViewController(self)
+                controller.RefreshGuiWithData()
                 
-                
-                choosedIndex = 2
-                self.activityIndicator.removeFromSuperview()
+                UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                self.activityIndicator.stopAnimating()
             }
-            
         }
         self.searchText.resignFirstResponder()
     }
@@ -461,13 +443,15 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         
     }
     
-    func pressedComment(videoId: String) {
+    func pressedComment(videoId: String, Row: Int) {
+        
         navigationController?.setNavigationBarHidden(false, animated: false)
         activityIndicator.startAnimating()
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
         video_id = videoId
-        //global videoindex atanmali
+        videoIndex = Row
         myViewController = "MainController"
+
         
         let controller:commentController = self.storyboard!.instantiateViewControllerWithIdentifier("commentController") as! commentController
         
@@ -484,13 +468,14 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         
     }
     
-    func pressedLikeCount(videoId: String) {
+    func pressedLikeCount(videoId: String, Row: Int) {
         
         navigationController?.setNavigationBarHidden(false, animated: false)
         activityIndicator.startAnimating()
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
         
         video_id = videoId
+        videoIndex = Row
         
         let controller:likeVideo = self.storyboard!.instantiateViewControllerWithIdentifier("likeVideo") as! likeVideo
         
@@ -571,6 +556,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
                 
             } else {
                 self.tableController.tableView.scrollEnabled = true
+                self.tableController.tableView.userInteractionEnabled = true
                 self.cameraButton.image = UIImage(named: "Camera")
                 self.cameraButton.title = nil
                 self.searchText.text = ""
@@ -631,6 +617,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         refreshURL = url
         self.tableController.refresh(tableController.refreshControl!, refreshUrl: refreshURL!)
         tableController.tableView.scrollEnabled = true
+        tableController.tableView.userInteractionEnabled = true
         
     }
     func changeFrame() {
@@ -711,6 +698,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         
      
         tableController.tableView.scrollEnabled = false
+        tableController.tableView.userInteractionEnabled = false
         isSearching = true
         cameraButton.image = nil
         cameraButton.title = "Vazgeç"

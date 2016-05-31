@@ -31,6 +31,14 @@ class HomePageViewController: UIViewController, UITextFieldDelegate, TimelineCon
         self.navigationItem.titleView = UIImageView(image:  UIImage(named: "molocate"))
         self.navigationItem.titleView?.tintColor = UIColor.whiteColor()
         
+        self.tableController = self.storyboard?.instantiateViewControllerWithIdentifier("timelineController") as! TimelineController
+        tableController.type = "HomePage"
+        tableController.delegate = self
+        tableController.view.frame = self.view.frame
+        self.view.addSubview(tableController.view)
+        self.addChildViewController(tableController);
+        tableController.didMoveToParentViewController(self)
+        
         try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
         
         self.nofollowings.hidden = true
@@ -48,15 +56,8 @@ class HomePageViewController: UIViewController, UITextFieldDelegate, TimelineCon
             
         }
         
-        self.tableController = self.storyboard?.instantiateViewControllerWithIdentifier("timelineController") as! TimelineController
-        tableController.type = "HomePage"
-        tableController.delegate = self
-        tableController.view.frame = self.view.frame
-        self.view.addSubview(tableController.view)
-        self.addChildViewController(tableController);
-        tableController.didMoveToParentViewController(self)
-        
-
+       
+     
     }
 
    
@@ -83,6 +84,7 @@ class HomePageViewController: UIViewController, UITextFieldDelegate, TimelineCon
                 
                 //choosedIndex = 0
                 self.activityIndicator.stopAnimating()
+                UIApplication.sharedApplication().endIgnoringInteractionEvents()
             }
         }
         
@@ -111,12 +113,14 @@ class HomePageViewController: UIViewController, UITextFieldDelegate, TimelineCon
         
     }
     
-    func pressedComment(videoId: String) {
+    func pressedComment(videoId: String, Row: Int) {
+  
         navigationController?.setNavigationBarHidden(false, animated: false)
         activityIndicator.startAnimating()
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
         video_id = videoId
-        //global videoindex atanmali
+        videoIndex = Row
+      
         myViewController = "HomeController"
         
         let controller:commentController = self.storyboard!.instantiateViewControllerWithIdentifier("commentController") as! commentController
@@ -134,13 +138,15 @@ class HomePageViewController: UIViewController, UITextFieldDelegate, TimelineCon
         
     }
     
-    func pressedLikeCount(videoId: String) {
+    func pressedLikeCount(videoId: String, Row: Int) {
+  
         
         navigationController?.setNavigationBarHidden(false, animated: false)
         activityIndicator.startAnimating()
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
         
         video_id = videoId
+        videoIndex = Row
         
         let controller:likeVideo = self.storyboard!.instantiateViewControllerWithIdentifier("likeVideo") as! likeVideo
         
@@ -164,6 +170,7 @@ class HomePageViewController: UIViewController, UITextFieldDelegate, TimelineCon
     override func viewDidAppear(animated: Bool) {
     
         NSNotificationCenter.defaultCenter().postNotificationName("closeSideBar", object: nil)
+     
         
     }
     
