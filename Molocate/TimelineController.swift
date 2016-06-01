@@ -42,9 +42,12 @@ class TimelineController: UITableViewController,PlayerDelegate {
     var videoArray = [MoleVideoInformation]()
     var likeHeart = UIImageView()
     var myRefreshControl = UIRefreshControl()
+    
     weak var delegate: TimelineControllerDelegate?
    
-    var type = "HomePage"
+    var type = ""
+    var placeId = ""
+   
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,7 +72,8 @@ class TimelineController: UITableViewController,PlayerDelegate {
             NSNotificationCenter.defaultCenter().postNotificationName("closeProfile", object: nil)
         }
         self.myRefreshControl = UIRefreshControl()
-        
+        self.myRefreshControl.addTarget(self, action: #selector(TimelineController.refresh(_:refreshUrl:)), forControlEvents: UIControlEvents.ValueChanged)
+        self.tableView.addSubview(myRefreshControl)
         
         let url: NSURL
         
@@ -78,16 +82,45 @@ class TimelineController: UITableViewController,PlayerDelegate {
             case "HomePage":
                 url = NSURL(string: MolocateBaseUrl + "video/api/news_feed/?category=all")!
                 self.myRefreshControl.attributedTitle = NSAttributedString(string: "Haber kaynağı güncelleniyor...")
+                getExploreData(url)
             case "MainController":
                 url = NSURL(string: MolocateBaseUrl + "video/api/explore/?category=all")!
                 self.myRefreshControl.attributedTitle = NSAttributedString(string: "Keşfet güncelleniyor...")
+                getExploreData(url)
+            case "ProfileLocation":
+                print("profileLocation")
+                //videoArray initially given by parentViewCont4\roller
+        
             default:
                 url = NSURL(string: MolocateBaseUrl + "video/api/news_feed/?category=all")!
         }
     
-        self.myRefreshControl.addTarget(self, action: #selector(TimelineController.refresh(_:refreshUrl:)), forControlEvents: UIControlEvents.ValueChanged)
-        self.tableView.addSubview(myRefreshControl)
+      
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(TimelineController.scrollToTop), name: "scrollToTop", object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(TimelineController.prepareForRetry), name: "prepareForRetry", object: nil)
+    }
+    
+    func getPlaceData(placeId: String){
+        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+        
+        MolocatePlace.getPlace(placeId) { (data, response, error) -> () in
+            dispatch_async(dispatch_get_main_queue()){
+                self.videoArray = thePlace.videoArray
+                self.tableView.reloadData()
+                if self.myRefreshControl.refreshing {
+                    self.myRefreshControl.endRefreshing()
+                }
+                self.refreshing = false
+                if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
+                    UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                }
+            }
+        }
+    }
+
+    func getExploreData(url: NSURL){
         
         MolocateVideo.getExploreVideos(url, completionHandler: { (data, response, error,next) -> () in
             self.nextUrl  = next
@@ -112,30 +145,31 @@ class TimelineController: UITableViewController,PlayerDelegate {
                     self.videoArray += data!
                     
                 }
+                
                 self.tableView.reloadData()
                 if self.videoArray.count == 0 {
                     //self.nofollowings.hidden = false
                 }
-                self.activityIndicator.stopAnimating()
+                
+             
+                if self.myRefreshControl.refreshing {
+                    self.myRefreshControl.endRefreshing()
+                }
+                self.refreshing = false
                 if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
                     UIApplication.sharedApplication().endIgnoringInteractionEvents()
                 }
             }
         })
         
-
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(TimelineController.scrollToTop), name: "scrollToTop", object: nil)
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(TimelineController.prepareForRetry), name: "prepareForRetry", object: nil)
     }
-
-    
     
     func refresh(sender:AnyObject, refreshUrl: NSURL = NSURL(string: "")!){
         
 
         refreshing = true
+        self.player1.stop()
+        self.player2.stop()
         
         
         let url: NSURL
@@ -144,70 +178,27 @@ class TimelineController: UITableViewController,PlayerDelegate {
             switch type {
                 case "HomePage":
                     url = NSURL(string: MolocateBaseUrl + "video/api/news_feed/?category=all")!
+                    getExploreData(url)
                 case "MainController":
                     url = NSURL(string: MolocateBaseUrl + "video/api/explore/?category=all")!
+                    getExploreData(url)
+                case "ProfileLocation":
+                    getPlaceData(placeId)                
                 default:
                     url = NSURL(string: MolocateBaseUrl + "video/api/news_feed/?category=all")!
             }
         }else{
             url = refreshUrl
-        }
-        self.player1.stop()
-        self.player2.stop()
-        
+            getExploreData(url)
 
+        }
         
-        MolocateVideo.getExploreVideos(url, completionHandler: { (data, response, error,next) -> () in
-            self.nextUrl = next
-            dispatch_async(dispatch_get_main_queue()){
-                
-                self.tableView.hidden = true
-              
-                if GlobalVideoUploadRequest == nil {
-                    self.videoArray = data!
-                }else{
-                    var queu = MoleVideoInformation()
-                    let json = (GlobalVideoUploadRequest?.JsonData)!
-                    let loc = json["location"] as! [[String:AnyObject]]
-                    queu.dateStr = "0s"
-                    queu.urlSta = (GlobalVideoUploadRequest?.uploadRequest.body)!
-                    queu.username = MoleCurrentUser.username
-                    queu.userpic = MoleCurrentUser.profilePic
-                    queu.caption = json["caption"] as! String
-                    queu.location = loc[0]["name"] as! String
-                    queu.locationID = loc[0]["id"] as! String
-                    queu.isFollowing = 1
-                    queu.thumbnailURL = (GlobalVideoUploadRequest?.thumbUrl)!
-                    queu.isUploading = true
-                    self.videoArray.append(queu)
-                    self.videoArray += data!
-                    
-                }
-                self.tableView.reloadData()
-                self.myRefreshControl.endRefreshing()
-              
-                UIApplication.sharedApplication().endIgnoringInteractionEvents()
-               
-                self.tableView.hidden = false
-                self.activityIndicator.removeFromSuperview()
-                self.refreshing = false
-                if self.videoArray.count == 0 {
-                   // self.nofollowings.hidden = false
-                } else {
-                   // self.nofollowings.hidden = true
-                }
-                
-            }
-            
-            
-            
-        })
     }
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
         if !likeorFollowClicked {
-            
             let cell = videoCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "timelineCell")
             cell.initialize(indexPath.row, videoInfo:  videoArray[indexPath.row])
             
@@ -378,6 +369,10 @@ class TimelineController: UITableViewController,PlayerDelegate {
         lastOffsetCapture = NSDate().timeIntervalSinceReferenceDate
     }
     
+    override func viewWillAppear(animated: Bool) {
+        player2.playFromBeginning()
+    }
+    
     override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         isScrollingFast = false
         var ipArray = [NSIndexPath]()
@@ -423,52 +418,373 @@ class TimelineController: UITableViewController,PlayerDelegate {
     
     override func scrollViewDidScroll(scrollView: UIScrollView) {
         if(!refreshing) {
-            
-            if (scrollView.contentOffset.y<pointNow) {
-                direction = 0
-            } else if (scrollView.contentOffset.y>pointNow) {
-                direction = 1
-            }
-            
-            let currentOffset = scrollView.contentOffset
-            let currentTime = NSDate().timeIntervalSinceReferenceDate   // [NSDate timeIntervalSinceReferenceDate];
-            
-            let timeDiff = currentTime - lastOffsetCapture;
-            if(timeDiff > 0.1) {
-                let distance = currentOffset.y - lastOffset.y;
-                //The multiply by 10, / 1000 isn't really necessary.......
-                let scrollSpeedNotAbs = (distance * 10) / 1000 //in pixels per millisecond
+            if type == "HomePage" {
+                if (scrollView.contentOffset.y<pointNow) {
+                    direction = 0
+                } else if (scrollView.contentOffset.y>pointNow) {
+                    direction = 1
+                }
                 
-                let scrollSpeed = fabsf(Float(scrollSpeedNotAbs));
-                if (scrollSpeed > 0.1
-                    ) {
-                    isScrollingFast = true
-                    //                    player1.stop()
-                    //                    player2.stop()
+                let currentOffset = scrollView.contentOffset
+                let currentTime = NSDate().timeIntervalSinceReferenceDate   // [NSDate timeIntervalSinceReferenceDate];
+                
+                let timeDiff = currentTime - lastOffsetCapture;
+                if(timeDiff > 0.1) {
+                    let distance = currentOffset.y - lastOffset.y;
+                    //The multiply by 10, / 1000 isn't really necessary.......
+                    let scrollSpeedNotAbs = (distance * 10) / 1000 //in pixels per millisecond
                     
-                } else {
-                    isScrollingFast = false
-                    var ipArray = [NSIndexPath]()
-                    for item in self.tableView.indexPathsForVisibleRows!{
-                        let cell = self.tableView.cellForRowAtIndexPath(item) as! videoCell
-                        if !cell.hasPlayer {
-                            ipArray.append(item)
+                    let scrollSpeed = fabsf(Float(scrollSpeedNotAbs));
+                    if (scrollSpeed > 0.1
+                        ) {
+                        isScrollingFast = true
+                        //                    player1.stop()
+                        //                    player2.stop()
+                        
+                    } else {
+                        isScrollingFast = false
+                        var ipArray = [NSIndexPath]()
+                        for item in self.tableView.indexPathsForVisibleRows!{
+                            let cell = self.tableView.cellForRowAtIndexPath(item) as! videoCell
+                            if !cell.hasPlayer {
+                                ipArray.append(item)
+                            }
+                        }
+                        if ipArray.count != 0 {
+                            self.tableView.reloadRowsAtIndexPaths(ipArray, withRowAnimation: .None)
+                        }
+                        
+                        
+                    }
+                    
+                    lastOffset = currentOffset;
+                    lastOffsetCapture = currentTime;
+                }
+                if is4s{
+                    if (scrollView.contentOffset.y > 10) && (scrollView.contentOffset.y+scrollView.frame.height < scrollView.contentSize.height
+                        )
+                    {
+                        let longest = scrollView.contentOffset.y + scrollView.frame.height
+                        if direction == 1 {
+                            //////////print("down")
+                            let cellap = scrollView.contentOffset.y - self.tableView.visibleCells[0].center.y
+                            //////////print(cellap)
+                            let row = self.tableView.indexPathsForVisibleRows![0].row+1
+                            if cellap > 0 {
+                                
+                                if (row) % 2 == 1{
+                                    //self.tableView.visibleCells[1].reloadInputViews()
+                                    if self.player1.playbackState.description != "Playing" {
+                                        self.player2.stop()
+                                        if !isScrollingFast {
+                                            self.player1.playFromBeginning()
+                                        }
+                                        player1Turn = true
+                                        //////print(self.tableView.indexPathsForVisibleRows![0].row)
+                                        //////////print("player1")
+                                    }
+                                }else{
+                                    if self.player2.playbackState.description != "Playing"{
+                                        self.player1.stop()
+                                        if !isScrollingFast {
+                                            self.player2.playFromBeginning()
+                                        }
+                                        player1Turn = false
+                                        //////////print("player2")
+                                    }
+                                }
+                            }
+                        }
+                            
+                            
+                        else {
+                            //////////print("up")
+                            
+                            let cellap = longest - self.tableView.visibleCells[0].center.y-150-self.view.frame.width
+                            ////////print(cellap)
+                            let row = self.tableView.indexPathsForVisibleRows![0].row
+                            if cellap < 0 {
+                                
+                                if (row) % 2 == 1{
+                                    
+                                    if self.player1.playbackState.description != "Playing" {
+                                        self.player2.stop()
+                                        if !isScrollingFast {
+                                            self.player1.playFromBeginning()
+                                        }
+                                        player1Turn = true
+                                        //////////print("player1")
+                                    }
+                                }else{
+                                    if self.player2.playbackState.description != "Playing"{
+                                        self.player1.stop()
+                                        if !isScrollingFast {
+                                            self.player2.playFromBeginning()
+                                        }
+                                        player1Turn = false
+                                        //////////print("player2")
+                                    }
+                                }
+                            }
                         }
                     }
-                    if ipArray.count != 0 {
-                        self.tableView.reloadRowsAtIndexPaths(ipArray, withRowAnimation: .None)
+                    
+                    
+                } else {
+                    if (scrollView.contentOffset.y > 10) && (scrollView.contentOffset.y+scrollView.frame.height < scrollView.contentSize.height
+                        )
+                    {
+                        
+                        if self.tableView.visibleCells.count > 2 {
+                            (self.tableView.visibleCells[0] as! videoCell).hasPlayer = false
+                            (self.tableView.visibleCells[2] as! videoCell).hasPlayer = false
+                        }
+                        let longest = scrollView.contentOffset.y + scrollView.frame.height
+                        if direction == 1 {
+                            //////////print("down")
+                            let cellap = scrollView.contentOffset.y - self.tableView.visibleCells[0].center.y
+                            //////////print(cellap)
+                            
+                            let row = self.tableView.indexPathsForVisibleRows![1].row
+                            if cellap > 0 {
+                                
+                                if (row) % 2 == 1{
+                                    //self.tableView.visibleCells[1].reloadInputViews()
+                                    if self.player1.playbackState.description != "Playing" {
+                                        self.player2.stop()
+                                        if !isScrollingFast {
+                                            self.player1.playFromBeginning()
+                                            
+                                        }
+                                        player1Turn = true
+                                        //////print(self.tableView.indexPathsForVisibleRows![0].row)
+                                        //////////print("player1")
+                                    }
+                                }else{
+                                    if self.player2.playbackState.description != "Playing"{
+                                        self.player1.stop()
+                                        if !isScrollingFast {
+                                            self.player2.playFromBeginning()
+                                            
+                                        }
+                                        player1Turn = false
+                                        //////////print("player2")
+                                    }
+                                }
+                            }
+                        }
+                            
+                            
+                        else {
+                            //////////print("up")
+                            
+                            let cellap = longest - self.tableView.visibleCells[1].center.y
+                            //////////print(cellap)
+                            let row = self.tableView.indexPathsForVisibleRows![0].row
+                            if cellap < 0 {
+                                
+                                if (row) % 2 == 1{
+                                    
+                                    if self.player1.playbackState.description != "Playing" {
+                                        self.player2.stop()
+                                        if !isScrollingFast {
+                                            self.player1.playFromBeginning()
+                                        }
+                                        player1Turn = true
+                                    }
+                                }else{
+                                    if self.player2.playbackState.description != "Playing"{
+                                        self.player1.stop()
+                                        if !isScrollingFast {
+                                            self.player2.playFromBeginning()
+                                        }
+                                        player1Turn = false
+                                    }
+                                }
+                            }
+                        }
                     }
+                    
                     
                     
                 }
+            }else if type == "ProfileLocation" {
                 
-                lastOffset = currentOffset;
-                lastOffsetCapture = currentTime;
-            }
-            if is4s{
+                if (scrollView.contentOffset.y<pointNow) {
+                    direction = 0
+                } else if (scrollView.contentOffset.y>pointNow) {
+                    direction = 1
+                }
+                
+                let currentOffset = scrollView.contentOffset
+                let currentTime = NSDate().timeIntervalSinceReferenceDate   // [NSDate timeIntervalSinceReferenceDate];
+                
+                let timeDiff = currentTime - lastOffsetCapture;
+                if(timeDiff > 0.1) {
+                    let distance = currentOffset.y - lastOffset.y;
+                    //The multiply by 10, / 1000 isn't really necessary.......
+                    let scrollSpeedNotAbs = (distance * 10) / 1000 //in pixels per millisecond
+                    
+                    let scrollSpeed = fabsf(Float(scrollSpeedNotAbs));
+                    if (scrollSpeed > 0.1) {
+                        isScrollingFast = true
+                        ////print("hızlı")
+                        
+                    } else {
+                        isScrollingFast = false
+                        var ipArray = [NSIndexPath]()
+                        for item in self.tableView.indexPathsForVisibleRows!{
+                            let cell = self.tableView.cellForRowAtIndexPath(item) as! videoCell
+                            if !cell.hasPlayer {
+                                ipArray.append(item)
+                            }
+                        }
+                        if ipArray.count != 0 {
+                            self.tableView.reloadRowsAtIndexPaths(ipArray, withRowAnimation: .None)
+                        }
+                        
+                        
+                    }
+                    
+                    lastOffset = currentOffset;
+                    lastOffsetCapture = currentTime;
+                }
+                
                 if (scrollView.contentOffset.y > 10) && (scrollView.contentOffset.y+scrollView.frame.height < scrollView.contentSize.height
                     )
                 {
+                    
+                    if self.tableView.visibleCells.count > 2 {
+                        (self.tableView.visibleCells[0] as! videoCell).hasPlayer = false
+                        (self.tableView.visibleCells[2] as! videoCell).hasPlayer = false
+                    }
+                    let longest = scrollView.contentOffset.y + scrollView.frame.height
+                    if direction == 1 {
+                        ////////print("down")
+                        let cellap = scrollView.contentOffset.y - self.tableView.visibleCells[0].center.y
+                        ////////print(cellap)
+                        let row = self.tableView.indexPathsForVisibleRows![0].row+1
+                        if cellap > 0 {
+                            
+                            if (row) % 2 == 1{
+                                //self.tableView.visibleCells[1].reloadInputViews()
+                                if self.player1.playbackState.description != "Playing" {
+                                    self.player2.stop()
+                                    if !isScrollingFast {
+                                        self.player1.playFromBeginning()
+                                    }
+                                    player1Turn = true
+                                    ////print(self.tableView.indexPathsForVisibleRows![0].row)
+                                    ////////print("player1")
+                                }
+                            }else{
+                                if self.player2.playbackState.description != "Playing"{
+                                    self.player1.stop()
+                                    if !isScrollingFast {
+                                        self.player2.playFromBeginning()
+                                    }
+                                    player1Turn = false
+                                    ////////print("player2")
+                                }
+                            }
+                        }
+                    }
+                        
+                        
+                    else {
+                        ////////print("up")
+                        
+                        let cellap = longest - self.tableView.visibleCells[0].center.y-150-self.view.frame.width
+                        //////print(cellap)
+                        let row = self.tableView.indexPathsForVisibleRows![0].row
+                        if cellap < 0 {
+                            
+                            if (row) % 2 == 1{
+                                
+                                if self.player1.playbackState.description != "Playing" {
+                                    self.player2.stop()
+                                    if !isScrollingFast {
+                                        self.player1.playFromBeginning()
+                                    }
+                                    player1Turn = true
+                                    ////////print("player1")
+                                }
+                            }else{
+                                if self.player2.playbackState.description != "Playing"{
+                                    self.player1.stop()
+                                    if !isScrollingFast {
+                                        self.player2.playFromBeginning()
+                                    }
+                                    player1Turn = false
+                                    ////////print("player2")
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                
+                
+            }else if type == "MainController" {
+                if (scrollView.contentOffset.y<pointNow) {
+                    
+                   
+                    
+                    //UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: UIStatusBarAnimation.Fade )r
+                    
+                    
+                    direction = 0
+                } else if (scrollView.contentOffset.y>pointNow) {
+                    
+             
+                    
+                    //UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: UIStatusBarAnimation.Fade )
+                    //collectionView.contentInset = UIEdgeInsets(top: 10,left: 0,bottom: 0,right: 0)
+                    direction = 1
+                    
+                }
+                
+                let currentOffset = scrollView.contentOffset
+                let currentTime = NSDate().timeIntervalSinceReferenceDate   // [NSDate timeIntervalSinceReferenceDate];
+                
+                let timeDiff = currentTime - lastOffsetCapture;
+                if(timeDiff > 0.1) {
+                    let distance = currentOffset.y - lastOffset.y;
+                    //The multiply by 10, / 1000 isn't really necessary.......
+                    let scrollSpeedNotAbs = (distance * 10) / 1000 //in pixels per millisecond
+                    
+                    let scrollSpeed = fabsf(Float(scrollSpeedNotAbs));
+                    if (scrollSpeed > 0.1) {
+                        isScrollingFast = true
+                        //////print("hızlı")
+                        
+                    } else {
+                        isScrollingFast = false
+                        var ipArray = [NSIndexPath]()
+                        for item in self.tableView.indexPathsForVisibleRows!{
+                            let cell = self.tableView.cellForRowAtIndexPath(item) as! videoCell
+                            if !cell.hasPlayer {
+                                ipArray.append(item)
+                            }
+                        }
+                        if ipArray.count != 0 {
+                            self.tableView.reloadRowsAtIndexPaths(ipArray, withRowAnimation: .None)
+                        }
+                        
+                        
+                    }
+                    
+                    lastOffset = currentOffset;
+                    lastOffsetCapture = currentTime;
+                }
+                
+                if (scrollView.contentOffset.y > 10) && (scrollView.contentOffset.y+scrollView.frame.height < scrollView.contentSize.height
+                    )
+                {
+                    if self.tableView.visibleCells.count > 2 {
+                        (self.tableView.visibleCells[0] as! videoCell).hasPlayer = false
+                        (self.tableView.visibleCells[2] as! videoCell).hasPlayer = false
+                    }
                     let longest = scrollView.contentOffset.y + scrollView.frame.height
                     if direction == 1 {
                         //////////print("down")
@@ -527,89 +843,13 @@ class TimelineController: UITableViewController,PlayerDelegate {
                                         self.player2.playFromBeginning()
                                     }
                                     player1Turn = false
+                                    
                                     //////////print("player2")
                                 }
                             }
                         }
                     }
                 }
-                
-                
-            } else {
-                if (scrollView.contentOffset.y > 10) && (scrollView.contentOffset.y+scrollView.frame.height < scrollView.contentSize.height
-                    )
-                {
-                    
-                    if self.tableView.visibleCells.count > 2 {
-                        (self.tableView.visibleCells[0] as! videoCell).hasPlayer = false
-                        (self.tableView.visibleCells[2] as! videoCell).hasPlayer = false
-                    }
-                    let longest = scrollView.contentOffset.y + scrollView.frame.height
-                    if direction == 1 {
-                        //////////print("down")
-                        let cellap = scrollView.contentOffset.y - self.tableView.visibleCells[0].center.y
-                        //////////print(cellap)
-                        
-                        let row = self.tableView.indexPathsForVisibleRows![1].row
-                        if cellap > 0 {
-                            
-                            if (row) % 2 == 1{
-                                //self.tableView.visibleCells[1].reloadInputViews()
-                                if self.player1.playbackState.description != "Playing" {
-                                    self.player2.stop()
-                                    if !isScrollingFast {
-                                        self.player1.playFromBeginning()
-                                        
-                                    }
-                                    player1Turn = true
-                                    //////print(self.tableView.indexPathsForVisibleRows![0].row)
-                                    //////////print("player1")
-                                }
-                            }else{
-                                if self.player2.playbackState.description != "Playing"{
-                                    self.player1.stop()
-                                    if !isScrollingFast {
-                                        self.player2.playFromBeginning()
-                                        
-                                    }
-                                    player1Turn = false
-                                    //////////print("player2")
-                                }
-                            }
-                        }
-                    }
-                        
-                        
-                    else {
-                        //////////print("up")
-                        
-                        let cellap = longest - self.tableView.visibleCells[1].center.y
-                        //////////print(cellap)
-                        let row = self.tableView.indexPathsForVisibleRows![0].row
-                        if cellap < 0 {
-                            
-                            if (row) % 2 == 1{
-                                
-                                if self.player1.playbackState.description != "Playing" {
-                                    self.player2.stop()
-                                    if !isScrollingFast {
-                                        self.player1.playFromBeginning()
-                                    }
-                                    player1Turn = true
-                                }
-                            }else{
-                                if self.player2.playbackState.description != "Playing"{
-                                    self.player1.stop()
-                                    if !isScrollingFast {
-                                        self.player2.playFromBeginning()
-                                    }
-                                    player1Turn = false
-                                }
-                            }
-                        }
-                    }
-                }
-                
                 
                 
             }
@@ -833,8 +1073,8 @@ class TimelineController: UITableViewController,PlayerDelegate {
     func pressedUsername(sender: UIButton) {
         let Row = sender.tag
         let user = videoArray[Row].username
-        player1.stop()
-        player2.stop()
+        player1.pause()
+        player2.pause()
         //stop players
         
         delegate?.pressedUsername(user)
@@ -845,8 +1085,8 @@ class TimelineController: UITableViewController,PlayerDelegate {
     func pressedPlace(sender: UIButton) {
         let Row = sender.tag
         let placeId = videoArray[Row].locationID
-        player1.stop()
-        player2.stop()
+        player1.pause()
+        player2.pause()
         //stopplayers
         delegate?.pressedPlace(placeId)
     }
@@ -854,8 +1094,8 @@ class TimelineController: UITableViewController,PlayerDelegate {
     func pressedLikeCount(sender: UIButton) {
         let Row = sender.tag
         let videoId = videoArray[Row].id
-        player1.stop()
-        player2.stop()
+        player1.pause()
+        player2.pause()
         //stopplayers
         delegate?.pressedLikeCount(videoId,Row: Row)
     }
@@ -864,8 +1104,8 @@ class TimelineController: UITableViewController,PlayerDelegate {
         //stopplayers
         let Row = sender.tag
         let videoId = videoArray[Row].id
-        player1.stop()
-        player2.stop()
+        player1.pause()
+        player2.pause()
         
         delegate?.pressedComment(videoId,Row: Row)
     }
@@ -901,8 +1141,8 @@ class TimelineController: UITableViewController,PlayerDelegate {
     func pressedReport(sender: UIButton) {
         //stop players
         let Row = sender.tag
-        player1.stop()
-        player2.stop()
+        player1.pause()
+        player2.pause()
         
         let actionSheetController: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         
@@ -939,15 +1179,19 @@ class TimelineController: UITableViewController,PlayerDelegate {
     }
 
     override func viewDidDisappear(animated: Bool) {
-        player1.stop()
+        player1.pause()
         player1.removeFromParentViewController()
-        player2.stop()
+        player2.pause()
         player2.removeFromParentViewController()
         // myCache.removeAll()
         // dictionary.removeAllObjects()
     }
     
     
+    func pausePLayers(){
+        player1.pause()
+        player2.pause()
+    }
     func playerReady(player: Player) {
         //check if it will be played
     }

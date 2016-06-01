@@ -1547,14 +1547,6 @@
                                     <action selector="followersButton:" destination="gJM-YO-RNX" eventType="touchUpInside" id="g8j-Qr-0Y9"/>
                                 </connections>
                             </button>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tkQ-go-XXc">
-                                <rect key="frame" x="0.0" y="179" width="375" height="488"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="gJM-YO-RNX" id="gzs-o8-0Gt"/>
-                                    <outlet property="delegate" destination="gJM-YO-RNX" id="0AB-Nh-8Lm"/>
-                                </connections>
-                            </tableView>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="MX9-rF-oMu">
                                 <rect key="frame" x="0.0" y="64" width="90" height="90"/>
                                 <constraints>
@@ -1590,18 +1582,15 @@
                             <constraint firstItem="av1-qZ-kKJ" firstAttribute="top" secondItem="x8r-Pu-U4I" secondAttribute="bottom" constant="4" id="J0B-80-eUQ"/>
                             <constraint firstItem="IsM-23-6co" firstAttribute="centerX" secondItem="3hD-wK-cGf" secondAttribute="centerX" id="LvE-bq-7Gj"/>
                             <constraint firstItem="x8r-Pu-U4I" firstAttribute="top" secondItem="3dl-Ra-DXK" secondAttribute="bottom" constant="8" id="MVT-f9-c3A"/>
-                            <constraint firstItem="tkQ-go-XXc" firstAttribute="centerX" secondItem="3hD-wK-cGf" secondAttribute="centerX" id="Nid-sv-C7g"/>
                             <constraint firstItem="4TG-FI-9yr" firstAttribute="top" secondItem="NgR-iF-VhF" secondAttribute="bottom" constant="-5" id="Nzy-Nf-SC8"/>
                             <constraint firstItem="0Lc-TG-GG8" firstAttribute="height" secondItem="MX9-rF-oMu" secondAttribute="height" id="Opx-SC-C04"/>
                             <constraint firstItem="NgR-iF-VhF" firstAttribute="top" secondItem="x8r-Pu-U4I" secondAttribute="bottom" constant="10" id="Phi-fB-gQr"/>
                             <constraint firstItem="0Lc-TG-GG8" firstAttribute="width" secondItem="MX9-rF-oMu" secondAttribute="width" id="QSM-cY-R8U"/>
-                            <constraint firstItem="tkQ-go-XXc" firstAttribute="width" secondItem="3hD-wK-cGf" secondAttribute="width" id="Uts-7t-09w"/>
                             <constraint firstItem="x8r-Pu-U4I" firstAttribute="leading" secondItem="0Lc-TG-GG8" secondAttribute="trailing" constant="8" id="Zks-oj-f5i"/>
                             <constraint firstItem="WKk-GX-c8W" firstAttribute="leading" secondItem="0Lc-TG-GG8" secondAttribute="trailing" constant="8" id="aPd-Eb-KSl"/>
                             <constraint firstItem="Mq0-Tg-688" firstAttribute="top" secondItem="0Lc-TG-GG8" secondAttribute="bottom" constant="1" id="asH-88-GIw"/>
                             <constraint firstAttribute="trailingMargin" secondItem="x8r-Pu-U4I" secondAttribute="trailing" id="ayE-Nl-wD9"/>
                             <constraint firstItem="NgR-iF-VhF" firstAttribute="top" secondItem="x8r-Pu-U4I" secondAttribute="bottom" id="bZT-gC-ggE"/>
-                            <constraint firstItem="tkQ-go-XXc" firstAttribute="top" secondItem="Mq0-Tg-688" secondAttribute="bottom" id="cNr-o8-1kj"/>
                             <constraint firstItem="0Lc-TG-GG8" firstAttribute="leading" secondItem="3hD-wK-cGf" secondAttribute="leading" id="d7O-MI-Xba"/>
                             <constraint firstItem="4TG-FI-9yr" firstAttribute="top" secondItem="NgR-iF-VhF" secondAttribute="bottom" constant="-12" id="dFl-G8-eSL"/>
                             <constraint firstItem="4TG-FI-9yr" firstAttribute="top" secondItem="NgR-iF-VhF" secondAttribute="bottom" constant="-5" id="g8q-Sl-io7"/>
@@ -1611,7 +1600,6 @@
                             <constraint firstItem="MX9-rF-oMu" firstAttribute="leading" secondItem="3hD-wK-cGf" secondAttribute="leading" id="lLi-Td-tBb"/>
                             <constraint firstItem="Mq0-Tg-688" firstAttribute="leading" secondItem="3hD-wK-cGf" secondAttribute="leadingMargin" id="lbI-xk-qZg"/>
                             <constraint firstItem="Mq0-Tg-688" firstAttribute="leading" secondItem="3hD-wK-cGf" secondAttribute="leading" constant="5" id="qJd-k2-xuK"/>
-                            <constraint firstItem="Mtg-Zq-iCy" firstAttribute="top" secondItem="tkQ-go-XXc" secondAttribute="bottom" id="ut0-8W-03l"/>
                             <constraint firstItem="IsM-23-6co" firstAttribute="centerY" secondItem="3hD-wK-cGf" secondAttribute="centerY" id="vdC-zq-TK8"/>
                         </constraints>
                         <variation key="default">
@@ -1641,7 +1629,6 @@
                         <outlet property="followerCount" destination="4TG-FI-9yr" id="gRs-UX-p9w"/>
                         <outlet property="locationName" destination="x8r-Pu-U4I" id="TVu-Sx-BpZ"/>
                         <outlet property="map" destination="MX9-rF-oMu" id="ITl-AT-MBK"/>
-                        <outlet property="tableView" destination="tkQ-go-XXc" id="dGn-8t-azS"/>
                         <outlet property="videoCount" destination="Mq0-Tg-688" id="ABR-Yk-AAb"/>
                         <outlet property="videosTitle" destination="Mq0-Tg-688" id="qWd-aK-EGL"/>
                     </connections>

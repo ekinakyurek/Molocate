@@ -225,7 +225,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         
-        //   Timelinecontroller da Main icin hide navigation bar farkli olmali
+        //   Timelinecontrollerx da Main icin hide navigation bar farkli olmali
     }
     
     func tableView(atableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -313,6 +313,8 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
                 navigationController?.setNavigationBarHidden(false, animated: false)
                 
                 let controller:profileLocation = self.storyboard!.instantiateViewControllerWithIdentifier("profileLocation") as! profileLocation
+                tableController.tableView.scrollEnabled = true
+                tableController.tableView.userInteractionEnabled = true
                 
                 self.navigationController?.pushViewController(controller, animated: true)
                 MolocatePlace.getPlace(self.venues[indexPath.row]["id"] as! String) { (data, response, error) -> () in
@@ -357,7 +359,8 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         }
         
         self.navigationController?.pushViewController(controller, animated: true)
-        
+        tableController.tableView.scrollEnabled = true
+        tableController.tableView.userInteractionEnabled = true
         MolocateAccount.getUser(username) { (data, response, error) -> () in
             dispatch_async(dispatch_get_main_queue()){
                 //DBG: If it is mine profile?
@@ -370,7 +373,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
                 self.activityIndicator.stopAnimating()
             }
         }
-        self.searchText.resignFirstResponder()
+      self.searchText.resignFirstResponder()
     }
 
     func pressedFollowSearch(sender: UIButton) {
@@ -615,7 +618,8 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         on = true
         let url = NSURL(string: MolocateBaseUrl  + "video/api/explore/?category=" + MoleCategoriesDictionary [categories[indexPath.row]]!)
         refreshURL = url
-        self.tableController.refresh(tableController.refreshControl!, refreshUrl: refreshURL!)
+
+        self.tableController.refresh(tableController.myRefreshControl, refreshUrl: refreshURL!)
         tableController.tableView.scrollEnabled = true
         tableController.tableView.userInteractionEnabled = true
         
