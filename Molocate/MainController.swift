@@ -34,7 +34,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
     var searchedUsers:[MoleUser]!
     let distanceFormatter = MKDistanceFormatter()
     var currentTask: Task?
-    var venueoruser: Bool = true
+    var venueoruser: Bool = false
     var bestEffortAtLocation : CLLocation!
     var venueButton2: UIButton!
     var usernameButton2: UIButton!
@@ -100,7 +100,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         usernameButton2.frame = CGRectMake(MolocateDevice.size.width / 2  ,7 , MolocateDevice.size.width / 2 - 20, 30)
         usernameButton2.setTitleColor(UIColor.blackColor(), forState: .Normal)
         usernameButton2.contentHorizontalAlignment = .Center
-        usernameButton2.setTitle("KİŞİLER", forState: .Normal)
+        usernameButton2.setTitle("KONUMLAR", forState: .Normal)
         usernameButton2.titleLabel?.font = UIFont(name: "AvenirNext-Medium", size:13)
         usernameButton2.addTarget(self, action: #selector(MainController.pressedUsernameButton(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         view.addSubview(usernameButton2)
@@ -110,7 +110,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
             .width / 2 - 20, 30)
         venueButton2.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         venueButton2.contentHorizontalAlignment = .Center
-        venueButton2.setTitle("KONUMLAR", forState: .Normal)
+        venueButton2.setTitle("KİŞİLER", forState: .Normal)
         venueButton2.titleLabel?.font = UIFont(name: "AvenirNext-Medium", size:13)
         
         venueButton2.addTarget(self, action: #selector(MainController.pressedVenue(_:)), forControlEvents: UIControlEvents.TouchUpInside)
@@ -177,19 +177,19 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
     
     func pressedVenue(sender: UIButton) {
         
-        venueoruser = true
+        venueoruser = false
         self.venueButton2.backgroundColor = swiftColor2
         self.usernameButton2.backgroundColor = swiftColor3
         self.venueButton2.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         self.usernameButton2.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
         if self.venueTable.numberOfRowsInSection(0) > 0 {
-            self.venueTable.reloadData()  }
+            self.venueTable.reloadData()}
         
         
     }
     
     func pressedUsernameButton(sender: UIButton) {
-        venueoruser = false
+        venueoruser = true
         self.venueButton2.backgroundColor = swiftColor3
         self.venueButton2.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
         self.usernameButton2.backgroundColor = swiftColor2
@@ -721,7 +721,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         
     }
     
-    
+  
     
     func searchBar(searchBar: UISearchBar, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         self.venueTable.hidden = false

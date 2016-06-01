@@ -17,6 +17,7 @@ struct MoleUserFriend {
     var is_place:Bool = false
     var username:String = ""
     var place_id:String = ""
+    var name: String = "Deneme Deneme"
 }
 
 struct MoleUserRelations{
@@ -80,7 +81,7 @@ public class MolocateAccount {
                 let nsError = error;
                 
                 do {
-                    //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+                   // print(NSString(data: data!, encoding: NSUTF8StringEncoding))
                     let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String: AnyObject]
                     if(result.indexForKey("results") != nil){
                         let count: Int = (result["count"] as? Int)!
@@ -97,11 +98,12 @@ public class MolocateAccount {
                                 var friend = MoleUserFriend()
                                 let thing = results[i] as! [String:AnyObject]
                                 friend.username = thing["username"] as! String
+                               // friend.name =  thing["first_name"] as! String
                                 friend.picture_url = thing["picture_url"] is NSNull ? NSURL():NSURL(string: thing["picture_url"] as! String)!
                                 let isfollowing = thing["is_following"] as! Int
-                                if(username == MoleCurrentUser.username){
-                                    friend.is_following = isfollowing == 0 ? false:true
-                                }
+                          
+                                friend.is_following = isfollowing == 0 ? false:true
+                              
                                 friends.append(friend)
                             }
                         
@@ -163,12 +165,13 @@ public class MolocateAccount {
                             var friend = MoleUserFriend()
                             let thing = results[i] as! [String:AnyObject]
                             friend.username = thing["username"] as! String
+                           // friend.name =  thing["first_name"] as! String
                             friend.picture_url = thing["picture_url"] is NSNull ? NSURL():NSURL(string: thing["picture_url"] as! String)!
                             let isfollowing = thing["is_following"] as! Int
                             
-                            if(username == MoleCurrentUser.username){
+                           
                                 friend.is_following = isfollowing == 0 ? false:true
-                            }
+                            
                             
                             let type = thing["type"] as! String
                             friend.is_place = type == "userprofile" ? false: true

@@ -29,7 +29,7 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
         myTable =   UITableView()
         myTable.frame =  CGRectMake(0, 0, MolocateDevice.size.width, MolocateDevice.size.height-60);
         myTable.tableFooterView = UIView()
-        myTable.allowsSelection = false
+        myTable.allowsSelection = true
         myTable.delegate      =   self
         myTable.dataSource    =   self
         self.view.addSubview(myTable)
@@ -91,42 +91,126 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     
-        let cell = TableViewCellFollowerFollowing(style: UITableViewCellStyle.Default, reuseIdentifier: "myIdentifier2")
-        
-        cell.myButton1.tag = indexPath.row
-        cell.myButton1.setTitle("\(userRelations.relations[indexPath.row].username)", forState: .Normal)
+        //let cell = TableViewCellFollowerFollowing(style: UITableViewCellStyle.Default, reuseIdentifier: "myIdentifier2")
+        let cell = searchUsername(style: UITableViewCellStyle.Default, reuseIdentifier: "cell")
+        cell.profilePhoto.tag = indexPath.row
+        cell.nameLabel.tag = indexPath.row
+        cell.followButton.tag = indexPath.row
+        cell.usernameLabel.tag = indexPath.row
+        cell.usernameLabel.text = userRelations.relations[indexPath.row].username
+        cell.nameLabel.text = userRelations.relations[indexPath.row].name
        
-        cell.myLabel1.tag = indexPath.row
-        
-        cell.fotoButton.tag = indexPath.row
-        
+        //bak bunaaaa  cell.nameLabel.text = userRelations.relations[indexPath.row]
+       
         if(userRelations.relations[indexPath.row].picture_url.absoluteString != ""){
-            cell.fotoButton.sd_setImageWithURL(userRelations.relations[indexPath.row].picture_url, forState: UIControlState.Normal)
+            cell.profilePhoto.sd_setImageWithURL(userRelations.relations[indexPath.row].picture_url, forState: UIControlState.Normal)
         }else{
-            cell.fotoButton.setImage(UIImage(named: "profile"), forState: .Normal)
+            cell.profilePhoto.setImage(UIImage(named: "profile"), forState: .Normal)
         }
+       
 
-        if followersclicked {
-    
-            if(classUser.username == MoleCurrentUser.username && !userRelations.relations[indexPath.row].is_following){
-                cell.myLabel1.hidden = false
-                cell.myLabel1.enabled = true
-                cell.myLabel1.addTarget(self, action: #selector(Followers.pressedFollow(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-            }
+        if(!userRelations.relations[indexPath.row].is_following){
+            cell.followButton.hidden = false
+            cell.followButton.enabled = true
+            cell.followButton.addTarget(self, action: #selector(Followers.pressedFollow(_:)), forControlEvents: .TouchUpInside)
             
-            cell.myButton1.addTarget(self, action: #selector(Followers.pressedProfile(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-            cell.fotoButton.addTarget(self, action: #selector(Followers.pressedProfile(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             
         } else {
-            
-        
-                cell.myButton1.addTarget(self, action: #selector(Followers.pressedProfile(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-                cell.fotoButton.addTarget(self, action: #selector(Followers.pressedProfile(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-            
+            cell.followButton.hidden = true
+            cell.followButton.enabled = false
         }
+
+//        if followersclicked {
+//        
+//               }else{
+//            
+//            if classUser.username == MoleCurrentUser.username {
+//                
+//                cell.followButton.hidden = true
+//                cell.followButton.enabled = false
+//                
+//            }else{
+//                
+//                if(!userRelations.relations[indexPath.row].is_following){
+//                    cell.followButton.hidden = false
+//                    cell.followButton.enabled = true
+//                    cell.followButton.addTarget(self, action: #selector(Followers.pressedFollow(_:)), forControlEvents: .TouchUpInside)
+//                    
+//                    
+//                } else {
+//                    cell.followButton.hidden = true
+//                    cell.followButton.enabled = false
+//                }
+//                
+//            }
+//  
+//        }
+        //                cell.myButton1.addTarget(self, action: #selector(Followers.pressedProfile(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        //                cell.fotoButton.addTarget(self, action: #selector(Followers.pressedProfile(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+
+        
+        
+//        if followersclicked {
+//    
+//            if(classUser.username == MoleCurrentUser.username && !userRelations.relations[indexPath.row].is_following){
+//                cell.myLabel1.hidden = false
+//                cell.myLabel1.enabled = true
+//                cell.myLabel1.addTarget(self, action: #selector(Followers.pressedFollow(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+//            }
+//            
+//            cell.myButton1.addTarget(self, action: #selector(Followers.pressedProfile(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+//            cell.fotoButton.addTarget(self, action: #selector(Followers.pressedProfile(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+//            
+//        } else {
+        //                cell.myButton1.addTarget(self, action: #selector(Followers.pressedProfile(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        //                cell.fotoButton.addTarget(self, action: #selector(Followers.pressedProfile(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+      
+
+        
+        
         return cell
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+       
+
+            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            self.parentViewController!.navigationController?.setNavigationBarHidden(false, animated: false)
+        
+            activityIndicator.startAnimating()
+            
+            UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+            
+            
+            let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
+            
+            if userRelations.relations[indexPath.row].username  != MoleCurrentUser.username{
+                controller.isItMyProfile = false
+            }else{
+                controller.isItMyProfile = true
+            }
+            
+            
+            self.navigationController?.pushViewController(controller, animated: true)
+            MolocateAccount.getUser(userRelations.relations[indexPath.row].username) { (data, response, error) -> () in
+                dispatch_async(dispatch_get_main_queue()){
+                    //DBG: If it is mine profile?
+                    
+                    user = data
+                    controller.classUser = data
+                    
+                    controller.RefreshGuiWithData()
+                    
+                    //choosedIndex = 0
+                    self.activityIndicator.stopAnimating()
+                }
+            }
+        
+        }
+        
+
+    
+
     
     func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         
@@ -171,6 +255,8 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
         
     }
     
+    
+    
     func pressedFollow(sender: UIButton) {
         let buttonRow = sender.tag
 
@@ -186,70 +272,50 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
         
     }
     
-    func pressedProfile(sender: UIButton) {
-        
-        self.parentViewController!.navigationController?.setNavigationBarHidden(false, animated: false)
-        let buttonRow = sender.tag
-        
-        activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
-        activityIndicator.center = self.view.center
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-        view.addSubview(activityIndicator)
-        activityIndicator.startAnimating()
-        
-        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
-        
-     
-        let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
-        
-        if userRelations.relations[buttonRow].username  != MoleCurrentUser.username{
-            controller.isItMyProfile = false
-        }else{
-            controller.isItMyProfile = true
-        }
-        
-        
-        self.navigationController?.pushViewController(controller, animated: true)
-        MolocateAccount.getUser(userRelations.relations[buttonRow].username) { (data, response, error) -> () in
-            dispatch_async(dispatch_get_main_queue()){
-                //DBG: If it is mine profile?
-                
-                user = data
-                controller.classUser = data
-                
-                controller.RefreshGuiWithData()
-                
-                //choosedIndex = 0
-                self.activityIndicator.removeFromSuperview()
-            }
-        }
-    }
+//    func pressedProfile(sender: UIButton) {
+//        
+//        self.parentViewController!.navigationController?.setNavigationBarHidden(false, animated: false)
+//        let buttonRow = sender.tag
+//        
+//        activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
+//        activityIndicator.center = self.view.center
+//        activityIndicator.hidesWhenStopped = true
+//        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+//        view.addSubview(activityIndicator)
+//        activityIndicator.startAnimating()
+//        
+//        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+//        
+//     
+//        let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
+//        
+//        if userRelations.relations[buttonRow].username  != MoleCurrentUser.username{
+//            controller.isItMyProfile = false
+//        }else{
+//            controller.isItMyProfile = true
+//        }
+//        
+//        
+//        self.navigationController?.pushViewController(controller, animated: true)
+//        MolocateAccount.getUser(userRelations.relations[buttonRow].username) { (data, response, error) -> () in
+//            dispatch_async(dispatch_get_main_queue()){
+//                //DBG: If it is mine profile?
+//                
+//                user = data
+//                controller.classUser = data
+//                
+//                controller.RefreshGuiWithData()
+//                
+//                //choosedIndex = 0
+//                self.activityIndicator.removeFromSuperview()
+//            }
+//        }
+//    }
     
-    
-    @IBAction func back(sender: AnyObject) {
-        if let parentVC = self.parentViewController {
-            if let parentVC = parentVC as? profileOther{
-                if followersclicked {
-                    if classPlace.name == "" {
-                        parentVC.followersCount.setTitle(  "\(classUser.follower_count)", forState: .Normal)
-                    }else{
-                        parentVC.followersCount.setTitle(  "\(classPlace.follower_count)", forState: .Normal)
-                    }
-                }else{
-                    parentVC.followingsCount.setTitle("\(classUser.following_count)", forState: .Normal)
-                }
-            }
-        }
-        
-        self.willMoveToParentViewController(nil)
-        self.view.removeFromSuperview()
-        self.removeFromParentViewController()
-    }
-    
+ 
     override func viewDidDisappear(animated: Bool) {
-        userRelations.relations.removeAll()
-        myTable.reloadData()
+       // userRelations.relations.removeAll()
+        //myTable.reloadData()
     }
     
     override func viewWillAppear(animated: Bool) {
