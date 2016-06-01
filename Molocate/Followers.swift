@@ -12,7 +12,7 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
     var follower = true
     var relationNextUrl = ""
     var followersclicked: Bool = true
-    
+    let refreshControl: UIRefreshControl = UIRefreshControl()
     @IBOutlet weak var TitleLabel: UILabel!
     @IBOutlet var toolBar: UINavigationBar!
 
@@ -36,13 +36,25 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
 
         if followersclicked {
             navigationController?.topViewController?.title = "Takipçi"
+            self.refreshControl.attributedTitle = NSAttributedString(string: "Takipçileriniz güncelleniyor...")
         }else{
+            self.refreshControl.attributedTitle = NSAttributedString(string: "Takip listeniz güncelleniyor...")
             navigationController?.topViewController?.title = "Takip"
+            
         }
+        
+   
+        self.refreshControl.addTarget(self, action: #selector(NotificationsViewController.refresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
+        self.myTable.addSubview(refreshControl)
         
         UIApplication.sharedApplication().endIgnoringInteractionEvents()
     }
     
+    
+    
+    func refresh(sender: AnyObject){
+         getData(followersclicked, userOrClass:  classPlace.name == "" ? true:false )
+    }
     func getData(followers:Bool, userOrClass: Bool){
         
         if followers {
@@ -55,6 +67,9 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
                         self.userRelations = data
                         self.myTable.reloadData()
                         self.classUser.follower_count = data.totalCount
+                        if self.refreshControl.refreshing{
+                            self.refreshControl.endRefreshing()
+                        }
                     }
                     
                 }
@@ -67,6 +82,9 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
                         self.userRelations = data
                         self.myTable.reloadData()
                         self.classPlace.follower_count = data.totalCount
+                        if self.refreshControl.refreshing{
+                            self.refreshControl.endRefreshing()
+                        }
                     }
                     
                 }
@@ -81,6 +99,9 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
                     self.userRelations = data
                     self.myTable.reloadData()
                     self.classUser.following_count = data.totalCount
+                    if self.refreshControl.refreshing{
+                        self.refreshControl.endRefreshing()
+                    }
                 }
                 
             }

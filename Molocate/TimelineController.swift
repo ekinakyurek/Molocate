@@ -228,7 +228,7 @@ class TimelineController: UITableViewController,PlayerDelegate {
             playtap.numberOfTapsRequired = 1
             cell.contentView.addGestureRecognizer(playtap)
             
-            
+            cell.videoComment.handleMentionTap { userHandle in  self.delegate?.pressedUsername(userHandle)}
             
             if videoArray[indexPath.row].isUploading {
                 

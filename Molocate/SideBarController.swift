@@ -3,11 +3,12 @@
 import UIKit
 
 var choosedIndex = 2
+let arkarenk = UIColor(netHex: 0x212429)
 
 class SideBarController: UITableViewController {
     
     
-    let arkarenk = UIColor(netHex: 0x212429)
+
     var menuArray = ["HABER","KEŞFET","BİLDİRİM","PROFİL"]
     var tableData: [String] = ["home", "explore", "notifications","avatar"]
     let cellIdentifier = "cell"

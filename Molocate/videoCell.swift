@@ -23,7 +23,7 @@ class videoCell: UITableViewCell {
     let profilePhoto : UIButton = UIButton()
     let likeCount : UIButton = UIButton()
     let commentCount : UIButton = UIButton()
-    let videoComment : UILabel = UILabel()
+    let videoComment : ActiveLabel = ActiveLabel()
     let videoTime : UILabel = UILabel()
     let label1 : UILabel = UILabel()
     let label2 : UILabel = UILabel()
@@ -66,7 +66,7 @@ class videoCell: UITableViewCell {
     
         Username.frame = CGRectMake(59 , 5, screenSize.width - 100, 22)
         Username.titleLabel?.sizeToFit()
-        Username.setTitleColor(swiftColor, forState: .Normal)
+        Username.setTitleColor(arkarenk, forState: .Normal)
         Username.contentHorizontalAlignment = .Left
         Username.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size:17)
         self.contentView.addSubview(Username)
@@ -81,9 +81,17 @@ class videoCell: UITableViewCell {
         self.contentView.addSubview(placeName)
         
         videoComment.frame = CGRectMake( 10 , 59 + screenSize.width , screenSize.width - 50 , 50)
-        videoComment.textAlignment = .Left
-        videoComment.numberOfLines = 2
-        videoComment.lineBreakMode = .ByWordWrapping
+      
+        videoComment.customize { label in
+            label.textAlignment = .Left
+            label.numberOfLines = 2
+            label.textColor = arkarenk
+            label.font = UIFont(name: "AvenirNext-Medium", size: 12.5)
+            label.lineBreakMode = .ByWordWrapping
+            label.mentionColor = swiftColor
+            label.hashtagColor = UIColor.blueColor()
+        }
+        
         self.contentView.addSubview(videoComment)
         
         label3.frame = CGRectMake( 12 , 104 + screenSize.width , screenSize.width - 45 , 1)
@@ -120,7 +128,7 @@ class videoCell: UITableViewCell {
         label1.text = "BEĞENİ"
         label1.font = UIFont(name: "AvenirNext-Regular", size: 10)
         label1.textAlignment = .Center
-        label1.textColor = UIColor.blackColor()
+        label1.textColor = arkarenk
         self.contentView.addSubview(label1)
         
        
@@ -143,7 +151,7 @@ class videoCell: UITableViewCell {
         label2.text = "YORUM"
         label2.font = UIFont(name: "AvenirNext-Regular", size: 10)
         label2.textAlignment = .Center
-        label2.textColor = UIColor.blackColor()
+        label2.textColor = arkarenk
         self.contentView.addSubview(label2)
         
     
@@ -207,25 +215,25 @@ class videoCell: UITableViewCell {
             self.likeButton.setBackgroundImage(UIImage(named: "likefilled"), forState: UIControlState.Normal)
         }
         
-        var textstring = " "
+        var textstring = videoInfo.caption
         
         for user in videoInfo.taggedUsers{
-            textstring +=  "@" + user
+            textstring +=  " @" + user
         }
-        
-        var multipleAttributes = [String : NSObject]()
-        multipleAttributes[NSForegroundColorAttributeName] = swiftColor2
-        multipleAttributes[NSFontAttributeName] =  UIFont(name: "AvenirNext-Medium", size: 12.5)
-        let tags =  NSAttributedString(string: textstring, attributes: multipleAttributes)
-        
-        var multipleAttributes2 = [String : NSObject]()
-        multipleAttributes2[NSFontAttributeName] =  UIFont(name: "AvenirNext-Medium", size: 12.5)
-        multipleAttributes2[NSForegroundColorAttributeName] = UIColor.blackColor()
-        let commentext = NSMutableAttributedString(string: videoInfo.caption, attributes:  multipleAttributes2)
+//        
+//        var multipleAttributes = [String : NSObject]()
+//        multipleAttributes[NSForegroundColorAttributeName] = swiftColor2
+//        multipleAttributes[NSFontAttributeName] =  UIFont(name: "AvenirNext-Medium", size: 12.5)
+//        let tags =  NSAttributedString(string: textstring, attributes: multipleAttributes)
+//        
+//        var multipleAttributes2 = [String : NSObject]()
+//        multipleAttributes2[NSFontAttributeName] =  UIFont(name: "AvenirNext-Medium", size: 12.5)
+//        multipleAttributes2[NSForegroundColorAttributeName] = UIColor.blackColor()
+//        let commentext = NSMutableAttributedString(string: videoInfo.caption, attributes:  multipleAttributes2)
 
-        commentext.appendAttributedString(tags)
+//        commentext.appendAttributedString(tags)
        
-        videoComment.attributedText = commentext
+        videoComment.text = textstring
         
         if(videoInfo.userpic.absoluteString != ""){
             self.profilePhoto.sd_setImageWithURL(videoInfo.userpic, forState: UIControlState.Normal)

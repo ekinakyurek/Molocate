@@ -101,6 +101,9 @@
 		E3AB5D131CBC781D00382252 /* appstore1024-1024.png in Resources */ = {isa = PBXBuildFile; fileRef = E3AB5D121CBC781D00382252 /* appstore1024-1024.png */; };
 		E3BF835D1CFC613A00EC508A /* TimelineController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3BF835B1CFC613A00EC508A /* TimelineController.swift */; };
 		E3F4673D1CC03F02005F8434 /* molocateNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3F4673C1CC03F02005F8434 /* molocateNotificationCell.swift */; };
+		E3F57EE31CFF3BB2007C3DF7 /* ActiveLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3F57EE21CFF3BB2007C3DF7 /* ActiveLabel.swift */; };
+		E3F57EE51CFF3BFD007C3DF7 /* ActiveType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3F57EE41CFF3BFD007C3DF7 /* ActiveType.swift */; };
+		E3F57EE71CFF3C31007C3DF7 /* RegexParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3F57EE61CFF3C31007C3DF7 /* RegexParser.swift */; };
 		E3FC416F1CB6B3EF00EE8995 /* MolocateUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FC416E1CB6B3EF00EE8995 /* MolocateUtility.swift */; };
 /* End PBXBuildFile section */
 
@@ -146,7 +149,6 @@
 		C61FDAB41BFBD393007B940E /* CameraViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraViewController.xib; sourceTree = "<group>"; };
 		C61FDAB61BFBD3A9007B940E /* FollowingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FollowingViewController.xib; sourceTree = "<group>"; };
 		C63629481CCCEE210071E6BF /* searchUsername.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = searchUsername.swift; sourceTree = "<group>"; };
-		C636294A1CCD3D360071E6BF /* md5-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "md5-Bridging-Header.h"; sourceTree = "<group>"; };
 		C638AFF21C9C7E74003085E8 /* likeVideo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = likeVideo.swift; sourceTree = "<group>"; };
 		C638AFF61C9C80B3003085E8 /* likeVideoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = likeVideoCell.swift; sourceTree = "<group>"; };
 		C63D1F1B1C1FA20D003B2CC1 /* SignUpAdvance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpAdvance.swift; sourceTree = "<group>"; };
@@ -225,6 +227,9 @@
 		E3AB5D121CBC781D00382252 /* appstore1024-1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "appstore1024-1024.png"; sourceTree = "<group>"; };
 		E3BF835B1CFC613A00EC508A /* TimelineController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineController.swift; sourceTree = "<group>"; };
 		E3F4673C1CC03F02005F8434 /* molocateNotificationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = molocateNotificationCell.swift; sourceTree = "<group>"; };
+		E3F57EE21CFF3BB2007C3DF7 /* ActiveLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActiveLabel.swift; sourceTree = "<group>"; };
+		E3F57EE41CFF3BFD007C3DF7 /* ActiveType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActiveType.swift; sourceTree = "<group>"; };
+		E3F57EE61CFF3C31007C3DF7 /* RegexParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegexParser.swift; sourceTree = "<group>"; };
 		E3FC416E1CB6B3EF00EE8995 /* MolocateUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MolocateUtility.swift; sourceTree = "<group>"; };
 		E98CE71F35380A6A5DF16FFF /* Pods_Molocate.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Molocate.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -284,8 +289,8 @@
 		385FC3531C926A8300F85B29 /* Giriş- Üyelik */ = {
 			isa = PBXGroup;
 			children = (
-				C63FBD081BF3E5B900DBB34C /* ViewController.swift */,
 				C63D1F1B1C1FA20D003B2CC1 /* SignUpAdvance.swift */,
+				C63FBD081BF3E5B900DBB34C /* ViewController.swift */,
 			);
 			name = "Giriş- Üyelik";
 			sourceTree = "<group>";
@@ -321,6 +326,7 @@
 				C6F9B5C71C80DD9300C7E9FC /* HomePageViewController.swift */,
 				C6F9B5C91C80DDF400C7E9FC /* NotificationsViewController.swift */,
 				E3BF835B1CFC613A00EC508A /* TimelineController.swift */,
+				388173F41C97AACB0064EBB5 /* commentController.swift */,
 			);
 			name = Navigation;
 			sourceTree = "<group>";
@@ -337,8 +343,6 @@
 			isa = PBXGroup;
 			children = (
 				C686D2C91C05FEA5003484A5 /* Frameworks */,
-				C6BA0A161BFA423E0091E088 /* libsqlite3.tbd */,
-				C6BA0A141BFA422B0091E088 /* libz.tbd */,
 				C63FBD051BF3E5B900DBB34C /* Molocate */,
 				C63FBD1A1BF3E5B900DBB34C /* MolocateTests */,
 				C63FBD251BF3E5B900DBB34C /* MolocateUITests */,
@@ -360,29 +364,22 @@
 		C63FBD051BF3E5B900DBB34C /* Molocate */ = {
 			isa = PBXGroup;
 			children = (
-				3862A5891CAA005D00D41791 /* Molocate.entitlements */,
 				C61023091C19FDCA00E9CA73 /* Main.storyboard */,
 				C6E86EAE1CB0E68D00203513 /* Launch Screen.storyboard */,
 				C63FBD121BF3E5B900DBB34C /* Info.plist */,
-				E33DCC701CB3FE5D0081C0DF /* MolocateDevice.swift */,
-				C61199BF1CCAD4FB00DF70F3 /* S3upload.swift */,
-				E33DCC6E1CB3FD7F0081C0DF /* MolocateRecord.swift */,
-				E3FC416E1CB6B3EF00EE8995 /* MolocateUtility.swift */,
-				C64B601D1C81D6A500E510DC /* MolocateAccount.swift */,
-				E33DCC681CB3F5250081C0DF /* MolocateVideo.swift */,
-				E33DCC6A1CB3F73C0081C0DF /* MolocatePlace.swift */,
-				E33DCC6C1CB3FA2C0081C0DF /* MolocateNotifications.swift */,
-				38F771031C9505670079FACD /* Player.swift */,
+				3862A5891CAA005D00D41791 /* Molocate.entitlements */,
 				C63FBD061BF3E5B900DBB34C /* AppDelegate.swift */,
-				385FC3531C926A8300F85B29 /* Giriş- Üyelik */,
 				C60905381C48140A00614C7F /* Navigation */,
+				385FC3531C926A8300F85B29 /* Giriş- Üyelik */,
+				E3F57EE01CFF3AED007C3DF7 /* MoleClasses */,
+				E3F57EE11CFF3B5A007C3DF7 /* Utility */,
+				3871AAA11C947F9E00DDD83E /* Cells */,
 				C6F7B26E1C1351CF0062E408 /* Profile */,
 				C6FA82331BFBEB850099D2C8 /* NavigationItems */,
 				C6D0D2B51C8BA87E00462BB7 /* fonts-lato */,
 				C609053D1C486A7300614C7F /* NotInUse */,
 				C63FBD0D1BF3E5B900DBB34C /* Assets.xcassets */,
 				C63FBD0F1BF3E5B900DBB34C /* LaunchScreen.storyboard */,
-				C636294A1CCD3D360071E6BF /* md5-Bridging-Header.h */,
 			);
 			path = Molocate;
 			sourceTree = "<group>";
@@ -437,6 +434,8 @@
 		C686D2C91C05FEA5003484A5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C6BA0A141BFA422B0091E088 /* libz.tbd */,
+				C6BA0A161BFA423E0091E088 /* libsqlite3.tbd */,
 				C6B19B421CD3A38500A9C602 /* StoreKit.framework */,
 				C68956291C4EC3E200D391F2 /* Accounts.framework */,
 				C68956271C4EC3D500D391F2 /* Social.framework */,
@@ -469,23 +468,21 @@
 		C6F7B26E1C1351CF0062E408 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				C61023151C1B407600E9CA73 /* Followers.swift */,
+				38E621051C90D9AB00FB1AD5 /* editProfile.swift */,
 				E333A2231CEB7B0D0003D781 /* MyProfile.swift */,
 				C69B823E1CA0D6F5008658CF /* oneVideo.swift */,
 				C638AFF21C9C7E74003085E8 /* likeVideo.swift */,
 				C66743821CEB84410020D514 /* sideProfilePic.swift */,
-				388173F41C97AACB0064EBB5 /* commentController.swift */,
 				C69DB1BE1C99079D0042DA03 /* tagComment.swift */,
 				C6CBA4FE1C876EC300AE65AD /* profileOther.swift */,
 				C6D6D4621CD6501000E37138 /* onePhoto.swift */,
 				C6B7C9EA1C7BE7EF005607EC /* profileLocation.swift */,
-				38E621051C90D9AB00FB1AD5 /* editProfile.swift */,
-				C61023151C1B407600E9CA73 /* Followers.swift */,
 				38E6210B1C90E49D00FB1AD5 /* changePassword.swift */,
 				C6F7B2641C134FAF0062E408 /* Tagged.swift */,
 				C6F7B26C1C1351BB0062E408 /* Tagged.xib */,
 				C6F7B2661C134FBF0062E408 /* Added.swift */,
 				C6F7B26A1C1351A20062E408 /* Added.xib */,
-				3871AAA11C947F9E00DDD83E /* Cells */,
 				C67C97721C44BE080001BEF5 /* ImagesForProfile */,
 			);
 			name = Profile;
@@ -501,6 +498,32 @@
 				C61FDAB61BFBD3A9007B940E /* FollowingViewController.xib */,
 			);
 			name = NavigationItems;
+			sourceTree = "<group>";
+		};
+		E3F57EE01CFF3AED007C3DF7 /* MoleClasses */ = {
+			isa = PBXGroup;
+			children = (
+				E33DCC701CB3FE5D0081C0DF /* MolocateDevice.swift */,
+				E33DCC6A1CB3F73C0081C0DF /* MolocatePlace.swift */,
+				E33DCC681CB3F5250081C0DF /* MolocateVideo.swift */,
+				E33DCC6C1CB3FA2C0081C0DF /* MolocateNotifications.swift */,
+				C64B601D1C81D6A500E510DC /* MolocateAccount.swift */,
+				E3FC416E1CB6B3EF00EE8995 /* MolocateUtility.swift */,
+				E33DCC6E1CB3FD7F0081C0DF /* MolocateRecord.swift */,
+			);
+			name = MoleClasses;
+			sourceTree = "<group>";
+		};
+		E3F57EE11CFF3B5A007C3DF7 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				38F771031C9505670079FACD /* Player.swift */,
+				C61199BF1CCAD4FB00DF70F3 /* S3upload.swift */,
+				E3F57EE21CFF3BB2007C3DF7 /* ActiveLabel.swift */,
+				E3F57EE41CFF3BFD007C3DF7 /* ActiveType.swift */,
+				E3F57EE61CFF3C31007C3DF7 /* RegexParser.swift */,
+			);
+			name = Utility;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -728,6 +751,7 @@
 				C68872861C8CED2800BDBE00 /* optionCell.swift in Sources */,
 				E33DCC691CB3F5250081C0DF /* MolocateVideo.swift in Sources */,
 				C63FBD091BF3E5B900DBB34C /* ViewController.swift in Sources */,
+				E3F57EE31CFF3BB2007C3DF7 /* ActiveLabel.swift in Sources */,
 				C61023161C1B407600E9CA73 /* Followers.swift in Sources */,
 				C638AFF31C9C7E74003085E8 /* likeVideo.swift in Sources */,
 				E333A2241CEB7B0D0003D781 /* MyProfile.swift in Sources */,
@@ -745,6 +769,7 @@
 				C6CBA4FF1C876EC300AE65AD /* profileOther.swift in Sources */,
 				C65C4F751C8E20B300DB5068 /* captureCollectionCell.swift in Sources */,
 				C63629491CCCEE210071E6BF /* searchUsername.swift in Sources */,
+				E3F57EE51CFF3BFD007C3DF7 /* ActiveType.swift in Sources */,
 				C66743831CEB84410020D514 /* sideProfilePic.swift in Sources */,
 				38EAEA621CF111870053249F /* eventController.swift in Sources */,
 				C6917F921BFA60B700CA501A /* CameraViewController.swift in Sources */,
@@ -767,6 +792,7 @@
 				C6F9B5C81C80DD9300C7E9FC /* HomePageViewController.swift in Sources */,
 				C63FBD071BF3E5B900DBB34C /* AppDelegate.swift in Sources */,
 				C69B823F1CA0D6F5008658CF /* oneVideo.swift in Sources */,
+				E3F57EE71CFF3C31007C3DF7 /* RegexParser.swift in Sources */,
 				C69DB1BF1C99079D0042DA03 /* tagComment.swift in Sources */,
 				C638AFF71C9C80B3003085E8 /* likeVideoCell.swift in Sources */,
 				C6D0CDF31C44200F006AAFF0 /* TableViewCellFollowerFollowing.swift in Sources */,
@@ -927,7 +953,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mellonapp.Molocate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "molocate/md5-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -951,7 +977,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mellonapp.Molocate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "molocate/md5-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
