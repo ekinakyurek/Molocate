@@ -357,6 +357,9 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         }else{
             controller.isItMyProfile = true
         }
+        controller.classUser.username = username
+        controller.classUser.profilePic =  searchedUsers[sender.tag].profilePic
+        controller.classUser.isFollowing = searchedUsers[sender.tag].isFollowing
         
         self.navigationController?.pushViewController(controller, animated: true)
         tableController.tableView.scrollEnabled = true
