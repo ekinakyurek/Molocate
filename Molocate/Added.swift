@@ -714,6 +714,8 @@ import AVFoundation
             controller.isItMyProfile = true
         }
         
+      
+        
         self.navigationController?.pushViewController(controller, animated: true)
         MolocateAccount.getUser(videoArray[buttonRow].username) { (data, response, error) -> () in
             dispatch_async(dispatch_get_main_queue()){

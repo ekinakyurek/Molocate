@@ -29,6 +29,8 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print("viewDiDLOAD")
         initGui()
         UIApplication.sharedApplication().endIgnoringInteractionEvents()
     }
@@ -162,6 +164,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
         }
         
         username.text = classUser.username
+        
         followingsCount.setTitle("\(classUser.following_count)", forState: .Normal)
         followersCount.setTitle("\(classUser.follower_count)", forState: .Normal)
         

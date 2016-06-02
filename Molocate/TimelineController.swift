@@ -12,9 +12,9 @@ import SDWebImage
 
 protocol TimelineControllerDelegate:class {
     
-    func pressedUsername(username: String)
+    func pressedUsername(username: String, profilePic: NSURL, isFollowing: Bool)
     
-    func pressedPlace(placeId: String)
+    func pressedPlace(placeId: String, Row: Int)
     
     func pressedLikeCount(videoId: String, Row: Int)
     
@@ -228,7 +228,7 @@ class TimelineController: UITableViewController,PlayerDelegate {
             playtap.numberOfTapsRequired = 1
             cell.contentView.addGestureRecognizer(playtap)
             
-            cell.videoComment.handleMentionTap { userHandle in  self.delegate?.pressedUsername(userHandle)}
+            cell.videoComment.handleMentionTap { userHandle in  self.delegate?.pressedUsername(userHandle, profilePic: NSURL(), isFollowing: false)}
             
             if videoArray[indexPath.row].isUploading {
                 
@@ -1072,12 +1072,12 @@ class TimelineController: UITableViewController,PlayerDelegate {
     
     func pressedUsername(sender: UIButton) {
         let Row = sender.tag
-        let user = videoArray[Row].username
+        let isFollowing = videoArray[Row].isFollowing == 0 ? false:true
         player1.pause()
         player2.pause()
         //stop players
         
-        delegate?.pressedUsername(user)
+        delegate?.pressedUsername(videoArray[Row].username, profilePic: videoArray[Row].userpic, isFollowing: isFollowing)
         
         print("pressed Username")
     }
@@ -1088,7 +1088,7 @@ class TimelineController: UITableViewController,PlayerDelegate {
         player1.pause()
         player2.pause()
         //stopplayers
-        delegate?.pressedPlace(placeId)
+        delegate?.pressedPlace(placeId, Row: Row)
     }
     
     func pressedLikeCount(sender: UIButton) {

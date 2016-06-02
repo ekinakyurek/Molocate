@@ -68,7 +68,7 @@ class videoCell: UITableViewCell {
         Username.titleLabel?.sizeToFit()
         Username.setTitleColor(arkarenk, forState: .Normal)
         Username.contentHorizontalAlignment = .Left
-        Username.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size:17)
+        Username.titleLabel?.font = UIFont(name: "AvenirNext-Medium", size:14)
         self.contentView.addSubview(Username)
         
         placeName.frame = CGRectMake(59 , 27, screenSize.width - 100, 22)

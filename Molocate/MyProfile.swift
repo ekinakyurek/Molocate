@@ -167,6 +167,7 @@ class MyProfile: UIViewController , UIScrollViewDelegate, UITableViewDelegate, U
         }
         
         username.text = classUser.username
+        username.textColor = arkarenk
         followingsCount.setTitle("\(classUser.following_count)", forState: .Normal)
         followersCount.setTitle("\(classUser.follower_count)", forState: .Normal)
         

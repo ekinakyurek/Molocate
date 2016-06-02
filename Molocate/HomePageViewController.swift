@@ -61,26 +61,33 @@ class HomePageViewController: UIViewController, UITextFieldDelegate, TimelineCon
     }
 
    
-    func pressedUsername(username: String) {
+    func pressedUsername(username: String, profilePic: NSURL, isFollowing: Bool) {
+        
         navigationController?.setNavigationBarHidden(false, animated: false)
         activityIndicator.startAnimating()
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
         
         let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
+        
         if username != MoleCurrentUser.username{
             controller.isItMyProfile = false
         }else{
             controller.isItMyProfile = true
         }
         
+        controller.classUser.username = username
+        controller.classUser.profilePic = profilePic
+        controller.classUser.isFollowing = isFollowing
+        
         self.navigationController?.pushViewController(controller, animated: true)
         MolocateAccount.getUser(username) { (data, response, error) -> () in
             dispatch_async(dispatch_get_main_queue()){
                 //DBG: If it is mine profile?
-                
-                user = data
-                controller.classUser = data
-                controller.RefreshGuiWithData()
+                if data.username != "" {
+                    user = data
+                    controller.classUser = data
+                    controller.RefreshGuiWithData()
+                }
                 
                 //choosedIndex = 0
                 self.activityIndicator.stopAnimating()
@@ -90,7 +97,8 @@ class HomePageViewController: UIViewController, UITextFieldDelegate, TimelineCon
         
     }
     
-    func pressedPlace(placeId: String) {
+    func pressedPlace(placeId: String, Row: Int) {
+        
         navigationController?.setNavigationBarHidden(false, animated: false)
         activityIndicator.startAnimating()
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()

@@ -210,20 +210,23 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
             }else{
                 controller.isItMyProfile = true
             }
-            
+        
+            controller.classUser.username =  userRelations.relations[indexPath.row].username
+            controller.classUser.profilePic = userRelations.relations[indexPath.row].picture_url
+            controller.classUser.isFollowing = userRelations.relations[indexPath.row].is_following
             
             self.navigationController?.pushViewController(controller, animated: true)
             MolocateAccount.getUser(userRelations.relations[indexPath.row].username) { (data, response, error) -> () in
                 dispatch_async(dispatch_get_main_queue()){
                     //DBG: If it is mine profile?
-                    
-                    user = data
-                    controller.classUser = data
-                    
-                    controller.RefreshGuiWithData()
-                    
-                    //choosedIndex = 0
+                    if data.username != ""{
+                        user = data
+                        controller.classUser = data
+                        controller.RefreshGuiWithData()
+                    }
+                        //choosedIndex = 0
                     self.activityIndicator.stopAnimating()
+                
                 }
             }
         
