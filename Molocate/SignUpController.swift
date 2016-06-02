@@ -66,7 +66,7 @@ class signUpController: UIViewController,UITextFieldDelegate {
                 let pwd: String = password.text!
                 let mail: String = email.text!
                 
-                let emailValidation = MolocateUtility.isValidEmail(email.text!)
+                let emailValidation = MolocateUtility.isValidEmail(mail)
                 print(emailValidation)
                 if username.text?.characters.count > 3 && emailValidation {
                     let mail: String = email.text!.lowercaseString

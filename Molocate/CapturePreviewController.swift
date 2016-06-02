@@ -567,7 +567,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
         let autoCompleteRowIdentifier = "AutoCompleteRowIdentifier"
-        var cell = tableView.dequeueReusableCellWithIdentifier(autoCompleteRowIdentifier)
+        let cell = tableView.dequeueReusableCellWithIdentifier(autoCompleteRowIdentifier)
         
 //        if let _ = cell
 //        {

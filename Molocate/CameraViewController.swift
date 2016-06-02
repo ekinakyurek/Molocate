@@ -401,7 +401,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
 //                        var distancen = ((latM-latL)*(latM-latL))+((lonL-lonM)*(lonL-lonM))
 //                        distancen = sqrt(distancen)*111000
                         ////print(distancen)
-                        let distance = itemlocation["distance"] as! NSInteger
+                        //let distance = itemlocation["distance"] as! NSInteger
                         let isVerified = item["verified"] as! Bool
                         let checkinsCount = itemstats["checkinsCount"] as! NSInteger
                         let enoughCheckin:Bool = (checkinsCount > 300)
@@ -483,7 +483,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         self.cameraChange.enabled = false
         self.recordButton.enabled = false
         
-        for var i = 0; i <  captureSession!.inputs.count; i++ {
+        for i in 0..<captureSession!.inputs.count {
             
             let input = captureSession!.inputs[i] as! AVCaptureDeviceInput
             let device = input.device as AVCaptureDevice
