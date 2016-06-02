@@ -1078,8 +1078,7 @@ class TimelineController: UITableViewController,PlayerDelegate {
         //stop players
         
         delegate?.pressedUsername(videoArray[Row].username, profilePic: videoArray[Row].userpic, isFollowing: isFollowing)
-        
-        print("pressed Username")
+ 
     }
     
     func pressedPlace(sender: UIButton) {

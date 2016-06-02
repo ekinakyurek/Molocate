@@ -224,6 +224,8 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
                         controller.classUser = data
                         controller.RefreshGuiWithData()
                     }
+                    
+                    UIApplication.sharedApplication().endIgnoringInteractionEvents()
                         //choosedIndex = 0
                     self.activityIndicator.stopAnimating()
                 

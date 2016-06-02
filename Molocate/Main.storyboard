@@ -1274,7 +1274,7 @@
                             <constraint firstAttribute="trailing" secondItem="4sN-1G-lCt" secondAttribute="trailing" id="oG1-WZ-KL2"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Home" id="FaT-oX-58H">
+                    <navigationItem key="navigationItem" id="FaT-oX-58H">
                         <barButtonItem key="leftBarButtonItem" image="sideMenu" id="7bQ-f5-Pet">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
@@ -2557,7 +2557,7 @@
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
-                    <navigationItem key="navigationItem" title="Main" id="hWU-Uj-Bgw">
+                    <navigationItem key="navigationItem" id="hWU-Uj-Bgw">
                         <barButtonItem key="leftBarButtonItem" image="sideMenu" id="1FP-0K-aCD">
                             <connections>
                                 <action selector="sideBar:" destination="pEW-a6-bHt" id="12U-Hr-cXc"/>

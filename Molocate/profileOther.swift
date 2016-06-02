@@ -29,23 +29,16 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        print("viewDiDLOAD")
         initGui()
-        UIApplication.sharedApplication().endIgnoringInteractionEvents()
+        if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
+             UIApplication.sharedApplication().endIgnoringInteractionEvents()
+        }
+       
     }
     
     func initGui(){
         
-        if(isItMyProfile && choosedIndex == 0){
-            user = MoleCurrentUser
-            classUser = MoleCurrentUser
-            FollowButton.image = UIImage(named: "settings")
-            //choosedIndex = 4 //??WHY
-            
-      
-        }else{
-            
+ 
            
             if(classUser.isFollowing){
                 FollowButton.image = UIImage(named: "unfollow")
@@ -54,10 +47,8 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
             }else{
                 FollowButton.image = UIImage(named: "follow")
             }
-        }
-        if(classUser.post_count != 0 ){
-            ////errormessage.hidden = true
-        }
+        
+    
         
         username.text = classUser.username
         followingsCount.setTitle("\(classUser.following_count)", forState: .Normal)
@@ -143,13 +134,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
             ProfileButton.enabled = false
         }
         
-        if(isItMyProfile && choosedIndex==0){
-            
-            (self.parentViewController?.parentViewController!.parentViewController as! ContainerController).scrollView.scrollEnabled = true
-
-            FollowButton.image = UIImage(named: "settings")
-          
-        }else{
+  
             if(classUser.isFollowing){
                 FollowButton.image = UIImage(named: "unfollow")
             }else if classUser.username == MoleCurrentUser.username{
@@ -157,12 +142,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
             }else{
                 FollowButton.image = UIImage(named: "follow")
             }
-        }
-        
-        if(classUser.post_count != 0 ){
-            //errormessage.hidden = true
-        }
-        
+     
         username.text = classUser.username
         
         followingsCount.setTitle("\(classUser.following_count)", forState: .Normal)

@@ -112,7 +112,6 @@ class SideBarController: UITableViewController {
         
         tableView.reloadData()
       
-        print(choosedIndex)
         switch (choosedIndex){
             
         case 0:

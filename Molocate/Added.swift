@@ -624,11 +624,6 @@ import AVFoundation
         player1.stop()
         player2.stop()
         
-        activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
-        activityIndicator.center = self.view.center
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-        view.addSubview(activityIndicator)
         activityIndicator.startAnimating()
         
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
@@ -648,7 +643,7 @@ import AVFoundation
                 controller.RefreshGuiWithData()
                 
                 UIApplication.sharedApplication().endIgnoringInteractionEvents()
-                self.activityIndicator.removeFromSuperview()
+                self.activityIndicator.stopAnimating()
             }
         }
         
@@ -661,11 +656,7 @@ import AVFoundation
         player2.stop()
         video_id = videoArray[sender.tag].id
         videoIndex = sender.tag
-        activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
-        activityIndicator.center = self.view.center
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-        view.addSubview(activityIndicator)
+
         activityIndicator.startAnimating()
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
         
@@ -677,7 +668,7 @@ import AVFoundation
                 controller.users = data
                 controller.tableView.reloadData()
                 UIApplication.sharedApplication().endIgnoringInteractionEvents()
-                self.activityIndicator.removeFromSuperview()
+                self.activityIndicator.stopAnimating()
             }
             
         }
@@ -695,11 +686,6 @@ import AVFoundation
         //////////print("username e basıldı at index path: \(buttonRow)")
         player1.stop()
         player2.stop()
-        activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
-        activityIndicator.center = self.view.center
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-        view.addSubview(activityIndicator)
         activityIndicator.startAnimating()
         
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
@@ -726,7 +712,8 @@ import AVFoundation
                 controller.RefreshGuiWithData()
                 
                 //choosedIndex = 0
-                self.activityIndicator.removeFromSuperview()
+                UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                self.activityIndicator.stopAnimating()
             }
         }
     }
@@ -747,12 +734,6 @@ import AVFoundation
              myViewController = "Added"
         }
         
-        
-        activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
-        activityIndicator.center = self.view.center
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-        view.addSubview(activityIndicator)
         activityIndicator.startAnimating()
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
         
@@ -763,7 +744,7 @@ import AVFoundation
                 comments = data
                 controller.tableView.reloadData()
                 UIApplication.sharedApplication().endIgnoringInteractionEvents()
-                self.activityIndicator.removeFromSuperview()
+                self.activityIndicator.stopAnimating()
             }
         }
         self.parentViewController!.navigationController?.pushViewController(controller, animated: true)

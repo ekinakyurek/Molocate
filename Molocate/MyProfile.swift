@@ -37,37 +37,21 @@ class MyProfile: UIViewController , UIScrollViewDelegate, UITableViewDelegate, U
     
     func initGui(){
         print("calıstı")
-        if(isItMyProfile && choosedIndex == 0){
-            user = MoleCurrentUser
-            classUser = MoleCurrentUser
-            FollowButton.image = UIImage(named: "settings")
-            //choosedIndex = 4 //??WHY
-            
-            
-            back.image = UIImage(named:"sideMenu")
-        }else{
-            
-            back.image = UIImage(named: "leftArrow")
-            if(classUser.isFollowing){
-                FollowButton.image = UIImage(named: "unfollow")
-            }else if classUser.username == MoleCurrentUser.username{
-                FollowButton.image = UIImage(named: "settings")
-            }else{
-                FollowButton.image = UIImage(named: "follow")
-            }
-        }
-        if(classUser.post_count != 0 ){
-            ////errormessage.hidden = true
-        }
-        
+     
+        user = MoleCurrentUser
+        classUser = MoleCurrentUser
+        FollowButton.image = UIImage(named: "settings")
+        back.image = UIImage(named:"sideMenu")
+    
         username.text = classUser.username
         followingsCount.setTitle("\(classUser.following_count)", forState: .Normal)
         followersCount.setTitle("\(classUser.follower_count)", forState: .Normal)
-        
+    
         
         settings.layer.zPosition = 1
         settings.hidden = true
-        settings.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.width, self.view.frame.width)
+        settings.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y,
+                                    self.view.frame.width, self.view.frame.width)
         settings.layer.cornerRadius = 0
         settings.tintColor = UIColor.clearColor()
         profilePhoto.layer.borderWidth = 0.5
@@ -76,6 +60,7 @@ class MyProfile: UIViewController , UIScrollViewDelegate, UITableViewDelegate, U
         profilePhoto.layer.cornerRadius = profilePhoto.frame.height/2
         profilePhoto.backgroundColor = profileBackgroundColor
         profilePhoto.clipsToBounds = true
+        
         if(classUser.profilePic.absoluteString != ""){
             profilePhoto.sd_setImageWithURL(classUser.profilePic)
             ProfileButton.enabled = true
@@ -140,32 +125,10 @@ class MyProfile: UIViewController , UIScrollViewDelegate, UITableViewDelegate, U
             ProfileButton.enabled = false
         }
         
-        if(isItMyProfile && choosedIndex==0){
-            
-            (self.parentViewController?.parentViewController!.parentViewController as! ContainerController).scrollView.scrollEnabled = true
-
-            FollowButton.image = UIImage(named: "settings")
-            //choosedIndex = 4 //??WHY
-            back.image = UIImage(named:"sideMenu")
-        }else{
-
-            
-            (self.parentViewController?.parentViewController!.parentViewController as! ContainerController).scrollView.scrollEnabled = false
-
-            back.image = UIImage(named: "leftArrow")
-            if(classUser.isFollowing){
-                FollowButton.image = UIImage(named: "unfollow")
-            }else if classUser.username == MoleCurrentUser.username{
-                FollowButton.image = UIImage(named: "settings")
-            }else{
-                FollowButton.image = UIImage(named: "follow")
-            }
-        }
-        
-        if(classUser.post_count != 0 ){
-            //errormessage.hidden = true
-        }
-        
+      
+        FollowButton.image = UIImage(named: "settings")
+        back.image = UIImage(named:"sideMenu")
+    
         username.text = classUser.username
         username.textColor = arkarenk
         followingsCount.setTitle("\(classUser.following_count)", forState: .Normal)

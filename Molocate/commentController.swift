@@ -15,7 +15,9 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
         super.viewDidLoad()
 
         initGui()
-        UIApplication.sharedApplication().endIgnoringInteractionEvents()
+        if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
+            UIApplication.sharedApplication().endIgnoringInteractionEvents()
+        }
     }
    
     override func viewWillDisappear(animated: Bool) {
@@ -221,7 +223,8 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
                 controller.RefreshGuiWithData()
                 
                 //choosedIndex = 0
-                self.activityIndicator.removeFromSuperview()
+                UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                self.activityIndicator.stopAnimating()
             }
         }
         
@@ -315,6 +318,10 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
         if self.newComment.text == "Yorumunu buradan yazabilirsin"{
             newComment.text = ""
         }
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        (self.parentViewController?.parentViewController?.parentViewController as! ContainerController).scrollView.scrollEnabled = false
     }
     
     override func didReceiveMemoryWarning() {
