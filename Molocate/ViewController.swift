@@ -25,6 +25,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDe
     override func viewDidLoad() {
         super.viewDidLoad()
         initGui()
+        
         stuckedVideoConfiguration()
         myCache.removeAll()
         dictionary.removeAllObjects()

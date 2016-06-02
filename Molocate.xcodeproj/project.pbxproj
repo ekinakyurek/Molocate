@@ -28,6 +28,9 @@
 		C61FDAB31BFBD332007B940E /* ExploreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C61FDAB21BFBD332007B940E /* ExploreViewController.xib */; };
 		C61FDAB51BFBD393007B940E /* CameraViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C61FDAB41BFBD393007B940E /* CameraViewController.xib */; };
 		C61FDAB71BFBD3A9007B940E /* FollowingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C61FDAB61BFBD3A9007B940E /* FollowingViewController.xib */; };
+		C6287C431CFF549C002C4B6B /* firstController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6287C421CFF549C002C4B6B /* firstController.swift */; };
+		C6287C451CFF54BB002C4B6B /* signUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6287C441CFF54BB002C4B6B /* signUpController.swift */; };
+		C6287C471CFF54D2002C4B6B /* logInController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6287C461CFF54D2002C4B6B /* logInController.swift */; };
 		C63629491CCCEE210071E6BF /* searchUsername.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63629481CCCEE210071E6BF /* searchUsername.swift */; };
 		C638AFF31C9C7E74003085E8 /* likeVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C638AFF21C9C7E74003085E8 /* likeVideo.swift */; };
 		C638AFF71C9C80B3003085E8 /* likeVideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C638AFF61C9C80B3003085E8 /* likeVideoCell.swift */; };
@@ -148,6 +151,9 @@
 		C61FDAB21BFBD332007B940E /* ExploreViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExploreViewController.xib; sourceTree = "<group>"; };
 		C61FDAB41BFBD393007B940E /* CameraViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraViewController.xib; sourceTree = "<group>"; };
 		C61FDAB61BFBD3A9007B940E /* FollowingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FollowingViewController.xib; sourceTree = "<group>"; };
+		C6287C421CFF549C002C4B6B /* firstController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = firstController.swift; sourceTree = "<group>"; };
+		C6287C441CFF54BB002C4B6B /* signUpController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = signUpController.swift; sourceTree = "<group>"; };
+		C6287C461CFF54D2002C4B6B /* logInController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = logInController.swift; sourceTree = "<group>"; };
 		C63629481CCCEE210071E6BF /* searchUsername.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = searchUsername.swift; sourceTree = "<group>"; };
 		C638AFF21C9C7E74003085E8 /* likeVideo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = likeVideo.swift; sourceTree = "<group>"; };
 		C638AFF61C9C80B3003085E8 /* likeVideoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = likeVideoCell.swift; sourceTree = "<group>"; };
@@ -289,6 +295,9 @@
 		385FC3531C926A8300F85B29 /* Giriş- Üyelik */ = {
 			isa = PBXGroup;
 			children = (
+				C6287C421CFF549C002C4B6B /* firstController.swift */,
+				C6287C441CFF54BB002C4B6B /* signUpController.swift */,
+				C6287C461CFF54D2002C4B6B /* logInController.swift */,
 				C63D1F1B1C1FA20D003B2CC1 /* SignUpAdvance.swift */,
 				C63FBD081BF3E5B900DBB34C /* ViewController.swift */,
 			);
@@ -777,6 +786,7 @@
 				C64B601E1C81D6A500E510DC /* MolocateAccount.swift in Sources */,
 				C6E92F781CCFD0F900CAE237 /* searchVenue.swift in Sources */,
 				C61FDAAF1BFBD0BC007B940E /* ContainerViewController.swift in Sources */,
+				C6287C471CFF54D2002C4B6B /* logInController.swift in Sources */,
 				C609053A1C48143C00614C7F /* MainController.swift in Sources */,
 				E33DCC6F1CB3FD7F0081C0DF /* MolocateRecord.swift in Sources */,
 				E3FC416F1CB6B3EF00EE8995 /* MolocateUtility.swift in Sources */,
@@ -784,7 +794,9 @@
 				38E621061C90D9AB00FB1AD5 /* editProfile.swift in Sources */,
 				C6F7B2671C134FBF0062E408 /* Added.swift in Sources */,
 				E3F4673D1CC03F02005F8434 /* molocateNotificationCell.swift in Sources */,
+				C6287C431CFF549C002C4B6B /* firstController.swift in Sources */,
 				E33DCC6B1CB3F73C0081C0DF /* MolocatePlace.swift in Sources */,
+				C6287C451CFF54BB002C4B6B /* signUpController.swift in Sources */,
 				C6F9F5511C12574500E62856 /* capturePreviewController.swift in Sources */,
 				C6F9B5CA1C80DDF400C7E9FC /* NotificationsViewController.swift in Sources */,
 				C6F7B2651C134FAF0062E408 /* Tagged.swift in Sources */,
