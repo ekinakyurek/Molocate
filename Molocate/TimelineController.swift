@@ -196,6 +196,7 @@ class TimelineController: UITableViewController,PlayerDelegate {
     }
 
     
+  
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         if !likeorFollowClicked {
@@ -313,7 +314,7 @@ class TimelineController: UITableViewController,PlayerDelegate {
             
             cell.likeCount.setTitle("\(videoArray[indexPath.row].likeCount)", forState: .Normal)
             cell.followButton.hidden = videoArray[indexPath.row].isFollowing == 1 ? true:false
-            
+            cell.commentCount.setTitle("\(videoArray[indexPath.row].commentCount)", forState: .Normal)
             return cell
             
             
@@ -339,7 +340,7 @@ class TimelineController: UITableViewController,PlayerDelegate {
     func scrollToTop() {
         self.tableView.setContentOffset(CGPoint(x:0,y:0), animated: true)
     }
-    
+
     override func tableView(atableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         
         if((!refreshing)&&(indexPath.row%10 == 7)&&(nextUrl != nil)&&(!IsExploreInProcess)){
@@ -370,7 +371,15 @@ class TimelineController: UITableViewController,PlayerDelegate {
     }
     
     override func viewWillAppear(animated: Bool) {
-        player2.playFromBeginning()
+            player2.playFromBeginning()
+
+            if let _ = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: videoIndex, inSection: 0)) as?videoCell{
+                videoArray[videoIndex].commentCount = comments.count
+                likeorFollowClicked = true
+                tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: videoIndex, inSection: 0)], withRowAnimation: .None)
+                likeorFollowClicked = false
+            }
+        
     }
     
     override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
@@ -1179,9 +1188,7 @@ class TimelineController: UITableViewController,PlayerDelegate {
 
     override func viewDidDisappear(animated: Bool) {
         player1.pause()
-        player1.removeFromParentViewController()
         player2.pause()
-        player2.removeFromParentViewController()
         // myCache.removeAll()
         // dictionary.removeAllObjects()
     }

@@ -41,7 +41,7 @@ public class MolocateUtility {
         
         UIView.animateWithDuration(0.3, delay: 0, options: .AllowUserInteraction, animations: { 
             heart.transform = CGAffineTransformMakeScale(1.3, 1.3);
-            heart.alpha = 1.0;
+            heart.alpha = 0.8;
             }) { (finished1) in
                 UIView.animateWithDuration(0.1, delay: 0, options: .AllowUserInteraction, animations: { 
                        heart.transform = CGAffineTransformMakeScale(1.0, 1.0);

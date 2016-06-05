@@ -123,7 +123,7 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
 
             MolocateVideo.commentAVideo(video_id, comment: mycomment.text) { (data, response, error) -> () in
                 dispatch_async(dispatch_get_main_queue()){
-                    self.updateParentController(true)
+                    //self.updateParentController(true)
                     
                     if data != "fail" {
                         if comments.count > 0 {
@@ -161,7 +161,7 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
                 
                 MolocateVideo.deleteAComment(comments[buttonRow].id, completionHandler: { (data, response, error) in
                         dispatch_async(dispatch_get_main_queue()){
-                            self.updateParentController(false)
+                           // self.updateParentController(false)
                         }
                     
                 })

@@ -689,10 +689,10 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         transformer.setTransform(t2, atTime: kCMTimeZero)
         instruction.layerInstructions = NSArray(object: transformer) as! [AVVideoCompositionLayerInstruction]
         videoComposition.instructions = NSArray(object: instruction) as! [AVVideoCompositionInstructionProtocol]
-        let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory,.UserDomainMask,true)[0]
+        let documentsPath = (NSTemporaryDirectory() as NSString)
         let random = arc4random()
         let exportPath = documentsPath.stringByAppendingFormat("/CroppedVideo\(random).mp4", documentsPath)
-        let exportURl = NSURL(fileURLWithPath: exportPath)
+        let exportURl = NSURL(fileURLWithPath: exportPath as String)
         let exporter = AVAssetExportSession(asset: tempasset, presetName:AVAssetExportPresetMediumQuality )
         exporter?.videoComposition = videoComposition
         exporter?.outputURL = exportURl
@@ -754,7 +754,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         
         
         
-        let directory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
+        let directory = (NSTemporaryDirectory() as NSString)
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateStyle = .LongStyle
         dateFormatter.timeStyle = .ShortStyle
