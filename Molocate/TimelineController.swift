@@ -253,7 +253,6 @@ class TimelineController: UITableViewController,PlayerDelegate {
             
             
             if !isScrollingFast {
-                
                 var trueURL = NSURL()
                 
                 if dictionary.objectForKey(self.videoArray[indexPath.row].id) != nil {
@@ -371,7 +370,8 @@ class TimelineController: UITableViewController,PlayerDelegate {
     }
     
     override func viewWillAppear(animated: Bool) {
-            player2.playFromBeginning()
+            isScrollingFast = false
+            
 
             if let _ = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: videoIndex, inSection: 0)) as?videoCell{
                 videoArray[videoIndex].commentCount = comments.count
@@ -1200,6 +1200,16 @@ class TimelineController: UITableViewController,PlayerDelegate {
     }
     func playerReady(player: Player) {
         //check if it will be played
+        
+        if player == player1 {
+            if player2.playbackState.description != "Playing"{
+            player.playFromBeginning()
+            }
+        } else {
+            if player1.playbackState.description != "Playing"{
+                player.playFromBeginning()
+            }
+        }
     }
     
     func playerPlaybackStateDidChange(player: Player) {
@@ -1211,7 +1221,11 @@ class TimelineController: UITableViewController,PlayerDelegate {
     }
     
     func playerPlaybackWillStartFromBeginning(player: Player) {
-    
+        if player == player1 {
+            player2.stop()
+        } else {
+            player1.stop()
+        }
     }
     
     func playerPlaybackDidEnd(player: Player) {
