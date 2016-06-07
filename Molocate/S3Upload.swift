@@ -151,7 +151,7 @@ public class S3Upload {
                     thumbnailRequest.HTTPBody = image
                     
                     let thumbnailTask = NSURLSession.sharedSession().dataTaskWithRequest(thumbnailRequest){data, response, error  in
-                        ////print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+                    //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
                         
                     //    let nsError = error;
                         

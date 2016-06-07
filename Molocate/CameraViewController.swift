@@ -483,9 +483,9 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         self.cameraChange.enabled = false
         self.recordButton.enabled = false
         
-        for i in 0..<captureSession!.inputs.count {
+        for item in captureSession!.inputs {
             
-            let input = captureSession!.inputs[i] as! AVCaptureDeviceInput
+            let input = item as! AVCaptureDeviceInput
             let device = input.device as AVCaptureDevice
             
             if device.hasMediaType(AVMediaTypeVideo){
@@ -585,8 +585,10 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         var success = true
         
         if error != nil {
-            NSLog("Movie file finishing error: %@", error!)
+            //NSLog("Movie file finishing error: %@", error!)
             success = error!.userInfo[AVErrorRecordingSuccessfullyFinishedKey] as! Bool? ?? false
+            self.holdRelease()
+            self.displayRecordAlert("Hata", message: "Telefonunuzda yeterli yer yok.")
         }
         self.cropVideoSquare(outputFileURL)
     
@@ -1073,6 +1075,14 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction((UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
             //self.dismissViewControllerAnimated(true, completion: nil)
+        })))
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    func displayRecordAlert(title: String, message: String) {
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction((UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
+            self.backtoCont(self)
         })))
         self.presentViewController(alert, animated: true, completion: nil)
     }
