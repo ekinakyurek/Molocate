@@ -22,6 +22,7 @@ var isUploaded = true
 var myViewController = "MainController"
 var thePlace:MolePlace = MolePlace()
 var pressedFollow = false
+var selectedCell = 0
 
 class MainController: UIViewController, UITableViewDelegate , UITableViewDataSource, UICollectionViewDelegate,CLLocationManagerDelegate, UICollectionViewDataSource, UISearchBarDelegate, TimelineControllerDelegate {
  
@@ -620,20 +621,43 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         myCell.selectedBackgroundView = backgroundView
         //myCell.layer.borderWidth = 0
         myCell.backgroundColor = swiftColor3
+       
+        if selectedCell == indexPath.row{
+        myCell.myLabel.textColor = UIColor.whiteColor()
+        myCell.backgroundColor = swiftColor2
+            var b = CGPoint(x: 75 * selectedCell, y: 0)
+            if selectedCell < 3 {
+                b.x = 0
+            }
+            else if selectedCell > 5 {
+                b = CGPoint(x: 75 * 4, y: 0)
+            }
+            else{
+                b = CGPoint(x: 75 * ( selectedCell - 2 ), y: 0)
+            }
+        self.collectionView.setContentOffset(b , animated: true)
+        }
+        else{
+        myCell.myLabel.textColor = UIColor.blackColor()
+        myCell.backgroundColor = swiftColor3
+        }
         myCell.myLabel?.text = categories[indexPath.row]
         myCell.frame.size.width = 75
         myCell.myLabel.textAlignment = .Center
         myCell.myLabel.font = UIFont(name: "AvenirNext-Regular", size: 15)
         return myCell
+        
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath){
         
-        //seçilmiş cell in labelının rengi değişsin
+        
         on = true
         let url = NSURL(string: MolocateBaseUrl  + "video/api/explore/?category=" + MoleCategoriesDictionary [categories[indexPath.row]]!)
         refreshURL = url
-
+        selectedCell = indexPath.row
+        self.collectionView.reloadData()
+        
         self.tableController.refresh(tableController.myRefreshControl, refreshUrl: refreshURL!)
         tableController.tableView.scrollEnabled = true
         tableController.tableView.userInteractionEnabled = true
