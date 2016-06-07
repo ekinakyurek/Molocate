@@ -53,7 +53,6 @@ class videoCell: UITableViewCell {
         let  screenSize = MolocateDevice.size
      
         profilePhoto.frame = CGRectMake(5, 5, 44, 44)
-        
         let image = UIImage(named: "profile")! as UIImage
         profilePhoto.layer.borderWidth = 0.1
         profilePhoto.layer.masksToBounds = false
