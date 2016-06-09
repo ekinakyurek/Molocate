@@ -7,7 +7,7 @@ class likeVideo: UIViewController, UITableViewDelegate, UITableViewDataSource  {
     var activityIndicator = UIActivityIndicatorView()
     @IBOutlet var toolBar: UIToolbar!
     @IBOutlet var tableView: UITableView!
-    
+    let refreshControl: UIRefreshControl = UIRefreshControl()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -27,16 +27,28 @@ class likeVideo: UIViewController, UITableViewDelegate, UITableViewDataSource  {
         
         tableView.allowsSelection = false
         tableView.tableFooterView = UIView()
+        
+        self.refreshControl.attributedTitle = NSAttributedString(string: "Beğeniler güncelleniyor...")
+        self.refreshControl.addTarget(self, action: #selector(likeVideo.refresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
+        self.tableView.addSubview(refreshControl)
    
     }
     
+    
+    func refresh(sender: AnyObject){
+       getData()
+    }
+    
+    
     func getData(){
         MolocateVideo.getLikes(video_id) { (data, response, error, count, next, previous) -> () in
-            
-            self.users.removeAll()
             dispatch_async(dispatch_get_main_queue()){
                 self.users = data
                 self.tableView.reloadData()
+                
+                if self.refreshControl.refreshing {
+                    self.refreshControl.endRefreshing()
+                }
             }
             
         }
