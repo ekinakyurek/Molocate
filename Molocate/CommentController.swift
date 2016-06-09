@@ -10,6 +10,7 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
     @IBOutlet var tableView: UITableView!
     @IBOutlet var newComment: UITextView!
     var activityIndicator = UIActivityIndicatorView()
+    let refreshControl: UIRefreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,8 +61,21 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
         tableView.allowsSelection = false
         tableView.tableFooterView = UIView()
         tableView.separatorColor = UIColor.clearColor()
+        
+        self.refreshControl.attributedTitle = NSAttributedString(string: "Yorumlar güncelleniyor...")
+        self.refreshControl.addTarget(self, action: #selector(commentController.refresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
+        self.tableView.addSubview(refreshControl)
     }
     
+    func refresh(sender: AnyObject){
+        MolocateVideo.getComments(video_id) { (data, response, error, count, next, previous) in
+            dispatch_async(dispatch_get_main_queue()){
+                comments=data
+                self.tableView.reloadData()
+                self.refreshControl.endRefreshing()
+            }
+        }
+    }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
