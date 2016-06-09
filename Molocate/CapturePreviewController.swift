@@ -567,33 +567,32 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
         let autoCompleteRowIdentifier = "AutoCompleteRowIdentifier"
-        let cell = tableView.dequeueReusableCellWithIdentifier(autoCompleteRowIdentifier)
-        
-//        if let _ = cell
-//        {
+        let cell = venueInCamera(style: UITableViewCellStyle.Default, reuseIdentifier: autoCompleteRowIdentifier)
+
             let index = indexPath.row as Int
             if isSearch {
-            cell!.textLabel!.text = autocompleteUrls[index]
+                let place = locationDict[index][autocompleteUrls[index]]
+                cell.nameLabel.text = place?.name
+                cell.addressNameLabel.text = place?.adress
+                
             } else {
-            
-            cell?.textLabel?.text = searchArray[index]
+                let place = searchDict[index][searchArray[index]]
+                cell.nameLabel.text = place?.name
+                cell.addressNameLabel.text = place?.adress
             }
-//        } else
-//        {
-//            cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: autoCompleteRowIdentifier)
-//        }
-        return cell!
+
+        return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         textField.text = ""
-        let selectedCell : UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
-        textField.text = selectedCell.textLabel!.text!
+        let selectedCell  = tableView.cellForRowAtIndexPath(indexPath) as! venueInCamera
+        textField.text = selectedCell.nameLabel.text
         placeTable.hidden = true
         downArrow.hidden = true
         self.view.endEditing(true)
         if isSearch {
-        let correctedRow = placeOrder.objectForKey((selectedCell.textLabel?.text!)!) as! Int
+        let correctedRow = placeOrder.objectForKey(textField.text!) as! Int
         videoLocation = locationDict[correctedRow][placesArray[correctedRow]]
         } else {
         videoLocation = searchDict[indexPath.row][searchArray[indexPath.row]]
