@@ -38,17 +38,19 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
     
     func initGui(){
         
- 
-           
-            if(classUser.isFollowing){
-                FollowButton.image = UIImage(named: "unfollow")
-            }else if classUser.username == MoleCurrentUser.username{
-                FollowButton.image = UIImage(named: "settings")
-            }else{
-                FollowButton.image = UIImage(named: "follow")
-            }
+
+       
+        if(classUser.isFollowing){
+            FollowButton.image = UIImage(named: "unfollow")
+        }else if classUser.username == MoleCurrentUser.username{
+            FollowButton.image = UIImage(named: "settings")
+        }else{
+            FollowButton.image = UIImage(named: "follow")
+        }
         
+        self.navigationItem.title = classUser.username
     
+
         
         username.text = classUser.username
         followingsCount.setTitle("\(classUser.following_count)", forState: .Normal)
@@ -393,6 +395,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
   
     override func viewWillAppear(animated: Bool) {
            (self.parentViewController?.parentViewController?.parentViewController as! ContainerController).scrollView.scrollEnabled = false
+       
     }
     override func viewWillDisappear(animated: Bool) {
         AVc.player1.stop()

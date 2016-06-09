@@ -110,7 +110,7 @@ class videoCell: UITableViewCell {
         
         
      
-        followButton.frame = CGRectMake(screenSize.width - 41 , 9 , 32 , 32)
+        followButton.frame = CGRectMake(screenSize.width - 45 , 9 , 39, 30)
         followButton.setBackgroundImage(UIImage(named: "follow"), forState: UIControlState.Normal)
         self.contentView.addSubview(followButton)
         

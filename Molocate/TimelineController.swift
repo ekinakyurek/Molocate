@@ -312,6 +312,7 @@ class TimelineController: UITableViewController,PlayerDelegate {
             }
             
             cell.likeCount.setTitle("\(videoArray[indexPath.row].likeCount)", forState: .Normal)
+            
             cell.followButton.hidden = videoArray[indexPath.row].isFollowing == 1 ? true:false
             cell.commentCount.setTitle("\(videoArray[indexPath.row].commentCount)", forState: .Normal)
             return cell
