@@ -180,9 +180,7 @@ class HomePageViewController: UIViewController, UITextFieldDelegate, TimelineCon
     
     override func viewDidAppear(animated: Bool) {
         NSNotificationCenter.defaultCenter().postNotificationName("closeSideBar", object: nil)
-        self.tableController.isOnView = true
-        self.tableController.isScrollingFast = false
-        
+
         
      
         
@@ -239,7 +237,7 @@ class HomePageViewController: UIViewController, UITextFieldDelegate, TimelineCon
          navigationController?.hidesBarsOnSwipe = true
     }
     override func viewDidDisappear(animated: Bool) {
-        self.tableController.isOnView = false 
+        
     }
     func textFieldDidBeginEditing(textField: UITextField) {
         cameraButton.image = nil

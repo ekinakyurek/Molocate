@@ -43,8 +43,6 @@ class TimelineController: UITableViewController,PlayerDelegate {
     var likeHeart = UIImageView()
     var myRefreshControl = UIRefreshControl()
     var isOnView = false
-    var ss = 0.0 as Float
-
     var requestUrl:NSURL = NSURL(string: "")!
 
     weak var delegate: TimelineControllerDelegate?
@@ -79,9 +77,6 @@ class TimelineController: UITableViewController,PlayerDelegate {
         self.myRefreshControl.addTarget(self, action: #selector(TimelineController.refresh(_:refreshUrl:)), forControlEvents: UIControlEvents.ValueChanged)
         self.tableView.addSubview(myRefreshControl)
 
-
-
-       print("ViewDidLoad")
         switch type {
             case "HomePage":
                 requestUrl = NSURL(string: MolocateBaseUrl + "video/api/news_feed/?category=all")!
@@ -94,7 +89,7 @@ class TimelineController: UITableViewController,PlayerDelegate {
             case "ProfileLocation":
                 print("profileLocation")
                 //videoArray initially given by parentViewCont4\roller
-
+                getPlaceData(placeId)
             default:
                 requestUrl = NSURL(string: MolocateBaseUrl + "video/api/news_feed/?category=all")!
         }
@@ -125,7 +120,6 @@ class TimelineController: UITableViewController,PlayerDelegate {
     }
 
     func getExploreData(url: NSURL){
-
         MolocateVideo.getExploreVideos(url, completionHandler: { (data, response, error,next) -> () in
             self.nextUrl  = next
             dispatch_async(dispatch_get_main_queue()){
@@ -170,7 +164,7 @@ class TimelineController: UITableViewController,PlayerDelegate {
 
     func refresh(sender:AnyObject, refreshUrl: NSURL = NSURL(string: "")!){
 
-
+        
         refreshing = true
         self.player1.stop()
         self.player2.stop()
@@ -195,7 +189,6 @@ class TimelineController: UITableViewController,PlayerDelegate {
 
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-
 
         if !likeorFollowClicked {
             let cell = videoCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "timelineCell")
@@ -249,12 +242,9 @@ class TimelineController: UITableViewController,PlayerDelegate {
                 cell.cellthumbnail.image = UIImage(named: "Mole")!
             }
 
-            print("burda")
-            print(isScrollingFast)
-            if !isScrollingFast {
-                print(indexPath.row)
+            if !isScrollingFast || (self.tableView.contentOffset.y == 0)  {
+               
                 var trueURL = NSURL()
-
                 if dictionary.objectForKey(self.videoArray[indexPath.row].id) != nil {
                     trueURL = dictionary.objectForKey(self.videoArray[indexPath.row].id) as! NSURL
                 } else {
@@ -315,9 +305,9 @@ class TimelineController: UITableViewController,PlayerDelegate {
 
             if !cell.followButton.hidden && videoArray[indexPath.row].isFollowing == 1{
                 //add animation
-                      followButton.setBackgroundImage(UIImage(named: "followTicked"), forState: UIControlState.Normal)
+                cell.followButton.setBackgroundImage(UIImage(named: "followTicked"), forState: UIControlState.Normal)
             }
-            cell.followButton.hidden = videoArray[indexPath.row].isFollowing == 1 ? true:false
+            //cell.followButton.hidden = videoArray[indexPath.row].isFollowing == 1 ? true:false
             cell.commentCount.setTitle("\(videoArray[indexPath.row].commentCount)", forState: .Normal)
             return cell
 
@@ -342,7 +332,15 @@ class TimelineController: UITableViewController,PlayerDelegate {
 
     }
 
-
+    func playTheTruth(){
+        if (player1.playbackState.description != "Playing") && (player2.playbackState.description != "Playing") {
+        if player1Turn {
+            player1.playFromBeginning()
+        } else {
+            player2.playFromBeginning()
+        }
+        }
+    }
 
     func scrollToTop() {
         self.tableView.setContentOffset(CGPoint(x:0,y:0), animated: true)
@@ -379,14 +377,10 @@ class TimelineController: UITableViewController,PlayerDelegate {
 
     override func viewWillAppear(animated: Bool) {
             isScrollingFast = false
+            isOnView = true
+        
+        
 
-
-//            if let _ = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: videoIndex, inSection: 0)) as?videoCell{
-//                videoArray[videoIndex].commentCount = comments.count
-//                likeorFollowClicked = true
-//                tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: videoIndex, inSection: 0)], withRowAnimation: .None)
-//                likeorFollowClicked = false
-//            }
 
     }
 
@@ -452,7 +446,7 @@ class TimelineController: UITableViewController,PlayerDelegate {
                     let scrollSpeedNotAbs = (distance * 10) / 1000 //in pixels per millisecond
 
                     let scrollSpeed = fabsf(Float(scrollSpeedNotAbs));
-                    ss = scrollSpeed
+                    
                     if (scrollSpeed > 0.1
                         ) {
                         isScrollingFast = true
@@ -1198,12 +1192,13 @@ class TimelineController: UITableViewController,PlayerDelegate {
     override func viewDidDisappear(animated: Bool) {
         player1.pause()
         player2.pause()
+        isOnView = false
         // myCache.removeAll()
         // dictionary.removeAllObjects()
     }
 
     override func viewDidAppear(animated: Bool) {
-        print("table gelmiyor aga")
+        playTheTruth()
     }
 
 
@@ -1213,6 +1208,7 @@ class TimelineController: UITableViewController,PlayerDelegate {
     }
     func playerReady(player: Player) {
         //check if it will be played
+
         if isOnView {
         if player == player1 {
             if player2.playbackState.description != "Playing"{

@@ -48,6 +48,7 @@ class profileLocation: UIViewController, UICollectionViewDelegateFlowLayout,NSUR
     }
     
     override func viewDidAppear(animated: Bool) {
+        
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -130,7 +131,6 @@ class profileLocation: UIViewController, UICollectionViewDelegateFlowLayout,NSUR
         let annotation = MKPointAnnotation()
         annotation.coordinate = location
         map.addAnnotation(annotation)
-        
         self.tableController.tableView.reloadData()
     }
 

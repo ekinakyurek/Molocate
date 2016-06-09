@@ -12,7 +12,7 @@ class ContainerController: UIViewController,UIScrollViewDelegate {
         super.viewDidLoad()
         
         scrollView.delegate = self
-
+        
        
         if let tabbar = self.childViewControllers[1] as? UITabBarController {
             print("tabbar reloaded \(choosedIndex)")

@@ -526,8 +526,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
     
     override func viewDidAppear(animated: Bool) {
         NSNotificationCenter.defaultCenter().postNotificationName("closeSideBar", object: nil)
-        self.tableController.isOnView = true
-        self.tableController.isScrollingFast = false
+        //self.tableController.isOnView = true
         
 
     }
@@ -725,7 +724,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
     override func viewDidDisappear(animated: Bool) {
         //self.tableView.removeFromSuperview()
         //SDImageCache.sharedImageCache().cleanDisk()
-        self.tableController.isOnView = false
+        //self.tableController.isOnView = false
         if isSearching == true {
             self.cameraButton.image = UIImage(named: "Camera")
             self.cameraButton.title = nil

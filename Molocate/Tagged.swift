@@ -260,7 +260,7 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
 
                 if !cell.followButton.hidden && videoArray[indexPath.row].isFollowing == 1{
                     //add animation
-                          followButton.setBackgroundImage(UIImage(named: "followTicked"), forState: UIControlState.Normal)
+                    cell.followButton.setBackgroundImage(UIImage(named: "followTicked"), forState: UIControlState.Normal)
                 }
 
             }
