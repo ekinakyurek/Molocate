@@ -69,6 +69,9 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         self.addChildViewController(tableController);
         tableController.didMoveToParentViewController(self)
         
+
+        
+        
         venueTable.layer.zPosition = 10
         tabBarController?.tabBar.hidden = true
         searchText.frame = CGRect(x: 0, y: 0, width: MolocateDevice.size.width/2, height: 36)
@@ -523,6 +526,10 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
     
     override func viewDidAppear(animated: Bool) {
         NSNotificationCenter.defaultCenter().postNotificationName("closeSideBar", object: nil)
+        self.tableController.isOnView = true
+        self.tableController.isScrollingFast = false
+        
+
     }
     
     @IBAction func sideBar(sender: AnyObject) {
@@ -717,7 +724,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
     override func viewDidDisappear(animated: Bool) {
         //self.tableView.removeFromSuperview()
         //SDImageCache.sharedImageCache().cleanDisk()
-
+        self.tableController.isOnView = false
         if isSearching == true {
             self.cameraButton.image = UIImage(named: "Camera")
             self.cameraButton.title = nil
@@ -739,6 +746,8 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
     
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
         
+        self.tableController.player1.stop()
+        self.tableController.player2.stop()
      
         tableController.tableView.scrollEnabled = false
         tableController.tableView.userInteractionEnabled = false
@@ -768,7 +777,6 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         self.usernameButton2.hidden = false
         self.backgroundLabel.hidden = false
         self.collectionView.hidden = true
-        
         let whitespaceCharacterSet = NSCharacterSet.symbolCharacterSet()
         let strippedString = searchText.text!.stringByTrimmingCharactersInSet(whitespaceCharacterSet)
         
@@ -792,7 +800,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
             }
             currentTask?.cancel()
             var parameters = [Parameter.query:strippedString]
-            parameters += self.bestEffortAtLocation.parameters()
+            parameters += self.bestEffortAtLocation.parameters(false)
             currentTask = session.venues.search(parameters) {
                 (result) -> Void in
                 if let response = result.response {

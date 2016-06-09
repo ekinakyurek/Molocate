@@ -31,6 +31,7 @@
 		C6287C431CFF549C002C4B6B /* FirstController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6287C421CFF549C002C4B6B /* FirstController.swift */; };
 		C6287C451CFF54BB002C4B6B /* SignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6287C441CFF54BB002C4B6B /* SignUpController.swift */; };
 		C6287C471CFF54D2002C4B6B /* LogInController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6287C461CFF54D2002C4B6B /* LogInController.swift */; };
+		C62E31081D08F79200BE8377 /* venueInCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62E31071D08F79200BE8377 /* venueInCamera.swift */; };
 		C63629491CCCEE210071E6BF /* SearchUsername.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63629481CCCEE210071E6BF /* SearchUsername.swift */; };
 		C638AFF31C9C7E74003085E8 /* LikeVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C638AFF21C9C7E74003085E8 /* LikeVideo.swift */; };
 		C638AFF71C9C80B3003085E8 /* LikeVideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C638AFF61C9C80B3003085E8 /* LikeVideoCell.swift */; };
@@ -158,6 +159,7 @@
 		C6287C421CFF549C002C4B6B /* FirstController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstController.swift; sourceTree = "<group>"; };
 		C6287C441CFF54BB002C4B6B /* SignUpController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpController.swift; sourceTree = "<group>"; };
 		C6287C461CFF54D2002C4B6B /* LogInController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInController.swift; sourceTree = "<group>"; };
+		C62E31071D08F79200BE8377 /* venueInCamera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = venueInCamera.swift; sourceTree = "<group>"; };
 		C63629481CCCEE210071E6BF /* SearchUsername.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchUsername.swift; sourceTree = "<group>"; };
 		C638AFF21C9C7E74003085E8 /* LikeVideo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikeVideo.swift; sourceTree = "<group>"; };
 		C638AFF61C9C80B3003085E8 /* LikeVideoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikeVideoCell.swift; sourceTree = "<group>"; };
@@ -317,6 +319,7 @@
 			children = (
 				38EAEA5F1CF10A5B0053249F /* EventCell.swift */,
 				388173F61C97ABE20064EBB5 /* CommentCell.swift */,
+				C62E31071D08F79200BE8377 /* venueInCamera.swift */,
 				C6E92F771CCFD0F900CAE237 /* SearchVenue.swift */,
 				C638AFF61C9C80B3003085E8 /* LikeVideoCell.swift */,
 				3871AAA21C9488BA00DDD83E /* SideCell.swift */,
@@ -791,6 +794,7 @@
 				C6DA6BE21C4332D100E24392 /* VideoCell.swift in Sources */,
 				C61199C01CCAD4FB00DF70F3 /* S3Upload.swift in Sources */,
 				C6CBA4FF1C876EC300AE65AD /* ProfileOther.swift in Sources */,
+				C62E31081D08F79200BE8377 /* venueInCamera.swift in Sources */,
 				C65C4F751C8E20B300DB5068 /* CaptureCollectionCell.swift in Sources */,
 				C63629491CCCEE210071E6BF /* SearchUsername.swift in Sources */,
 				E3F57EE51CFF3BFD007C3DF7 /* ActiveType.swift in Sources */,

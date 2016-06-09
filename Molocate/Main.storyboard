@@ -1274,6 +1274,7 @@
                             <constraint firstAttribute="trailing" secondItem="4sN-1G-lCt" secondAttribute="trailing" id="oG1-WZ-KL2"/>
                         </constraints>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" id="FaT-oX-58H">
                         <barButtonItem key="leftBarButtonItem" image="sideMenu" id="7bQ-f5-Pet">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -2413,6 +2414,7 @@
                             </mask>
                         </variation>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" title="Bildirimler" id="vCc-Tn-Lgj">
                         <barButtonItem key="leftBarButtonItem" image="sideMenu" id="ybu-Zc-HLG">
                             <connections>
@@ -2591,7 +2593,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="320.5" y="1395.5"/>
+            <point key="canvasLocation" x="304.5" y="1403.5"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="2nZ-4F-piq">

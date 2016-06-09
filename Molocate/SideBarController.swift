@@ -111,7 +111,7 @@ class SideBarController: UITableViewController {
         NSNotificationCenter.defaultCenter().postNotificationName("closeSideBar", object: nil )
         
         tableView.reloadData()
-      
+        
         switch (choosedIndex){
             
         case 0:

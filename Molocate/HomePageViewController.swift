@@ -25,19 +25,22 @@ class HomePageViewController: UIViewController, UITextFieldDelegate, TimelineCon
     override func viewDidLoad() {
        
         super.viewDidLoad()
+        
         self.automaticallyAdjustsScrollViewInsets = false
+        tableController = self.storyboard?.instantiateViewControllerWithIdentifier("timelineController") as! TimelineController
+        tableController.type = "HomePage"
+        tableController.delegate = self
+        tableController.view.frame = self.view.frame
+        tableController.view.layer.zPosition = 0
+        self.view.addSubview(tableController.view)
+        self.addChildViewController(tableController);
+        tableController.didMoveToParentViewController(self)
         
         navigationController?.hidesBarsOnSwipe = true
         self.navigationItem.titleView = UIImageView(image:  UIImage(named: "molocate"))
         self.navigationItem.titleView?.tintColor = UIColor.whiteColor()
         
-        self.tableController = self.storyboard?.instantiateViewControllerWithIdentifier("timelineController") as! TimelineController
-        tableController.type = "HomePage"
-        tableController.delegate = self
-        tableController.view.frame = self.view.frame
-        self.view.addSubview(tableController.view)
-        self.addChildViewController(tableController);
-        tableController.didMoveToParentViewController(self)
+        
         
         try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
         
@@ -176,11 +179,15 @@ class HomePageViewController: UIViewController, UITextFieldDelegate, TimelineCon
 
     
     override func viewDidAppear(animated: Bool) {
-    
         NSNotificationCenter.defaultCenter().postNotificationName("closeSideBar", object: nil)
+        self.tableController.isOnView = true
+        self.tableController.isScrollingFast = false
+        
+        
      
         
     }
+    
     
     @IBAction func sideBar(sender: AnyObject) {
         if(sideClicked == false){
@@ -232,7 +239,7 @@ class HomePageViewController: UIViewController, UITextFieldDelegate, TimelineCon
          navigationController?.hidesBarsOnSwipe = true
     }
     override func viewDidDisappear(animated: Bool) {
-   
+        self.tableController.isOnView = false 
     }
     func textFieldDidBeginEditing(textField: UITextField) {
         cameraButton.image = nil

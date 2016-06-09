@@ -54,6 +54,7 @@ class profileLocation: UIViewController, UICollectionViewDelegateFlowLayout,NSUR
         SDImageCache.sharedImageCache().clearMemory()
     }
     
+    
     func initGui(){
         
         followerCount.setTitle("\(thePlace.follower_count)", forState: UIControlState.Normal)

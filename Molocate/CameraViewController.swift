@@ -372,7 +372,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         
     
         //var parameters = [Parameter.query:"moda sahil"]
-        let parameters = location.parameters()
+        let parameters = location.parameters(true)
     
         
         let searchTask = session.venues.search(parameters) {
@@ -1220,7 +1220,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
 }
 
 extension CLLocation {
-    func parameters() -> Parameters {
+    func parameters(bool: Bool) -> Parameters {
         let myll = Parameter.ll
         let myllacc = Parameter.llAcc
         let myalt = Parameter.alt
@@ -1232,9 +1232,13 @@ extension CLLocation {
         valuealt = "\(self.altitude)"
         valuealtacc = "\(self.verticalAccuracy)"
 
+        if bool {
+            return [ myll:valuell , myllacc:valuellacc , myalt:valuealt, myaltAcc: valuealtacc,intent:"browse",radius:"\(500)"]
+        } else {
+            return [ myll:valuell , myllacc:valuellacc , myalt:valuealt, myaltAcc: valuealtacc]
+        }
         
-        return [ myll:valuell , myllacc:valuellacc , myalt:valuealt, myaltAcc: valuealtacc,intent:"browse",radius:"\(500)"]
-    }
+        }
     
     
 }
