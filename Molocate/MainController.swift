@@ -657,11 +657,12 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath){
-        
+    
         
         on = true
         let url = NSURL(string: MolocateBaseUrl  + "video/api/explore/?category=" + MoleCategoriesDictionary [categories[indexPath.row]]!)
-        refreshURL = url
+        tableController.requestUrl = url!
+        print(tableController.requestUrl.absoluteString)
         selectedCell = indexPath.row
         self.collectionView.reloadData()
         

@@ -29,12 +29,12 @@ class HomePageViewController: UIViewController, UITextFieldDelegate, TimelineCon
         self.automaticallyAdjustsScrollViewInsets = false
         tableController = self.storyboard?.instantiateViewControllerWithIdentifier("timelineController") as! TimelineController
         tableController.type = "HomePage"
-        tableController.delegate = self
         tableController.view.frame = self.view.frame
         tableController.view.layer.zPosition = 0
         self.view.addSubview(tableController.view)
         self.addChildViewController(tableController);
         tableController.didMoveToParentViewController(self)
+        tableController.delegate = self
         
         navigationController?.hidesBarsOnSwipe = true
         self.navigationItem.titleView = UIImageView(image:  UIImage(named: "molocate"))

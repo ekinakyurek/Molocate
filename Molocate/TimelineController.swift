@@ -44,6 +44,9 @@ class TimelineController: UITableViewController,PlayerDelegate {
     var myRefreshControl = UIRefreshControl()
     var isOnView = false
     var ss = 0.0 as Float
+    
+    var requestUrl:NSURL = NSURL(string: "")!
+    
     weak var delegate: TimelineControllerDelegate?
    
     var type = ""
@@ -76,24 +79,24 @@ class TimelineController: UITableViewController,PlayerDelegate {
         self.myRefreshControl.addTarget(self, action: #selector(TimelineController.refresh(_:refreshUrl:)), forControlEvents: UIControlEvents.ValueChanged)
         self.tableView.addSubview(myRefreshControl)
         
-        let url: NSURL
+  
         
-       
+       print("ViewDidLoad")
         switch type {
             case "HomePage":
-                url = NSURL(string: MolocateBaseUrl + "video/api/news_feed/?category=all")!
+                requestUrl = NSURL(string: MolocateBaseUrl + "video/api/news_feed/?category=all")!
                 self.myRefreshControl.attributedTitle = NSAttributedString(string: "Haber kaynağı güncelleniyor...")
-                getExploreData(url)
+                getExploreData(requestUrl)
             case "MainController":
-                url = NSURL(string: MolocateBaseUrl + "video/api/explore/?category=all")!
+                requestUrl = NSURL(string: MolocateBaseUrl + "video/api/explore/?category=all")!
                 self.myRefreshControl.attributedTitle = NSAttributedString(string: "Keşfet güncelleniyor...")
-                getExploreData(url)
+                getExploreData(requestUrl)
             case "ProfileLocation":
                 print("profileLocation")
                 //videoArray initially given by parentViewCont4\roller
         
             default:
-                url = NSURL(string: MolocateBaseUrl + "video/api/news_feed/?category=all")!
+                requestUrl = NSURL(string: MolocateBaseUrl + "video/api/news_feed/?category=all")!
         }
     
       
@@ -172,27 +175,20 @@ class TimelineController: UITableViewController,PlayerDelegate {
         self.player1.stop()
         self.player2.stop()
         
-        
-        let url: NSURL
-        
-        if refreshUrl.absoluteString == "" {
-            switch type {
-                case "HomePage":
-                    url = NSURL(string: MolocateBaseUrl + "video/api/news_feed/?category=all")!
-                    getExploreData(url)
-                case "MainController":
-                    url = NSURL(string: MolocateBaseUrl + "video/api/explore/?category=all")!
-                    getExploreData(url)
-                case "ProfileLocation":
-                    getPlaceData(placeId)                
-                default:
-                    url = NSURL(string: MolocateBaseUrl + "video/api/news_feed/?category=all")!
-            }
-        }else{
-            url = refreshUrl
-            getExploreData(url)
-
+        switch type {
+            case "HomePage":
+                getExploreData(requestUrl)
+            case "MainController":
+                getExploreData(requestUrl)
+            case "ProfileLocation":
+                getPlaceData(placeId)
+            default:
+                print("default")
         }
+    
+    
+
+        
         
     }
 
