@@ -40,6 +40,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
     var venueButton2: UIButton!
     var usernameButton2: UIButton!
     var backgroundLabel: UILabel!
+    var linee: UILabel!
     var on = true
     var tableController: TimelineController!
     
@@ -52,7 +53,8 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
 
     
     var categories = ["Hepsi","Eğlence","Yemek","Gezi","Moda" , "Güzellik", "Spor","Etkinlik","Kampüs"]
-    
+    var categoryImagesWhite : [String]  = [ "all" , "fun", "food", "travel", "fashion", "beauty", "sport", "event", "campus"]
+    var categoryImagesBlack : [String]  = [ "allb" , "funb", "foodb", "travelb", "fashionb", "beautyb", "sportb", "eventb", "campusb"]
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -61,8 +63,8 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         tableController = self.storyboard?.instantiateViewControllerWithIdentifier("timelineController") as! TimelineController
         tableController.type = "MainController"
         tableController.delegate = self
-        tableController.view.frame = CGRectMake(0, 44, MolocateDevice.size
-            .width, MolocateDevice.size.height - 44)
+        tableController.view.frame = CGRectMake(0, 60, MolocateDevice.size
+            .width, MolocateDevice.size.height - 60)
         
         tableController.view.layer.zPosition = 0
         self.view.addSubview(tableController.view)
@@ -98,6 +100,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         backgroundLabel.layer.masksToBounds = false
         backgroundLabel.layer.borderColor = swiftColor.CGColor
         view.addSubview(backgroundLabel)
+        
         
         
         usernameButton2 = UIButton()
@@ -168,7 +171,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         let index = NSIndexPath(forRow: 0, inSection: 0)
         
         self.collectionView.selectItemAtIndexPath(index, animated: false, scrollPosition: UICollectionViewScrollPosition.None)
-        collectionView.contentSize.width = 75 * 9
+        collectionView.contentSize.width = 60 * 9
         collectionView.backgroundColor = UIColor.whiteColor()
         collectionView.hidden = false
 
@@ -611,19 +614,10 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
             }
             self.activityIndicator.removeFromSuperview()
         }
-        
-    }
-    
-
-    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-   
-        if scrollView == collectionView {
-            rightArrow.hidden = false
-        }
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return  CGSize.init(width: 75 , height: 44)
+        return  CGSize.init(width: 60 , height: 60)
     }
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -644,35 +638,51 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         myCell.backgroundColor = swiftColor3
         
         if selectedCell == indexPath.row{
+             myCell.categoryImage?.image = UIImage(named: categoryImagesWhite[indexPath.row])
+            UIView.animateWithDuration(0.5, animations: {
+                myCell.bottomCon.constant = 2
+                myCell.topCon.constant = -2
+                //self.view.layoutIfNeeded()
+            })
+            myCell.myLabel.hidden = false
         myCell.myLabel.textColor = UIColor.whiteColor()
         myCell.backgroundColor = swiftColor2
               let screenSize = UIScreen.mainScreen().bounds
-            var b = CGPoint(x: 75 * selectedCell, y: 0)
+            var b = CGPoint(x: 60 * selectedCell, y: 0)
+            
             if selectedCell < 2 {
                 b.x = 0
             }
-            else if selectedCell > 5 {
+            else if selectedCell > 4 {
                 let contentSize =  collectionView.contentSize.width
                 b = CGPoint(x: contentSize - screenSize.width  , y: 0)
             }
             
             else{
-                b = CGPoint(x: 75 * ( selectedCell - 2 ), y: 0)
+                b = CGPoint(x: 60 * ( selectedCell - 2 ), y: 0)
             }
         self.collectionView.setContentOffset(b , animated: true)
         }
         else{
+         myCell.categoryImage?.image = UIImage(named: categoryImagesBlack[indexPath.row])
+        myCell.myLabel.hidden = true
+        UIView.animateWithDuration(0.5, animations: {
+                myCell.bottomCon.constant = 0
+                myCell.topCon.constant = 5
+                //self.view.layoutIfNeeded()
+            })
         myCell.myLabel.textColor = UIColor.blackColor()
         myCell.backgroundColor = swiftColor3
         }
         myCell.myLabel?.text = categories[indexPath.row]
-        myCell.frame.size.width = 75
-        myCell.myLabel.textAlignment = .Center
-        myCell.myLabel.font = UIFont(name: "AvenirNext-Regular", size: 15)
+        //myCell.frame.size.width = 75
+        //myCell.myLabel.textAlignment = .Center
+        //myCell.myLabel.font = UIFont(name: "AvenirNext-Regular", size: 12)
         return myCell
         
     }
     
+   
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath){
     
         
@@ -682,7 +692,6 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         print(tableController.requestUrl.absoluteString)
         selectedCell = indexPath.row
         self.collectionView.reloadData()
-        
         self.tableController.refresh(tableController.myRefreshControl, refreshUrl: refreshURL!)
         tableController.tableView.scrollEnabled = true
         tableController.tableView.userInteractionEnabled = true

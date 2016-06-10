@@ -31,6 +31,7 @@
 		C6287C431CFF549C002C4B6B /* FirstController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6287C421CFF549C002C4B6B /* FirstController.swift */; };
 		C6287C451CFF54BB002C4B6B /* SignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6287C441CFF54BB002C4B6B /* SignUpController.swift */; };
 		C6287C471CFF54D2002C4B6B /* LogInController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6287C461CFF54D2002C4B6B /* LogInController.swift */; };
+		C62B17F11D0B2EC8004CD060 /* shirt-2.png in Resources */ = {isa = PBXBuildFile; fileRef = C62B17F01D0B2EC8004CD060 /* shirt-2.png */; };
 		C62E31081D08F79200BE8377 /* venueInCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62E31071D08F79200BE8377 /* venueInCamera.swift */; };
 		C63629491CCCEE210071E6BF /* SearchUsername.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63629481CCCEE210071E6BF /* SearchUsername.swift */; };
 		C638AFF31C9C7E74003085E8 /* LikeVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C638AFF21C9C7E74003085E8 /* LikeVideo.swift */; };
@@ -158,6 +159,7 @@
 		C6287C421CFF549C002C4B6B /* FirstController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstController.swift; sourceTree = "<group>"; };
 		C6287C441CFF54BB002C4B6B /* SignUpController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpController.swift; sourceTree = "<group>"; };
 		C6287C461CFF54D2002C4B6B /* LogInController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInController.swift; sourceTree = "<group>"; };
+		C62B17F01D0B2EC8004CD060 /* shirt-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shirt-2.png"; sourceTree = "<group>"; };
 		C62E31071D08F79200BE8377 /* venueInCamera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = venueInCamera.swift; sourceTree = "<group>"; };
 		C63629481CCCEE210071E6BF /* SearchUsername.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchUsername.swift; sourceTree = "<group>"; };
 		C638AFF21C9C7E74003085E8 /* LikeVideo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikeVideo.swift; sourceTree = "<group>"; };
@@ -438,6 +440,7 @@
 		C67C97721C44BE080001BEF5 /* ImagesForProfile */ = {
 			isa = PBXGroup;
 			children = (
+				C62B17F01D0B2EC8004CD060 /* shirt-2.png */,
 				E3AB5D121CBC781D00382252 /* appstore1024-1024.png */,
 				C6537F501CA9F4E8005EE0BA /* Sent-96.png */,
 				C69B824A1CA1102D008658CF /* sign-2.png */,
@@ -689,6 +692,7 @@
 				C6E86EAF1CB0E68E00203513 /* Launch Screen.storyboard in Resources */,
 				C6537F591CAD64F9005EE0BA /* Menunew.png in Resources */,
 				C6F7B26B1C1351A20062E408 /* Added.xib in Resources */,
+				C62B17F11D0B2EC8004CD060 /* shirt-2.png in Resources */,
 				C610D38C1CC399F20080D48D /* backButton.png in Resources */,
 				C61FDAB51BFBD393007B940E /* CameraViewController.xib in Resources */,
 				C6C5DA4C1C951B6F00DC16EF /* leftarrow.png in Resources */,
