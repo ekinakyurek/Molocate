@@ -96,7 +96,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         self.captureSession = AVCaptureSession()
         
         self.sessionQueue = dispatch_queue_create("session queue", DISPATCH_QUEUE_SERIAL)
-
+        try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         previewLayer?.session = self.captureSession
         

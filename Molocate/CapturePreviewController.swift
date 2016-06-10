@@ -198,7 +198,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
         super.viewDidLoad()
       
         
-               try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
+        try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
         UIApplication.sharedApplication().endIgnoringInteractionEvents()
         toolBar.barTintColor = swiftColor
         toolBar.translucent = false

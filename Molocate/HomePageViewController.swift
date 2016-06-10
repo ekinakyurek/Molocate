@@ -181,9 +181,6 @@ class HomePageViewController: UIViewController, UITextFieldDelegate, TimelineCon
     override func viewDidAppear(animated: Bool) {
         NSNotificationCenter.defaultCenter().postNotificationName("closeSideBar", object: nil)
 
-        
-     
-        
     }
     
     

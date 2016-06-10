@@ -24,7 +24,7 @@ var thePlace:MolePlace = MolePlace()
 var pressedFollow = false
 var selectedCell = 0
 
-class MainController: UIViewController, UITableViewDelegate , UITableViewDataSource, UICollectionViewDelegate,CLLocationManagerDelegate, UICollectionViewDataSource, UISearchBarDelegate, TimelineControllerDelegate {
+class MainController: UIViewController, UITableViewDelegate , UITableViewDataSource, UICollectionViewDelegate,CLLocationManagerDelegate, UICollectionViewDataSource, UISearchBarDelegate, TimelineControllerDelegate, UITextFieldDelegate {
  
 
     var isSearching = false
@@ -68,10 +68,10 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         self.view.addSubview(tableController.view)
         self.addChildViewController(tableController);
         tableController.didMoveToParentViewController(self)
-        
+        searchText.returnKeyType = UIReturnKeyType.Done
 
         
-        
+        self.searchText.delegate = self
         venueTable.layer.zPosition = 10
         tabBarController?.tabBar.hidden = true
         searchText.frame = CGRect(x: 0, y: 0, width: MolocateDevice.size.width/2, height: 36)
@@ -151,6 +151,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         bartextField.textColor = UIColor.whiteColor()
         bartextField.attributedPlaceholder =  NSAttributedString(string: "Ara", attributes: [NSForegroundColorAttributeName:UIColor.whiteColor(), NSFontAttributeName: UIFont(name: "AvenirNext-Regular", size: 14)! ])
         
+        
         let magnifyingGlass = bartextField.leftView as! UIImageView
         magnifyingGlass.image = magnifyingGlass.image?.imageWithRenderingMode(.AlwaysTemplate)
         magnifyingGlass.tintColor = UIColor.whiteColor()
@@ -175,7 +176,11 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
             UIApplication.sharedApplication().endIgnoringInteractionEvents()
         }
+
     }
+   
+
+    
     
     
     
@@ -208,7 +213,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
   
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        
+        searchText.resignFirstResponder()
         //   Timelinecontrollerx da Main icin hide navigation bar farkli olmali
     }
     
@@ -327,6 +332,8 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
                 
             }
     }
+    
+
     
     func pressedProfileSearch(sender:UIButton){
         
@@ -588,6 +595,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
             } else {
                 self.tableController.tableView.scrollEnabled = true
                 self.tableController.tableView.userInteractionEnabled = true
+                self.tableController.isOnView = true
                 self.cameraButton.image = UIImage(named: "Camera")
                 self.cameraButton.title = nil
                 self.searchText.text = ""
@@ -599,6 +607,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
                 self.collectionView.hidden = false
                 self.venueTable.hidden = true
                 self.searchText.resignFirstResponder()
+                
             }
             self.activityIndicator.removeFromSuperview()
         }
@@ -693,6 +702,8 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         }
     }
     
+    
+    
     func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
         let locationAge = newLocation.timestamp.timeIntervalSinceNow
         
@@ -752,12 +763,14 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         searchBar.resignFirstResponder()
     }
     
-    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
         
         self.tableController.player1.stop()
         self.tableController.player2.stop()
-     
+        self.tableController.isOnView = false
         tableController.tableView.scrollEnabled = false
         tableController.tableView.userInteractionEnabled = false
         isSearching = true
@@ -847,13 +860,22 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         
         return true
     }
-
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        if (text == "\n") {
+            textView.resignFirstResponder()
+        }
+        return true
+    }
+    
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
+        
+      
         textField.resignFirstResponder()
         return true
     }
-
+    
+    
     func displayAlert(title: String, message: String) {
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
