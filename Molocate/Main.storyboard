@@ -749,17 +749,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logoVectorel" translatesAutoresizingMaskIntoConstraints="NO" id="gS4-dY-bWU">
-                                <rect key="frame" x="113" y="65" width="150" height="150"/>
+                                <rect key="frame" x="82" y="40" width="212" height="212"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="150" id="THO-db-WcS"/>
-                                    <constraint firstAttribute="height" constant="150" id="ef8-U9-72H"/>
                                     <constraint firstAttribute="width" secondItem="gS4-dY-bWU" secondAttribute="height" multiplier="1:1" id="oWb-QR-tJN"/>
                                 </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="ef8-U9-72H"/>
-                                    </mask>
-                                </variation>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I5X-CN-gx5">
                                 <rect key="frame" x="26" y="312" width="323" height="44"/>
@@ -832,6 +825,7 @@
                             <constraint firstItem="I5X-CN-gx5" firstAttribute="width" secondItem="FHq-h4-9PL" secondAttribute="width" id="7EB-fW-buT"/>
                             <constraint firstItem="FHq-h4-9PL" firstAttribute="centerX" secondItem="wsP-Ik-ga6" secondAttribute="centerX" id="9ZB-jW-6de"/>
                             <constraint firstItem="I5X-CN-gx5" firstAttribute="top" secondItem="gS4-dY-bWU" secondAttribute="bottom" constant="65" id="9ey-o8-9hS"/>
+                            <constraint firstItem="I5X-CN-gx5" firstAttribute="top" secondItem="gS4-dY-bWU" secondAttribute="bottom" constant="60" id="CNM-KR-PQ4"/>
                             <constraint firstItem="eYH-9d-GKC" firstAttribute="height" secondItem="I5X-CN-gx5" secondAttribute="height" id="Ehr-mR-Mcg"/>
                             <constraint firstItem="gS4-dY-bWU" firstAttribute="centerX" secondItem="wsP-Ik-ga6" secondAttribute="centerX" id="Etf-2s-RkS"/>
                             <constraint firstItem="I5X-CN-gx5" firstAttribute="centerX" secondItem="wsP-Ik-ga6" secondAttribute="centerX" id="Ffe-k3-dYY"/>
@@ -847,7 +841,7 @@
                             <constraint firstItem="I5X-CN-gx5" firstAttribute="centerY" secondItem="wsP-Ik-ga6" secondAttribute="centerY" id="gKW-O8-FEd"/>
                             <constraint firstItem="I5X-CN-gx5" firstAttribute="leading" secondItem="wsP-Ik-ga6" secondAttribute="leadingMargin" constant="10" id="nGo-di-nr8"/>
                             <constraint firstItem="Xu1-2q-1sX" firstAttribute="centerX" secondItem="wsP-Ik-ga6" secondAttribute="centerX" id="oZx-vt-Avg"/>
-                            <constraint firstItem="gS4-dY-bWU" firstAttribute="top" secondItem="wsP-Ik-ga6" secondAttribute="topMargin" constant="65" id="pMa-Nl-5cy"/>
+                            <constraint firstItem="gS4-dY-bWU" firstAttribute="top" secondItem="wsP-Ik-ga6" secondAttribute="topMargin" constant="40" id="pMa-Nl-5cy"/>
                             <constraint firstItem="Bzr-7Q-hTj" firstAttribute="top" secondItem="I5X-CN-gx5" secondAttribute="bottom" constant="35" id="zSa-h6-vhj"/>
                         </constraints>
                         <variation key="default">
@@ -3264,7 +3258,7 @@
         <image name="switch" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Omh-JG-0zV"/>
+        <segue reference="i6B-xP-GmW"/>
         <segue reference="hW6-pa-tyf"/>
         <segue reference="QdI-VY-wKQ"/>
         <segue reference="Vlr-i7-pN8"/>
