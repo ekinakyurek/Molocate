@@ -39,7 +39,7 @@ class TableViewCellFollowerFollowing: UITableViewCell {
         contentView.addSubview(myButton1)
    
         //myLabel1 = UIButton()
-        myLabel1.frame = CGRect(x:UIScreen.mainScreen().bounds.width - 40 , y: gap + 5, width: 30, height: 30)
+        myLabel1.frame = CGRectMake(UIScreen.mainScreen().bounds.width - 37 , 9, 39, 30)
         myLabel1.setBackgroundImage(UIImage(named: "follow"), forState: .Normal)
         myLabel1.hidden = true
         myLabel1.enabled = false

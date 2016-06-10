@@ -120,7 +120,9 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
         cell.usernameLabel.tag = indexPath.row
         cell.usernameLabel.text = userRelations.relations[indexPath.row].username
         cell.nameLabel.text = userRelations.relations[indexPath.row].name
-       
+        if(classUser.username == MoleCurrentUser.username){
+        cell.followButton.hidden = true
+        }
         //bak bunaaaa  cell.nameLabel.text = userRelations.relations[indexPath.row]
        
         if(userRelations.relations[indexPath.row].picture_url.absoluteString != ""){
@@ -131,15 +133,11 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
        
 
         if(!userRelations.relations[indexPath.row].is_following){
-            cell.followButton.hidden = false
-            cell.followButton.enabled = true
-            cell.followButton.addTarget(self, action: #selector(Followers.pressedFollow(_:)), forControlEvents: .TouchUpInside)
-            
-            
+            cell.followButton.setBackgroundImage(UIImage(named: "follow"), forState: UIControlState.Normal)
         } else {
-            cell.followButton.hidden = true
-            cell.followButton.enabled = false
+            cell.followButton.setBackgroundImage(UIImage(named: "followTicked"), forState: UIControlState.Normal)
         }
+        cell.followButton.addTarget(self, action: #selector(Followers.pressedFollow(_:)), forControlEvents: .TouchUpInside)
 
 //        if followersclicked {
 //        
@@ -284,17 +282,28 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
     
     
     func pressedFollow(sender: UIButton) {
+        
         let buttonRow = sender.tag
-
-        MoleCurrentUser.following_count += 1
-        self.userRelations.relations[buttonRow].is_following = true
-      
+        
+        if !classUser.isFollowing{
+            classUser.isFollowing = true
+            self.userRelations.relations[buttonRow].is_following = true
+            MolocateAccount.follow(userRelations.relations[buttonRow].username){ (data, response, error) -> () in
+                
+            }
+            
+        }else {
+                self.classUser.isFollowing = false
+                self.userRelations.relations[buttonRow].is_following = false
+            MolocateAccount.unfollow(userRelations.relations[buttonRow].username){ (data, response, error) -> () in
+                
+            }
+            
+    }
         let index = NSIndexPath(forRow: buttonRow, inSection: 0)
         self.myTable.reloadRowsAtIndexPaths([index], withRowAnimation: .None)
         
-        MolocateAccount.follow(userRelations.relations[buttonRow].username){ (data, response, error) -> () in
-            //do something
-        }
+        
         
     }
     

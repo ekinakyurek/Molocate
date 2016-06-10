@@ -32,11 +32,13 @@ class sideProfilePic: UITableViewCell {
         let screenSize: CGRect = UIScreen.mainScreen().bounds
         
         username = UILabel()
-        username.frame = CGRectMake(screenSize.size.width / 10 , 40 + screenSize.size.width * 2 / 10 , screenSize.size.width / 5 , 30)
+        username.frame = CGRectMake(screenSize.size.width / 14 , 40 + screenSize.size.width * 2 / 10 , screenSize.size.width * 25.7 / 100  , 50)
         username.textColor = UIColor.whiteColor()
         username.textAlignment = .Center
         username.text = "ekinimo"
-        username.font = UIFont(name: "AvenirNext-Medium", size:17)
+        username.lineBreakMode = NSLineBreakMode.ByCharWrapping
+        username.numberOfLines = 2
+        username.font = UIFont(name: "AvenirNext-Medium", size:15)
         contentView.addSubview(username)
         
         profilePhoto = UIImageView()
@@ -45,7 +47,7 @@ class sideProfilePic: UITableViewCell {
         profilePhoto.layer.borderWidth = 0.5
         profilePhoto.layer.masksToBounds = false
         profilePhoto.layer.borderColor = UIColor.clearColor().CGColor
-        profilePhoto.frame = CGRectMake (screenSize.size.width / 10, 36 , screenSize.size.width * 2 / 10 ,  screenSize.size.width * 2 / 10)
+        profilePhoto.frame = CGRectMake (screenSize.size.width / 10 , 36 , screenSize.size.width * 2 / 10 ,  screenSize.size.width * 2 / 10)
         profilePhoto.layer.cornerRadius = profilePhoto.frame.height/2
         profilePhoto.clipsToBounds = true
         

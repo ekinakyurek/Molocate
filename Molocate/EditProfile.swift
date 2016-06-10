@@ -17,7 +17,6 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
     let birthday : UILabel = UILabel()
     let konum : UILabel = UILabel()
     let nameText : UITextField =  UITextField()
-    let surnameText : UITextField = UITextField()
     let switchDemo : UISwitch = UISwitch()
     let erkek : UILabel = UILabel()
     let kadın : UILabel = UILabel()
@@ -37,6 +36,7 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBarHidden = false
+        
         user = MoleCurrentUser
         initGui()
     }
@@ -186,7 +186,7 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
         self.view.addSubview(name)
         
     
-        nameText.frame = CGRectMake(screenWidth / 3 + 10 , 0 + (scr * (33 / 120)), (screenWidth - (screenWidth / 3) - 20) / 2 - 5, (scr * 6) / 120)
+        nameText.frame = CGRectMake(screenWidth / 3 + 10 , 0 + (scr * (33 / 120)), (screenWidth - (screenWidth / 3) - 30)  - 5, (scr * 6) / 120)
         nameText.borderStyle = .RoundedRect
         nameText.textColor = UIColor.blackColor()
         nameText.keyboardType = .Default
@@ -196,13 +196,6 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
         self.view.addSubview(nameText)
         
       
-        surnameText.frame = CGRectMake(2 * screenWidth / 3 + 10  , 0 + (scr * (33 / 120)), (screenWidth - (screenWidth / 3) - 20) / 2 - 5 , (scr * 6) / 120)
-        surnameText.font = UIFont(name: "AvenirNext-Regular", size: 14)
-        surnameText.borderStyle = .RoundedRect
-        surnameText.textColor = UIColor.blackColor()
-        surnameText.keyboardType = .EmailAddress
-        surnameText.text = user.last_name
-        self.view.addSubview(surnameText)
         
 
     }
@@ -326,7 +319,6 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
         sender.hidden = true
         
         user.first_name = nameText.text!
-        user.last_name = surnameText.text!
         
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"

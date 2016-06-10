@@ -115,14 +115,14 @@ class videoCell: UITableViewCell {
         self.contentView.addSubview(followButton)
         
         
-        likeButton.frame = CGRectMake( 5 , 108 + screenSize.width , 36, 36)
+        likeButton.frame = CGRectMake( 5 , 110 + screenSize.width , 32, 32)
         let likeImage = UIImage(named: "likeunfilled")! as UIImage
         likeButton.setBackgroundImage(likeImage, forState: UIControlState.Normal)
         self.contentView.addSubview(likeButton)
         
         
   
-        label1.frame = CGRectMake( 42 , 110 + screenSize.width , 44 , 18)
+        label1.frame = CGRectMake( 38 , 110 + screenSize.width , 44 , 18)
         //yazı ortalama
         label1.text = "BEĞENİ"
         label1.font = UIFont(name: "AvenirNext-Regular", size: 10)
@@ -131,7 +131,7 @@ class videoCell: UITableViewCell {
         self.contentView.addSubview(label1)
         
        
-        likeCount.frame = CGRectMake( 42 , 106 + screenSize.width , 44 , 36)
+        likeCount.frame = CGRectMake( 38 , 106 + screenSize.width , 44 , 36)
         likeCount.contentHorizontalAlignment = .Center
         likeCount.contentVerticalAlignment = .Bottom
         //likeCount.setTitle("0", forState: .Normal)
@@ -139,14 +139,14 @@ class videoCell: UITableViewCell {
         likeCount.titleLabel!.font = UIFont(name: "AvenirNext-Medium", size: 14)
         self.contentView.addSubview(likeCount)
         
-        commentButton.frame = CGRectMake( 93 , 108 + screenSize.width , 36 , 36)
+        commentButton.frame = CGRectMake( 93 , 110 + screenSize.width , 32 , 32)
         let commentImage = UIImage(named: "comment")! as UIImage
     
         commentButton.setBackgroundImage(commentImage, forState: UIControlState.Normal)
         self.contentView.addSubview(commentButton)
         
        
-        label2.frame = CGRectMake( 130 , 110 + screenSize.width , 44 , 18)
+        label2.frame = CGRectMake( 126 , 110 + screenSize.width , 44 , 18)
         label2.text = "YORUM"
         label2.font = UIFont(name: "AvenirNext-Regular", size: 10)
         label2.textAlignment = .Center
@@ -154,15 +154,15 @@ class videoCell: UITableViewCell {
         self.contentView.addSubview(label2)
         
     
-        commentCount.frame = CGRectMake( 130 , 123 + screenSize.width , 44 , 18)
+        commentCount.frame = CGRectMake( 128 , 124 + screenSize.width , 44 , 18)
         //commentCount.setTitle("0", forState: .Normal)
         commentCount.titleLabel!.font = UIFont(name: "AvenirNext-Medium", size: 14)
         commentCount.contentHorizontalAlignment = .Center
         commentCount.setTitleColor(swiftColor, forState: .Normal)
         self.contentView.addSubview(commentCount)
         
-        reportButton.frame = CGRectMake(screenSize.width - 49, 109 + screenSize.width  , 34, 34)
-        let reportImage = UIImage(named: "sign-2.png")! as UIImage
+        reportButton.frame = CGRectMake(screenSize.width - 44, 122 + screenSize.width  , 36, 9.6)
+        let reportImage = UIImage(named: "points")! as UIImage
         reportButton.setBackgroundImage(reportImage, forState: UIControlState.Normal)
         self.contentView.addSubview(reportButton)
         

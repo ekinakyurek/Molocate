@@ -98,7 +98,7 @@ public class MolocateAccount {
                                 var friend = MoleUserFriend()
                                 let thing = results[i] as! [String:AnyObject]
                                 friend.username = thing["username"] as! String
-                               // friend.name =  thing["first_name"] as! String
+                                friend.name =  thing["first_name"] as! String
                                 friend.picture_url = thing["picture_url"] is NSNull ? NSURL():NSURL(string: thing["picture_url"] as! String)!
                                 let isfollowing = thing["is_following"] as! Int
                           
@@ -165,7 +165,7 @@ public class MolocateAccount {
                             var friend = MoleUserFriend()
                             let thing = results[i] as! [String:AnyObject]
                             friend.username = thing["username"] as! String
-                           // friend.name =  thing["first_name"] as! String
+                            friend.name =  thing["first_name"] as! String
                             friend.picture_url = thing["picture_url"] is NSNull ? NSURL():NSURL(string: thing["picture_url"] as! String)!
                             let isfollowing = thing["is_following"] as! Int
                             

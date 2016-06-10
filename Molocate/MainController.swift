@@ -203,29 +203,9 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
     }
     
     
-    func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
-
-        
-        if scrollView == collectionView{
-            if collectionView.contentOffset.x == 300 {
-                rightArrow.hidden = true
-            }
-            else{
-                rightArrow.hidden = false
-            }
-        }
-        
-       
-        
-    }
     
-    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
-        
-        if scrollView == collectionView{
-            rightArrow.hidden = true
-        }
-        
-    }
+    
+  
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         
@@ -384,7 +364,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
     }
 
     func pressedFollowSearch(sender: UIButton) {
-        print(sender.tag)
+        
         let buttonRow = sender.tag
         pressedFollow = true
         self.searchedUsers[buttonRow].isFollowing = true
@@ -397,7 +377,10 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
             MoleCurrentUser.following_count += 1
             
         }
+        
         pressedFollow = false
+        
+        
     }
     
         
@@ -627,17 +610,20 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         myCell.selectedBackgroundView = backgroundView
         //myCell.layer.borderWidth = 0
         myCell.backgroundColor = swiftColor3
-       
+        
         if selectedCell == indexPath.row{
         myCell.myLabel.textColor = UIColor.whiteColor()
         myCell.backgroundColor = swiftColor2
+              let screenSize = UIScreen.mainScreen().bounds
             var b = CGPoint(x: 75 * selectedCell, y: 0)
-            if selectedCell < 3 {
+            if selectedCell < 2 {
                 b.x = 0
             }
             else if selectedCell > 5 {
-                b = CGPoint(x: 75 * 4, y: 0)
+                let contentSize =  collectionView.contentSize.width
+                b = CGPoint(x: contentSize - screenSize.width  , y: 0)
             }
+            
             else{
                 b = CGPoint(x: 75 * ( selectedCell - 2 ), y: 0)
             }

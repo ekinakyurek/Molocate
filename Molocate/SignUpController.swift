@@ -7,6 +7,7 @@ class signUpController: UIViewController,UITextFieldDelegate {
     @IBOutlet var termsButton: UIButton!
     @IBOutlet var email: UITextField!
     
+    @IBOutlet var toolBar: UIToolbar!
     //locationManagerlı şeyi eklemedim
     
     @IBOutlet var signUpButton: UIButton!
@@ -67,15 +68,16 @@ class signUpController: UIViewController,UITextFieldDelegate {
                 let mail: String = email.text!
                 
                 let emailValidation = MolocateUtility.isValidEmail(mail)
-                print(emailValidation)
+                
                 if username.text?.characters.count > 3 && emailValidation {
                     let mail: String = email.text!.lowercaseString
                     
                     MolocateAccount.SignUp(uname, password: pwd, email: mail, completionHandler: { (data, response, error) in
                         dispatch_async(dispatch_get_main_queue(), {
                             if(data == "success"){
-                                //buraya segue koy
-                                print("üye olundu")
+                                dispatch_async(dispatch_get_main_queue()) {
+                                    self.performSegueWithIdentifier("signUp", sender: self)
+                                }
                                 if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
                                     UIApplication.sharedApplication().endIgnoringInteractionEvents()
                                 }
@@ -126,17 +128,10 @@ class signUpController: UIViewController,UITextFieldDelegate {
         
         //navigationController?.navigationBar.hidden = true
         
-        var rightSwipe = UISwipeGestureRecognizer(target: self, action: Selector("handleSwipes:"))
-        rightSwipe.direction = .Right
-        view.addGestureRecognizer(rightSwipe)
+      
         
     }
-    func handleSwipes(gesture: UIGestureRecognizer) {
-        
-        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
-            self.performSegueWithIdentifier("backToFirst", sender: self)
-        }
-    }
+   
     override func viewWillAppear(animated: Bool) {
      
         adjustViewLayout(MolocateDevice.size)

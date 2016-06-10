@@ -331,7 +331,7 @@ class MyProfile: UIViewController , UIScrollViewDelegate, UITableViewDelegate, U
             MoleGlobalVideo = nil
             GlobalVideoUploadRequest = nil
            
-            self.parentViewController!.parentViewController!.performSegueWithIdentifier("logout", sender: self)
+            self.parentViewController!.parentViewController!.performSegueWithIdentifier("logOut", sender: self)
         }
         
         

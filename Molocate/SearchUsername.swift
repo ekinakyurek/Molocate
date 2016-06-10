@@ -23,7 +23,7 @@ class searchUsername: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         let screenSize: CGRect = UIScreen.mainScreen().bounds
-               profilePhoto.frame = CGRectMake(10, 5, 44, 44)
+               profilePhoto.frame = CGRectMake(10, 8 , 44, 44)
         //let image = UIImage(named: "profile")! as UIImage
         profilePhoto.layer.borderWidth = 0.1
         profilePhoto.layer.masksToBounds = false
@@ -34,7 +34,7 @@ class searchUsername: UITableViewCell {
         // profilePhoto.setBackgroundImage(image, forState: UIControlState.Normal)
         self.contentView.addSubview(profilePhoto)
         
-        usernameLabel.frame = CGRectMake(64 , 6 , screenSize.width - 100, 25)
+        usernameLabel.frame = CGRectMake(66 , 8 , screenSize.width - 100, 25)
         usernameLabel.textColor = UIColor.blackColor()
         usernameLabel.textAlignment = .Left
         //usernameLabel.text = "@kcenan"
@@ -42,15 +42,15 @@ class searchUsername: UITableViewCell {
         //Username.addTarget(self, action: "pressedUsername:", forControlEvents:UIControlEvents.TouchUpInside)
         self.contentView.addSubview(usernameLabel)
   
-        nameLabel.frame = CGRectMake(64 , 27 , screenSize.width - 100, 22)
+        nameLabel.frame = CGRectMake(66 , 27 , screenSize.width - 100, 22)
         nameLabel.textColor = UIColor.grayColor()
         nameLabel.textAlignment = .Left
         //nameLabel.text = "Kağan Cenan"
-        nameLabel.font = UIFont(name: "AvenirNext-Regular", size:13)
+        nameLabel.font = UIFont(name: "AvenirNext-Regular", size:12)
         self.contentView.addSubview(nameLabel)
         
         //followButton = UIButton()
-        followButton.frame = CGRectMake(screenSize.width - 41 , 11 , 32 , 32)
+        followButton.frame = CGRectMake(UIScreen.mainScreen().bounds.width - 44 , 15 , 39, 30)
         followButton.setBackgroundImage(UIImage(named: "follow"), forState: UIControlState.Normal)
         self.contentView.addSubview(followButton)
     }

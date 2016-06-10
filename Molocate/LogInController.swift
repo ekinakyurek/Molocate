@@ -17,6 +17,7 @@ import UIKit
 class logInController: UIViewController, UITextFieldDelegate {
     
     
+    @IBOutlet var toolBar: UIToolbar!
     var loginActive = true
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     var errorMessage = "Lütfen tekrar deneyiniz."
@@ -46,7 +47,9 @@ class logInController: UIViewController, UITextFieldDelegate {
         MolocateAccount.Login(uname, password: pwd, completionHandler: { (data, response, error) in
             dispatch_async(dispatch_get_main_queue(), {
                 if( data == "success" ){
-                    print("oldu lan")
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.performSegueWithIdentifier("logIn", sender: self)
+                    }
                     if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
                         UIApplication.sharedApplication().endIgnoringInteractionEvents()
                     }
@@ -102,6 +105,7 @@ class logInController: UIViewController, UITextFieldDelegate {
         loginButton.layer.borderWidth = 1
         loginButton.layer.borderColor = UIColor.clearColor().CGColor
         
+    
         
         let screenSize: CGRect = UIScreen.mainScreen().bounds
         let imageView = UIImageView(image: UIImage(named: "Logo.png"))
@@ -111,17 +115,7 @@ class logInController: UIViewController, UITextFieldDelegate {
         if is4s {
         loginButton.frame.origin.y = screenSize.height / 2 + 30
         }
-        var rightSwipe = UISwipeGestureRecognizer(target: self, action: Selector("handleSwipes:"))
-          rightSwipe.direction = .Right
-        view.addGestureRecognizer(rightSwipe)
-        
-    }
-    func handleSwipes(gesture: UIGestureRecognizer) {
-        
-        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
-            self.performSegueWithIdentifier("backToFirst", sender: self)
-        }
-    }
+           }
     
   
     override func viewWillAppear(animated: Bool) {
