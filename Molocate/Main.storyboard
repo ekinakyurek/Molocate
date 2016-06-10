@@ -734,7 +734,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1513.5" y="-2706.5"/>
+            <point key="canvasLocation" x="1117.5" y="-2820.5"/>
         </scene>
         <!--First Controller-->
         <scene sceneID="wU9-eB-ahd">
@@ -768,7 +768,7 @@
                                     <segue destination="Lat-Ou-M0z" kind="show" identifier="signUpSegue" id="r8V-JF-m1L"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eYH-9d-GKC">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eYH-9d-GKC">
                                 <rect key="frame" x="26" y="563" width="323" height="44"/>
                                 <color key="backgroundColor" red="0.78823529411764703" green="0.14117647058823529" blue="0.31764705882352939" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -782,7 +782,7 @@
                                     <segue destination="XtY-e9-cyT" kind="show" identifier="logInSegue" id="F9H-sc-cMe"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Zaten hesabın var mı?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xu1-2q-1sX">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Zaten hesabın var mı?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xu1-2q-1sX">
                                 <rect key="frame" x="122" y="535" width="131" height="18"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="13"/>
                                 <color key="textColor" red="0.89411764709999997" green="0.94509803920000002" blue="0.99607843139999996" alpha="1" colorSpace="calibratedRGB"/>
@@ -864,7 +864,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sDY-Mk-9m9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2678.5" y="-2820.5"/>
+            <point key="canvasLocation" x="2498.5" y="-3032.5"/>
         </scene>
         <!--Log In Controller-->
         <scene sceneID="AaA-Zb-hEN">
@@ -996,7 +996,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oj3-FL-lUq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3040.5" y="-2396.5"/>
+            <point key="canvasLocation" x="3274.5" y="-2004.5"/>
         </scene>
         <!--Sign Up Controller-->
         <scene sceneID="cRk-Km-lu0">
@@ -1190,7 +1190,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6nq-vk-Vno" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2250.5" y="-2826.5"/>
+            <point key="canvasLocation" x="1906.5" y="-2898.5"/>
         </scene>
         <!--Container Controller-->
         <scene sceneID="UcB-W7-oL7">
@@ -1593,7 +1593,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mmj-q2-7dr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1205.5" y="-676.5"/>
+            <point key="canvasLocation" x="1241.5" y="-676.5"/>
         </scene>
         <!--Profile-->
         <scene sceneID="pYS-jB-53J">
@@ -2971,7 +2971,8 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" id="LlD-Ut-DBI">
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <navigationItem key="navigationItem" title="Profil" id="LlD-Ut-DBI">
                         <barButtonItem key="leftBarButtonItem" image="sideMenu" id="IO0-MG-EC8">
                             <connections>
                                 <action selector="backButton:" destination="yEu-4o-WM5" id="G95-ck-M2g"/>
@@ -2984,6 +2985,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="FollowButton" destination="uY0-CZ-fln" id="y9J-PD-0YT"/>
@@ -3258,10 +3260,10 @@
         <image name="switch" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="i6B-xP-GmW"/>
-        <segue reference="hW6-pa-tyf"/>
         <segue reference="QdI-VY-wKQ"/>
-        <segue reference="Vlr-i7-pN8"/>
+        <segue reference="ON5-bH-Lzp"/>
+        <segue reference="FAJ-KK-HEh"/>
         <segue reference="cGX-Xw-vdc"/>
+        <segue reference="Vlr-i7-pN8"/>
     </inferredMetricsTieBreakers>
 </document>

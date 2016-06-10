@@ -23,7 +23,11 @@ class SideBarController: UITableViewController {
         tableView.tableFooterView = UIView()
         tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
         
-        
+        MolocateAccount.getCurrentUser { (data, response, error) in
+            dispatch_async(dispatch_get_main_queue() , {
+              self.tableView.reloadData()
+            })
+        }
         
     }
     

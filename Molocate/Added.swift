@@ -279,7 +279,9 @@ import AVFoundation
             }
                 }
             if indexPath.row == 0 && on {
+                if self.player2.playbackState.description != "Playing" {
                 self.player2.playFromBeginning()
+                }
             }
             }
 

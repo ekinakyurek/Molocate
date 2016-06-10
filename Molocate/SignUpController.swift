@@ -51,7 +51,7 @@ class signUpController: UIViewController,UITextFieldDelegate {
     @IBAction func signUpButton(sender: AnyObject) {
         
         if(MolocateDevice.isConnectedToNetwork()){
-            
+            choosedIndex = 2
             if username.text == "" || password.text == "" || email.text == ""{
                 displayAlert("Hata", message: "lütfen bilgileri doldurunuz.")
             }else {

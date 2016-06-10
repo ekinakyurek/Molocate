@@ -43,7 +43,8 @@ class logInController: UIViewController, UITextFieldDelegate {
         
         let uname: String = (username.text?.lowercaseString)!
         let pwd: String = password.text!
-        
+        choosedIndex = 2
+        if(MolocateDevice.isConnectedToNetwork()){
         MolocateAccount.Login(uname, password: pwd, completionHandler: { (data, response, error) in
             dispatch_async(dispatch_get_main_queue(), {
                 if( data == "success" ){
@@ -62,7 +63,9 @@ class logInController: UIViewController, UITextFieldDelegate {
                     }
                 }
             })
-        })
+        }) } else {
+            self.displayAlert("Hata", message: "İnternet bağlantınızı kontrol ediniz.")
+        }
         
         
 

@@ -144,7 +144,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         rectShape2.borderColor = swiftColor2.CGColor
         self.venueButton2.layer.backgroundColor = swiftColor2.CGColor
         self.venueButton2.layer.mask = rectShape2
-        
+        searchText.backgroundColor = swiftColor
         let bartextField = searchText.valueForKey("searchField") as! UITextField
         bartextField.backgroundColor = swiftColor2
         bartextField.font = UIFont(name: "AvenirNext-Regular", size: 14)
@@ -263,9 +263,10 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
             } else {
                 let cell = searchUsername(style: UITableViewCellStyle.Default, reuseIdentifier: "cell")
                 if searchedUsers[indexPath.row].isFollowing {
-                    cell.followButton.hidden = true
+                    cell.followButton.setBackgroundImage(UIImage(named: "followTicked"), forState: UIControlState.Normal)
+                    cell.followButton.addTarget(self, action: #selector(MainController.pressedUnfollowSearch(_:)), forControlEvents: .TouchUpInside)
                 } else {
-                    
+                    cell.followButton.setBackgroundImage(UIImage(named: "follow"), forState: UIControlState.Normal)
                     cell.followButton.addTarget(self, action: #selector(MainController.pressedFollowSearch(_:)), forControlEvents: .TouchUpInside)
                 }
                 cell.usernameLabel.text = "@\(searchedUsers[indexPath.row].username)"
@@ -383,6 +384,26 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         
     }
     
+    
+    func pressedUnfollowSearch(sender: UIButton) {
+        
+        let buttonRow = sender.tag
+        pressedFollow = false
+        self.searchedUsers[buttonRow].isFollowing = false
+        var indexes = [NSIndexPath]()
+        let index = NSIndexPath(forRow: buttonRow, inSection: 0)
+        indexes.append(index)
+        self.venueTable.reloadRowsAtIndexPaths(indexes, withRowAnimation: .None)
+        
+        MolocateAccount.unfollow(self.searchedUsers[buttonRow].username){ (data, response, error) -> () in
+            MoleCurrentUser.following_count -= 1
+            
+        }
+        
+        pressedFollow = true
+        
+        
+    }
         
     
     
@@ -509,6 +530,8 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
     
     override func viewDidAppear(animated: Bool) {
         NSNotificationCenter.defaultCenter().postNotificationName("closeSideBar", object: nil)
+        self.searchText.text = ""
+        self.searchText.placeholder = "Ara"
         //self.tableController.isOnView = true
         
 
