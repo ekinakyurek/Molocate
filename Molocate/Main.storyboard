@@ -145,39 +145,49 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5RV-oc-KEd">
-                                                    <rect key="frame" x="337" y="3" width="30" height="30"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qK1-zd-RHu">
+                                                    <rect key="frame" x="323" y="8" width="44" height="34"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="30" id="X04-qc-5tI"/>
-                                                        <constraint firstAttribute="width" constant="30" id="hVd-lE-0LB"/>
+                                                        <constraint firstAttribute="height" constant="34" id="In2-i1-WiR"/>
+                                                        <constraint firstAttribute="width" constant="44" id="Kms-fK-HYt"/>
+                                                        <constraint firstAttribute="width" constant="30" id="UCk-iR-f15"/>
+                                                        <constraint firstAttribute="height" constant="9" id="eRP-fJ-eRv"/>
                                                     </constraints>
-                                                    <state key="normal" image="points"/>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="UCk-iR-f15"/>
+                                                            <exclude reference="eRP-fJ-eRv"/>
+                                                        </mask>
+                                                    </variation>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qK1-zd-RHu">
-                                                    <rect key="frame" x="327" y="-7" width="50" height="50"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="points" translatesAutoresizingMaskIntoConstraints="NO" id="bGd-e0-Kag">
+                                                    <rect key="frame" x="332" y="13" width="30" height="10"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="50" id="UCk-iR-f15"/>
-                                                        <constraint firstAttribute="height" constant="50" id="eRP-fJ-eRv"/>
+                                                        <constraint firstAttribute="width" constant="30" id="S3H-Vm-8nB"/>
+                                                        <constraint firstAttribute="height" constant="9.5" id="VMC-BZ-WUJ"/>
                                                     </constraints>
-                                                </button>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="5RV-oc-KEd" firstAttribute="top" secondItem="obK-Au-r1F" secondAttribute="topMargin" constant="-5" id="7B2-2w-gFc"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="qK1-zd-RHu" secondAttribute="trailing" id="4xE-kh-HCl"/>
+                                                <constraint firstItem="qK1-zd-RHu" firstAttribute="top" secondItem="obK-Au-r1F" secondAttribute="topMargin" id="66y-Nt-jTf"/>
                                                 <constraint firstItem="cIR-HD-TTt" firstAttribute="leading" secondItem="obK-Au-r1F" secondAttribute="leadingMargin" constant="8" id="999-Or-AEc"/>
+                                                <constraint firstItem="bGd-e0-Kag" firstAttribute="top" secondItem="obK-Au-r1F" secondAttribute="topMargin" constant="5" id="HYg-py-sIr"/>
                                                 <constraint firstItem="fWb-Ej-YVV" firstAttribute="leading" secondItem="obK-Au-r1F" secondAttribute="leadingMargin" constant="5" id="Q3B-re-LkO"/>
                                                 <constraint firstItem="cIR-HD-TTt" firstAttribute="top" secondItem="Ner-aq-Sia" secondAttribute="bottom" constant="5" id="QfL-g8-CNQ"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="qK1-zd-RHu" secondAttribute="trailing" constant="-10" id="Rek-mk-px2"/>
                                                 <constraint firstItem="cIR-HD-TTt" firstAttribute="leading" secondItem="fWb-Ej-YVV" secondAttribute="trailing" constant="8" id="XvT-4k-Lh4"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="cIR-HD-TTt" secondAttribute="bottom" constant="5" id="Z76-PW-9ZC"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="bGd-e0-Kag" secondAttribute="trailing" constant="5" id="ZTc-Pv-icx"/>
                                                 <constraint firstItem="Ner-aq-Sia" firstAttribute="top" secondItem="obK-Au-r1F" secondAttribute="topMargin" id="aig-Mh-eQr"/>
-                                                <constraint firstItem="5RV-oc-KEd" firstAttribute="trailing" secondItem="obK-Au-r1F" secondAttribute="trailingMargin" id="be1-8x-iDC"/>
                                                 <constraint firstItem="fWb-Ej-YVV" firstAttribute="top" secondItem="obK-Au-r1F" secondAttribute="topMargin" constant="5" id="c0u-Bd-DJA"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="cIR-HD-TTt" secondAttribute="trailing" constant="20" id="chD-Xu-bcI"/>
                                                 <constraint firstItem="Ner-aq-Sia" firstAttribute="top" secondItem="obK-Au-r1F" secondAttribute="topMargin" constant="5" id="dip-9D-97F"/>
                                                 <constraint firstItem="Ner-aq-Sia" firstAttribute="leading" secondItem="fWb-Ej-YVV" secondAttribute="trailing" constant="8" id="kJ7-kV-nfl"/>
                                                 <constraint firstItem="qK1-zd-RHu" firstAttribute="top" secondItem="obK-Au-r1F" secondAttribute="topMargin" constant="-15" id="lGb-PV-8Re"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="qK1-zd-RHu" secondAttribute="trailing" constant="5" id="m88-T3-1Kv"/>
                                                 <constraint firstItem="cIR-HD-TTt" firstAttribute="top" secondItem="Ner-aq-Sia" secondAttribute="bottom" constant="5" id="nNH-Ah-73S"/>
                                                 <constraint firstItem="cIR-HD-TTt" firstAttribute="top" secondItem="Ner-aq-Sia" secondAttribute="bottom" id="qke-Vi-cqt"/>
+                                                <constraint firstItem="qK1-zd-RHu" firstAttribute="top" secondItem="obK-Au-r1F" secondAttribute="topMargin" constant="5" id="zva-GI-6SU"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
@@ -185,6 +195,9 @@
                                                     <exclude reference="999-Or-AEc"/>
                                                     <exclude reference="QfL-g8-CNQ"/>
                                                     <exclude reference="nNH-Ah-73S"/>
+                                                    <exclude reference="lGb-PV-8Re"/>
+                                                    <exclude reference="m88-T3-1Kv"/>
+                                                    <exclude reference="zva-GI-6SU"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>

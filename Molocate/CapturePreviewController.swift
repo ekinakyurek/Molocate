@@ -30,6 +30,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
         var latitude: Float!
         var longitude: Float!
         var rating: Float!
+        var selectedCell = 0
     
        
         
@@ -405,7 +406,16 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
         myCell.label?.text = self.categories[indexPath.row]
         myCell.frame.size.width = 75
         myCell.label.textAlignment = .Center
-        }
+            if selectedCell == indexPath.row{
+                myCell.label.textColor = UIColor.whiteColor()
+                myCell.backgroundColor = swiftColor2
+            }
+            else{
+                myCell.label.textColor = UIColor.blackColor()
+                myCell.backgroundColor = swiftColor3
+            }
+            
+            }
         
         return myCell
     }
@@ -416,7 +426,9 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
         self.categ = MoleCategoriesDictionary[self.categories[indexPath.row]]
         //print(self.categories[indexPath.row])
         //print(self.categ)
+        selectedCell = indexPath.row
         self.isCategorySelected = true
+         self.collectionView.reloadData()
         if isLocationSelected {
          self.bottomToolbar.barTintColor = swiftColor
         }

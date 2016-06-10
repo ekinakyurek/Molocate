@@ -120,9 +120,8 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
         cell.usernameLabel.tag = indexPath.row
         cell.usernameLabel.text = userRelations.relations[indexPath.row].username
         cell.nameLabel.text = userRelations.relations[indexPath.row].name
-        if(classUser.username == MoleCurrentUser.username){
-        cell.followButton.hidden = true
-        }
+        
+       
         //bak bunaaaa  cell.nameLabel.text = userRelations.relations[indexPath.row]
        
         if(userRelations.relations[indexPath.row].picture_url.absoluteString != ""){
@@ -130,6 +129,7 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
         }else{
             cell.profilePhoto.setImage(UIImage(named: "profile"), forState: .Normal)
         }
+        
        
 
         if(!userRelations.relations[indexPath.row].is_following){
@@ -184,7 +184,9 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
         //                cell.myButton1.addTarget(self, action: #selector(Followers.pressedProfile(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         //                cell.fotoButton.addTarget(self, action: #selector(Followers.pressedProfile(_:)), forControlEvents: UIControlEvents.TouchUpInside)
       
-
+        if(userRelations.relations[indexPath.row].username == MoleCurrentUser.username){
+            cell.followButton.hidden = true
+        }
         
         
         return cell
