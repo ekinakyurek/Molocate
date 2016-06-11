@@ -344,6 +344,9 @@ class TimelineController: UITableViewController,PlayerDelegate {
 
     func scrollToTop() {
         self.tableView.setContentOffset(CGPoint(x:0,y:0), animated: true)
+        if type == "HomePage" {
+            NSNotificationCenter.defaultCenter().postNotificationName("showNavigation", object: nil)
+        }
     }
 
     override func tableView(atableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {

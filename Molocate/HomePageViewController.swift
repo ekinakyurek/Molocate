@@ -51,8 +51,7 @@ class HomePageViewController: UIViewController, UITextFieldDelegate, TimelineCon
         if(choosedIndex != 0 && profileOn == 1){
             NSNotificationCenter.defaultCenter().postNotificationName("closeProfile", object: nil)
         }
-        
-        
+       NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HomePageViewController.showNavigation), name: "showNavigation", object: nil)
         
         if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
             UIApplication.sharedApplication().endIgnoringInteractionEvents()
@@ -122,6 +121,10 @@ class HomePageViewController: UIViewController, UITextFieldDelegate, TimelineCon
         
         
         
+    }
+    
+    func showNavigation() {
+        navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     func pressedComment(videoId: String, Row: Int) {

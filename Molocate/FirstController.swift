@@ -80,6 +80,7 @@ class firstController: UIViewController , CLLocationManagerDelegate {
     }
     
     func fbLoginInitiate() {
+        choosedIndex = 2
         FBSDKLoginManager().logInWithReadPermissions(["public_profile", "email","user_birthday", "user_friends"],fromViewController:self,handler: { (Result:FBSDKLoginManagerLoginResult!, error:NSError!) -> Void in
             
             if (error != nil) {

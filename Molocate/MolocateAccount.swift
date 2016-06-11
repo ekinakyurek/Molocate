@@ -99,7 +99,7 @@ public class MolocateAccount {
                                 let thing = results[i] as! [String:AnyObject]
                                 friend.username = thing["username"] as! String
                                 friend.name =  thing["first_name"] as! String
-                                friend.picture_url = thing["picture_url"] is NSNull ? NSURL():NSURL(string: thing["picture_url"] as! String)!
+                                friend.picture_url = thing["thumbnail_url"] is NSNull ? NSURL():NSURL(string: thing["thumbnail_url"] as! String)!
                                 let isfollowing = thing["is_following"] as! Int
                           
                                 friend.is_following = isfollowing == 0 ? false:true
@@ -166,7 +166,7 @@ public class MolocateAccount {
                             let thing = results[i] as! [String:AnyObject]
                             friend.username = thing["username"] as! String
                             friend.name =  thing["first_name"] as! String
-                            friend.picture_url = thing["picture_url"] is NSNull ? NSURL():NSURL(string: thing["picture_url"] as! String)!
+                            friend.picture_url = thing["thumbnail_url"] is NSNull ? NSURL():NSURL(string: thing["thumbnail_url"] as! String)!
                             let isfollowing = thing["is_following"] as! Int
                             
                            
@@ -700,7 +700,7 @@ public class MolocateAccount {
                         //print(item)
                         var user = MoleUser()
                         user.username = item["username"] as! String
-                        user.profilePic = item["picture_url"] is NSNull ? NSURL():NSURL(string: item["picture_url"] as! String)!
+                        user.profilePic = item["thumbnail_url"] is NSNull ? NSURL():NSURL(string: item["thumbnail_url"] as! String)!
                         user.first_name = item["first_name"] as! String
                         user.last_name = item["last_name"] as! String
                         user.isFollowing = item["is_following"] as! Int == 1 ? true:false
@@ -740,7 +740,7 @@ public class MolocateAccount {
                         user.username = result["username"] as! String
                         user.first_name = result["first_name"] as! String
                         user.last_name = result["last_name"] as! String
-                        user.profilePic = result["picture_url"] is NSNull ? NSURL():NSURL(string: result["picture_url"] as! String)!
+                        user.profilePic = result["thumbnail_url"] is NSNull ? NSURL():NSURL(string: result["picture_url"] as! String)!
                         user.follower_count = result["follower_count"] as! Int
                         user.following_count = result["following_count"]as! Int
                         user.tag_count = result["tag_count"] as! Int
@@ -891,7 +891,7 @@ public class MolocateAccount {
                         var urlString = ""
                         let message = result["result"]
                         if(message == "success"){
-                            urlString = result["picture_url"]!
+                            urlString = result["thumbnail_url"]!
                         }else{
                             urlString = ""
                         }
