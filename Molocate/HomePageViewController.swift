@@ -41,6 +41,7 @@ class HomePageViewController: UIViewController, UITextFieldDelegate, TimelineCon
         self.navigationItem.titleView?.tintColor = UIColor.whiteColor()
         
         
+        tabBarController?.tabBar.hidden = true
         
         try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
         
@@ -200,6 +201,7 @@ class HomePageViewController: UIViewController, UITextFieldDelegate, TimelineCon
     @IBOutlet var cameraButton: UIBarButtonItem!
     
     @IBAction func openCamera(sender: AnyObject) {
+        
         if CLLocationManager.locationServicesEnabled() {
             switch(CLLocationManager.authorizationStatus()) {
             case .NotDetermined, .Restricted, .Denied:

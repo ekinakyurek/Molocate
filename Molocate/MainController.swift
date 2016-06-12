@@ -561,7 +561,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
     
     
     @IBAction func openCamera(sender: AnyObject) {
-    
+        
         if (isUploaded) {
             CaptionText = ""
             if isSearching != true {

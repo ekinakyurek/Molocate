@@ -738,10 +738,12 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         
         var time:Double = 0.0
         for video in self.videoClips {
+            
             let asset = AVAsset(URL: video)
             let videoAssetTrack = asset.tracksWithMediaType(AVMediaTypeVideo)[0]
             let audioAssetTrack = asset.tracksWithMediaType(AVMediaTypeAudio)[0]
-            let atTime = CMTime(seconds: time, preferredTimescale:1)
+            let atTime = CMTimeMakeWithSeconds(time, 1000)
+        
             do{
                 try videoTrack.insertTimeRange(CMTimeRangeMake(kCMTimeZero, asset.duration) , ofTrack: videoAssetTrack, atTime: atTime)
                 
@@ -750,7 +752,9 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
             }catch{
                 print("something bad happend I don't want to talk about it")
             }
+            
             time +=  asset.duration.seconds
+            //print(time)
             
         }
         
