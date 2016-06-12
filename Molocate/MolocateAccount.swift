@@ -740,7 +740,7 @@ public class MolocateAccount {
                         user.username = result["username"] as! String
                         user.first_name = result["first_name"] as! String
                         user.last_name = result["last_name"] as! String
-                        user.profilePic = result["thumbnail_url"] is NSNull ? NSURL():NSURL(string: result["picture_url"] as! String)!
+                        user.profilePic = result["picture_url"] is NSNull ? NSURL():NSURL(string: result["picture_url"] as! String)!
                         user.follower_count = result["follower_count"] as! Int
                         user.following_count = result["following_count"]as! Int
                         user.tag_count = result["tag_count"] as! Int

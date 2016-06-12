@@ -174,11 +174,13 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
                 // In iOS 9 and later, it's possible to move the file into the photo library without duplicating the file data.
                 // This avoids using double the disk space during save, which can make a difference on devices with limited free disk space.
                 let newURL = NSURL(fileURLWithPath: videoPath!)
-                
+                print(videoPath)
                 PHAssetChangeRequest.creationRequestForAssetFromVideoAtFileURL(newURL)
                 }, completionHandler: {success, error in
                     if !success {
                         NSLog("Could not save movie to photo library: %@", error!)
+                    } else {
+                        
                     }
                     
                     
@@ -561,7 +563,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
             autocompleteUrls = placesArray
         }
         
-            placeTable.reloadData()
+        self.placeTable.reloadData()
     }
     func getParameters(strippedString:String) -> Parameters {
         return [Parameter.ll:valuell,Parameter.llAcc:valuellacc,Parameter.alt:valuealt,Parameter.altAcc:valuealtacc,Parameter.radius:"\(3000)",Parameter.query:strippedString]
@@ -583,11 +585,12 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
 
             let index = indexPath.row as Int
             if isSearch {
-                let place = locationDict[index][autocompleteUrls[index]]
+                let correctedRow = placeOrder.objectForKey(autocompleteUrls[index]) as! Int
+                let place = locationDict[correctedRow][autocompleteUrls[index]]
                 cell.nameLabel.text = place?.name
                 cell.addressNameLabel.text = place?.adress
-                
             } else {
+                
                 let place = searchDict[index][searchArray[index]]
                 cell.nameLabel.text = place?.name
                 cell.addressNameLabel.text = place?.adress

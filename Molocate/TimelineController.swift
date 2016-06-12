@@ -743,19 +743,11 @@ class TimelineController: UITableViewController,PlayerDelegate {
             }else if type == "MainController" {
                 if (scrollView.contentOffset.y<pointNow) {
 
-
-
-                    //UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: UIStatusBarAnimation.Fade )r
-
-
                     direction = 0
+                    //self.parentViewController?.navigationController?.setNavigationBarHidden(false, animated: true)
                 } else if (scrollView.contentOffset.y>pointNow) {
-
-
-
-                    //UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: UIStatusBarAnimation.Fade )
-                    //collectionView.contentInset = UIEdgeInsets(top: 10,left: 0,bottom: 0,right: 0)
                     direction = 1
+                    //self.parentViewController?.navigationController?.setNavigationBarHidden(true, animated: true)
 
                 }
 

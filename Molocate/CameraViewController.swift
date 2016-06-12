@@ -754,7 +754,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
             }
             
             time +=  asset.duration.seconds
-            //print(time)
+            
             
         }
         

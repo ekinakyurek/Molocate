@@ -21,8 +21,10 @@ class oneVideo: UIViewController,PlayerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if UIApplication.sharedApplication().isIgnoringInteractionEvents(){
         UIApplication.sharedApplication().endIgnoringInteractionEvents()
-        
+        }
+        initGui()
         // Do any additional setup after loading the view.
     }
     
