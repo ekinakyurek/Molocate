@@ -1,4 +1,4 @@
-//Molocate app. Account Related Functions
+ //Molocate app. Account Related Functions
 import UIKit
 
 //Globals
@@ -877,6 +877,77 @@ public class MolocateAccount {
         }
     }
     
+    class func sendProfilePhotoandThumbnail(image: NSData, thumbnail: NSData, completionHandler: (data: String!, response: NSURLResponse!, error: NSError!) -> ()){
+      
+        let headers = [
+            "content-type": "multipart/form-data; boundary=---011000010111000001101001",
+            "authorization": "Token " + MoleUserToken!
+        ]
+        let parameters = [
+            [
+                "name": "picture",
+                "fileName": ["0": []],
+                "content-type" : "image/jpeg"
+            ],
+            [
+                "name": "thumbnail",
+                "fileName": ["0": []],
+                "content-type" : "image/jpeg"
+            ]
+        ]
+        
+        let boundary = "---011000010111000001101001"
+        
+       
+        let postData = NSMutableData()
+        
+        for param in parameters {
+            
+            var body = ""
+            let paramName = param["name"]!
+            
+            body += "--\(boundary)\r\n"
+            
+        
+            body += "Content-Disposition:form-data; name=\"\(paramName)\""
+            
+            let filename = param["fileName"]
+            let contentType = param["content-type"]!
+    
+            body += "; filename=\"\(filename)\"\r\n"
+            body += "Content-Type: \(contentType)\r\n\r\n"
+            postData.appendData(body.dataUsingEncoding(NSUTF8StringEncoding)!)
+              
+            
+            if paramName as! String == "picture"{
+                postData.appendData(image)
+            }else{
+                postData.appendData(thumbnail)
+            }
+        
+        }
+        
+        postData.appendData("--\(boundary)--\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
+        
+        let request = NSMutableURLRequest(URL: NSURL(string: MolocateBaseUrl + "account/api/upload_both/")!,cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 5.0)
+        request.HTTPMethod = "POST"
+        request.allHTTPHeaderFields = headers
+        request.HTTPBody = postData
+        
+        let session = NSURLSession.sharedSession()
+        let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
+            
+            if (error != nil) {
+                completionHandler(data: "error", response: response , error: error  )
+            } else {
+                completionHandler(data: "success", response: response , error: error  )
+            }
+        })
+        
+        dataTask.resume()
+    }
+    
+    
     class func uploadProfilePhoto(image: NSData, completionHandler: (data: String!, response: NSURLResponse!, error: NSError!) -> ()){
         
         let headers = ["content-type": "/*/", "content-disposition":"attachment;filename=molocate.png" ]
@@ -899,7 +970,7 @@ public class MolocateAccount {
                         var urlString = ""
                         let message = result["result"]
                         if(message == "success"){
-                            urlString = result["thumbnail_url"]!
+                            urlString = result["picture_url"]!
                         }else{
                             urlString = ""
                         }

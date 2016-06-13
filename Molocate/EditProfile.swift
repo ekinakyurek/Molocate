@@ -32,6 +32,8 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
     let erkekimage : UILabel = UILabel()
     let kadınimage :UILabel = UILabel()
     
+    var thumbnail: UIImage?
+    var selected: UIImage?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -334,6 +336,41 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
         
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
         
+        
+        
+//        if selected != nil && thumbnail != nil {
+//            
+//            let imageData = UIImageJPEGRepresentation(selected!, 1.0)
+//            let thumbNailData = UIImageJPEGRepresentation(thumbnail!, 1.0)
+//            
+//          
+//            MolocateAccount.sendProfilePhotoandThumbnail(imageData!, thumbnail: thumbNailData!, completionHandler: { (data, response, error) in
+//                dispatch_async(dispatch_get_main_queue()) { () -> Void in
+//                    self.activityIndicator.stopAnimating()
+//                    UIApplication.sharedApplication().endIgnoringInteractionEvents()
+//                    if data == "success"{
+//                        choosedIndex = 0
+//                        self.performSegueWithIdentifier("goBackProfile", sender: self)
+//                    }else{
+//                        self.displayAlert("Tamam", message: "Kullanıcı bilgileri değiştirilirken bir hata oluştu")
+//                        sender.hidden = false
+//                    }
+//                    
+//                }
+//               
+//            })
+//        }else{
+//            MolocateAccount.EditUser({ (data, response, error) in
+//                if data == "success"{
+//                    choosedIndex = 0
+//                    self.performSegueWithIdentifier("goBackProfile", sender: self)
+//                }else{
+//                    self.displayAlert("Tamam", message: "Kullanıcı bilgileri değiştirilirken bir hata oluştu")
+//                    sender.hidden = false
+//                }
+//            })
+//        }
+        
         MolocateAccount.uploadProfilePhoto(imageData!) { (data, response, error) -> () in
             dispatch_async(dispatch_get_main_queue()) { () -> Void in
                 if data[0] == "h"{
@@ -397,8 +434,10 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
     
     func imagePickerController(picker: UIImagePickerController!, didFinishPickingImage image: UIImage!, editingInfo: NSDictionary!) {
         let selectedImage : UIImage = image
-        photo.image = MolocateUtility.RBSquareImageTo(selectedImage, size: CGSize(width: 192, height: 192))
-        
+        photo.image = MolocateUtility.RBSquareImageTo(selectedImage, size: CGSize(width: 480, height: 480))
+        selected = photo.image
+        thumbnail = MolocateUtility.RBSquareImageTo(selectedImage, size: CGSize(width: 92, height: 92))
+    
         //print("new image")
         self.dismissViewControllerAnimated(true, completion: nil)
         
