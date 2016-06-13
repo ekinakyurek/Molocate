@@ -24,7 +24,7 @@ var thePlace:MolePlace = MolePlace()
 var pressedFollow = false
 var selectedCell = 0
 
-class MainController: UIViewController, UITableViewDelegate , UITableViewDataSource, UICollectionViewDelegate,CLLocationManagerDelegate, UICollectionViewDataSource, UISearchBarDelegate, TimelineControllerDelegate, UITextFieldDelegate {
+class MainController: UIViewController, UITableViewDelegate , UITableViewDataSource, UICollectionViewDelegate,CLLocationManagerDelegate, UICollectionViewDataSource, UISearchBarDelegate, TimelineControllerDelegate, UITextFieldDelegate{
  
 
     var isSearching = false
@@ -58,21 +58,25 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.automaticallyAdjustsScrollViewInsets = false
+        self.automaticallyAdjustsScrollViewInsets = true
+        self.navigationController?.navigationBar.barTintColor = swiftColor
+        self.navigationController?.navigationBar.translucent = false
+        self.navigationController?.hidesBarsOnSwipe = true
+        
+
         
         tableController = self.storyboard?.instantiateViewControllerWithIdentifier("timelineController") as! TimelineController
         tableController.type = "MainController"
         tableController.delegate = self
-        tableController.view.frame = CGRectMake(0, 60, MolocateDevice.size
-            .width, MolocateDevice.size.height - 60)
-        
+        tableController.view.frame = self.view.frame
         tableController.view.layer.zPosition = 0
         self.view.addSubview(tableController.view)
         self.addChildViewController(tableController);
         tableController.didMoveToParentViewController(self)
-        searchText.returnKeyType = UIReturnKeyType.Done
-
         
+        
+        searchText.returnKeyType = UIReturnKeyType.Done
+        //tableController.tableView.makeoN
         self.searchText.delegate = self
         venueTable.layer.zPosition = 10
         tabBarController?.tabBar.hidden = true
@@ -87,9 +91,6 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         venueTable.hidden = true
         searchText.delegate = self
     
-        self.navigationController?.navigationBar.barTintColor = swiftColor
-        self.navigationController?.navigationBar.translucent = false
-        
 
      
         
@@ -173,19 +174,16 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         self.collectionView.selectItemAtIndexPath(index, animated: false, scrollPosition: UICollectionViewScrollPosition.None)
         collectionView.contentSize.width = 60 * 9
         collectionView.backgroundColor = UIColor.whiteColor()
+        collectionView.layer.zPosition = 5
         collectionView.hidden = false
 
         
         if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
             UIApplication.sharedApplication().endIgnoringInteractionEvents()
         }
-
     }
    
 
-    
-    
-    
     
     func pressedVenue(sender: UIButton) {
         
@@ -733,6 +731,11 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         (self.parentViewController?.parentViewController?.parentViewController as! ContainerController).scrollView.scrollEnabled = true
 
         dispatch_async(dispatch_get_main_queue()) {
+            
+        
+                // The search bar is hidden when the view becomes visible the first time
+   
+                
             self.locationManager = CLLocationManager()
             self.locationManager.delegate = self
             self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters

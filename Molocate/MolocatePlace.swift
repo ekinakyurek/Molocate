@@ -208,6 +208,9 @@ public class MolocatePlace {
                                 let thing = results[i] as! [String:AnyObject]
                                 friend.username = thing["username"] as! String
                                 friend.picture_url = thing["picture_url"] is NSNull ? NSURL():NSURL(string: thing["picture_url"] as! String)!
+                                let thumbnail = thing["thumbnail_url"] as! String
+                                
+                                friend.thumbnail_url = thumbnail == "" ? friend.picture_url:NSURL(string: thumbnail)!
                                 let isfollowing = thing["is_following"] as! Int
                                 
                                 friend.is_following = isfollowing == 0 ? false:true

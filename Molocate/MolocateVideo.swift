@@ -329,7 +329,7 @@ public class MolocateVideo {
 //                            
 //                            print(videoStr.username)
 //                            print(videoStr.location)
-//                            print(videoStr.urlSta)
+                            //print(videoStr.urlSta)
                         }
                         completionHandler(data: videoArray, response: response, error: nsError)
                     }else{

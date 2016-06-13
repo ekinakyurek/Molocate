@@ -14,6 +14,7 @@ let profileBackgroundColor = UIColor(netHex: 0xDCDDDF)
 struct MoleUserFriend {
     var is_following = false
     var picture_url = NSURL()
+    var thumbnail_url = NSURL()
     var is_place:Bool = false
     var username:String = ""
     var place_id:String = ""
@@ -97,13 +98,17 @@ public class MolocateAccount {
                             for i in 0..<results.count{
                                 var friend = MoleUserFriend()
                                 let thing = results[i] as! [String:AnyObject]
+                           
                                 friend.username = thing["username"] as! String
                                 friend.name =  thing["first_name"] as! String
-                                friend.picture_url = thing["thumbnail_url"] is NSNull ? NSURL():NSURL(string: thing["thumbnail_url"] as! String)!
-                                let isfollowing = thing["is_following"] as! Int
+                                friend.picture_url = thing["picture_url"] is NSNull ? NSURL():NSURL(string: thing["picture_url"] as! String)!
+                                let thumbnail = thing["thumbnail_url"] as! String
+                   
+                                friend.thumbnail_url = thumbnail == "" ? friend.picture_url:NSURL(string: thumbnail)!
+                                    let isfollowing = thing["is_following"] as! Int
                           
                                 friend.is_following = isfollowing == 0 ? false:true
-                              
+                            
                                 friends.append(friend)
                             }
                         
@@ -166,11 +171,14 @@ public class MolocateAccount {
                             let thing = results[i] as! [String:AnyObject]
                             friend.username = thing["username"] as! String
                             friend.name =  thing["first_name"] as! String
-                            friend.picture_url = thing["thumbnail_url"] is NSNull ? NSURL():NSURL(string: thing["thumbnail_url"] as! String)!
+                            friend.picture_url = thing["picture_url"] is NSNull ? NSURL():NSURL(string: thing["picture_url"] as! String)!
+                            let thumbnail = thing["thumbnail_url"] as! String
+                            
+                            friend.thumbnail_url = thumbnail == "" ? friend.picture_url:NSURL(string: thumbnail)!
                             let isfollowing = thing["is_following"] as! Int
                             
                            
-                                friend.is_following = isfollowing == 0 ? false:true
+                            friend.is_following = isfollowing == 0 ? false:true
                             
                             
                             let type = thing["type"] as! String

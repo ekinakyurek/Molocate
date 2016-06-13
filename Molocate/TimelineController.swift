@@ -22,7 +22,7 @@ protocol TimelineControllerDelegate:class {
 
 }
 
-class TimelineController: UITableViewController,PlayerDelegate {
+class TimelineController: UITableViewController,PlayerDelegate, UINavigationControllerDelegate {
 
 
 
@@ -57,8 +57,8 @@ class TimelineController: UITableViewController,PlayerDelegate {
         tableView.tableFooterView = UIView()
         tableView.allowsSelection = false
         tableView.backgroundColor = UIColor.whiteColor()
-
-
+        navigationController?.hidesBarsOnSwipe = true
+        
         self.player1 = Player()
         self.player1.delegate = self
         self.player1.playbackLoops = true
@@ -100,6 +100,9 @@ class TimelineController: UITableViewController,PlayerDelegate {
 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(TimelineController.prepareForRetry), name: "prepareForRetry", object: nil)
     }
+    
+ 
+
 
     func getPlaceData(placeId: String){
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
@@ -145,6 +148,8 @@ class TimelineController: UITableViewController,PlayerDelegate {
                 }
 
                 self.tableView.reloadData()
+              
+            
                 if self.videoArray.count == 0 {
                     //self.nofollowings.hidden = false
                 }
@@ -381,9 +386,6 @@ class TimelineController: UITableViewController,PlayerDelegate {
     override func viewWillAppear(animated: Bool) {
             isScrollingFast = false
             isOnView = true
-        
-        
-
 
     }
 

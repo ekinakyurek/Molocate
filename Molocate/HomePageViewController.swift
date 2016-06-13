@@ -36,7 +36,7 @@ class HomePageViewController: UIViewController, UITextFieldDelegate, TimelineCon
         tableController.didMoveToParentViewController(self)
         tableController.delegate = self
         
-        navigationController?.hidesBarsOnSwipe = true
+    
         self.navigationItem.titleView = UIImageView(image:  UIImage(named: "molocate"))
         self.navigationItem.titleView?.tintColor = UIColor.whiteColor()
         
