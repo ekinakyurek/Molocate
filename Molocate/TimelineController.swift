@@ -86,6 +86,7 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
                 requestUrl = NSURL(string: MolocateBaseUrl + "video/api/explore/?category=all")!
                 self.myRefreshControl.attributedTitle = NSAttributedString(string: "Keşfet güncelleniyor...")
                 getExploreData(requestUrl)
+            
             case "ProfileLocation":
                 print("profileLocation")
                 //videoArray initially given by parentViewCont4\roller
@@ -433,10 +434,13 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
 
 
     override func scrollViewDidScroll(scrollView: UIScrollView) {
+
+        
         if(!refreshing) {
             if type == "HomePage" {
                 if (scrollView.contentOffset.y<pointNow) {
                     direction = 0
+
                 } else if (scrollView.contentOffset.y>pointNow) {
                     direction = 1
                 }
@@ -743,7 +747,8 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
 
 
             }else if type == "MainController" {
-                if (scrollView.contentOffset.y<pointNow) {
+                print(scrollView.contentOffset.y)
+                                if (scrollView.contentOffset.y<pointNow) {
 
                     direction = 0
                     //self.parentViewController?.navigationController?.setNavigationBarHidden(false, animated: true)
@@ -752,6 +757,28 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
                     //self.parentViewController?.navigationController?.setNavigationBarHidden(true, animated: true)
 
                 }
+                if scrollView.contentOffset.y > 0 {
+                    if self.parentViewController is MainController {
+                        let cv = (self.parentViewController as! MainController).collectionView
+                        var imp = scrollView.contentOffset.y
+                        if imp < 0 {
+                            imp = -imp
+                        }
+                        if cv.frame.origin.y + 60 > imp {
+                            if direction == 0 {
+                                let oldY = cv.frame.origin.y
+                                cv.frame = CGRect(origin: CGPoint(x:0 ,y:oldY+1) , size: cv.contentSize)
+                            }
+                            
+                        } else {
+                            if direction == 1 {
+                                let oldY = cv.frame.origin.y
+                                cv.frame = CGRect(origin: CGPoint(x:0 ,y:oldY-1) , size: cv.contentSize)
+                            }
+                        }
+                    }
+                }
+
 
                 let currentOffset = scrollView.contentOffset
                 let currentTime = NSDate().timeIntervalSinceReferenceDate   // [NSDate timeIntervalSinceReferenceDate];
@@ -1242,6 +1269,22 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
 
     func playerPlaybackDidEnd(player: Player) {
 
+    }
+    
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if type == "MainController" {
+            return UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 60))
+        } else {
+            return UIView()
+        }
+    }
+    
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if type == "MainController" {
+            return 60
+        } else {
+            return 0
+        }
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
