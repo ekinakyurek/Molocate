@@ -110,6 +110,7 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
 
         MolocatePlace.getPlace(placeId) { (data, response, error) -> () in
             dispatch_async(dispatch_get_main_queue()){
+                self.nextUrl = MoleNextPlaceVideos
                 self.videoArray = thePlace.videoArray
                 self.tableView.reloadData()
                 if self.myRefreshControl.refreshing {
@@ -356,6 +357,7 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
     }
 
     override func tableView(atableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        //print(nextUrl)
 
         if((!refreshing)&&(indexPath.row%10 == 7)&&(nextUrl != nil)&&(!IsExploreInProcess)){
             IsExploreInProcess = true
@@ -747,8 +749,7 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
 
 
             }else if type == "MainController" {
-                print(scrollView.contentOffset.y)
-                                if (scrollView.contentOffset.y<pointNow) {
+                                              if (scrollView.contentOffset.y<pointNow) {
 
                     direction = 0
                     if self.parentViewController is MainController {
@@ -776,17 +777,12 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
                             imp = -imp
                         }
                         if cv.frame.origin.y + 60 > imp {
-//                            if direction == 0 {
-//                                let oldY = cv.frame.origin.y
-//                                cv.frame = CGRect(origin: CGPoint(x:0 ,y:oldY+1) , size: cv.contentSize)
-//                                print("görünüyor")
-//                            }
-                            
+
                         } else {
                             if direction == 1 {
                                 let oldY = cv.frame.origin.y
                                 cv.frame = CGRect(origin: CGPoint(x:0 ,y:oldY-2) , size: cv.contentSize)
-                                print("görünmüyor")
+                                //print("görünmüyor")
                             }
                         }
                     }
