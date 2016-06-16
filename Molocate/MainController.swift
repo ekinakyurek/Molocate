@@ -312,6 +312,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
                         thePlace = data
                         controller.classPlace = data
                         controller.RefreshGuiWithData()
+                        print(thePlace.name)
                         if thePlace.name == "notExist"{
                             thePlace.name = self.venues[indexPath.row]["name"] as! String
                             let addressArr = self.venues[indexPath.row]["location"]!["formattedAddress"] as! [String]
@@ -690,7 +691,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
    
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath){
     
-        
+        self.tableController.tableView.setContentOffset(CGPoint(x: 0,y:0), animated: false)
         on = true
         let url = NSURL(string: MolocateBaseUrl  + "video/api/explore/?category=" + MoleCategoriesDictionary [categories[indexPath.row]]!)
         tableController.requestUrl = url!
