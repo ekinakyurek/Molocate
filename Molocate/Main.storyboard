@@ -2473,7 +2473,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="S2W-SU-W1a" userLabel="venueTable">
-                                <rect key="frame" x="0.0" y="60" width="375" height="563"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="579"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" id="nRD-f7-FQk">
@@ -2507,7 +2507,7 @@
                                 </variation>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rightarrows" translatesAutoresizingMaskIntoConstraints="NO" id="e5P-fZ-8GL">
-                                <rect key="frame" x="343" y="26" width="16" height="16"/>
+                                <rect key="frame" x="343" y="10" width="16" height="16"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="16" id="5V2-dj-FP3"/>
                                     <constraint firstAttribute="width" constant="16" id="PR8-2K-G8b"/>
@@ -2532,8 +2532,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="75" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Etkinlik" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O2q-wA-0Ox">
-                                                    <rect key="frame" x="3" y="40" width="69" height="14"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Etkinlik" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O2q-wA-0Ox">
+                                                    <rect key="frame" x="3" y="44" width="69" height="14"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="14" id="549-HM-3JR"/>
                                                     </constraints>
@@ -2541,8 +2541,8 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="comment" translatesAutoresizingMaskIntoConstraints="NO" id="2JY-6L-Jj6">
-                                                    <rect key="frame" x="24" y="13" width="27" height="27"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="comment" translatesAutoresizingMaskIntoConstraints="NO" id="2JY-6L-Jj6">
+                                                    <rect key="frame" x="22" y="13" width="31" height="31"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="2JY-6L-Jj6" secondAttribute="height" multiplier="1:1" id="uCG-Z6-1B8"/>
                                                     </constraints>
@@ -2576,13 +2576,13 @@
                         <constraints>
                             <constraint firstItem="9X1-BS-kZi" firstAttribute="centerX" secondItem="5sS-Sg-M13" secondAttribute="centerX" id="08C-hh-5og"/>
                             <constraint firstItem="S2W-SU-W1a" firstAttribute="top" secondItem="e5P-fZ-8GL" secondAttribute="bottom" constant="18" id="1un-BQ-k2E"/>
-                            <constraint firstItem="S2W-SU-W1a" firstAttribute="top" secondItem="9X1-BS-kZi" secondAttribute="bottom" id="52M-XL-HNu"/>
                             <constraint firstItem="S2W-SU-W1a" firstAttribute="centerX" secondItem="5sS-Sg-M13" secondAttribute="centerX" id="8Eg-q7-nWm"/>
                             <constraint firstItem="9X1-BS-kZi" firstAttribute="top" secondItem="u20-0v-vV5" secondAttribute="bottom" id="Ela-ki-66h"/>
                             <constraint firstItem="hGD-DQ-gsG" firstAttribute="top" secondItem="5sS-Sg-M13" secondAttribute="topMargin" constant="60" id="F5w-PF-Vu8"/>
                             <constraint firstItem="hGD-DQ-gsG" firstAttribute="centerX" secondItem="5sS-Sg-M13" secondAttribute="centerX" identifier="15" id="JBd-zG-zUI"/>
                             <constraint firstAttribute="trailingMargin" secondItem="e5P-fZ-8GL" secondAttribute="trailing" identifier="17" id="M9D-Rz-tg3"/>
                             <constraint firstItem="OSz-RY-fS1" firstAttribute="top" secondItem="S2W-SU-W1a" secondAttribute="bottom" id="VAW-XO-dQh"/>
+                            <constraint firstItem="S2W-SU-W1a" firstAttribute="top" secondItem="u20-0v-vV5" secondAttribute="bottom" constant="44" id="VLa-fs-hN1"/>
                             <constraint firstItem="9X1-BS-kZi" firstAttribute="width" secondItem="5sS-Sg-M13" secondAttribute="width" id="ln5-cn-Ohq"/>
                             <constraint firstItem="S2W-SU-W1a" firstAttribute="width" secondItem="5sS-Sg-M13" secondAttribute="width" id="shc-0n-gGn"/>
                         </constraints>

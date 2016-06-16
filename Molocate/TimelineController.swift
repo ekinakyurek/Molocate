@@ -751,29 +751,42 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
                                 if (scrollView.contentOffset.y<pointNow) {
 
                     direction = 0
+                    if self.parentViewController is MainController {
+                    self.parentViewController?.navigationController?.setNavigationBarHidden(false, animated: true)
+                    viewBool = false
+                    NSNotificationCenter.defaultCenter().postNotificationName("changeView", object: nil)
+                    }
                     //self.parentViewController?.navigationController?.setNavigationBarHidden(false, animated: true)
                 } else if (scrollView.contentOffset.y>pointNow) {
                     direction = 1
+                    if self.parentViewController is MainController {
+                    self.parentViewController?.navigationController?.setNavigationBarHidden(true, animated: true)
+                    viewBool = true
+                    NSNotificationCenter.defaultCenter().postNotificationName("changeView", object: nil)
+                            }
                     //self.parentViewController?.navigationController?.setNavigationBarHidden(true, animated: true)
 
                 }
                 if scrollView.contentOffset.y > 0 {
                     if self.parentViewController is MainController {
                         let cv = (self.parentViewController as! MainController).collectionView
+                        let tb = (self.parentViewController as! MainController).tableController.tableView
                         var imp = scrollView.contentOffset.y
                         if imp < 0 {
                             imp = -imp
                         }
                         if cv.frame.origin.y + 60 > imp {
-                            if direction == 0 {
-                                let oldY = cv.frame.origin.y
-                                cv.frame = CGRect(origin: CGPoint(x:0 ,y:oldY+1) , size: cv.contentSize)
-                            }
+//                            if direction == 0 {
+//                                let oldY = cv.frame.origin.y
+//                                cv.frame = CGRect(origin: CGPoint(x:0 ,y:oldY+1) , size: cv.contentSize)
+//                                print("görünüyor")
+//                            }
                             
                         } else {
                             if direction == 1 {
                                 let oldY = cv.frame.origin.y
-                                cv.frame = CGRect(origin: CGPoint(x:0 ,y:oldY-1) , size: cv.contentSize)
+                                cv.frame = CGRect(origin: CGPoint(x:0 ,y:oldY-2) , size: cv.contentSize)
+                                print("görünmüyor")
                             }
                         }
                     }
@@ -1271,21 +1284,21 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
 
     }
     
-    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if type == "MainController" {
-            return UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 60))
-        } else {
-            return UIView()
-        }
-    }
-    
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if type == "MainController" {
-            return 60
-        } else {
-            return 0
-        }
-    }
+//    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        if type == "MainController" {
+//            return UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 60))
+//        } else {
+//            return UIView()
+//        }
+//    }
+//    
+//    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        if type == "MainController" {
+//            return 60
+//        } else {
+//            return 0
+//        }
+//    }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return videoArray.count

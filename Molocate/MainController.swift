@@ -23,7 +23,7 @@ var myViewController = "MainController"
 var thePlace:MolePlace = MolePlace()
 var pressedFollow = false
 var selectedCell = 0
-
+var viewBool = false
 class MainController: UIViewController, UITableViewDelegate , UITableViewDataSource, UICollectionViewDelegate,CLLocationManagerDelegate, UICollectionViewDataSource, UISearchBarDelegate, TimelineControllerDelegate, UITextFieldDelegate{
  
 
@@ -61,14 +61,14 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         self.automaticallyAdjustsScrollViewInsets = true
         self.navigationController?.navigationBar.barTintColor = swiftColor
         self.navigationController?.navigationBar.translucent = false
-        self.navigationController?.hidesBarsOnSwipe = true
+        //self.navigationController?.hidesBarsOnSwipe = true
         
 
         
         tableController = self.storyboard?.instantiateViewControllerWithIdentifier("timelineController") as! TimelineController
         tableController.type = "MainController"
         tableController.delegate = self
-        tableController.view.frame = self.view.frame
+        tableController.view.frame = CGRectMake(0, 60, MolocateDevice.size.width, MolocateDevice.size.height - 60)
         tableController.view.layer.zPosition = 0
         self.view.addSubview(tableController.view)
         self.addChildViewController(tableController);
@@ -181,6 +181,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
             UIApplication.sharedApplication().endIgnoringInteractionEvents()
         }
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MainController.changeView), name: "changeView", object: nil)
     }
    
 
@@ -210,9 +211,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
     
     
     
-    
-  
-    
+
     func scrollViewDidScroll(scrollView: UIScrollView) {
         searchText.resignFirstResponder()
         //   Timelinecontrollerx da Main icin hide navigation bar farkli olmali
@@ -411,6 +410,14 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         pressedFollow = true
         
         
+    }
+    
+    func changeView() {
+        if viewBool {
+            self.tableController.tableView.frame = self.view.frame
+        } else {
+            self.tableController.tableView.frame = CGRectMake(0, 60, MolocateDevice.size.width, MolocateDevice.size.height - 60)
+        }
     }
         
     
