@@ -311,16 +311,19 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
                     dispatch_async(dispatch_get_main_queue()){
                         thePlace = data
                         controller.classPlace = data
-                        controller.RefreshGuiWithData()
-                        print(thePlace.name)
+                        
                         if thePlace.name == "notExist"{
                             thePlace.name = self.venues[indexPath.row]["name"] as! String
                             let addressArr = self.venues[indexPath.row]["location"]!["formattedAddress"] as! [String]
+                            thePlace.lat = self.venues[indexPath.row]["location"]!["lat"] as! Double
+                            thePlace.lon = self.venues[indexPath.row]["location"]!["lng"] as! Double
                             for item in addressArr{
                                 thePlace.address = thePlace.address + item
                             }
-                            controller.followButton = nil
+                            controller.followButton.tintColor = UIColor.clearColor()
+                            
                         }
+                        controller.RefreshGuiWithData()
                     }
                 }
                 

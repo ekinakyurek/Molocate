@@ -93,6 +93,7 @@ class profileLocation: UIViewController, UICollectionViewDelegateFlowLayout,NSUR
         self.view.backgroundColor = swiftColor3
     }
     func RefreshGuiWithData(){
+        
         followerCount.setTitle("\(thePlace.follower_count)", forState: UIControlState.Normal)
         locationName.text = thePlace.name
         self.navigationController!.topViewController!.title = thePlace.name
