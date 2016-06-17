@@ -8,6 +8,9 @@ PODS:
   - SDWebImage (3.7.5):
     - SDWebImage/Core (= 3.7.5)
   - SDWebImage/Core (3.7.5)
+  - XLActionController (2.0.0):
+    - XLActionController/Core (= 2.0.0)
+  - XLActionController/Core (2.0.0)
 
 DEPENDENCIES:
   - AWSS3
@@ -15,6 +18,7 @@ DEPENDENCIES:
   - QuadratTouch (>= 1.0)
   - RecordButton
   - SDWebImage
+  - XLActionController
 
 SPEC CHECKSUMS:
   AWSCore: 7e0da755786280a76ed4ab4ed8c1d38ced09b460
@@ -23,5 +27,6 @@ SPEC CHECKSUMS:
   QuadratTouch: 296d83c63a4328f6f40af9fc728fe24f0e3b00d4
   RecordButton: 53e5cea9112aa2f09dccf83e55d3c4645197b58a
   SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
+  XLActionController: 97ed31237413db4d9401c6a559270f4d2b4de136
 
 COCOAPODS: 0.39.0

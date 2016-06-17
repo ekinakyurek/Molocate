@@ -18,6 +18,7 @@ class videoCell: UITableViewCell {
     let followButton : UIButton = UIButton()
     let placeName : UIButton = UIButton()
     let reportButton: UIButton = UIButton()
+    let shareButton:UIButton = UIButton()
     let commentButton : UIButton = UIButton()
     let likeButton : UIButton = UIButton()
     let profilePhoto : UIButton = UIButton()
@@ -166,6 +167,11 @@ class videoCell: UITableViewCell {
         reportButton.setBackgroundImage(reportImage, forState: UIControlState.Normal)
         self.contentView.addSubview(reportButton)
         
+        shareButton.frame = CGRectMake(screenSize.width - 88, 110 + screenSize.width  , 32, 32)
+        let shareImage = UIImage(named: "share")! as UIImage
+        shareButton.setBackgroundImage(shareImage, forState: .Normal)
+        self.contentView.addSubview(shareButton)
+        
         newRect = CGRectMake(0, 54, screenSize.width, screenSize.width)
         cellthumbnail = UIImageView(frame: newRect)
         self.contentView.layer.addSublayer(cellthumbnail.layer)
@@ -207,6 +213,7 @@ class videoCell: UITableViewCell {
         commentCount.setTitle("\(commentCount)", forState: .Normal)
        
         reportButton.tag = row
+        shareButton.tag = row
      
         self.videoTime.text = videoInfo.dateStr
         

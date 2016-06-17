@@ -90,6 +90,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-Molocate/QuadratTouch.framework"
   install_framework "Pods-Molocate/RecordButton.framework"
   install_framework "Pods-Molocate/SDWebImage.framework"
+  install_framework "Pods-Molocate/XLActionController.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-Molocate/AWSCore.framework"
@@ -98,4 +99,5 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-Molocate/QuadratTouch.framework"
   install_framework "Pods-Molocate/RecordButton.framework"
   install_framework "Pods-Molocate/SDWebImage.framework"
+  install_framework "Pods-Molocate/XLActionController.framework"
 fi

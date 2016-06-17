@@ -14,6 +14,7 @@ pod "RecordButton"
 pod 'SDWebImage'
 pod 'HanekeSwift'
 pod 'AWSS3'
+pod 'XLActionController'
 
 end
 
