@@ -213,7 +213,7 @@ public class MolocateAccount {
         
         let url: NSURL
         if(nextUrl == ""){
-            url = NSURL(string: MolocateBaseUrl + "relation/api/facebook_friends/" + (username as String))!
+            url = NSURL(string: MolocateBaseUrl + "relation/api/followings/?username=" + (username as String) )!
         }else{
             url = NSURL(string:nextUrl)!
         }

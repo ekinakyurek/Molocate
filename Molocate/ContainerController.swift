@@ -55,22 +55,7 @@ class ContainerController: UIViewController,UIScrollViewDelegate {
         //setStatusBarBackgroundColor(swiftColor)
     }
 
-    
-    func setStatusBarBackgroundColor(color: UIColor) {
-        
-        guard  let statusBar = UIApplication.sharedApplication().valueForKey("statusBarWindow")?.valueForKey("statusBar") as? UIView else {
-            return
-        }
-        
-        UIView.animateWithDuration(0.4) {
-            statusBar.backgroundColor = color
-
-        }
-        
-    }
-    
-
-
+ 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -101,12 +86,14 @@ class ContainerController: UIViewController,UIScrollViewDelegate {
             sideClicked = false
         }
         if(scrollView.contentOffset.x < self.view.frame.width*0.2){
-            setStatusBarBackgroundColor(UIColor.blackColor())
+            
+            MolocateUtility.setStatusBarBackgroundColor(UIColor.blackColor())
+        
 
         
         }
         else{
-            setStatusBarBackgroundColor(swiftColor)
+            MolocateUtility.setStatusBarBackgroundColor(swiftColor)
 
         }
     }

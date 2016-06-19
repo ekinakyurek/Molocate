@@ -12,6 +12,7 @@ class FacebookFriends: UITableViewController {
 
     var userRelations = MoleUserRelations()
     var continueButton = UIButton()
+    var facebookInfo = UILabel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,13 +20,16 @@ class FacebookFriends: UITableViewController {
         tableView.allowsSelection = false
         tableView.tableFooterView = UIView()
         
-        continueButton.frame = CGRectMake(0, MolocateDevice.size.height-32, MolocateDevice.size.width, 32)
-        continueButton.backgroundColor = swiftColor
-        continueButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        continueButton.setTitle("Devam Et", forState: .Normal)
-        continueButton.addTarget(self, action: #selector(FacebookFriends.pressedContinue(_:)), forControlEvents: .TouchUpInside)
-
-        self.view.addSubview(continueButton)
+        MolocateUtility.setStatusBarBackgroundColor(swiftColor)
+        
+        MoleUserToken = NSUserDefaults.standardUserDefaults().objectForKey("userToken") as? String
+        
+        MolocateAccount.getFacebookFriends { (data, response, error, count, next, previous) in
+            dispatch_async(dispatch_get_main_queue(), {
+                self.userRelations = data
+                self.tableView.reloadData()
+            })
+        }
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -33,6 +37,9 @@ class FacebookFriends: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
+    
+    
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -40,21 +47,56 @@ class FacebookFriends: UITableViewController {
     }
 
     // MARK: - Table view data source
+    
+    
 
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 60
+    }
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return userRelations.relations.count
     }
+    
+    override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        continueButton.frame = CGRectMake(0, 0, MolocateDevice.size.width, 44)
+        continueButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        continueButton.backgroundColor = arkarenk
+        continueButton.setTitle("Devam Et", forState: .Normal)
+        continueButton.addTarget(self, action: #selector(FacebookFriends.pressedContinue(_:)), forControlEvents: .TouchUpInside)
+        return continueButton
+    }
+    
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        facebookInfo.frame = CGRectMake(0, 16, MolocateDevice.size.width, 44)
+        facebookInfo.textAlignment = .Center
+        facebookInfo.textRectForBounds(CGRectMake(0, 20, MolocateDevice.size.width, 20), limitedToNumberOfLines: 1)
+        facebookInfo.textColor = UIColor.whiteColor()
+        facebookInfo.font = UIFont (name: "AvenirNext-Regular", size: 16)
+        facebookInfo.backgroundColor = swiftColor
+        facebookInfo.text = "Molocate'deki arkadaşların"
+        return facebookInfo
+        
+    }
+    
+    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 44
+    }
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 16+44
+    }
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
        
-        let cell = searchUsername(style: UITableViewCellStyle.Default, reuseIdentifier: "cell")
+        let cell = searchUsername(style: UITableViewCellStyle.Default, reuseIdentifier: "cellface")
+        
         cell.profilePhoto.tag = indexPath.row
         cell.nameLabel.tag = indexPath.row
         cell.followButton.tag = indexPath.row
@@ -75,11 +117,11 @@ class FacebookFriends: UITableViewController {
         
         if(!userRelations.relations[indexPath.row].is_following){
             cell.followButton.setBackgroundImage(UIImage(named: "follow"), forState: UIControlState.Normal)
+            cell.followButton.addTarget(self, action: #selector(FacebookFriends.pressedFollow(_:)), forControlEvents: .TouchUpInside)
         } else {
             cell.followButton.setBackgroundImage(UIImage(named: "followTicked"), forState: UIControlState.Normal)
-            cell.followButton.enabled = false
         }
-        cell.followButton.addTarget(self, action: #selector(FacebookFriends.pressedFollow(_:)), forControlEvents: .TouchUpInside)
+
         
         
         
@@ -98,6 +140,8 @@ class FacebookFriends: UITableViewController {
     
     func pressedFollow(sender: UIButton){
         let Row=sender.tag
+        
+        print("pressed follow")
         MolocateAccount.follow(userRelations.relations[Row].username) { (data, response, error) in
             
         }

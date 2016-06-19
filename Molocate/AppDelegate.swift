@@ -74,15 +74,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
        
     }
     
-    func setStatusBarBackgroundColor() {
-        
-        guard  let statusBar = UIApplication.sharedApplication().valueForKey("statusBarWindow")?.valueForKey("statusBar") as? UIView else {
-            return
-        }
-        
-        statusBar.backgroundColor = UIColor.blackColor()
-    }
-    
     
     
     func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {

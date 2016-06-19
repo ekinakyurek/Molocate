@@ -37,6 +37,16 @@ extension UIColor {
 
 public class MolocateUtility {
     
+    
+    class func setStatusBarBackgroundColor(color: UIColor) {
+        
+        guard  let statusBar = UIApplication.sharedApplication().valueForKey("statusBarWindow")?.valueForKey("statusBar") as? UIView else {
+            return
+        }
+        
+        statusBar.backgroundColor = color
+    }
+    
     class func animateLikeButton(inout heart: UIImageView){
         
         UIView.animateWithDuration(0.3, delay: 0, options: .AllowUserInteraction, animations: { 
