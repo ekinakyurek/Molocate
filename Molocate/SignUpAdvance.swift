@@ -15,6 +15,7 @@ class SignUpAdvance: UIViewController , UITextFieldDelegate {
     var message2 : UILabel!
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     
+    var facebookfriends = MoleUserRelations()
     @IBOutlet var toolBar: UIToolbar!
 
     @IBOutlet var confirmButton: UIButton!
@@ -156,7 +157,16 @@ class SignUpAdvance: UIViewController , UITextFieldDelegate {
                 dispatch_async(dispatch_get_main_queue(), {
                     if(data == "success"){
                         MolocateAccount.getCurrentUser({ (data, response, error) -> () in
-                            self.performSegueWithIdentifier("usernameAfter", sender: self)
+                          
+                        })
+                        
+                        MolocateAccount.getFacebookFriends(completionHandler: { (data, response, error, count, next, previous) in
+                            dispatch_async(dispatch_get_main_queue(), {
+                                self.facebookfriends = data
+                                self.performSegueWithIdentifier("usernameAfter", sender: self)
+                                
+                            })
+                            
                         })
                     }else if (data != "error"){
                         self.displayAlert("Dikkat!", message: data)
@@ -168,6 +178,12 @@ class SignUpAdvance: UIViewController , UITextFieldDelegate {
         }
     }
     
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let yourVC = segue.destinationViewController as? FacebookFriends{
+            yourVC.userRelations = self.facebookfriends
+        }
+    }
     
     func dismissKeyboard() {
         view.endEditing(true)
