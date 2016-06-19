@@ -23,10 +23,7 @@ class FacebookFriends: UIViewController {
         tableView.tableFooterView = UIView()
         
         MolocateUtility.setStatusBarBackgroundColor(swiftColor)
-        
-        MoleUserToken = NSUserDefaults.standardUserDefaults().objectForKey("userToken") as? String
-        
-
+ 
         tableView.frame = CGRectMake(0, 60, MolocateDevice.size.width, MolocateDevice.size.height-60)
         
         facebookInfo.frame = CGRectMake(0, 16, MolocateDevice.size.width, 44)
