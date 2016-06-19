@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Lqy-4g-TXT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Uek-31-GU9">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -983,44 +983,56 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="toolBar" destination="zUL-gX-3JO" id="O97-l7-jmI"/>
-                        <segue destination="Lqy-4g-TXT" kind="show" identifier="usernameAfter" id="ACQ-fj-8Gj"/>
+                        <segue destination="qZJ-oT-jof" kind="show" identifier="usernameAfter" id="NLe-la-ABI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6nq-vk-Vno" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1322.5" y="-3178.5"/>
+            <point key="canvasLocation" x="1416.5" y="-3337.5"/>
         </scene>
-        <!--Facebook Friends-->
-        <scene sceneID="hRR-oG-Yec">
+        <!--Facebook arkadaşların-->
+        <scene sceneID="dTK-AG-EFJ">
             <objects>
-                <tableViewController id="Lqy-4g-TXT" customClass="FacebookFriends" customModule="Molocate" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="mHz-7d-f5U">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                <viewController title="Facebook arkadaşların" id="qZJ-oT-jof" customClass="FacebookFriends" customModule="Molocate" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="2qX-pd-PyL"/>
+                        <viewControllerLayoutGuide type="bottom" id="hul-Hx-KB9"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dLF-Ch-tlX">
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="kIo-TK-nWq">
+                                <rect key="frame" x="0.0" y="60" width="375" height="543"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="OHu-lt-Jgu" customClass="searchUsername" customModule="Molocate" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="OHu-lt-Jgu" id="UL5-KN-mmK">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="qZJ-oT-jof" id="MoA-J3-fhd"/>
+                                    <outlet property="delegate" destination="qZJ-oT-jof" id="MNY-ez-QTI"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellface" id="agF-JM-Ynh" customClass="searchUsername" customModule="Molocate" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="agF-JM-Ynh" id="mOi-Ea-qkb">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="Lqy-4g-TXT" id="PCi-hz-IkQ"/>
-                            <outlet property="delegate" destination="Lqy-4g-TXT" id="PAL-Ug-itR"/>
-                        </connections>
-                    </tableView>
+                    </view>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
-                        <segue destination="XJp-AN-JyV" kind="show" identifier="facebookAfter" id="6FV-2E-L7f"/>
+                        <outlet property="tableView" destination="kIo-TK-nWq" id="rmt-3G-C71"/>
+                        <segue destination="XJp-AN-JyV" kind="show" identifier="facebookAfter" id="cbq-mW-lhQ"/>
                     </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="YEg-ah-ZED" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IaN-jK-SL4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1086.5" y="-2398.5"/>
+            <point key="canvasLocation" x="1153.5" y="-2485.5"/>
         </scene>
         <!--Container Controller-->
         <scene sceneID="UcB-W7-oL7">
@@ -1031,20 +1043,20 @@
                         <viewControllerLayoutGuide type="bottom" id="WYU-AR-Mls"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="jh0-dd-dEh">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TTU-CU-FCk">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                                 <subviews>
                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dk9-2W-VYE" userLabel="side">
-                                        <rect key="frame" x="0.0" y="0.0" width="240" height="600"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="240" height="536"/>
                                         <connections>
                                             <segue destination="hGb-1k-zG5" kind="embed" id="qCF-XT-z9Z"/>
                                         </connections>
                                     </containerView>
                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DBc-Bg-Tik" userLabel="main">
-                                        <rect key="frame" x="240" y="0.0" width="600" height="600"/>
+                                        <rect key="frame" x="240" y="0.0" width="600" height="536"/>
                                         <connections>
                                             <segue destination="E61-BU-32T" kind="embed" id="BSv-Ma-h6Z"/>
                                         </connections>
@@ -2123,7 +2135,7 @@
             <objects>
                 <tableViewController id="hGb-1k-zG5" customClass="SideBarController" customModule="Molocate" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="91" sectionHeaderHeight="28" sectionFooterHeight="28" id="3JI-O2-u1D">
-                        <rect key="frame" x="0.0" y="0.0" width="240" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="240" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -3097,9 +3109,9 @@
         <image name="switch" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="MZ3-75-Fkk"/>
-        <segue reference="kLH-Vl-CEb"/>
-        <segue reference="6FV-2E-L7f"/>
         <segue reference="iX5-7U-zGl"/>
+        <segue reference="kLH-Vl-CEb"/>
+        <segue reference="i6B-xP-GmW"/>
+        <segue reference="MZ3-75-Fkk"/>
     </inferredMetricsTieBreakers>
 </document>

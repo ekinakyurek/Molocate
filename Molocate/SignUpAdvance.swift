@@ -182,6 +182,7 @@ class SignUpAdvance: UIViewController , UITextFieldDelegate {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let yourVC = segue.destinationViewController as? FacebookFriends{
             yourVC.userRelations = self.facebookfriends
+            yourVC.tableView.reloadData()
         }
     }
     

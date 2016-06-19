@@ -8,11 +8,13 @@
 
 import UIKit
 
-class FacebookFriends: UITableViewController {
+class FacebookFriends: UIViewController {
 
     var userRelations = MoleUserRelations()
     var continueButton = UIButton()
     var facebookInfo = UILabel()
+    
+    @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,12 +26,26 @@ class FacebookFriends: UITableViewController {
         
         MoleUserToken = NSUserDefaults.standardUserDefaults().objectForKey("userToken") as? String
         
-        MolocateAccount.getFacebookFriends { (data, response, error, count, next, previous) in
-            dispatch_async(dispatch_get_main_queue(), {
-                self.userRelations = data
-                self.tableView.reloadData()
-            })
-        }
+
+        tableView.frame = CGRectMake(0, 60, MolocateDevice.size.width, MolocateDevice.size.height-60)
+        
+        facebookInfo.frame = CGRectMake(0, 16, MolocateDevice.size.width, 44)
+        facebookInfo.textAlignment = .Center
+        facebookInfo.textRectForBounds(CGRectMake(0, 20, MolocateDevice.size.width, 20), limitedToNumberOfLines: 1)
+         facebookInfo.textColor = UIColor.whiteColor()
+        facebookInfo.font = UIFont(name: "AvenirNext-DemiBold.ttf", size: 17)
+         facebookInfo.backgroundColor = swiftColor
+         facebookInfo.text = "Molocate'deki arkadaşların"
+         self.view.addSubview(facebookInfo)
+        
+        
+        continueButton.frame = CGRectMake(0, MolocateDevice.size.height-44, MolocateDevice.size.width, 44)
+        continueButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        continueButton.backgroundColor = arkarenk
+        continueButton.setTitle("Devam Et", forState: .Normal)
+        continueButton.addTarget(self, action: #selector(FacebookFriends.pressedContinue(_:)), forControlEvents: .TouchUpInside)
+        
+        self.view.addSubview(continueButton)
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -50,50 +66,22 @@ class FacebookFriends: UITableViewController {
     
     
 
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 60
     }
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return userRelations.relations.count
     }
-    
-    override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        continueButton.frame = CGRectMake(0, 0, MolocateDevice.size.width, 44)
-        continueButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        continueButton.backgroundColor = arkarenk
-        continueButton.setTitle("Devam Et", forState: .Normal)
-        continueButton.addTarget(self, action: #selector(FacebookFriends.pressedContinue(_:)), forControlEvents: .TouchUpInside)
-        return continueButton
-    }
-    
-    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        facebookInfo.frame = CGRectMake(0, 16, MolocateDevice.size.width, 44)
-        facebookInfo.textAlignment = .Center
-        facebookInfo.textRectForBounds(CGRectMake(0, 20, MolocateDevice.size.width, 20), limitedToNumberOfLines: 1)
-        facebookInfo.textColor = UIColor.whiteColor()
-        facebookInfo.font = UIFont (name: "AvenirNext-Regular", size: 16)
-        facebookInfo.backgroundColor = swiftColor
-        facebookInfo.text = "Molocate'deki arkadaşların"
-        return facebookInfo
-        
-    }
-    
-    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 44
-    }
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 16+44
-    }
 
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
        
         let cell = searchUsername(style: UITableViewCellStyle.Default, reuseIdentifier: "cellface")
         
