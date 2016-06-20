@@ -163,6 +163,8 @@ class SignUpAdvance: UIViewController , UITextFieldDelegate {
                         MolocateAccount.getFacebookFriends(completionHandler: { (data, response, error, count, next, previous) in
                             dispatch_async(dispatch_get_main_queue(), {
                                 self.facebookfriends = data
+                                
+                                UIApplication.sharedApplication().endIgnoringInteractionEvents()
                                 self.performSegueWithIdentifier("usernameAfter", sender: self)
                                 
                             })
@@ -182,7 +184,6 @@ class SignUpAdvance: UIViewController , UITextFieldDelegate {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let yourVC = segue.destinationViewController as? FacebookFriends{
             yourVC.userRelations = self.facebookfriends
-            yourVC.tableView.reloadData()
         }
     }
     
