@@ -40,7 +40,7 @@ struct MoleUser{
     var isFollowing:Bool = false;
     var gender = "male"
     var birthday = "2016-10-12"
-    
+    var isFaceUser:Bool = false
     func printUser() -> Void {
         print("username: " + username)
         print("email: " + email)

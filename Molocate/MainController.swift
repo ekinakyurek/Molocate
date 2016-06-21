@@ -43,7 +43,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
     var linee: UILabel!
     var on = true
     var tableController: TimelineController!
-    
+    var findFriends: UIButton!
     @IBOutlet var venueTable: UITableView!
     @IBOutlet var rightArrow: UIImageView!
     @IBOutlet var collectionView: UICollectionView!
@@ -91,8 +91,13 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         venueTable.hidden = true
         searchText.delegate = self
     
-
-     
+        findFriends = UIButton()
+        findFriends.frame = CGRect(x: self.view.center.x-50, y: self.view.center.y-60-(self.navigationController?.navigationBar.frame.height)!, width: 100, height: 40)
+        findFriends.backgroundColor = UIColor.blueColor()
+        findFriends.setTitle("Arkadaş bul", forState: .Normal)
+        findFriends.addTarget(self, action: #selector(MainController.pressedFindFriend(_:)), forControlEvents: .TouchUpInside)
+        
+        findFriends.hidden = true
         
         backgroundLabel = UILabel()
         backgroundLabel.frame = CGRectMake( 0 , 0 , MolocateDevice.size.width , 44)
@@ -182,6 +187,8 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
             UIApplication.sharedApplication().endIgnoringInteractionEvents()
         }
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MainController.changeView), name: "changeView", object: nil)
+        venueTable.addSubview(findFriends)
+        
     }
    
 
@@ -208,8 +215,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         if self.venueTable.numberOfRowsInSection(0) > 0 {
             self.venueTable.reloadData()  }
     }
-    
-    
+
     
 
     func scrollViewDidScroll(scrollView: UIScrollView) {
@@ -425,6 +431,35 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
     }
         
     
+    func pressedFindFriend(sender: UIButton) {
+        
+        navigationController?.setNavigationBarHidden(false, animated: false)
+        activityIndicator.startAnimating()
+        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+        let controller:findFriendController = self.storyboard!.instantiateViewControllerWithIdentifier("findFriendController") as! findFriendController
+        self.navigationController?.pushViewController(controller, animated: true)
+        MoleCurrentUser.isFaceUser = true
+        if MoleCurrentUser.isFaceUser {
+            MolocateAccount.getFacebookFriends(completionHandler: { (data, response, error, count, next, previous) in
+                dispatch_async(dispatch_get_main_queue(), {
+                    controller.userRelations = data
+                    controller.tableView.reloadData()
+                    controller.userRelationsFace = data
+                    
+                    
+                })
+            })
+            
+            
+        } else {
+            
+        }
+        
+        self.activityIndicator.stopAnimating()
+        UIApplication.sharedApplication().endIgnoringInteractionEvents()
+
+        
+    }
     
     func pressedUsername(username: String, profilePic: NSURL, isFollowing: Bool) {
         
@@ -618,6 +653,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
                 self.backgroundLabel.hidden = true
                 self.collectionView.hidden = false
                 self.venueTable.hidden = true
+                self.findFriends.hidden = true
                 self.searchText.resignFirstResponder()
                 
             }
@@ -773,6 +809,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
             self.cameraButton.title = nil
             self.isSearching = false
             self.venueTable.hidden = true
+            self.findFriends.hidden = true
             self.venueButton2.hidden = true
             self.usernameButton2.hidden = true
             self.backgroundLabel.hidden = true
@@ -800,6 +837,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         cameraButton.image = nil
         cameraButton.title = "Vazgeç"
         venueTable.hidden = false
+        findFriends.hidden = false
         venueButton2.hidden = false
         usernameButton2.hidden = false
         backgroundLabel.hidden = false
@@ -818,6 +856,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
     
     func searchBar(searchBar: UISearchBar, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         self.venueTable.hidden = false
+        findFriends.hidden = true
         self.venueButton2.hidden = false
         self.usernameButton2.hidden = false
         self.backgroundLabel.hidden = false

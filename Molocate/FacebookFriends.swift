@@ -29,11 +29,11 @@ class FacebookFriends: UIViewController {
         facebookInfo.frame = CGRectMake(0, 16, MolocateDevice.size.width, 44)
         facebookInfo.textAlignment = .Center
         facebookInfo.textRectForBounds(CGRectMake(0, 20, MolocateDevice.size.width, 20), limitedToNumberOfLines: 1)
-         facebookInfo.textColor = UIColor.whiteColor()
+        facebookInfo.textColor = UIColor.whiteColor()
         facebookInfo.font = UIFont(name: "AvenirNext-DemiBold.ttf", size: 17)
-         facebookInfo.backgroundColor = swiftColor
-         facebookInfo.text = "Molocate'deki arkadaşların"
-         self.view.addSubview(facebookInfo)
+        facebookInfo.backgroundColor = swiftColor
+        facebookInfo.text = "Molocate'deki arkadaşların"
+        self.view.addSubview(facebookInfo)
         
         
         continueButton.frame = CGRectMake(0, MolocateDevice.size.height-44, MolocateDevice.size.width, 44)

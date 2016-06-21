@@ -73,6 +73,7 @@
 		C6BA05121D13F90400AB89FF /* Twitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BA05111D13F90400AB89FF /* Twitter.swift */; };
 		C6BA05141D13F90E00AB89FF /* TwitterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6BA05131D13F90E00AB89FF /* TwitterCell.xib */; };
 		C6BA05161D13F97900AB89FF /* ActionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BA05151D13F97900AB89FF /* ActionData.swift */; };
+		C6BA05181D19368200AB89FF /* findFriendController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BA05171D19368200AB89FF /* findFriendController.swift */; };
 		C6BA0A051BFA417B0091E088 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6BA0A041BFA417B0091E088 /* AudioToolbox.framework */; };
 		C6BA0A071BFA41F20091E088 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6BA0A061BFA41F20091E088 /* CFNetwork.framework */; };
 		C6BA0A0A1BFA42000091E088 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6BA0A081BFA42000091E088 /* CoreGraphics.framework */; };
@@ -211,6 +212,7 @@
 		C6BA05111D13F90400AB89FF /* Twitter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Twitter.swift; sourceTree = "<group>"; };
 		C6BA05131D13F90E00AB89FF /* TwitterCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TwitterCell.xib; sourceTree = "<group>"; };
 		C6BA05151D13F97900AB89FF /* ActionData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionData.swift; sourceTree = "<group>"; };
+		C6BA05171D19368200AB89FF /* findFriendController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = findFriendController.swift; sourceTree = "<group>"; };
 		C6BA0A041BFA417B0091E088 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		C6BA0A061BFA41F20091E088 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		C6BA0A081BFA42000091E088 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -357,6 +359,7 @@
 				C6F9B5C91C80DDF400C7E9FC /* NotificationsViewController.swift */,
 				E3BF835B1CFC613A00EC508A /* TimelineController.swift */,
 				388173F41C97AACB0064EBB5 /* CommentController.swift */,
+				C6BA05171D19368200AB89FF /* findFriendController.swift */,
 			);
 			name = Navigation;
 			sourceTree = "<group>";
@@ -804,6 +807,7 @@
 				C63D1F1C1C1FA20D003B2CC1 /* SignUpAdvance.swift in Sources */,
 				C6D785431D05FB3000DA59B3 /* profileUser.swift in Sources */,
 				38E6210C1C90E49D00FB1AD5 /* ChangePassword.swift in Sources */,
+				C6BA05181D19368200AB89FF /* findFriendController.swift in Sources */,
 				E3BF835D1CFC613A00EC508A /* TimelineController.swift in Sources */,
 				C6DA6BE21C4332D100E24392 /* VideoCell.swift in Sources */,
 				C61199C01CCAD4FB00DF70F3 /* S3Upload.swift in Sources */,
