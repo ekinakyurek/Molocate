@@ -232,21 +232,13 @@ public class MolocateAccount {
                 let nsError = error
                 do {
                     
-                    print("önerriiiiii")
-                    print(NSString(data: data!, encoding: NSUTF8StringEncoding))
-                    let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String: AnyObject]
+                    let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! NSArray
                     
-                    if(result.indexForKey("results") != nil){
-                        let next =  result["next"] is NSNull ? "":result["next"] as? String
-                        let previous =  result["previous"] is NSNull ? "":result["previous"] as? String
-                        let results = result["results"] as! NSArray
-                        var followings = MoleUserRelations()
-                        var friends = [MoleUserFriend]()
-                        
-                        
-                        for i in 0..<results.count{
+                    var followings = MoleUserRelations()
+            
+                        for i in 0..<result.count{
                             var friend = MoleUserFriend()
-                            let thing = results[i] as! [String:AnyObject]
+                            let thing = result[i] as! [String:AnyObject]
                             friend.username = thing["username"] as! String
                             friend.name =  thing["first_name"] as! String
                             friend.picture_url = thing["picture_url"] is NSNull ? NSURL():NSURL(string: thing["picture_url"] as! String)!
@@ -266,17 +258,11 @@ public class MolocateAccount {
                                 friend.place_id = thing["place_id"] as! String
                             }
                             
-                            friends.append(friend)
+                            followings.relations.append(friend)
                         }
+                    
                         
-                        
-                        followings.relations = friends
-                        
-                        completionHandler(data: followings , response: response , error: nsError, count: 0, next: next, previous: previous  )
-                    }else{
-                        completionHandler(data:  MoleUserRelations() , response: nil , error: nsError, count: -1, next: nil, previous: ""  )
-                        if debug {print("ServerDataError:: in mole.getFacebookFriends()")}
-                    }
+                        completionHandler(data: followings , response: response , error: nsError, count: 0, next: nil, previous: nil  )
                 } catch{
                     completionHandler(data:  MoleUserRelations() , response: nil , error: nsError, count: 0, next: nil, previous: ""  )
                     if debug {print("JSONCastError:: in mole.getFacebookFriends()")}
