@@ -43,6 +43,7 @@
 		C63FBD111BF3E5B900DBB34C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C63FBD0F1BF3E5B900DBB34C /* LaunchScreen.storyboard */; };
 		C63FBD1C1BF3E5B900DBB34C /* MolocateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63FBD1B1BF3E5B900DBB34C /* MolocateTests.swift */; };
 		C63FBD271BF3E5B900DBB34C /* MolocateUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63FBD261BF3E5B900DBB34C /* MolocateUITests.swift */; };
+		C6411C401D1AFCEA00E29DA6 /* termsPrivacy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6411C3F1D1AFCEA00E29DA6 /* termsPrivacy.swift */; };
 		C642196C1BF92A14000CAD93 /* ExploreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C642196B1BF92A14000CAD93 /* ExploreViewController.swift */; };
 		C64B601E1C81D6A500E510DC /* MolocateAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = C64B601D1C81D6A500E510DC /* MolocateAccount.swift */; };
 		C650C9C51C87E8090067275B /* report1.png in Resources */ = {isa = PBXBuildFile; fileRef = C650C9C41C87E8090067275B /* report1.png */; };
@@ -182,6 +183,7 @@
 		C63FBD221BF3E5B900DBB34C /* MolocateUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MolocateUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C63FBD261BF3E5B900DBB34C /* MolocateUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MolocateUITests.swift; sourceTree = "<group>"; };
 		C63FBD281BF3E5B900DBB34C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C6411C3F1D1AFCEA00E29DA6 /* termsPrivacy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = termsPrivacy.swift; sourceTree = "<group>"; };
 		C642196B1BF92A14000CAD93 /* ExploreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreViewController.swift; sourceTree = "<group>"; };
 		C64B601D1C81D6A500E510DC /* MolocateAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MolocateAccount.swift; sourceTree = "<group>"; };
 		C650C9C41C87E8090067275B /* report1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = report1.png; sourceTree = "<group>"; };
@@ -351,6 +353,7 @@
 			children = (
 				C60905351C4812A100614C7F /* ContainerController.swift */,
 				C609053B1C48145700614C7F /* SideBarController.swift */,
+				C6411C3F1D1AFCEA00E29DA6 /* termsPrivacy.swift */,
 				C60905391C48143C00614C7F /* MainController.swift */,
 				38EAEA611CF111870053249F /* EventController.swift */,
 				C6F9F5501C12574500E62856 /* CapturePreviewController.swift */,
@@ -832,6 +835,7 @@
 				E33DCC711CB3FE5D0081C0DF /* MolocateDevice.swift in Sources */,
 				38E621061C90D9AB00FB1AD5 /* EditProfile.swift in Sources */,
 				C6F7B2671C134FBF0062E408 /* Added.swift in Sources */,
+				C6411C401D1AFCEA00E29DA6 /* termsPrivacy.swift in Sources */,
 				E3F4673D1CC03F02005F8434 /* MolocateNotificationCell.swift in Sources */,
 				C6287C431CFF549C002C4B6B /* FirstController.swift in Sources */,
 				E33DCC6B1CB3F73C0081C0DF /* MolocatePlace.swift in Sources */,

@@ -151,6 +151,8 @@ public class MolocateAccount {
         if error == nil{
             let nsError = error
             do {
+                
+                print("faceeeee")
                  print(NSString(data: data!, encoding: NSUTF8StringEncoding))
                 let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String: AnyObject]
                 
@@ -208,6 +210,88 @@ public class MolocateAccount {
     task.resume()
     
     }
+    
+    
+    
+    class func getSuggestedFriends(nextUrl: String = "",completionHandler: (data: MoleUserRelations, response: NSURLResponse!, error: NSError!, count: Int!, next: String?, previous: String?) -> ()){
+        let url: NSURL
+        if(nextUrl == ""){
+            url = NSURL(string: MolocateBaseUrl + "account/api/suggested_users/")!
+        }else{
+            url = NSURL(string:nextUrl)!
+        }
+        
+        let request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "GET"
+        request.addValue("Token " + MoleUserToken! , forHTTPHeaderField: "Authorization")
+        request.timeoutInterval = timeOut
+        
+        let task = NSURLSession.sharedSession().dataTaskWithRequest(request){ data, response, error in
+            
+            if error == nil{
+                let nsError = error
+                do {
+                    
+                    print("önerriiiiii")
+                    print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+                    let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String: AnyObject]
+                    
+                    if(result.indexForKey("results") != nil){
+                        let next =  result["next"] is NSNull ? "":result["next"] as? String
+                        let previous =  result["previous"] is NSNull ? "":result["previous"] as? String
+                        let results = result["results"] as! NSArray
+                        var followings = MoleUserRelations()
+                        var friends = [MoleUserFriend]()
+                        
+                        
+                        for i in 0..<results.count{
+                            var friend = MoleUserFriend()
+                            let thing = results[i] as! [String:AnyObject]
+                            friend.username = thing["username"] as! String
+                            friend.name =  thing["first_name"] as! String
+                            friend.picture_url = thing["picture_url"] is NSNull ? NSURL():NSURL(string: thing["picture_url"] as! String)!
+                            let thumbnail = thing["thumbnail_url"] as! String
+                            
+                            friend.thumbnail_url = thumbnail == "" ? friend.picture_url:NSURL(string: thumbnail)!
+                            let isfollowing = thing["is_following"] as! Int
+                            
+                            
+                            friend.is_following = isfollowing == 0 ? false:true
+                            
+                            
+                            let type = thing["type"] as! String
+                            friend.is_place = type == "userprofile" ? false: true
+                            
+                            if(friend.is_place){
+                                friend.place_id = thing["place_id"] as! String
+                            }
+                            
+                            friends.append(friend)
+                        }
+                        
+                        
+                        followings.relations = friends
+                        
+                        completionHandler(data: followings , response: response , error: nsError, count: 0, next: next, previous: previous  )
+                    }else{
+                        completionHandler(data:  MoleUserRelations() , response: nil , error: nsError, count: -1, next: nil, previous: ""  )
+                        if debug {print("ServerDataError:: in mole.getFacebookFriends()")}
+                    }
+                } catch{
+                    completionHandler(data:  MoleUserRelations() , response: nil , error: nsError, count: 0, next: nil, previous: ""  )
+                    if debug {print("JSONCastError:: in mole.getFacebookFriends()")}
+                }
+            }else{
+                completionHandler(data:  MoleUserRelations() , response: nil , error: error, count: 0, next: nil, previous: ""  )
+                if debug {print("RequestError:: in mole.getFacebookFriends()")}
+            }
+        }
+        
+        task.resume()
+        
+    }
+    
+
 
     class func getFollowings(nextUrl: String = "",username: String, completionHandler: (data: MoleUserRelations, response: NSURLResponse!, error: NSError!, count: Int!, next: String?, previous: String?) -> ()){
         
@@ -1098,6 +1182,12 @@ public class MolocateAccount {
                         MoleCurrentUser.gender =  result["gender"] is NSNull ? "": (result["gender"] as! String)
                         MoleCurrentUser.birthday = result["birthday"] is NSNull || (result["birthday"] as! String)   == "" ? "1970-01-01" : result["birthday"] as! String
                         
+                        if result["is_facebook_created_user"] as! Int == 0 {
+                            MoleCurrentUser.isFaceUser = false
+                        } else {
+                            MoleCurrentUser.isFaceUser = true
+                        }
+                        print(MoleCurrentUser.isFaceUser)
                         completionHandler(data: MoleCurrentUser, response: response , error: nsError  )
                     }else{
                         completionHandler(data: MoleCurrentUser , response: nil , error: nsError  )

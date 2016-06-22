@@ -438,7 +438,8 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
         let controller:findFriendController = self.storyboard!.instantiateViewControllerWithIdentifier("findFriendController") as! findFriendController
         self.navigationController?.pushViewController(controller, animated: true)
-        MoleCurrentUser.isFaceUser = true
+        
+
         if MoleCurrentUser.isFaceUser {
             MolocateAccount.getFacebookFriends(completionHandler: { (data, response, error, count, next, previous) in
                 dispatch_async(dispatch_get_main_queue(), {
@@ -449,10 +450,21 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
                     
                 })
             })
+            MolocateAccount.getSuggestedFriends { (data, response, error, count, next, previous) in
+                dispatch_async(dispatch_get_main_queue(), {
+                    controller.userRelationsRandom = data
+                })
+            }
             
             
         } else {
-            
+            MolocateAccount.getSuggestedFriends { (data, response, error, count, next, previous) in
+                dispatch_async(dispatch_get_main_queue(), {
+                    controller.userRelations = data
+                    controller.userRelationsRandom = data
+                    controller.tableView.reloadData()
+                })
+            }
         }
         
         self.activityIndicator.stopAnimating()
@@ -686,7 +698,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
              myCell.categoryImage?.image = UIImage(named: categoryImagesWhite[indexPath.row])
             UIView.animateWithDuration(0.5, animations: {
                 myCell.bottomCon.constant = 2
-                myCell.topCon.constant = -2
+                myCell.topCon.constant = 0
                 //self.view.layoutIfNeeded()
             })
             myCell.myLabel.hidden = false
@@ -712,7 +724,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
          myCell.categoryImage?.image = UIImage(named: categoryImagesBlack[indexPath.row])
         myCell.myLabel.hidden = true
         UIView.animateWithDuration(0.5, animations: {
-                myCell.bottomCon.constant = 0
+                myCell.bottomCon.constant = -5
                 myCell.topCon.constant = 5
                 //self.view.layoutIfNeeded()
             })

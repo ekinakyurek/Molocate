@@ -102,9 +102,9 @@ class videoCell: UITableViewCell {
         
         self.contentView.addSubview(label3)
         
-        videoTime.frame = CGRectMake( screenSize.width - 30  , 59 + screenSize.width , 25 , 25)
+        videoTime.frame = CGRectMake( screenSize.width - 34  , 59 + screenSize.width , 25 , 30)
         //videoTime.text = "2s"
-        videoTime.font = UIFont(name: "AvenirNext-UltraLight", size: 13)
+        videoTime.font = UIFont(name: "AvenirNext-UltraLight", size: 11)
         videoTime.textAlignment = .Right
         videoTime.textColor = UIColor.blackColor()
         self.contentView.addSubview(videoTime)
