@@ -96,6 +96,7 @@ class videoCell: UITableViewCell {
             label.lineBreakMode = .ByWordWrapping
             label.mentionColor = swiftColor
             label.hashtagColor = UIColor.blueColor()
+            
         }
         
         self.contentView.addSubview(videoComment)
@@ -106,7 +107,6 @@ class videoCell: UITableViewCell {
         label3.text = "  "
         label3.font = UIFont(name: "AvenirNext-Regular", size: 10)
         label3.textAlignment = .Center
-        
         self.contentView.addSubview(label3)
         
         videoTime.frame = CGRectMake( screenSize.width - 34  , 60 + screenSize.width , 28 , 10)
@@ -176,7 +176,7 @@ class videoCell: UITableViewCell {
         //reportButton.setBackgroundImage(reportImage, forState: UIControlState.Normal)
         self.contentView.addSubview(reportButton)
         
-        shareButton.frame = CGRectMake(screenSize.width - 88, 66 + screenSize.width  , 30, 30)
+        shareButton.frame = CGRectMake(self.commentCount.frame.origin.x+60, 66 + screenSize.width  , 30, 30)
         let shareImage = UIImage(named: "share")! as UIImage
         shareButton.setBackgroundImage(shareImage, forState: .Normal)
         self.contentView.addSubview(shareButton)

@@ -208,7 +208,7 @@ class tagComment: UIViewController, UITextViewDelegate {
         return true
     }
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
-        let maxLength = 300
+        let maxLength = 120
         let currentString: NSString = textField.text!
         let newString: NSString = currentString.stringByReplacingCharactersInRange(range, withString: currentString as String)
         return newString.length <= maxLength

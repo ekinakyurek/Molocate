@@ -825,6 +825,9 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
             })
             
         }
+        selectedCell = 0
+        self.collectionView.reloadData()
+        self.collectionView.setContentOffset(CGPoint(x: 0,y:0), animated: false)
         
     }
     override func viewDidDisappear(animated: Bool) {

@@ -451,6 +451,12 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
         removeDatas()
     }
     
+    override func viewDidAppear(animated: Bool) {
+
+    }
+    
+    
+    
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
     {
@@ -704,6 +710,9 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
     }
     override func viewWillAppear(animated: Bool) {
         adjustViewLayout(UIScreen.mainScreen().bounds.size)
+        selectedCell = 0
+        self.collectionView.reloadData()
+        self.collectionView.setContentOffset(CGPoint(x:0,y:0), animated: false)
     }
     func adjustViewLayout(size: CGSize) {
         
