@@ -92,9 +92,10 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         searchText.delegate = self
     
         findFriends = UIButton()
-        findFriends.frame = CGRect(x: self.view.center.x-50, y: self.view.center.y-60-(self.navigationController?.navigationBar.frame.height)!, width: 100, height: 40)
+        findFriends.frame = CGRect(x: self.view.center.x-50, y: self.view.frame.height*0.2, width: 100, height: 40)
         findFriends.backgroundColor = UIColor.blueColor()
         findFriends.setTitle("Arkadaş bul", forState: .Normal)
+        findFriends.titleLabel?.font = UIFont(name: "AvenirNext-Medium", size: 15)
         findFriends.addTarget(self, action: #selector(MainController.pressedFindFriend(_:)), forControlEvents: .TouchUpInside)
         
         findFriends.hidden = true
@@ -160,6 +161,16 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         bartextField.textColor = UIColor.whiteColor()
         bartextField.attributedPlaceholder =  NSAttributedString(string: "Ara", attributes: [NSForegroundColorAttributeName:UIColor.whiteColor(), NSFontAttributeName: UIFont(name: "AvenirNext-Regular", size: 14)! ])
         
+        let rectShape3 = CAShapeLayer()
+        rectShape3.bounds = self.findFriends.frame
+        rectShape3.position = self.findFriends.center
+        rectShape3.path = UIBezierPath(roundedRect: self.findFriends.bounds, byRoundingCorners: [.BottomRight , .TopRight , .BottomLeft , .TopLeft ] , cornerRadii: CGSize(width: 8, height: 8)).CGPath
+        rectShape3.borderWidth = 1.0
+        rectShape3.borderColor = swiftColor2.CGColor
+        self.findFriends.layer.backgroundColor = swiftColor2.CGColor
+        //Here I'm masking the textView's layer with rectShape layer
+        self.findFriends.layer.mask = rectShape3
+
         
         let magnifyingGlass = bartextField.leftView as! UIImageView
         magnifyingGlass.image = magnifyingGlass.image?.imageWithRenderingMode(.AlwaysTemplate)
@@ -598,8 +609,15 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         NSNotificationCenter.defaultCenter().postNotificationName("closeSideBar", object: nil)
         self.searchText.text = ""
         self.searchText.placeholder = "Ara"
-        //self.tableController.isOnView = true
-        
+        self.tableController.tableView.scrollEnabled = true
+        self.tableController.tableView.userInteractionEnabled = true
+        if venues != nil {
+        self.venues.removeAll()
+        }
+        if searchedUsers != nil {
+            self.searchedUsers.removeAll()
+        }
+        self.venueTable.reloadData()
 
     }
     
