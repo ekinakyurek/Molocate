@@ -63,6 +63,11 @@ class videoCell: UITableViewCell {
         profilePhoto.clipsToBounds = true
         profilePhoto.setBackgroundImage(image, forState: UIControlState.Normal)
         self.contentView.addSubview(profilePhoto)
+        
+        var reportImage2 : UIImageView
+        reportImage2  = UIImageView(frame:CGRectMake(screenSize.width - 32, 77.4 + screenSize.width  , 27, 7.2));
+        reportImage2.image = UIImage(named:"points")
+        self.contentView.addSubview(reportImage2)
     
         Username.frame = CGRectMake(59 , 5, screenSize.width - 100, 22)
         Username.titleLabel?.sizeToFit()
@@ -80,11 +85,12 @@ class videoCell: UITableViewCell {
         placeName.titleLabel?.lineBreakMode = NSLineBreakMode.ByTruncatingTail
         self.contentView.addSubview(placeName)
         
-        videoComment.frame = CGRectMake( 10 , 59 + screenSize.width , screenSize.width - 50 , 50)
+        videoComment.frame = CGRectMake( 10 , 103 + screenSize.width , screenSize.width - 20 , 46)
       
         videoComment.customize { label in
             label.textAlignment = .Left
-            label.numberOfLines = 2
+            
+            label.numberOfLines = 3
             label.textColor = arkarenk
             label.font = UIFont(name: "AvenirNext-Medium", size: 12.5)
             label.lineBreakMode = .ByWordWrapping
@@ -94,19 +100,20 @@ class videoCell: UITableViewCell {
         
         self.contentView.addSubview(videoComment)
         
-        label3.frame = CGRectMake( 12 , 104 + screenSize.width , screenSize.width - 45 , 1)
+        label3.frame = CGRectMake( 12 , 104 + screenSize.width , screenSize.width - 24 , 0.5)
         label3.backgroundColor = UIColor.lightGrayColor()
+        label3.alpha = 0.2
         label3.text = "  "
         label3.font = UIFont(name: "AvenirNext-Regular", size: 10)
         label3.textAlignment = .Center
         
         self.contentView.addSubview(label3)
         
-        videoTime.frame = CGRectMake( screenSize.width - 34  , 59 + screenSize.width , 25 , 30)
+        videoTime.frame = CGRectMake( screenSize.width - 34  , 60 + screenSize.width , 28 , 10)
         //videoTime.text = "2s"
-        videoTime.font = UIFont(name: "AvenirNext-UltraLight", size: 11)
+        videoTime.font = UIFont(name: "AvenirNext-Regular", size: 11)
         videoTime.textAlignment = .Right
-        videoTime.textColor = UIColor.blackColor()
+        videoTime.textColor = UIColor.darkGrayColor()
         self.contentView.addSubview(videoTime)
         
         
@@ -116,58 +123,60 @@ class videoCell: UITableViewCell {
         self.contentView.addSubview(followButton)
         
         
-        likeButton.frame = CGRectMake( 5 , 110 + screenSize.width , 32, 32)
-        let likeImage = UIImage(named: "likeunfilled")! as UIImage
-        likeButton.setBackgroundImage(likeImage, forState: UIControlState.Normal)
-        self.contentView.addSubview(likeButton)
+        
         
         
   
-        label1.frame = CGRectMake( 38 , 110 + screenSize.width , 44 , 18)
-        //yazı ortalama
-        label1.text = "BEĞENİ"
-        label1.font = UIFont(name: "AvenirNext-Regular", size: 10)
-        label1.textAlignment = .Center
-        label1.textColor = arkarenk
-        self.contentView.addSubview(label1)
+//        label1.frame = CGRectMake( 38 , 110 + screenSize.width , 44 , 18)
+//        //yazı ortalama
+//        label1.text = "BEĞENİ"
+//        label1.font = UIFont(name: "AvenirNext-Regular", size: 10)
+//        label1.textAlignment = .Center
+//        label1.textColor = arkarenk
+//        self.contentView.addSubview(label1)
         
        
-        likeCount.frame = CGRectMake( 38 , 106 + screenSize.width , 44 , 36)
+        likeCount.frame = CGRectMake( 26 , 62 + screenSize.width , 54 , 38)
         likeCount.contentHorizontalAlignment = .Center
-        likeCount.contentVerticalAlignment = .Bottom
+        //likeCount.contentVerticalAlignment = .Bottom
         //likeCount.setTitle("0", forState: .Normal)
         likeCount.setTitleColor(swiftColor, forState: .Normal)
         likeCount.titleLabel!.font = UIFont(name: "AvenirNext-Medium", size: 14)
         self.contentView.addSubview(likeCount)
         
-        commentButton.frame = CGRectMake( 93 , 110 + screenSize.width , 32 , 32)
-        let commentImage = UIImage(named: "comment")! as UIImage
-    
-        commentButton.setBackgroundImage(commentImage, forState: UIControlState.Normal)
-        self.contentView.addSubview(commentButton)
+        likeButton.frame = CGRectMake( 9 , 66 + screenSize.width  , 30, 30)
+        let likeImage = UIImage(named: "likeunfilled")! as UIImage
+        likeButton.setBackgroundImage(likeImage, forState: UIControlState.Normal)
+        self.contentView.addSubview(likeButton)
         
-       
-        label2.frame = CGRectMake( 126 , 110 + screenSize.width , 44 , 18)
-        label2.text = "YORUM"
-        label2.font = UIFont(name: "AvenirNext-Regular", size: 10)
-        label2.textAlignment = .Center
-        label2.textColor = arkarenk
-        self.contentView.addSubview(label2)
-        
-    
-        commentCount.frame = CGRectMake( 128 , 124 + screenSize.width , 44 , 18)
-        //commentCount.setTitle("0", forState: .Normal)
+        commentCount.frame = CGRectMake( 101 , 62 + screenSize.width , 54 , 38)
         commentCount.titleLabel!.font = UIFont(name: "AvenirNext-Medium", size: 14)
         commentCount.contentHorizontalAlignment = .Center
         commentCount.setTitleColor(swiftColor, forState: .Normal)
         self.contentView.addSubview(commentCount)
         
-        reportButton.frame = CGRectMake(screenSize.width - 44, 122 + screenSize.width  , 36, 9.6)
-        let reportImage = UIImage(named: "points")! as UIImage
-        reportButton.setBackgroundImage(reportImage, forState: UIControlState.Normal)
+        commentButton.frame = CGRectMake( 84 , 66 + screenSize.width  , 30, 30)
+        let commentImage = UIImage(named: "comment")! as UIImage
+        commentButton.setBackgroundImage(commentImage, forState: UIControlState.Normal)
+        self.contentView.addSubview(commentButton)
+        
+       
+//        label2.frame = CGRectMake( 126 , 110 + screenSize.width , 44 , 18)
+//        label2.text = "YORUM"
+//        label2.font = UIFont(name: "AvenirNext-Regular", size: 10)
+//        label2.textAlignment = .Center
+//        label2.textColor = arkarenk
+//        self.contentView.addSubview(label2)
+        
+    
+        
+        
+        reportButton.frame = CGRectMake(screenSize.width - 35, 64 + screenSize.width  , 34, 34)
+        //let reportImage = UIImage(named: "points")! as UIImage
+        //reportButton.setBackgroundImage(reportImage, forState: UIControlState.Normal)
         self.contentView.addSubview(reportButton)
         
-        shareButton.frame = CGRectMake(screenSize.width - 88, 110 + screenSize.width  , 32, 32)
+        shareButton.frame = CGRectMake(screenSize.width - 88, 66 + screenSize.width  , 30, 30)
         let shareImage = UIImage(named: "share")! as UIImage
         shareButton.setBackgroundImage(shareImage, forState: .Normal)
         self.contentView.addSubview(shareButton)

@@ -68,7 +68,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         tableController = self.storyboard?.instantiateViewControllerWithIdentifier("timelineController") as! TimelineController
         tableController.type = "MainController"
         tableController.delegate = self
-        tableController.view.frame = CGRectMake(0, 60, MolocateDevice.size.width, MolocateDevice.size.height - 60)
+        tableController.view.frame = CGRectMake(0, 50, MolocateDevice.size.width, MolocateDevice.size.height - 50)
         tableController.view.layer.zPosition = 0
         self.view.addSubview(tableController.view)
         self.addChildViewController(tableController);
@@ -437,7 +437,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         if viewBool {
             self.tableController.tableView.frame = self.view.frame
         } else {
-            self.tableController.tableView.frame = CGRectMake(0, 60, MolocateDevice.size.width, MolocateDevice.size.height - 60)
+            self.tableController.tableView.frame = CGRectMake(0, 50, MolocateDevice.size.width, MolocateDevice.size.height - 50)
         }
     }
         
@@ -685,6 +685,15 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
                 self.venueTable.hidden = true
                 self.findFriends.hidden = true
                 self.searchText.resignFirstResponder()
+                if searchedUsers != nil {
+                    searchedUsers.removeAll()
+                    self.venueTable.reloadData()
+                }
+                if venues != nil {
+                    venues.removeAll()
+                    self.venueTable.reloadData()
+                    
+                }
                 
             }
             self.activityIndicator.removeFromSuperview()
@@ -772,19 +781,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         tableController.tableView.userInteractionEnabled = true
         
     }
-    func changeFrame() {
-        
-        switch(choosedIndex){
-        case 2:
-            self.tableController.tableView.frame = CGRectMake(0, 44, MolocateDevice.size.width, MolocateDevice.size.height - 44)
-            self.collectionView.hidden = true
-            
-            break;
-        default:
-            self.tableController.tableView.frame = CGRectMake(0, 100, MolocateDevice.size.width, MolocateDevice.size.height - 100)
-            self.collectionView.hidden = false
-        }
-    }
+
     
     
     
@@ -892,9 +889,9 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         self.backgroundLabel.hidden = false
         self.collectionView.hidden = true
         let whitespaceCharacterSet = NSCharacterSet.symbolCharacterSet()
-        let strippedString = searchText.text!.stringByTrimmingCharactersInSet(whitespaceCharacterSet)
+        let strippedString = searchText.text!.stringByTrimmingCharactersInSet(whitespaceCharacterSet) + text
         
-        
+       
         if venueoruser {
             locationManager.startUpdatingLocation()
             if self.bestEffortAtLocation == nil {
