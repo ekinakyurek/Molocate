@@ -160,9 +160,15 @@ class SignUpAdvance: UIViewController , UITextFieldDelegate {
                           
                         })
                         
+                        MolocateAccount.getSuggestedFriends(completionHandler: { (data, response, error, count, next, previous) in
+                            dispatch_async(dispatch_get_main_queue(), {
+                                self.facebookfriends.relations  +=  data.relations
+                            })
+                        })
+                        
                         MolocateAccount.getFacebookFriends(completionHandler: { (data, response, error, count, next, previous) in
                             dispatch_async(dispatch_get_main_queue(), {
-                                self.facebookfriends = data
+                                self.facebookfriends.relations += data.relations
                                 
                                 UIApplication.sharedApplication().endIgnoringInteractionEvents()
                                 self.performSegueWithIdentifier("usernameAfter", sender: self)

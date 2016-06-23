@@ -9,6 +9,8 @@ import Bolts
 import QuadratTouch
 import SDWebImage
 import AWSS3
+import Fabric
+import Crashlytics
 
 var DeviceToken:String?
 var isRegistered = false
@@ -27,6 +29,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         // [Optional] Power your app with Local Datastore. For more info, go to
         //setStatusBarBackgroundColor()
+        
+        Fabric.with([Crashlytics.self])
+        Fabric.sharedSDK().debug = true
         if(NSUserDefaults.standardUserDefaults().boolForKey("isRegistered")) {
             isRegistered = true
             DeviceToken = NSUserDefaults.standardUserDefaults().objectForKey("DeviceToken") as? String

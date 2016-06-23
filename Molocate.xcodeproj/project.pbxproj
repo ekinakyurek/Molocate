@@ -581,6 +581,7 @@
 				C63FBD011BF3E5B800DBB34C /* Resources */,
 				6478D27176E53AECFF80ABC8 /* Embed Pods Frameworks */,
 				3A5D761AB8388936CF8DF066 /* Copy Pods Resources */,
+				E35C437C1D1C578F00914C26 /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -784,6 +785,20 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Molocate/Pods-Molocate-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		E35C437C1D1C578F00914C26 /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" 6cb61046c52026aa64d53ae417492642254d8e3d c37c152224b05bc484c1666dd4e5921ebe31967a5eeae89d8e13639eb9105934";
 		};
 /* End PBXShellScriptBuildPhase section */
 

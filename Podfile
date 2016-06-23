@@ -15,7 +15,8 @@ pod 'SDWebImage'
 pod 'HanekeSwift'
 pod 'AWSS3'
 pod 'XLActionController'
-
+pod 'Fabric'
+pod 'Crashlytics'
 end
 
 target 'MolocateTests' do

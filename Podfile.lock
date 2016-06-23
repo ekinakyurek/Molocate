@@ -2,6 +2,9 @@ PODS:
   - AWSCore (2.4.0)
   - AWSS3 (2.4.0):
     - AWSCore (= 2.4.0)
+  - Crashlytics (3.7.2):
+    - Fabric (~> 1.6.3)
+  - Fabric (1.6.7)
   - HanekeSwift (0.10.1)
   - QuadratTouch (1.1.1)
   - RecordButton (1.0.0)
@@ -14,6 +17,8 @@ PODS:
 
 DEPENDENCIES:
   - AWSS3
+  - Crashlytics
+  - Fabric
   - HanekeSwift
   - QuadratTouch (>= 1.0)
   - RecordButton
@@ -23,6 +28,8 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   AWSCore: 7e0da755786280a76ed4ab4ed8c1d38ced09b460
   AWSS3: dc00e788fb6733853ecd615a45f9d7dd6ce25823
+  Crashlytics: 130ab943f8c78cda7a814b434f270b2e2c8a3cba
+  Fabric: caf7580c725e64db144f610ac65cd60956911dc7
   HanekeSwift: 08e47d3d0f2899ec58e5d257beba0de619aca9e8
   QuadratTouch: 296d83c63a4328f6f40af9fc728fe24f0e3b00d4
   RecordButton: 53e5cea9112aa2f09dccf83e55d3c4645197b58a

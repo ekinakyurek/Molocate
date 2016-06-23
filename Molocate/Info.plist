@@ -30,6 +30,20 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>2.4</string>
+	<key>Fabric</key>
+	<dict>
+		<key>APIKey</key>
+		<string>6cb61046c52026aa64d53ae417492642254d8e3d</string>
+		<key>Kits</key>
+		<array>
+			<dict>
+				<key>KitInfo</key>
+				<dict/>
+				<key>KitName</key>
+				<string>Crashlytics</string>
+			</dict>
+		</array>
+	</dict>
 	<key>FacebookAppID</key>
 	<string>1622592488004581</string>
 	<key>FacebookDisplayName</key>
@@ -40,8 +54,8 @@
 		<string>fb-messenger-api</string>
 		<string>fbauth2</string>
 		<string>fbshareextension</string>
-        <string>instagram</string>
-        <string>fbapi20150629</string>
+		<string>instagram</string>
+		<string>fbapi20150629</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
