@@ -32,7 +32,7 @@ class FacebookFriends: UIViewController {
         facebookInfo.textColor = UIColor.whiteColor()
         facebookInfo.font = UIFont(name: "AvenirNext-DemiBold.ttf", size: 17)
         facebookInfo.backgroundColor = swiftColor
-        facebookInfo.text = "Arkadaşlarını Bul"
+        facebookInfo.text = "Önerilen kullanıcılar"
         self.view.addSubview(facebookInfo)
         
         
