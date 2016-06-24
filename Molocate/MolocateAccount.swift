@@ -1023,7 +1023,7 @@ public class MolocateAccount {
         }
     }
     
-    class func sendProfilePhotoandThumbnail(image: NSData, thumbnail: NSData, completionHandler: (data: String!, response: NSURLResponse!, error: NSError!) -> ()){
+    class func sendProfilePhotoandThumbnail(image: NSData, thumbnail: NSData, completionHandler: (data: String!, pictureUrl: String, thumbnailUrl: String, response: NSURLResponse!, error: NSError!) -> ()){
       
         let headers = [
             "content-type": "multipart/form-data; boundary=---011000010111000001101001",
@@ -1082,11 +1082,16 @@ public class MolocateAccount {
         
         let session = NSURLSession.sharedSession()
         let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
-            
-            if (error != nil) {
-                completionHandler(data: "error", response: response , error: error  )
-            } else {
-                completionHandler(data: "success", response: response , error: error  )
+            do{
+                let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String: String]
+                
+                if (error != nil) {
+                    completionHandler(data:"error" , pictureUrl: "", thumbnailUrl: "",response: response , error: error  )
+                } else {
+                    completionHandler(data: "success", pictureUrl: result["picture_url"]!, thumbnailUrl: result["thumbnail_url"]!,response: response , error: error  )
+                }
+            }catch{
+                completionHandler(data:"error" , pictureUrl: "", thumbnailUrl: "",response: response , error: nil  )
             }
         })
         
@@ -1107,7 +1112,7 @@ public class MolocateAccount {
         request.timeoutInterval = timeOut
         
         let task = NSURLSession.sharedSession().dataTaskWithRequest(request){data, response, error  in
-            //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+            print(NSString(data: data!, encoding: NSUTF8StringEncoding))
             if error == nil {
                 let nsError = error;
                 do {

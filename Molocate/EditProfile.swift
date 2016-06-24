@@ -344,41 +344,46 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
             let thumbNailData = UIImageJPEGRepresentation(thumbnail!, 1.0)
             
           
-            MolocateAccount.sendProfilePhotoandThumbnail(imageData!, thumbnail: thumbNailData!, completionHandler: { (data, response, error) in
+            MolocateAccount.sendProfilePhotoandThumbnail(imageData!, thumbnail: thumbNailData!, completionHandler: { (data, pictureUrl, thumbnailUrl, response, error) in
                 dispatch_async(dispatch_get_main_queue()) { () -> Void in
-                    SDImageCache.sharedImageCache().removeImageForKey(MoleCurrentUser.profilePic.absoluteString)
-                    //Server should return urls and we can set cache for this urls
-                    MolocateAccount.getCurrentUser({ (data, response, error) in
-                       
-                    })
-                    self.selected = nil
-                    self.thumbnail = nil
-                    self.activityIndicator.stopAnimating()
-                    UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                    
                     if data == "success"{
+                        SDImageCache.sharedImageCache().removeImageForKey(MoleCurrentUser.profilePic.absoluteString)
+                        SDImageCache.sharedImageCache().removeImageForKey(MoleCurrentUser.thumbnailPic.absoluteString)
+                        SDImageCache.sharedImageCache().storeImage(self.selected!, forKey: pictureUrl)
+                        SDImageCache.sharedImageCache().storeImage(self.thumbnail!, forKey: thumbnailUrl)
+                        MoleCurrentUser.profilePic = NSURL(string: pictureUrl)!
+                        MoleCurrentUser.thumbnailPic = NSURL(string: thumbnailUrl)!
+
                         choosedIndex = 0
-                        //self.navigationController?.popViewControllerAnimated(true)
+                        self.navigationController?.popViewControllerAnimated(true)
+                        self.selected = nil
+                        self.thumbnail = nil
                     }else{
                         self.displayAlert("Tamam", message: "Kullanıcı bilgileri değiştirilirken bir hata oluştu")
                         sender.hidden = false
                     }
+        
+                    self.activityIndicator.stopAnimating()
+                    UIApplication.sharedApplication().endIgnoringInteractionEvents()
                     
                 }
                
             })
         }else{
             MolocateAccount.EditUser({ (data, response, error) in
-                if data == "success"{
-                    choosedIndex = 0
-                    
-                }else{
-                    self.displayAlert("Tamam", message: "Kullanıcı bilgileri değiştirilirken bir hata oluştu")
-                    sender.hidden = false
+                dispatch_async(dispatch_get_main_queue()) { () -> Void in
+                    if data == "success"{
+                        choosedIndex = 0
+                        self.navigationController?.popViewControllerAnimated(true)
+                    }else{
+                        self.displayAlert("Tamam", message: "Kullanıcı bilgileri değiştirilirken bir hata oluştu")
+                        sender.hidden = false
+                    }
                 }
             })
         }
-        choosedIndex = 0
-        self.navigationController?.popViewControllerAnimated(true)
+      
 //
 //        MolocateAccount.uploadProfilePhoto(imageData!) { (data, response, error) -> () in
 //            dispatch_async(dispatch_get_main_queue()) { () -> Void in
