@@ -30,6 +30,7 @@ struct MoleUser{
     var username:String = ""
     var email : String = ""
     var profilePic:NSURL = NSURL()
+    var thumbnailPic:NSURL = NSURL()
     var token: String = ""
     var first_name = ""
     var last_name = ""

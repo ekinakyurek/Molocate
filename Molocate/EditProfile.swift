@@ -338,71 +338,75 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
         
         
         
-//        if selected != nil && thumbnail != nil {
-//            
-//            let imageData = UIImageJPEGRepresentation(selected!, 1.0)
-//            let thumbNailData = UIImageJPEGRepresentation(thumbnail!, 1.0)
-//            
-//          
-//            MolocateAccount.sendProfilePhotoandThumbnail(imageData!, thumbnail: thumbNailData!, completionHandler: { (data, response, error) in
-//                dispatch_async(dispatch_get_main_queue()) { () -> Void in
-//                    self.activityIndicator.stopAnimating()
-//                    UIApplication.sharedApplication().endIgnoringInteractionEvents()
-//                    if data == "success"{
-//                        choosedIndex = 0
-//                        self.performSegueWithIdentifier("goBackProfile", sender: self)
-//                    }else{
-//                        self.displayAlert("Tamam", message: "Kullanıcı bilgileri değiştirilirken bir hata oluştu")
-//                        sender.hidden = false
-//                    }
-//                    
-//                }
-//               
-//            })
-//        }else{
-//            MolocateAccount.EditUser({ (data, response, error) in
-//                if data == "success"{
-//                    choosedIndex = 0
-//                    self.performSegueWithIdentifier("goBackProfile", sender: self)
-//                }else{
-//                    self.displayAlert("Tamam", message: "Kullanıcı bilgileri değiştirilirken bir hata oluştu")
-//                    sender.hidden = false
-//                }
-//            })
-//        }
-        
-        MolocateAccount.uploadProfilePhoto(imageData!) { (data, response, error) -> () in
-            dispatch_async(dispatch_get_main_queue()) { () -> Void in
-                if data[0] == "h"{
-                    SDImageCache.sharedImageCache().removeImageForKey(data!)
-                    SDImageCache.sharedImageCache().storeImage(self.photo.image!, forKey: data!)
-                    MoleCurrentUser.profilePic = NSURL(string: data!)!
-                    MolocateAccount.EditUser { (data, response, error) -> () in
-                        dispatch_async(dispatch_get_main_queue()) { () -> Void in
-                            self.activityIndicator.stopAnimating()
-                            UIApplication.sharedApplication().endIgnoringInteractionEvents()
-                            if data == "success"{
-                                choosedIndex = 0
-                                self.performSegueWithIdentifier("goBackProfile", sender: self)
-                            }else{
-                                self.displayAlert("Tamam", message: "Kullanıcı bilgileri değiştirilirken bir hata oluştu")
-                                sender.hidden = false
-                            }
-                           
-                        }
-                    }
-                }else{
+        if selected != nil && thumbnail != nil {
+            
+            let imageData = UIImageJPEGRepresentation(selected!, 1.0)
+            let thumbNailData = UIImageJPEGRepresentation(thumbnail!, 1.0)
+            
+          
+            MolocateAccount.sendProfilePhotoandThumbnail(imageData!, thumbnail: thumbNailData!, completionHandler: { (data, response, error) in
+                dispatch_async(dispatch_get_main_queue()) { () -> Void in
+                    SDImageCache.sharedImageCache().removeImageForKey(MoleCurrentUser.profilePic.absoluteString)
+                    MolocateAccount.getCurrentUser({ (data, response, error) in
+                       
+                    })
                     self.activityIndicator.stopAnimating()
                     UIApplication.sharedApplication().endIgnoringInteractionEvents()
-                    self.displayAlert("Tamam", message: "Profil fotosu yüklenirken bir hata oluştu")
+                    if data == "success"{
+                        choosedIndex = 0
+                        self.navigationController?.popViewControllerAnimated(true)
+                    }else{
+                        self.displayAlert("Tamam", message: "Kullanıcı bilgileri değiştirilirken bir hata oluştu")
+                        sender.hidden = false
+                    }
+                    
+                }
+               
+            })
+        }else{
+            MolocateAccount.EditUser({ (data, response, error) in
+                if data == "success"{
+                    choosedIndex = 0
+                    self.navigationController?.popViewControllerAnimated(true)
+                }else{
+                    self.displayAlert("Tamam", message: "Kullanıcı bilgileri değiştirilirken bir hata oluştu")
                     sender.hidden = false
                 }
-                
-               
-            }
-                
+            })
         }
-        
+//
+//        MolocateAccount.uploadProfilePhoto(imageData!) { (data, response, error) -> () in
+//            dispatch_async(dispatch_get_main_queue()) { () -> Void in
+//                if data[0] == "h"{
+//                    SDImageCache.sharedImageCache().removeImageForKey(data!)
+//                    SDImageCache.sharedImageCache().storeImage(self.photo.image!, forKey: data!)
+//                    MoleCurrentUser.profilePic = NSURL(string: data!)!
+//                    MolocateAccount.EditUser { (data, response, error) -> () in
+//                        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+//                            self.activityIndicator.stopAnimating()
+//                            UIApplication.sharedApplication().endIgnoringInteractionEvents()
+//                            if data == "success"{
+//                                choosedIndex = 0
+//                                self.performSegueWithIdentifier("goBackProfile", sender: self)
+//                            }else{
+//                                self.displayAlert("Tamam", message: "Kullanıcı bilgileri değiştirilirken bir hata oluştu")
+//                                sender.hidden = false
+//                            }
+//                           
+//                        }
+//                    }
+//                }else{
+//                    self.activityIndicator.stopAnimating()
+//                    UIApplication.sharedApplication().endIgnoringInteractionEvents()
+//                    self.displayAlert("Tamam", message: "Profil fotosu yüklenirken bir hata oluştu")
+//                    sender.hidden = false
+//                }
+//                
+//               
+//            }
+//                
+//        }
+//        
     }
     
 
