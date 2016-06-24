@@ -308,7 +308,8 @@ class MyProfile: UIViewController , UIScrollViewDelegate, UITableViewDelegate, U
         if indexPath.row == 1 {
             self.scrollView.userInteractionEnabled = true
             self.scrollView.alpha = 1
-            self.performSegueWithIdentifier("goEditProfile", sender: self)
+            let controller:editProfile = self.storyboard!.instantiateViewControllerWithIdentifier("editProfile") as! editProfile
+            self.navigationController?.pushViewController(controller, animated: true)
             self.settings.hidden = true
         }
         if indexPath.row == 2 {

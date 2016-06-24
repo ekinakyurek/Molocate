@@ -347,11 +347,12 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
             MolocateAccount.sendProfilePhotoandThumbnail(imageData!, thumbnail: thumbNailData!, completionHandler: { (data, response, error) in
                 dispatch_async(dispatch_get_main_queue()) { () -> Void in
                     SDImageCache.sharedImageCache().removeImageForKey(MoleCurrentUser.profilePic.absoluteString)
+                    //Server should return urls and we can set cache for this urls
                     MolocateAccount.getCurrentUser({ (data, response, error) in
                        
                     })
-                    imageData = nil
-                    thumbNailData = nil
+                    self.selected = nil
+                    self.thumbnail = nil
                     self.activityIndicator.stopAnimating()
                     UIApplication.sharedApplication().endIgnoringInteractionEvents()
                     if data == "success"{
@@ -415,7 +416,7 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
     
     func changePassword(sender:UIButton!)
     {
-        
+        //DBG: Push View Controller
         let controller:changePasswordd = self.storyboard!.instantiateViewControllerWithIdentifier("changePasswordd") as! changePasswordd
         controller.view.frame = self.view.bounds
         controller.willMoveToParentViewController(self)
