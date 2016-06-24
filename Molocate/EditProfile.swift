@@ -79,7 +79,7 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
         saveButton.titleLabel!.font =  UIFont(name: "AvenirNext-DemiBold.ttf", size: 18)
         self.view.addSubview(saveButton)
         
-        
+    
         let password   = UIButton(type: UIButtonType.System) as UIButton
         password.frame = CGRectMake(30 , 0 + (scr * 82) / 120 , screenWidth - 60 , (scr * 6) / 120 )
         password.setTitleColor(UIColor.whiteColor(), forState: .Normal)
@@ -334,7 +334,7 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
         self.view.addSubview(activityIndicator)
         activityIndicator.startAnimating()
         
-        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+        //UIApplication.sharedApplication().beginIgnoringInteractionEvents()
         
         
         
@@ -357,7 +357,7 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
                     UIApplication.sharedApplication().endIgnoringInteractionEvents()
                     if data == "success"{
                         choosedIndex = 0
-                        self.navigationController?.popViewControllerAnimated(true)
+                        //self.navigationController?.popViewControllerAnimated(true)
                     }else{
                         self.displayAlert("Tamam", message: "Kullanıcı bilgileri değiştirilirken bir hata oluştu")
                         sender.hidden = false
@@ -370,13 +370,15 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
             MolocateAccount.EditUser({ (data, response, error) in
                 if data == "success"{
                     choosedIndex = 0
-                    self.navigationController?.popViewControllerAnimated(true)
+                    
                 }else{
                     self.displayAlert("Tamam", message: "Kullanıcı bilgileri değiştirilirken bir hata oluştu")
                     sender.hidden = false
                 }
             })
         }
+        choosedIndex = 0
+        self.navigationController?.popViewControllerAnimated(true)
 //
 //        MolocateAccount.uploadProfilePhoto(imageData!) { (data, response, error) -> () in
 //            dispatch_async(dispatch_get_main_queue()) { () -> Void in

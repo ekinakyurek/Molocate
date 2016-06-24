@@ -397,6 +397,7 @@ class MyProfile: UIViewController , UIScrollViewDelegate, UITableViewDelegate, U
     override func viewWillAppear(animated: Bool) {
         self.RefreshGuiWithData()
         (self.parentViewController?.parentViewController!.parentViewController as! ContainerController).scrollView.scrollEnabled = true
+        self.tabBarController?.tabBar.hidden = true
     }
     
   
