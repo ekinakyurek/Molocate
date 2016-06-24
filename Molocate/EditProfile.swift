@@ -350,6 +350,8 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
                     MolocateAccount.getCurrentUser({ (data, response, error) in
                        
                     })
+                    imageData = nil
+                    thumbNailData = nil
                     self.activityIndicator.stopAnimating()
                     UIApplication.sharedApplication().endIgnoringInteractionEvents()
                     if data == "success"{
