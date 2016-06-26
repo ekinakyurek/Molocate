@@ -1,7 +1,7 @@
 import Foundation
 import AWSS3
 
-let MoleCategoriesDictionary = ["Eğlence":"fun","Yemek":"food","Gezi":"travel","Moda":"fashion" , "Güzellik":"makeup", "Spor": "Sport","Etkinlik": "Event","Kampüs":"university", "Hepsi":"all"]
+let MoleCategoriesDictionary = ["EĞLENCE":"fun","YEMEK":"food","GEZİ":"travel","MODA":"fashion" , "GÜZELLİK":"makeup", "SPOR": "Sport","ETKİNLİK": "Event","KAMPÜS":"university", "HEPSİ":"all"]
 var MoleGlobalVideo:MoleVideoInformation!
 var AddedNextUserVideos: NSURL?
 var TaggedNextUserVideos: NSURL?

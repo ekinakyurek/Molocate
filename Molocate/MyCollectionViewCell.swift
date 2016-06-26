@@ -11,8 +11,6 @@ import UIKit
 class myCollectionViewCell: UICollectionViewCell {
     @IBOutlet var myLabel: UILabel!
     @IBOutlet var categoryImage: UIImageView!
-    @IBOutlet var bottomCon: NSLayoutConstraint!
-    @IBOutlet var topCon: NSLayoutConstraint!
     
 }
 

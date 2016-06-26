@@ -15,6 +15,8 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     @IBOutlet var toolBar: UIToolbar!
     
+    var categoryImagesWhite : [String]  = [ "fun", "food", "travel", "fashion", "beauty", "sport", "event", "campus"]
+    var categoryImagesBlack : [String]  = [ "funb", "foodb", "travelb", "fashionb", "beautyb", "sportb", "eventb", "campusb"]
     var isSearch = true
     var searchDict:[[String:locationss]]!
     var searchArray:[String]!
@@ -48,7 +50,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
   
 
     @IBOutlet var textField: UITextField!
-    var categories = ["Eğlence","Yemek","Gezi","Moda" , "Güzellik", "Spor","Etkinlik","Kampüs"]
+    var categories = ["EĞLENCE","YEMEK","GEZİ","MODA" , "GÜZELLİK", "SPOR","ETKİNLİK","KAMPÜS"]
    
     var videoLocation:locationss!
     @IBOutlet var placeTable: UITableView!
@@ -224,8 +226,8 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
             self.textField.autocapitalizationType = .Words
             let index = NSIndexPath(forRow: 0, inSection: 0)
             self.collectionView.selectItemAtIndexPath(index, animated: false, scrollPosition: UICollectionViewScrollPosition.None)
-            self.collectionView.contentSize.width = 75 * 8
-            self.collectionView.backgroundColor = swiftColor3
+            self.collectionView.contentSize.width = 60 * 9
+            self.collectionView.backgroundColor = UIColor.whiteColor()
         }
         
         
@@ -254,7 +256,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
         caption = UIButton()
         caption.frame.size.width = screenSize.width
         caption.frame.origin.x = 0
-        caption.frame.size.height = screenSize.height - 192 - screenSize.width
+        caption.frame.size.height = screenSize.height - 198 - screenSize.width
         if is4s {
             
         } else {
@@ -382,7 +384,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        let a : CGSize = CGSize.init(width: 75, height: 44)
+        let a : CGSize = CGSize.init(width: 50, height: 50)
 
         
         return a
@@ -396,30 +398,58 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
         return categories.count
     }
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let myCell : captureCollectionCell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! captureCollectionCell
-        dispatch_async(dispatch_get_main_queue()) {
-
-        let backgroundView = UIView()
-        backgroundView.backgroundColor = swiftColor2
-        myCell.selectedBackgroundView = backgroundView
+        let myCell : captureCollectionCell = collectionView.dequeueReusableCellWithReuseIdentifier("myCell", forIndexPath: indexPath) as! captureCollectionCell
         
-        myCell.layer.borderWidth = 0
-        myCell.backgroundColor = swiftColor3
-        myCell.label?.text = self.categories[indexPath.row]
-        myCell.frame.size.width = 75
-        myCell.label.textAlignment = .Center
+            let backgroundView = UIView()
+            backgroundView.backgroundColor = swiftColor
+            
+            myCell.selectedBackgroundView = backgroundView
+            //myCell.layer.borderWidth = 0
+            myCell.backgroundColor = UIColor.whiteColor()
+            
             if selectedCell == indexPath.row{
-                myCell.label.textColor = UIColor.whiteColor()
+                myCell.categoryImage?.image = UIImage(named: categoryImagesWhite[indexPath.row])
+                UIView.animateWithDuration(0.5, animations: {
+                    // myCell.bottomCon.constant = 2
+                    //myCell.topCon.constant = 0
+                    //self.view.layoutIfNeeded()
+                })
+                //myCell.myLabel.hidden = false
+                myCell.myLabel.textColor = UIColor.whiteColor()
                 myCell.backgroundColor = swiftColor2
+                let screenSize = UIScreen.mainScreen().bounds
+                var b = CGPoint(x: 60 * selectedCell, y: 0)
+                
+                if selectedCell < 2 {
+                    b.x = 0
+                }
+                else if selectedCell > 4 {
+                    let contentSize =  collectionView.contentSize.width
+                    b = CGPoint(x: contentSize - screenSize.width  , y: 0)
+                }
+                    
+                else{
+                    b = CGPoint(x: 60 * ( selectedCell - 2 ), y: 0)
+                }
+                self.collectionView.setContentOffset(b , animated: true)
             }
             else{
-                myCell.label.textColor = UIColor.blackColor()
-                myCell.backgroundColor = swiftColor3
+                myCell.categoryImage?.image = UIImage(named: categoryImagesBlack[indexPath.row])
+                // myCell.myLabel.hidden = true
+                UIView.animateWithDuration(0.5, animations: {
+                    //  myCell.bottomCon.constant = -5
+                    // myCell.topCon.constant = 5
+                    //self.view.layoutIfNeeded()
+                })
+                myCell.myLabel.textColor = UIColor.blackColor()
+                myCell.backgroundColor = UIColor.whiteColor()
             }
-            
-            }
-        
-        return myCell
+            myCell.myLabel?.text = categories[indexPath.row]
+            //myCell.frame.size.width = 75
+            //myCell.myLabel.textAlignment = .Center
+            //myCell.myLabel.font = UIFont(name: "AvenirNext-Regular", size: 12)
+            return myCell
+
     }
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath){
        

@@ -1140,6 +1140,16 @@ These Services are operated and provided by Molocate. If you have any questions 
             </objects>
             <point key="canvasLocation" x="3828.5" y="-4115.5"/>
         </scene>
+        <!--Page View Controller-->
+        <scene sceneID="ixt-6u-Xom">
+            <objects>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="bD4-mA-nsi" sceneMemberID="viewController">
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </pageViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="P0m-2t-5IC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4318" y="-4661"/>
+        </scene>
         <!--Sign Up Advance-->
         <scene sceneID="EkM-B3-c9I">
             <objects>
@@ -2159,8 +2169,8 @@ These Services are operated and provided by Molocate. If you have any questions 
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Qm-0t-BEd">
-                                <rect key="frame" x="-4" y="579" width="383" height="44"/>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Qm-0t-BEd">
+                                <rect key="frame" x="-4" y="623" width="379" height="44"/>
                                 <color key="backgroundColor" red="0.78823529410000004" green="0.14117647059999999" blue="0.31764705879999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="uCp-iR-NfW"/>
@@ -2169,7 +2179,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="dy2-AX-0y9"/>
                                     <barButtonItem style="plain" id="RpB-Cl-Qh6">
                                         <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="k4Z-6M-DOq">
-                                            <rect key="frame" x="7" y="6" width="369" height="33"/>
+                                            <rect key="frame" x="5" y="6" width="369" height="33"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="30" id="0oq-8n-RAJ"/>
@@ -2205,53 +2215,50 @@ These Services are operated and provided by Molocate. If you have any questions 
                                 <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                             </textField>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="y2r-Lc-d5x">
-                                <rect key="frame" x="-4" y="108" width="383" height="44"/>
+                                <rect key="frame" x="-2" y="108" width="379" height="50"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="Evy-sq-1eE"/>
+                                    <constraint firstAttribute="height" constant="50" id="Evy-sq-1eE"/>
                                 </constraints>
-                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="jap-O6-Z3M">
-                                    <size key="itemSize" width="75" height="44"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="8" minimumInteritemSpacing="8" id="jap-O6-Z3M">
+                                    <size key="itemSize" width="50" height="50"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="bX6-Zj-c1f" customClass="captureCollectionCell" customModule="Molocate" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="75" height="44"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="myCell" id="bX6-Zj-c1f" customClass="captureCollectionCell" customModule="Molocate" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="75" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="SeC-x3-Kxt">
-                                                    <rect key="frame" x="8" y="8" width="59" height="28"/>
-                                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="15"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4Pv-av-eDg">
+                                                    <rect key="frame" x="13" y="6" width="25" height="25"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="25" id="MDL-1i-CiO"/>
+                                                        <constraint firstAttribute="width" constant="25" id="hzX-SZ-wpl"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="roi-Nn-WMS">
+                                                    <rect key="frame" x="12" y="35" width="26" height="11"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="10"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
-                                            <constraint firstItem="SeC-x3-Kxt" firstAttribute="top" secondItem="bX6-Zj-c1f" secondAttribute="topMargin" id="0Mp-1z-HEa"/>
-                                            <constraint firstAttribute="bottomMargin" secondItem="SeC-x3-Kxt" secondAttribute="bottom" id="0hU-CB-Ldm"/>
-                                            <constraint firstItem="SeC-x3-Kxt" firstAttribute="leading" secondItem="bX6-Zj-c1f" secondAttribute="leadingMargin" id="7gn-CP-6w7"/>
-                                            <constraint firstItem="SeC-x3-Kxt" firstAttribute="leading" secondItem="bX6-Zj-c1f" secondAttribute="leadingMargin" id="WIP-d4-2l1"/>
-                                            <constraint firstAttribute="trailingMargin" secondItem="SeC-x3-Kxt" secondAttribute="trailing" id="YYi-5W-8Zu"/>
-                                            <constraint firstItem="SeC-x3-Kxt" firstAttribute="trailing" secondItem="bX6-Zj-c1f" secondAttribute="trailingMargin" constant="-5" id="mWB-zo-TPJ"/>
-                                            <constraint firstAttribute="trailingMargin" secondItem="SeC-x3-Kxt" secondAttribute="trailing" id="msq-59-wh9"/>
-                                            <constraint firstItem="SeC-x3-Kxt" firstAttribute="leading" secondItem="bX6-Zj-c1f" secondAttribute="leadingMargin" constant="-5" id="vQo-CI-QX7"/>
+                                            <constraint firstItem="roi-Nn-WMS" firstAttribute="top" secondItem="4Pv-av-eDg" secondAttribute="bottom" constant="4" id="Tfw-qg-knD"/>
+                                            <constraint firstItem="roi-Nn-WMS" firstAttribute="centerX" secondItem="bX6-Zj-c1f" secondAttribute="centerX" id="X4c-4z-G4d"/>
+                                            <constraint firstAttribute="bottomMargin" secondItem="roi-Nn-WMS" secondAttribute="bottom" constant="-4" id="qWf-dl-mWy"/>
+                                            <constraint firstItem="4Pv-av-eDg" firstAttribute="centerX" secondItem="bX6-Zj-c1f" secondAttribute="centerX" id="qmt-YF-TTd"/>
+                                            <constraint firstItem="4Pv-av-eDg" firstAttribute="top" secondItem="bX6-Zj-c1f" secondAttribute="topMargin" constant="-2" id="vQM-QJ-zqv"/>
                                         </constraints>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="WIP-d4-2l1"/>
-                                                <exclude reference="mWB-zo-TPJ"/>
-                                                <exclude reference="msq-59-wh9"/>
-                                                <exclude reference="vQo-CI-QX7"/>
-                                            </mask>
-                                        </variation>
                                         <connections>
-                                            <outlet property="label" destination="SeC-x3-Kxt" id="7tN-O8-hWC"/>
+                                            <outlet property="categoryImage" destination="4Pv-av-eDg" id="rCs-ri-3Tw"/>
+                                            <outlet property="myLabel" destination="roi-Nn-WMS" id="7Uo-d2-7W6"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -2260,6 +2267,13 @@ These Services are operated and provided by Molocate. If you have any questions 
                                     <outlet property="delegate" destination="KaE-bU-5kG" id="zNe-0p-HYk"/>
                                 </connections>
                             </collectionView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="downarrows" translatesAutoresizingMaskIntoConstraints="NO" id="Csa-hp-M7g">
+                                <rect key="frame" x="341" y="77" width="18" height="18"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="18" id="7FV-Cz-pV7"/>
+                                    <constraint firstAttribute="width" constant="18" id="cef-3u-G3l"/>
+                                </constraints>
+                            </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="uXp-wN-ZT7">
                                 <rect key="frame" x="-4" y="108" width="383" height="176"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2277,33 +2291,11 @@ These Services are operated and provided by Molocate. If you have any questions 
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rightarrows" translatesAutoresizingMaskIntoConstraints="NO" id="Z1u-bs-wmu">
-                                <rect key="frame" x="357" y="122" width="16" height="16"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="16" id="1M3-35-1FW"/>
-                                    <constraint firstAttribute="width" constant="16" id="CG6-hl-T6V"/>
-                                    <constraint firstAttribute="width" constant="20" id="i3E-Y2-5OE"/>
-                                    <constraint firstAttribute="height" constant="20" id="wtX-Rf-j3V"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="i3E-Y2-5OE"/>
-                                        <exclude reference="wtX-Rf-j3V"/>
-                                    </mask>
-                                </variation>
-                            </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="downarrows" translatesAutoresizingMaskIntoConstraints="NO" id="Csa-hp-M7g">
-                                <rect key="frame" x="341" y="77" width="18" height="18"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="18" id="7FV-Cz-pV7"/>
-                                    <constraint firstAttribute="width" constant="18" id="cef-3u-G3l"/>
-                                </constraints>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.92156862745098034" green="0.16862745098039217" blue="0.36470588235294116" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="A0W-5J-K2r" firstAttribute="leading" secondItem="3fg-W9-KY2" secondAttribute="leadingMargin" constant="-20" id="1yh-6u-kGd"/>
-                            <constraint firstItem="y2r-Lc-d5x" firstAttribute="leading" secondItem="3fg-W9-KY2" secondAttribute="leadingMargin" constant="-20" id="5Dh-Hi-JzX"/>
+                            <constraint firstItem="y2r-Lc-d5x" firstAttribute="leading" secondItem="3fg-W9-KY2" secondAttribute="leadingMargin" constant="-18" id="5Dh-Hi-JzX"/>
                             <constraint firstAttribute="trailingMargin" secondItem="A0W-5J-K2r" secondAttribute="trailing" constant="-20" id="6ay-kv-DQU"/>
                             <constraint firstItem="Yzx-Ur-Ne1" firstAttribute="width" secondItem="A0W-5J-K2r" secondAttribute="width" id="9zc-9o-o8l"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Csa-hp-M7g" secondAttribute="trailing" id="GyI-7t-ehY"/>
@@ -2311,23 +2303,19 @@ These Services are operated and provided by Molocate. If you have any questions 
                             <constraint firstItem="uXp-wN-ZT7" firstAttribute="width" secondItem="A0W-5J-K2r" secondAttribute="width" id="L7h-ZP-UI7"/>
                             <constraint firstItem="3Qm-0t-BEd" firstAttribute="leading" secondItem="Yzx-Ur-Ne1" secondAttribute="leading" id="NRv-ON-1mF"/>
                             <constraint firstItem="3Qm-0t-BEd" firstAttribute="leading" secondItem="uXp-wN-ZT7" secondAttribute="leading" id="TnS-T3-7ol"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Z1u-bs-wmu" secondAttribute="trailing" constant="-14" id="Xa5-sn-d5x"/>
-                            <constraint firstItem="Z1u-bs-wmu" firstAttribute="top" secondItem="Yzx-Ur-Ne1" secondAttribute="bottom" constant="14" id="ZwC-AE-9Vg"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="y2r-Lc-d5x" secondAttribute="trailing" constant="-18" id="Vr2-XO-NbY"/>
                             <constraint firstItem="Csa-hp-M7g" firstAttribute="top" secondItem="A0W-5J-K2r" secondAttribute="bottom" constant="13" id="b0i-Ac-UTE"/>
                             <constraint firstItem="uXp-wN-ZT7" firstAttribute="top" secondItem="Yzx-Ur-Ne1" secondAttribute="bottom" id="by1-lj-ADH"/>
                             <constraint firstItem="3Qm-0t-BEd" firstAttribute="leading" secondItem="A0W-5J-K2r" secondAttribute="leading" id="cwR-IN-VGv"/>
                             <constraint firstItem="y2r-Lc-d5x" firstAttribute="top" secondItem="Yzx-Ur-Ne1" secondAttribute="bottom" id="e08-S5-iQU"/>
                             <constraint firstItem="3Qm-0t-BEd" firstAttribute="bottom" secondItem="svE-vn-fIx" secondAttribute="top" id="h6t-DG-CUI"/>
-                            <constraint firstItem="Z1u-bs-wmu" firstAttribute="top" secondItem="Yzx-Ur-Ne1" secondAttribute="bottom" constant="12" id="har-Ep-oCt"/>
                             <constraint firstItem="y2r-Lc-d5x" firstAttribute="width" secondItem="Yzx-Ur-Ne1" secondAttribute="width" id="pOA-Oy-8uj"/>
                             <constraint firstItem="Yzx-Ur-Ne1" firstAttribute="top" secondItem="A0W-5J-K2r" secondAttribute="bottom" id="pnb-si-XaF"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Z1u-bs-wmu" secondAttribute="trailing" id="w5O-Sw-Xp7"/>
                             <constraint firstItem="A0W-5J-K2r" firstAttribute="top" secondItem="3gR-j4-g0H" secondAttribute="bottom" id="zOc-1M-zkc"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="har-Ep-oCt"/>
-                                <exclude reference="w5O-Sw-Xp7"/>
+                                <exclude reference="pOA-Oy-8uj"/>
                             </mask>
                         </variation>
                     </view>
@@ -2576,51 +2564,46 @@ These Services are operated and provided by Molocate. If you have any questions 
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="dF1-52-XIY"/>
                                 </constraints>
-                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="VJq-la-UgH">
-                                    <size key="itemSize" width="75" height="60"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="8" minimumInteritemSpacing="8" id="VJq-la-UgH">
+                                    <size key="itemSize" width="50" height="50"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="myCell" id="5vv-pn-ygc" customClass="myCollectionViewCell" customModule="Molocate" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="-5" width="75" height="60"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="75" height="60"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Etkinlik" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O2q-wA-0Ox">
-                                                    <rect key="frame" x="2" y="38" width="70" height="14"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="14" id="549-HM-3JR"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="12"/>
+                                                    <rect key="frame" x="9" y="35" width="33" height="11"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="10"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="comment" translatesAutoresizingMaskIntoConstraints="NO" id="2JY-6L-Jj6">
-                                                    <rect key="frame" x="25" y="13" width="25" height="25"/>
+                                                    <rect key="frame" x="13" y="6" width="25" height="25"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" secondItem="2JY-6L-Jj6" secondAttribute="height" multiplier="1:1" id="uCG-Z6-1B8"/>
+                                                        <constraint firstAttribute="height" constant="25" id="CXy-jZ-LGi"/>
+                                                        <constraint firstAttribute="width" constant="25" id="JBy-aM-HEu"/>
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
-                                            <constraint firstItem="O2q-wA-0Ox" firstAttribute="leading" secondItem="5vv-pn-ygc" secondAttribute="leadingMargin" constant="-6" id="6AT-cE-4an"/>
-                                            <constraint firstItem="2JY-6L-Jj6" firstAttribute="top" secondItem="5vv-pn-ygc" secondAttribute="topMargin" constant="5" id="8aw-Ei-Dsq"/>
-                                            <constraint firstItem="2JY-6L-Jj6" firstAttribute="centerX" secondItem="5vv-pn-ygc" secondAttribute="centerX" id="90W-mm-uDo"/>
-                                            <constraint firstItem="O2q-wA-0Ox" firstAttribute="top" secondItem="2JY-6L-Jj6" secondAttribute="bottom" id="I6S-Ce-xXB"/>
-                                            <constraint firstAttribute="trailingMargin" secondItem="O2q-wA-0Ox" secondAttribute="trailing" constant="-5" id="PnW-bO-sUa"/>
-                                            <constraint firstAttribute="bottomMargin" secondItem="O2q-wA-0Ox" secondAttribute="bottom" id="ovX-Sf-ggU"/>
+                                            <constraint firstItem="O2q-wA-0Ox" firstAttribute="centerX" secondItem="5vv-pn-ygc" secondAttribute="centerX" id="7YZ-RO-CDH"/>
+                                            <constraint firstItem="2JY-6L-Jj6" firstAttribute="centerX" secondItem="5vv-pn-ygc" secondAttribute="centerX" id="Aaf-oM-q4p"/>
+                                            <constraint firstItem="2JY-6L-Jj6" firstAttribute="top" secondItem="5vv-pn-ygc" secondAttribute="topMargin" constant="-2" id="G5U-uE-vHd"/>
+                                            <constraint firstAttribute="bottomMargin" secondItem="O2q-wA-0Ox" secondAttribute="bottom" constant="-4" id="ISz-8R-zto"/>
+                                            <constraint firstItem="O2q-wA-0Ox" firstAttribute="top" secondItem="2JY-6L-Jj6" secondAttribute="bottom" constant="4" id="JQS-Ud-pY2"/>
                                         </constraints>
                                         <connections>
-                                            <outlet property="bottomCon" destination="I6S-Ce-xXB" id="p8X-bu-KiU"/>
                                             <outlet property="categoryImage" destination="2JY-6L-Jj6" id="M5n-TY-1ZN"/>
                                             <outlet property="myLabel" destination="O2q-wA-0Ox" id="vp3-UP-PIg"/>
-                                            <outlet property="topCon" destination="8aw-Ei-Dsq" id="JQJ-GE-rEP"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -2845,7 +2828,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                         <viewControllerLayoutGuide type="bottom" id="l4A-y1-gmQ"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="3vR-td-2V3">
-                        <rect key="frame" x="0.0" y="44" width="375" height="623"/>
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="sDO-do-oSn">
@@ -2986,7 +2969,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                                 <nil key="highlightedColor"/>
                             </label>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" directionalLockEnabled="YES" bounces="NO" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kga-sg-XlE">
-                                <rect key="frame" x="0.0" y="130" width="375" height="493"/>
+                                <rect key="frame" x="0.0" y="130" width="375" height="473"/>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -3330,9 +3313,9 @@ These Services are operated and provided by Molocate. If you have any questions 
         <image name="switch" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="i6B-xP-GmW"/>
-        <segue reference="t3C-nx-boF"/>
-        <segue reference="E7d-RL-ZWZ"/>
+        <segue reference="iVR-Yc-KKO"/>
         <segue reference="iX5-7U-zGl"/>
+        <segue reference="E7d-RL-ZWZ"/>
+        <segue reference="kLH-Vl-CEb"/>
     </inferredMetricsTieBreakers>
 </document>

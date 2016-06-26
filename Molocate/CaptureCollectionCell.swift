@@ -9,5 +9,8 @@
 import UIKit
 
 class captureCollectionCell: UICollectionViewCell {
-    @IBOutlet var label: UILabel!
+    @IBOutlet var myLabel: UILabel!
+    
+    @IBOutlet var categoryImage: UIImageView!
+    
 }

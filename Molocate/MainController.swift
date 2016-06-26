@@ -52,7 +52,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
     var refreshURL = NSURL(string: "http://molocate-py3.hm5xmcabvz.eu-central-1.elasticbeanstalk.com/video/api/explore/?category=all")
 
     
-    var categories = ["Hepsi","Eğlence","Yemek","Gezi","Moda" , "Güzellik", "Spor","Etkinlik","Kampüs"]
+    var categories = ["HEPSİ","EĞLENCE","YEMEK","GEZİ","MODA" , "GÜZELLİK", "SPOR","ETKİNLİK","KAMPÜS"]
     var categoryImagesWhite : [String]  = [ "all" , "fun", "food", "travel", "fashion", "beauty", "sport", "event", "campus"]
     var categoryImagesBlack : [String]  = [ "allb" , "funb", "foodb", "travelb", "fashionb", "beautyb", "sportb", "eventb", "campusb"]
     override func viewDidLoad() {
@@ -241,7 +241,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
                 return rowHeight
             }
         
-            return 60
+            return 50
         
     }
     
@@ -701,7 +701,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return  CGSize.init(width: 60 , height: 60)
+        return  CGSize.init(width: 50 , height: 50)
     }
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -715,20 +715,20 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         let myCell : myCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("myCell", forIndexPath: indexPath) as! myCollectionViewCell
         
         let backgroundView = UIView()
-        backgroundView.backgroundColor = swiftColor2
+        backgroundView.backgroundColor = swiftColor
         
         myCell.selectedBackgroundView = backgroundView
         //myCell.layer.borderWidth = 0
-        myCell.backgroundColor = swiftColor3
+        myCell.backgroundColor = UIColor.whiteColor()
         
         if selectedCell == indexPath.row{
              myCell.categoryImage?.image = UIImage(named: categoryImagesWhite[indexPath.row])
             UIView.animateWithDuration(0.5, animations: {
-                myCell.bottomCon.constant = 2
-                myCell.topCon.constant = 0
+               // myCell.bottomCon.constant = 2
+                //myCell.topCon.constant = 0
                 //self.view.layoutIfNeeded()
             })
-            myCell.myLabel.hidden = false
+            //myCell.myLabel.hidden = false
         myCell.myLabel.textColor = UIColor.whiteColor()
         myCell.backgroundColor = swiftColor2
               let screenSize = UIScreen.mainScreen().bounds
@@ -749,14 +749,14 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         }
         else{
          myCell.categoryImage?.image = UIImage(named: categoryImagesBlack[indexPath.row])
-        myCell.myLabel.hidden = true
+       // myCell.myLabel.hidden = true
         UIView.animateWithDuration(0.5, animations: {
-                myCell.bottomCon.constant = -5
-                myCell.topCon.constant = 5
+              //  myCell.bottomCon.constant = -5
+               // myCell.topCon.constant = 5
                 //self.view.layoutIfNeeded()
             })
         myCell.myLabel.textColor = UIColor.blackColor()
-        myCell.backgroundColor = swiftColor3
+        myCell.backgroundColor = UIColor.whiteColor()
         }
         myCell.myLabel?.text = categories[indexPath.row]
         //myCell.frame.size.width = 75
@@ -781,7 +781,8 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         tableController.tableView.userInteractionEnabled = true
         
     }
-
+    
+   
     
     
     
