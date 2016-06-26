@@ -164,9 +164,9 @@ public class MolocateVideo {
                             videoStr.thumbnailURL = NSURL(string:item["thumbnail"] as! String)!
                             videoStr.deletable = item["is_deletable"] as! Bool
                             videoArray.append(videoStr)
-                            //print(videoStr.username)
-                            //print(videoStr.location)
-                            //print(videoStr.urlSta)
+//                            print(videoStr.username)
+//                            print(videoStr.location)
+//                            print(videoStr.urlSta)
                         }
                         completionHandler(data: videoArray, response: response, error: nsError, next: nexturl)
                     }else{
@@ -327,9 +327,9 @@ public class MolocateVideo {
                             videoStr.deletable = item["is_deletable"] as! Bool
                             videoArray.append(videoStr)
 //                            
-//                            print(videoStr.username)
-//                            print(videoStr.location)
-                            //print(videoStr.urlSta)
+                            print(videoStr.username)
+                            print(videoStr.location)
+                            print(videoStr.urlSta)
                         }
                         completionHandler(data: videoArray, response: response, error: nsError)
                     }else{
@@ -386,9 +386,9 @@ public class MolocateVideo {
                         videoStr.deletable = item["is_deletable"] as! Bool
                         videoStr.thumbnailURL = NSURL(string:item["thumbnail"] as! String)!
                         
-                        print(videoStr.username)
-                        print(videoStr.location)
-                        print(videoStr.urlSta)
+//                        print(videoStr.username)
+//                        print(videoStr.location)
+//                        print(videoStr.urlSta)
                         completionHandler(data: videoStr, response: response, error: nsError)
                     }else{
                         completionHandler(data: MoleVideoInformation(), response: NSURLResponse(), error: nsError)

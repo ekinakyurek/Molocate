@@ -28,6 +28,8 @@
 		C61FDAB31BFBD332007B940E /* ExploreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C61FDAB21BFBD332007B940E /* ExploreViewController.xib */; };
 		C61FDAB51BFBD393007B940E /* CameraViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C61FDAB41BFBD393007B940E /* CameraViewController.xib */; };
 		C61FDAB71BFBD3A9007B940E /* FollowingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C61FDAB61BFBD3A9007B940E /* FollowingViewController.xib */; };
+		C620B55B1D2041B70083953E /* tutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C620B55A1D2041B60083953E /* tutorialViewController.swift */; };
+		C620B5611D2054450083953E /* tutorialPageContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C620B5601D2054450083953E /* tutorialPageContentViewController.swift */; };
 		C6287C431CFF549C002C4B6B /* FirstController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6287C421CFF549C002C4B6B /* FirstController.swift */; };
 		C6287C451CFF54BB002C4B6B /* SignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6287C441CFF54BB002C4B6B /* SignUpController.swift */; };
 		C6287C471CFF54D2002C4B6B /* LogInController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6287C461CFF54D2002C4B6B /* LogInController.swift */; };
@@ -162,6 +164,8 @@
 		C61FDAB21BFBD332007B940E /* ExploreViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExploreViewController.xib; sourceTree = "<group>"; };
 		C61FDAB41BFBD393007B940E /* CameraViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraViewController.xib; sourceTree = "<group>"; };
 		C61FDAB61BFBD3A9007B940E /* FollowingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FollowingViewController.xib; sourceTree = "<group>"; };
+		C620B55A1D2041B60083953E /* tutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = tutorialViewController.swift; sourceTree = "<group>"; };
+		C620B5601D2054450083953E /* tutorialPageContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = tutorialPageContentViewController.swift; sourceTree = "<group>"; };
 		C6287C421CFF549C002C4B6B /* FirstController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstController.swift; sourceTree = "<group>"; };
 		C6287C441CFF54BB002C4B6B /* SignUpController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpController.swift; sourceTree = "<group>"; };
 		C6287C461CFF54D2002C4B6B /* LogInController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInController.swift; sourceTree = "<group>"; };
@@ -404,6 +408,7 @@
 				C6E86EAE1CB0E68D00203513 /* Launch Screen.storyboard */,
 				C63FBD121BF3E5B900DBB34C /* Info.plist */,
 				3862A5891CAA005D00D41791 /* Molocate.entitlements */,
+				C67D5B891D206259003DFC45 /* tutorial */,
 				C6D785421D05FB3000DA59B3 /* profileUser.swift */,
 				C6CBA4FE1C876EC300AE65AD /* ProfileOther.swift */,
 				C6D785441D0600FF00DA59B3 /* profile1stCell.swift */,
@@ -470,6 +475,15 @@
 				C6C5DA4B1C951B6F00DC16EF /* leftarrow.png */,
 			);
 			name = ImagesForProfile;
+			sourceTree = "<group>";
+		};
+		C67D5B891D206259003DFC45 /* tutorial */ = {
+			isa = PBXGroup;
+			children = (
+				C620B55A1D2041B60083953E /* tutorialViewController.swift */,
+				C620B5601D2054450083953E /* tutorialPageContentViewController.swift */,
+			);
+			name = tutorial;
 			sourceTree = "<group>";
 		};
 		C686D2C91C05FEA5003484A5 /* Frameworks */ = {
@@ -815,6 +829,7 @@
 				C61023161C1B407600E9CA73 /* Followers.swift in Sources */,
 				C638AFF31C9C7E74003085E8 /* LikeVideo.swift in Sources */,
 				E333A2241CEB7B0D0003D781 /* MyProfile.swift in Sources */,
+				C620B55B1D2041B70083953E /* tutorialViewController.swift in Sources */,
 				388173F51C97AACB0064EBB5 /* CommentController.swift in Sources */,
 				C6D785451D0600FF00DA59B3 /* profile1stCell.swift in Sources */,
 				C6B7C9EB1C7BE7EF005607EC /* ProfileLocation.swift in Sources */,
@@ -823,6 +838,7 @@
 				C67C444F1C75D69700FCB157 /* MyCollectionViewCell.swift in Sources */,
 				C6D6D4631CD6501000E37138 /* OnePhoto.swift in Sources */,
 				C63D1F1C1C1FA20D003B2CC1 /* SignUpAdvance.swift in Sources */,
+				C620B5611D2054450083953E /* tutorialPageContentViewController.swift in Sources */,
 				C6D785431D05FB3000DA59B3 /* profileUser.swift in Sources */,
 				38E6210C1C90E49D00FB1AD5 /* ChangePassword.swift in Sources */,
 				C6BA05181D19368200AB89FF /* findFriendController.swift in Sources */,
