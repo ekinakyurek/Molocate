@@ -89,13 +89,12 @@ class videoCell: UITableViewCell {
       
         videoComment.customize { label in
             label.textAlignment = .Left
-            
             label.numberOfLines = 3
             label.textColor = arkarenk
             label.font = UIFont(name: "AvenirNext-Medium", size: 12.5)
             label.lineBreakMode = .ByWordWrapping
             label.mentionColor = swiftColor
-            label.hashtagColor = UIColor.blueColor()
+            label.hashtagColor = UIColor(red: 90, green: 200, blue: 250)
             
         }
         
@@ -248,8 +247,7 @@ class videoCell: UITableViewCell {
 
 //        commentext.appendAttributedString(tags)
        
-        videoComment.text = textstring
-        
+        videoComment.text = textstring        
         if(videoInfo.userpic.absoluteString != ""){
             self.profilePhoto.sd_setImageWithURL(videoInfo.userpic, forState: UIControlState.Normal)
         }else{
