@@ -451,6 +451,9 @@ public class MolocateAccount {
                 if error == nil {
                     let Nserror = error
                     do {
+                        
+                        print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+                        
                         let resultJson = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments) as! [String:AnyObject]
                         if(resultJson.indexForKey("logged_in") != nil){
                             let logging = resultJson["logged_in"] as! Int
