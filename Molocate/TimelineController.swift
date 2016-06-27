@@ -1211,18 +1211,25 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
             parentLayer.frame = videoLayer.frame
             let sticker = UIImage(named: "videoSticker")
             let string = username
-            let newsticker = self.textToImage(string, inImage: sticker!, atPoint: CGPointMake(140, 150))
             let tempasset = AVAsset(URL: shareURL)
             let clipVideoTrack = (tempasset.tracksWithMediaType(AVMediaTypeVideo)[0]) as AVAssetTrack
             let composition = AVMutableVideoComposition()
             composition.frameDuration = CMTimeMake(1,30)
             composition.renderSize = CGSizeMake(clipVideoTrack.naturalSize.width, clipVideoTrack.naturalSize.height)
-            let over = UIImageView(frame: CGRect(origin: CGPoint(x: 375-string.characters.count*20,y:-60), size: CGSize(width: 459, height: 261.75)))
-            over.image = newsticker
+            let over = UIImageView(frame: CGRect(origin: CGPoint(x: clipVideoTrack.naturalSize.width-142,y:10), size: CGSize(width: 142, height: 42.8)))
+            over.image = sticker
+            let dist = CGFloat(string.characters.count*15)
+            let text = CATextLayer()
+            text.frame = CGRect(origin: CGPoint(x: clipVideoTrack.naturalSize.width-142-dist,y:5), size: CGSize(width: dist, height: 42.8))
+            text.alignmentMode = "left"
+            text.string = string
+            text.fontSize = 25
+            text.font = UIFont(name: "AvenirNext-Regular", size:5)!
             parentLayer.frame = CGRectMake(0, 0,composition.renderSize.width, composition.renderSize.height)
             videoLayer.frame = CGRectMake(0, 0,composition.renderSize.width, composition.renderSize.height)
             parentLayer.addSublayer(videoLayer)
             parentLayer.addSublayer(over.layer)
+            parentLayer.addSublayer(text)
             composition.animationTool = AVVideoCompositionCoreAnimationTool(postProcessingAsVideoLayer: videoLayer, inLayer: parentLayer)
             let instruction = AVMutableVideoCompositionInstruction()
             instruction.timeRange = CMTimeRangeMake(kCMTimeZero,clipVideoTrack.timeRange.duration)
@@ -1281,7 +1288,6 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
                 parentLayer.frame = videoLayer.frame
                 let sticker = UIImage(named: "videoSticker2")
                 let string = username
-                //let newsticker = self.textToImage(string, inImage: sticker!, atPoint: CGPointMake(140, 150))
                 let tempasset = AVAsset(URL: shareURL)
                 let clipVideoTrack = (tempasset.tracksWithMediaType(AVMediaTypeVideo)[0]) as AVAssetTrack
                 let composition = AVMutableVideoComposition()
@@ -1289,15 +1295,18 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
                 composition.renderSize = CGSizeMake(clipVideoTrack.naturalSize.width, clipVideoTrack.naturalSize.height)
                 let over = UIImageView(frame: CGRect(origin: CGPoint(x: clipVideoTrack.naturalSize.width-142,y:10), size: CGSize(width: 142, height: 42.8)))
                 over.image = sticker
-                let dist = CGFloat(string.characters.count*20)
-                let under = UITextView(frame: CGRect(origin: CGPoint(x: clipVideoTrack.naturalSize.width-142-dist,y:10), size: CGSize(width: 142, height: 42.8)))
-                under.insertText(string)
-                under.attributedText = NSAttributedString(string: "Ara", attributes: [NSForegroundColorAttributeName:UIColor.blackColor(), NSFontAttributeName: UIFont(name: "AvenirNext-Regular", size: 14)! ])
+                let dist = CGFloat(string.characters.count*15)
+                let text = CATextLayer()
+                text.frame = CGRect(origin: CGPoint(x: clipVideoTrack.naturalSize.width-142-dist,y:5), size: CGSize(width: dist, height: 42.8))
+                text.alignmentMode = "left"
+                text.string = string
+                text.fontSize = 25
+                text.font = UIFont(name: "AvenirNext-Regular", size:5)!
                 parentLayer.frame = CGRectMake(0, 0,composition.renderSize.width, composition.renderSize.height)
                 videoLayer.frame = CGRectMake(0, 0,composition.renderSize.width, composition.renderSize.height)
                 parentLayer.addSublayer(videoLayer)
                 parentLayer.addSublayer(over.layer)
-                parentLayer.addSublayer(under.layer)
+                parentLayer.addSublayer(text)
                 composition.animationTool = AVVideoCompositionCoreAnimationTool(postProcessingAsVideoLayer: videoLayer, inLayer: parentLayer)
                 let instruction = AVMutableVideoCompositionInstruction()
                 instruction.timeRange = CMTimeRangeMake(kCMTimeZero,clipVideoTrack.timeRange.duration)
