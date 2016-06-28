@@ -424,13 +424,16 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
     func changePassword(sender:UIButton!)
     {
         //DBG: Push View Controller
-        let controller:changePasswordd = self.storyboard!.instantiateViewControllerWithIdentifier("changePasswordd") as! changePasswordd
-        controller.view.frame = self.view.bounds
-        controller.willMoveToParentViewController(self)
-        self.view.addSubview(controller.view)
-        self.addChildViewController(controller)
-        controller.didMoveToParentViewController(self)
+//        let controller:changePasswordd = self.storyboard!.instantiateViewControllerWithIdentifier("changePasswordd") as! changePasswordd
+//        controller.view.frame = self.view.bounds
+//        controller.willMoveToParentViewController(self)
+//        self.view.addSubview(controller.view)
+//        self.addChildViewController(controller)
+//        controller.didMoveToParentViewController(self)
         //print("şifre değiştirecek")
+        
+        let controller:changePasswordd = self.storyboard!.instantiateViewControllerWithIdentifier("changePasswordd") as! changePasswordd
+        navigationController?.pushViewController(controller, animated: true)
         
     }
     func changePhoto(sender:UIButton!)

@@ -79,9 +79,9 @@ class changePasswordd: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.toolBar.clipsToBounds = true
-        self.toolBar.translucent = false
-        self.toolBar.barTintColor = swiftColor
+//        self.toolBar.clipsToBounds = true
+//        self.toolBar.translucent = false
+//        self.toolBar.barTintColor = swiftColor
         activityIndicator.hidesWhenStopped = true
         activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
     }

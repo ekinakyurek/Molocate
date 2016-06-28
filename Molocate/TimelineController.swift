@@ -844,15 +844,14 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
                         if cellap > 0 {
 
                             if (row) % 2 == 1{
-                                //self.tableView.visibleCells[1].reloadInputViews()
+                                
                                 if self.player1.playbackState.description != "Playing" {
                                     self.player2.stop()
                                     if !isScrollingFast {
                                         self.player1.playFromBeginning()
                                     }
                                     player1Turn = true
-                                    //////print(self.tableView.indexPathsForVisibleRows![0].row)
-                                    //////////print("player1")
+
                                 }
                             }else{
                                 if self.player2.playbackState.description != "Playing"{
@@ -1209,7 +1208,7 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
             let videoLayer = CALayer()
             let parentLayer = CALayer()
             parentLayer.frame = videoLayer.frame
-            let sticker = UIImage(named: "videoSticker")
+            let sticker = UIImage(named: "videoSticker2")
             let string = username
             let tempasset = AVAsset(URL: shareURL)
             let clipVideoTrack = (tempasset.tracksWithMediaType(AVMediaTypeVideo)[0]) as AVAssetTrack

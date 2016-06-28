@@ -27,7 +27,7 @@ public class MolocateNotifications{
         request.timeoutInterval = timeout
         
         let task = NSURLSession.sharedSession().dataTaskWithRequest(request){ (data, response, error) -> Void in
-            //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+            print(NSString(data: data!, encoding: NSUTF8StringEncoding))
             if error == nil {
                 let nsError = error
                 do {

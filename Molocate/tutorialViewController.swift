@@ -32,7 +32,7 @@ class tutorialViewController: UIPageViewController, UIPageViewControllerDataSour
         self.dataSource = self
         
         self.setViewControllers([getViewControllerAtIndex(0)] as [UIViewController], direction: UIPageViewControllerNavigationDirection.Forward,  animated: true, completion: nil)
-        
+        view.backgroundColor = swiftColor
     }
     
     
@@ -43,15 +43,29 @@ class tutorialViewController: UIPageViewController, UIPageViewControllerDataSour
         let pageContent: tutorialPageContentViewController = viewController as! tutorialPageContentViewController
         
         var index = pageContent.pageIndex
-        
+       
+        if index < 3 {
+            NSNotificationCenter.defaultCenter().postNotificationName("fontSmaller", object: nil)
+            
+        }
         if ((index == 0) || (index == NSNotFound))
         {
             return nil
         }
         
         index -= 1;
+       
         
         return getViewControllerAtIndex(index)
+    }
+    
+    
+    func presentationCountForPageViewController(pageViewController: UIPageViewController) -> Int {
+        return 4
+    }
+    
+    func presentationIndexForPageViewController(pageViewController: UIPageViewController) -> Int {
+        return 0
     }
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController?
@@ -60,20 +74,35 @@ class tutorialViewController: UIPageViewController, UIPageViewControllerDataSour
         
         var index = pageContent.pageIndex
         
+        if index > 2 {
+            NSNotificationCenter.defaultCenter().postNotificationName("fontBigger", object: nil)
+            
+        }
+       
+       
         if (index == NSNotFound)
         {
             return nil;
         }
-        
-        ;
+      
         if index > 2 {
         index = 2
+            
             return nil
         }
         else {
             index += 1
+  
+          
             return getViewControllerAtIndex(index) }
+        
+
+        
     }
+    
+    
+    
+    
     
     
     
@@ -86,6 +115,8 @@ class tutorialViewController: UIPageViewController, UIPageViewControllerDataSour
         
         tutorialpageContentViewController.strPhotoName = "\(arrPagePhoto[index])"
         tutorialpageContentViewController.pageIndex = index
+        
+        
         
         return tutorialpageContentViewController
     }
