@@ -595,6 +595,32 @@ public class MolocateVideo {
         }
     }
     
+    class func increment_watch(videoIds: [String], completionHandler: (data: String! , response: NSURLResponse!, error: NSError!) -> ()){
+        
+        do{
+            
+            let Body = ["videos": videoIds]
+            let jsonData = try NSJSONSerialization.dataWithJSONObject(Body, options: NSJSONWritingOptions())
+            
+            let url = NSURL(string: MolocateBaseUrl + "video/api/increment_watch/")!
+            
+            let request = NSMutableURLRequest(URL: url)
+            request.HTTPMethod = "POST"
+            request.addValue("Token "+MoleUserToken!, forHTTPHeaderField: "Authorization")
+            request.HTTPBody = jsonData
+            request.timeoutInterval = timeout
+            
+            let task = NSURLSession.sharedSession().dataTaskWithRequest(request){ data, response, error in
+               // print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+                
+            }
+                  task.resume()
+        }catch{
+              print("error")
+        }
+            
+       
+    }
     
     class func deleteAComment(id: String, completionHandler: (data: String! , response: NSURLResponse!, error: NSError!) -> ()){
    

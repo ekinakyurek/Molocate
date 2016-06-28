@@ -25,6 +25,7 @@ protocol TimelineControllerDelegate:class {
     func pressedComment(videoId: String, Row: Int)
 
 }
+var watch_list = [String]()
 
 class TimelineController: UITableViewController,PlayerDelegate, UINavigationControllerDelegate, FBSDKSharingDelegate {
 
@@ -284,6 +285,7 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
                     if indexPath.row % 2 == 1 {
 
                         self.player1.setUrl(trueURL)
+                        self.player1.id = self.videoArray[indexPath.row].id
                         self.player1.view.frame = cell.newRect
                         cell.contentView.addSubview(self.player1.view)
                         cell.hasPlayer = true
@@ -291,6 +293,7 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
                     }else{
 
                         self.player2.setUrl(trueURL)
+                        self.player2.id = self.videoArray[indexPath.row].id
                         self.player2.view.frame = cell.newRect
                         cell.contentView.addSubview(self.player2.view)
                         cell.hasPlayer = true
@@ -1456,7 +1459,15 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
     }
 
     func playerPlaybackDidEnd(player: Player) {
-
+        watch_list.append(player.id)
+        if watch_list.count == 10{
+            MolocateVideo.increment_watch(watch_list, completionHandler: { (data, response, error) in
+                 dispatch_async(dispatch_get_main_queue()){
+                    watch_list.removeAll()
+                    print("wathc incremented")
+                 }
+            })
+        }
     }
     
     func textToImage(drawText: NSString, inImage: UIImage, atPoint:CGPoint)->UIImage{

@@ -28,6 +28,7 @@ import AVFoundation
     var player1Turn = false
     var classUser = MoleUser()
     var isItMyProfile = true
+
     override func viewDidLoad() {
         super.viewDidLoad()
           try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
@@ -115,6 +116,18 @@ import AVFoundation
     }
     
     func playerPlaybackDidEnd(player: Player) {
+        
+        if classUser.username != MoleCurrentUser.username{
+                watch_list.append(player.id)
+                if watch_list.count == 10{
+                    MolocateVideo.increment_watch(watch_list, completionHandler: { (data, response, error) in
+                        dispatch_async(dispatch_get_main_queue()){
+                            watch_list.removeAll()
+                            print("watch incremented")
+                        }
+                    })
+                }
+        }
     }
     
     func playTapped(sender: UITapGestureRecognizer) {
@@ -266,6 +279,7 @@ import AVFoundation
             if indexPath.row % 2 == 1 {
                 
                 self.player1.setUrl(trueURL)
+                self.player1.id = self.videoArray[indexPath.row].id
                 self.player1.view.frame = cell.newRect
                 cell.contentView.addSubview(self.player1.view)
                 cell.hasPlayer = true
@@ -273,6 +287,7 @@ import AVFoundation
             }else{
                 
                 self.player2.setUrl(trueURL)
+                self.player2.id = self.videoArray[indexPath.row].id
                 self.player2.view.frame = cell.newRect
                 cell.contentView.addSubview(self.player2.view)
                 cell.hasPlayer = true

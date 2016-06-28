@@ -179,6 +179,8 @@ public class Player: UIViewController {
 
     private var player: AVPlayer!
     private var playerView: PlayerView!
+    public var tag:String!
+    public var id: String = ""
 
     // MARK: object lifecycle
 

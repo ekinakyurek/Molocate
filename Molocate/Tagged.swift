@@ -112,6 +112,15 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
     }
 
     func playerPlaybackDidEnd(player: Player) {
+        watch_list.append(player.id)
+        if watch_list.count == 10{
+            MolocateVideo.increment_watch(watch_list, completionHandler: { (data, response, error) in
+                dispatch_async(dispatch_get_main_queue()){
+                    watch_list.removeAll()
+                    print("watch incremented")
+                }
+            })
+        }
     }
 
     func playTapped(sender: UITapGestureRecognizer) {
@@ -229,6 +238,7 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
             if indexPath.row % 2 == 1 {
 
                 self.player1.setUrl(trueURL)
+                self.player1.id = self.videoArray[indexPath.row].id
                 self.player1.view.frame = cell.newRect
                 cell.contentView.addSubview(self.player1.view)
                 cell.hasPlayer = true
@@ -236,6 +246,7 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
             }else{
 
                 self.player2.setUrl(trueURL)
+                self.player2.id = self.videoArray[indexPath.row].id
                 self.player2.view.frame = cell.newRect
                 cell.contentView.addSubview(self.player2.view)
                 cell.hasPlayer = true
