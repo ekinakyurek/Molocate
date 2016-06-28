@@ -132,7 +132,7 @@ class FacebookFriends: UIViewController {
         }
         
         userRelations.relations[Row].is_place = true
-        
+        userRelations.relations[Row].is_following = true
   
         tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: Row, inSection: 0)], withRowAnimation: .None)
     }

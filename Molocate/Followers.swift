@@ -287,7 +287,7 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
         
         let buttonRow = sender.tag
         
-        if !classUser.isFollowing{
+        if !userRelations.relations[buttonRow].is_following{
             classUser.isFollowing = true
             self.userRelations.relations[buttonRow].is_following = true
             MolocateAccount.follow(userRelations.relations[buttonRow].username){ (data, response, error) -> () in

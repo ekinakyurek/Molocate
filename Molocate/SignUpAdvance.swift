@@ -23,6 +23,7 @@ class SignUpAdvance: UIViewController , UITextFieldDelegate {
     @IBAction func back(sender: AnyObject) {
         //geri basarsa yeni username olmadığı için üye oluşmamış olucak
     }
+    @IBOutlet var termsButton: UIButton!
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +37,9 @@ class SignUpAdvance: UIViewController , UITextFieldDelegate {
         if(FaceMail != "not_valid"){email.text = FaceMail}
         
         UIApplication.sharedApplication().endIgnoringInteractionEvents()
-        
+        termsButton.titleLabel?.lineBreakMode = .ByWordWrapping
+        termsButton.titleLabel?.textAlignment = .Center
+        termsButton.setTitle("Kaydolarak, Koşullarımızı ve Gizlilik İlkemizi.\nkabul etmiş olursun.", forState: .Normal)
     }
     
     func initGui(){
