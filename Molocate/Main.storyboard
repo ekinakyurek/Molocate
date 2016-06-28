@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Uek-31-GU9">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BtI-HJ-crP">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -1141,23 +1141,15 @@ These Services are operated and provided by Molocate. If you have any questions 
             <point key="canvasLocation" x="3828.5" y="-4115.5"/>
         </scene>
         <!--Tutorial View Controller-->
-        <scene sceneID="Y7m-8l-GZQ">
+        <scene sceneID="wrn-Jv-m9Y">
             <objects>
-                <viewController id="2WS-8I-dM5" customClass="tutorialViewController" customModule="Molocate" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="DSU-46-DWh"/>
-                        <viewControllerLayoutGuide type="bottom" id="FRC-Yk-l9O"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="36x-kI-qM8">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" doubleSided="YES" id="BtI-HJ-crP" customClass="tutorialViewController" customModule="Molocate" customModuleProvider="target" sceneMemberID="viewController">
+                    <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="8XA-c1-AiJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                </pageViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PXf-nQ-VkW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4761.5" y="-4128.5"/>
+            <point key="canvasLocation" x="4658" y="-4146"/>
         </scene>
         <!--Tutorial Page Content View Controller-->
         <scene sceneID="gMO-a3-dBQ">
@@ -1171,16 +1163,32 @@ These Services are operated and provided by Molocate. If you have any questions 
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bLC-CA-mP7">
-                                <rect key="frame" x="67" y="139" width="240" height="128"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bLC-CA-mP7">
+                                <rect key="frame" x="-4" y="0.0" width="383" height="667"/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="67L-Bv-KeI">
+                                <rect key="frame" x="123" y="597" width="130" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="130" id="Yki-99-ugo"/>
+                                    <constraint firstAttribute="height" constant="30" id="nTP-na-PgN"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="13"/>
+                                <state key="normal" title="Tanıtımı Geç">
+                                    <color key="titleColor" red="1" green="0.97129626970000005" blue="0.99007940480000001" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="skipTutorial:" destination="1Qr-bi-83L" eventType="touchUpInside" id="iTa-Zv-D8q"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="bLC-CA-mP7" secondAttribute="trailing" id="3mM-Yo-Upb"/>
-                            <constraint firstItem="bLC-CA-mP7" firstAttribute="leading" secondItem="Hwb-c2-fz8" secondAttribute="leadingMargin" id="HCn-Lj-hWc"/>
-                            <constraint firstItem="tdl-jc-pYY" firstAttribute="top" secondItem="bLC-CA-mP7" secondAttribute="bottom" id="eG7-9G-z77"/>
-                            <constraint firstItem="bLC-CA-mP7" firstAttribute="top" secondItem="JQS-ps-r4b" secondAttribute="bottom" id="uvX-kw-ujF"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="bLC-CA-mP7" secondAttribute="bottom" id="7iC-jd-ixB"/>
+                            <constraint firstItem="bLC-CA-mP7" firstAttribute="top" secondItem="Hwb-c2-fz8" secondAttribute="topMargin" id="CLh-v4-hGh"/>
+                            <constraint firstItem="bLC-CA-mP7" firstAttribute="leading" secondItem="Hwb-c2-fz8" secondAttribute="leadingMargin" constant="-20" id="Cx1-fj-bND"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="bLC-CA-mP7" secondAttribute="trailing" constant="-20" id="eiS-Fp-gfy"/>
+                            <constraint firstItem="tdl-jc-pYY" firstAttribute="top" secondItem="67L-Bv-KeI" secondAttribute="bottom" constant="30" id="fmc-h8-xpp"/>
+                            <constraint firstItem="67L-Bv-KeI" firstAttribute="centerX" secondItem="Hwb-c2-fz8" secondAttribute="centerX" id="xtA-Y8-k30"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
@@ -2870,7 +2878,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                         <viewControllerLayoutGuide type="bottom" id="l4A-y1-gmQ"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="3vR-td-2V3">
-                        <rect key="frame" x="0.0" y="44" width="375" height="623"/>
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="sDO-do-oSn">
@@ -3011,7 +3019,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                                 <nil key="highlightedColor"/>
                             </label>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" directionalLockEnabled="YES" bounces="NO" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kga-sg-XlE">
-                                <rect key="frame" x="0.0" y="130" width="375" height="493"/>
+                                <rect key="frame" x="0.0" y="130" width="375" height="473"/>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -3355,9 +3363,9 @@ These Services are operated and provided by Molocate. If you have any questions 
         <image name="switch" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="r8V-JF-m1L"/>
         <segue reference="hW6-pa-tyf"/>
-        <segue reference="Omh-JG-0zV"/>
+        <segue reference="i6B-xP-GmW"/>
+        <segue reference="r8V-JF-m1L"/>
         <segue reference="iX5-7U-zGl"/>
     </inferredMetricsTieBreakers>
 </document>

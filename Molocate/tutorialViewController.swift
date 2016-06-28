@@ -11,20 +11,32 @@ import UIKit
 
 class tutorialViewController: UIPageViewController, UIPageViewControllerDataSource
 {
-   
+    
     var arrPagePhoto: NSArray = NSArray()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        arrPagePhoto = ["Mole", "logoVectorel", "likefilled"];
-        
+        if MolocateDevice.size.height > 710{
+        arrPagePhoto = ["plushosgeldin.jpg", "plushaber.jpg", "pluskesfet.jpg","pluspaylas.jpg"]
+        }
+        else if is4s{
+            arrPagePhoto = ["4hosgeldin.jpg", "4haber.jpg", "4kesfet.jpg","4paylas.jpg"]
+        }
+        if MolocateDevice.size.height < 710 && MolocateDevice.size.height > 650   {
+            arrPagePhoto = ["6hosgeldin.jpg", "6haber.jpg", "6kesfet.jpg","6paylas.jpg"]
+        }
+        else{
+            arrPagePhoto = ["5hosgeldin.jpg", "5haber.jpg", "5kesfet.jpg","5paylas.jpg"]
+           
+        }
         self.dataSource = self
         
-        self.setViewControllers([getViewControllerAtIndex(0)] as [UIViewController], direction: UIPageViewControllerNavigationDirection.Forward, animated: true, completion: nil)
+        self.setViewControllers([getViewControllerAtIndex(0)] as [UIViewController], direction: UIPageViewControllerNavigationDirection.Forward,  animated: true, completion: nil)
+        
     }
     
-    // MARK:- UIPageViewControllerDataSource Methods
+    
+    
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController?
     {
@@ -38,6 +50,7 @@ class tutorialViewController: UIPageViewController, UIPageViewControllerDataSour
         }
         
         index -= 1;
+        
         return getViewControllerAtIndex(index)
     }
     
@@ -52,10 +65,17 @@ class tutorialViewController: UIPageViewController, UIPageViewControllerDataSour
             return nil;
         }
         
-        index += 1;
-       
-        return getViewControllerAtIndex(index)
+        ;
+        if index > 2 {
+        index = 2
+            return nil
+        }
+        else {
+            index += 1
+            return getViewControllerAtIndex(index) }
     }
+    
+    
     
     // MARK:- Other Methods
     func getViewControllerAtIndex(index: NSInteger) -> tutorialPageContentViewController
@@ -63,7 +83,7 @@ class tutorialViewController: UIPageViewController, UIPageViewControllerDataSour
         // Create a new view controller and pass suitable data.
         let tutorialpageContentViewController = self.storyboard?.instantiateViewControllerWithIdentifier("tutorialPageContentViewController") as! tutorialPageContentViewController
         
-    
+        
         tutorialpageContentViewController.strPhotoName = "\(arrPagePhoto[index])"
         tutorialpageContentViewController.pageIndex = index
         
