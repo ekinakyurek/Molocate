@@ -156,9 +156,13 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
 
                 self.tableView.reloadData()
               
-            
+            if self.type == "HomePage" {
                 if self.videoArray.count == 0 {
-                    //self.nofollowings.hidden = false
+                    
+                    NSNotificationCenter.defaultCenter().postNotificationName("showNoFoll", object: nil)
+                } else {
+                    NSNotificationCenter.defaultCenter().postNotificationName("hideNoFoll", object: nil)
+                }
                 }
 
 

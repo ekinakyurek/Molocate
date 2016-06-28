@@ -109,6 +109,11 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
     }
 
     func playerPlaybackWillStartFromBeginning(player: Player) {
+        if player == player1 {
+            player2.stop()
+        } else {
+            player1.stop()
+        }
     }
 
     func playerPlaybackDidEnd(player: Player) {

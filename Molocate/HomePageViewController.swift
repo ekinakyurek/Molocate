@@ -44,7 +44,7 @@ class HomePageViewController: UIViewController, UITextFieldDelegate, TimelineCon
         tabBarController?.tabBar.hidden = true
         
         try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
-        
+        self.view.addSubview(nofollowings)
         self.nofollowings.hidden = true
         
         self.view.backgroundColor = swiftColor
@@ -53,6 +53,8 @@ class HomePageViewController: UIViewController, UITextFieldDelegate, TimelineCon
             NSNotificationCenter.defaultCenter().postNotificationName("closeProfile", object: nil)
         }
        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HomePageViewController.showNavigation), name: "showNavigation", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HomePageViewController.showNoFoll), name: "showNoFoll", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HomePageViewController.hideNoFoll), name: "hideNoFoll", object: nil)
         
         if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
             UIApplication.sharedApplication().endIgnoringInteractionEvents()
@@ -196,6 +198,13 @@ class HomePageViewController: UIViewController, UITextFieldDelegate, TimelineCon
             sideClicked = false
             NSNotificationCenter.defaultCenter().postNotificationName("closeSideBar", object: nil)
         }
+    }
+    
+    func showNoFoll(){
+        self.nofollowings.hidden = false
+    }
+    func hideNoFoll(){
+        self.nofollowings.hidden = true
     }
     
     @IBOutlet var cameraButton: UIBarButtonItem!
