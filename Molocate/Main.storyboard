@@ -1424,7 +1424,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                                 </constraints>
                                 <string key="text">Henüz kimseyi
  takip etmiyorsunuz :(</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="15"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -2853,7 +2853,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="66W-jh-A6t">
-                                <rect key="frame" x="-4" y="80" width="172" height="50"/>
+                                <rect key="frame" x="-4" y="80" width="192" height="50"/>
                                 <accessibility key="accessibilityConfiguration">
                                     <accessibilityTraits key="traits" button="YES" adjustable="YES"/>
                                 </accessibility>
@@ -2959,7 +2959,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KTk-Md-Iip">
-                                <rect key="frame" x="168" y="80" width="171" height="50"/>
+                                <rect key="frame" x="188" y="80" width="191" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="45B-hb-g7r"/>
                                 </constraints>
@@ -2972,7 +2972,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g4k-wa-ZG4">
-                                <rect key="frame" x="168" y="80" width="0.0" height="50"/>
+                                <rect key="frame" x="188" y="80" width="0.0" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="width" id="sjM-Yd-Nf6"/>
                                     <constraint firstAttribute="height" constant="50" id="wSU-Pg-6yv"/>
@@ -2994,10 +2994,12 @@ These Services are operated and provided by Molocate. If you have any questions 
                             <constraint firstItem="3To-tl-XUU" firstAttribute="leading" secondItem="sDO-do-oSn" secondAttribute="trailing" constant="8" id="9bQ-01-fez"/>
                             <constraint firstItem="66W-jh-A6t" firstAttribute="top" secondItem="sDO-do-oSn" secondAttribute="bottom" id="9yr-9D-Qbe"/>
                             <constraint firstItem="sDO-do-oSn" firstAttribute="leading" secondItem="3vR-td-2V3" secondAttribute="leading" id="Ac6-cv-8or"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="KTk-Md-Iip" secondAttribute="trailing" constant="20" id="BGJ-lC-4Kb"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="KTk-Md-Iip" secondAttribute="trailing" id="BGJ-lC-4Kb"/>
                             <constraint firstItem="g4k-wa-ZG4" firstAttribute="leading" secondItem="66W-jh-A6t" secondAttribute="trailing" id="Bfk-15-0Ae"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="KTk-Md-Iip" secondAttribute="trailing" constant="-20" id="C2D-Vl-ek0"/>
                             <constraint firstItem="Kga-sg-XlE" firstAttribute="top" secondItem="KTk-Md-Iip" secondAttribute="bottom" id="D1P-km-qaB"/>
                             <constraint firstItem="66W-jh-A6t" firstAttribute="width" secondItem="KTk-Md-Iip" secondAttribute="width" id="Di8-l7-tfi"/>
+                            <constraint firstItem="66W-jh-A6t" firstAttribute="leading" secondItem="3vR-td-2V3" secondAttribute="leadingMargin" constant="-20" id="EWU-Zi-QOV"/>
                             <constraint firstItem="FoO-of-504" firstAttribute="top" secondItem="h0a-Ie-Udv" secondAttribute="bottom" id="Eis-g9-spL"/>
                             <constraint firstItem="PJe-BZ-epf" firstAttribute="centerX" secondItem="3vR-td-2V3" secondAttribute="centerX" id="GPR-7E-kLl"/>
                             <constraint firstItem="PJe-BZ-epf" firstAttribute="top" secondItem="h0a-Ie-Udv" secondAttribute="bottom" id="IoE-Gj-Hdz"/>
@@ -3007,7 +3009,6 @@ These Services are operated and provided by Molocate. If you have any questions 
                             <constraint firstItem="KTk-Md-Iip" firstAttribute="top" secondItem="sDO-do-oSn" secondAttribute="bottom" id="Qbc-eM-voZ"/>
                             <constraint firstItem="qkE-Kj-8gt" firstAttribute="centerX" secondItem="iPf-fw-yYZ" secondAttribute="centerX" id="R2R-v8-rWL"/>
                             <constraint firstItem="dDc-Qs-8Oy" firstAttribute="top" secondItem="3To-tl-XUU" secondAttribute="bottom" constant="5" id="ReW-Qg-7Sh"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="KTk-Md-Iip" secondAttribute="trailing" constant="20" id="U2K-nn-bz4"/>
                             <constraint firstItem="FoO-of-504" firstAttribute="leading" secondItem="3vR-td-2V3" secondAttribute="leading" id="Vxp-08-dI5"/>
                             <constraint firstItem="0c1-ee-i8J" firstAttribute="top" secondItem="dDc-Qs-8Oy" secondAttribute="bottom" constant="-10" id="Z9B-w1-1tu"/>
                             <constraint firstItem="l4A-y1-gmQ" firstAttribute="top" secondItem="Kga-sg-XlE" secondAttribute="bottom" id="btO-UN-TD1"/>
@@ -3017,12 +3018,18 @@ These Services are operated and provided by Molocate. If you have any questions 
                             <constraint firstItem="0c1-ee-i8J" firstAttribute="centerX" secondItem="dDc-Qs-8Oy" secondAttribute="centerX" id="hx5-mf-gNp"/>
                             <constraint firstItem="iPf-fw-yYZ" firstAttribute="top" secondItem="3To-tl-XUU" secondAttribute="bottom" constant="5" id="kJ3-Oj-nsH"/>
                             <constraint firstItem="0zZ-d0-Kt4" firstAttribute="top" secondItem="3To-tl-XUU" secondAttribute="bottom" constant="3" id="m8L-st-ZsN"/>
-                            <constraint firstItem="66W-jh-A6t" firstAttribute="leading" secondItem="3vR-td-2V3" secondAttribute="leadingMargin" constant="-20" id="mAh-1z-ta7"/>
+                            <constraint firstItem="66W-jh-A6t" firstAttribute="leading" secondItem="3vR-td-2V3" secondAttribute="leadingMargin" id="mAh-1z-ta7"/>
                             <constraint firstItem="PJe-BZ-epf" firstAttribute="width" secondItem="3vR-td-2V3" secondAttribute="width" id="miy-KV-kB2"/>
                             <constraint firstAttribute="trailingMargin" secondItem="3To-tl-XUU" secondAttribute="trailing" constant="8" id="p4x-Mu-W7h"/>
                             <constraint firstItem="sDO-do-oSn" firstAttribute="top" secondItem="h0a-Ie-Udv" secondAttribute="bottom" id="x1E-ma-Izi"/>
                             <constraint firstItem="3To-tl-XUU" firstAttribute="top" secondItem="h0a-Ie-Udv" secondAttribute="bottom" constant="2" id="zja-AO-jqN"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="mAh-1z-ta7"/>
+                                <exclude reference="BGJ-lC-4Kb"/>
+                            </mask>
+                        </variation>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" title="Profil" id="LlD-Ut-DBI">

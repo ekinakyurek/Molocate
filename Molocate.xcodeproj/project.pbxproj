@@ -107,6 +107,7 @@
 		C6D720CD1D21ECFC00FF1998 /* 4hosgeldin.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C6D720BD1D21ECFC00FF1998 /* 4hosgeldin.jpg */; };
 		C6D720CE1D21ECFC00FF1998 /* 4haber.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C6D720BE1D21ECFC00FF1998 /* 4haber.jpg */; };
 		C6D720CF1D21ECFC00FF1998 /* Pluspaylas.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C6D720BF1D21ECFC00FF1998 /* Pluspaylas.jpg */; };
+		C6D720D41D23439C00FF1998 /* foursquare.png in Resources */ = {isa = PBXBuildFile; fileRef = C6D720D31D23439C00FF1998 /* foursquare.png */; };
 		C6D785431D05FB3000DA59B3 /* profileUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D785421D05FB3000DA59B3 /* profileUser.swift */; };
 		C6D785451D0600FF00DA59B3 /* profile1stCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D785441D0600FF00DA59B3 /* profile1stCell.swift */; };
 		C6D785471D0604C900DA59B3 /* profileCell2.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D785461D0604C900DA59B3 /* profileCell2.swift */; };
@@ -265,6 +266,7 @@
 		C6D720BD1D21ECFC00FF1998 /* 4hosgeldin.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 4hosgeldin.jpg; sourceTree = "<group>"; };
 		C6D720BE1D21ECFC00FF1998 /* 4haber.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 4haber.jpg; sourceTree = "<group>"; };
 		C6D720BF1D21ECFC00FF1998 /* Pluspaylas.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Pluspaylas.jpg; sourceTree = "<group>"; };
+		C6D720D31D23439C00FF1998 /* foursquare.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = foursquare.png; sourceTree = "<group>"; };
 		C6D785421D05FB3000DA59B3 /* profileUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = profileUser.swift; sourceTree = "<group>"; };
 		C6D785441D0600FF00DA59B3 /* profile1stCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = profile1stCell.swift; sourceTree = "<group>"; };
 		C6D785461D0604C900DA59B3 /* profileCell2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = profileCell2.swift; sourceTree = "<group>"; };
@@ -492,6 +494,7 @@
 		C67C97721C44BE080001BEF5 /* ImagesForProfile */ = {
 			isa = PBXGroup;
 			children = (
+				C6D720D31D23439C00FF1998 /* foursquare.png */,
 				C62B17F01D0B2EC8004CD060 /* shirt-2.png */,
 				E3AB5D121CBC781D00382252 /* appstore1024-1024.png */,
 				C6537F501CA9F4E8005EE0BA /* Sent-96.png */,
@@ -766,6 +769,7 @@
 			files = (
 				C67830191C9CC76E00DC969D /* LatoTR-Bold.ttf in Resources */,
 				C6D720CF1D21ECFC00FF1998 /* Pluspaylas.jpg in Resources */,
+				C6D720D41D23439C00FF1998 /* foursquare.png in Resources */,
 				C6D720CD1D21ECFC00FF1998 /* 4hosgeldin.jpg in Resources */,
 				C678301A1C9CC76E00DC969D /* LatoTR-Hairline.ttf in Resources */,
 				C6D720CB1D21ECFC00FF1998 /* 4paylaş.jpg in Resources */,

@@ -8,20 +8,46 @@ let arkarenk = UIColor(netHex: 0x212429)
 class SideBarController: UITableViewController {
     
     
-
+    let foursquareLabel : UILabel = UILabel()
+    let foursquareLabel2 : UILabel = UILabel()
+    
     var menuArray = ["HABER","KEŞFET","BİLDİRİM","PROFİL"]
     var tableData: [String] = ["home", "explore", "notifications","avatar"]
     let cellIdentifier = "cell"
     var attractionImages = [String]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        let  screenSize = MolocateDevice.size
         
         tableView.separatorStyle = .SingleLineEtched
         self.tableView.separatorColor = UIColor.lightTextColor()
         self.tableView.backgroundColor = arkarenk
         tableView.tableFooterView = UIView()
         tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
+        
+        foursquareLabel.frame = CGRectMake( screenSize.width / 5 - 30   , 9 * screenSize.height / 10  , 60 , 15)
+        foursquareLabel.font = UIFont(name: "AvenirNext-Regular", size: 8)
+        foursquareLabel.textAlignment = .Center
+        foursquareLabel.text = "POWERED BY"
+        foursquareLabel.textColor = UIColor.whiteColor()
+        self.tableView.addSubview(foursquareLabel)
+        
+        foursquareLabel2.frame = CGRectMake( screenSize.width / 5 - 30   , 9 * screenSize.height / 10  + 12 , 60 , 15)
+        foursquareLabel2.font = UIFont(name: "AvenirNext-Regular", size: 8)
+        foursquareLabel2.textAlignment = .Center
+        foursquareLabel2.text = "FOURSQUARE"
+        foursquareLabel2.textColor = UIColor.whiteColor()
+        self.tableView.addSubview(foursquareLabel2)
+        
+        let imageName = "foursquare.png"
+        let image = UIImage(named: imageName)
+        let imageView = UIImageView(image: image!)
+        imageView.frame = CGRect(x: screenSize.width / 5 - 11   , y: 9 * screenSize.height / 10 - 28 , width: 24 , height: 19.2 * 1.5)
+        self.tableView.addSubview(imageView)
+        
+        
+        
         
         MolocateAccount.getCurrentUser { (data, response, error) in
             dispatch_async(dispatch_get_main_queue() , {
