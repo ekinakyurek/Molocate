@@ -113,11 +113,11 @@ class MyProfile: UIViewController , UIScrollViewDelegate, UITableViewDelegate, U
     }
     
     func RefreshGuiWithData(){
-        addedButton.setTitle("▶︎GÖNDERİ(\(classUser.post_count))", forState: .Normal)
-        taggedButton.setTitle("@ETİKET(\(classUser.tag_count))", forState: .Normal)
+        addedButton.setTitle("▶︎GÖNDERİ(\(MoleCurrentUser.post_count))", forState: .Normal)
+        taggedButton.setTitle("@ETİKET(\(MoleCurrentUser.tag_count))", forState: .Normal)
        
         if(classUser.profilePic.absoluteString != ""){
-            profilePhoto.sd_setImageWithURL(classUser.profilePic)
+            profilePhoto.sd_setImageWithURL(MoleCurrentUser.profilePic)
             ProfileButton.enabled = true
             
         }else{
@@ -129,15 +129,15 @@ class MyProfile: UIViewController , UIScrollViewDelegate, UITableViewDelegate, U
         FollowButton.image = UIImage(named: "settings")
         back.image = UIImage(named:"sideMenu")
     
-        username.text = classUser.username
+        username.text = MoleCurrentUser.username
         username.textColor = arkarenk
-        followingsCount.setTitle("\(classUser.following_count)", forState: .Normal)
-        followersCount.setTitle("\(classUser.follower_count)", forState: .Normal)
+        followingsCount.setTitle("\(MoleCurrentUser.following_count)", forState: .Normal)
+        followersCount.setTitle("\(MoleCurrentUser.follower_count)", forState: .Normal)
         
         
-        AVc.classUser = classUser
-        AVc.isItMyProfile = self.isItMyProfile
-        BVc.classUser = classUser
+        AVc.classUser = MoleCurrentUser
+        AVc.isItMyProfile = true
+        BVc.classUser = MoleCurrentUser
         AVc.getData()
         BVc.getData()
 
