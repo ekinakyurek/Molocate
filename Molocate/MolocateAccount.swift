@@ -1,6 +1,6 @@
  //Molocate app. Account Related Functions
 import UIKit
-
+import RNCryptor
 //Globals
 let MolocateBaseUrl = "http://molocate-py3.hm5xmcabvz.eu-central-1.elasticbeanstalk.com/"
 var IsExploreInProcess = false
@@ -578,18 +578,22 @@ public class MolocateAccount {
     
     class func SignUp(username: String, password: String, email: String, completionHandler: (data: String! , response: NSURLResponse!, error: NSError!) -> ()){
         
-        let json = ["username": username, "password": password, "email": email]
+        //let json = ["username": username, "password": password, "email": email]
         
+        let pureString = username+"+/"+password+"+/"+email
+        //print(pureString)
         do {
-            
-            let jsonData = try NSJSONSerialization.dataWithJSONObject(json, options: .PrettyPrinted)
+            let pureData = pureString.dataUsingEncoding(NSUTF8StringEncoding)
+            let passwordEnc = "ebenisikimmemo"
+            let encriptedString = RNCryptor.encryptData(pureData!, password: passwordEnc)
+            //let jsonData = try NSJSONSerialization.dataWithJSONObject(json, options: .PrettyPrinted)
             
             let url = NSURL(string: MolocateBaseUrl + "account/register/")!
             
             let request = NSMutableURLRequest(URL: url)
             request.HTTPMethod = "POST"
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            request.HTTPBody = jsonData
+            request.HTTPBody = encriptedString
             request.timeoutInterval = timeOut
             
             let task = NSURLSession.sharedSession().dataTaskWithRequest(request){ data, response, error in

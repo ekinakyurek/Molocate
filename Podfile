@@ -17,6 +17,7 @@ pod 'AWSS3'
 pod 'XLActionController'
 pod 'Fabric'
 pod 'Crashlytics'
+pod 'RNCryptor', '~> 4.0.0-beta'
 end
 
 target 'MolocateTests' do

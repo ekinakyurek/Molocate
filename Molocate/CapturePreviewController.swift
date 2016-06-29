@@ -70,17 +70,17 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
                         ////print(self.videoLocation)
 
             let random = randomStringWithLength(64)
-            let fileName = random.stringByAppendingFormat(".mp4", random)
+            let fileName = random //.stringByAppendingFormat(".mp4", random)
             let fileURL = NSURL(fileURLWithPath: videoPath!)
             NSUserDefaults.standardUserDefaults().setObject(videoPath, forKey: "videoPath")
             let uploadRequest = AWSS3TransferManagerUploadRequest()
             uploadRequest.body = fileURL
-            uploadRequest.key = "videos/" + (fileName as String)
+            uploadRequest.key = "videos/" + (fileName.stringByAppendingFormat(".mp4", fileName) as String)
             uploadRequest.bucket = S3BucketName
             
             let json = [
                 "video_id": fileName as String,
-                "video_url": "https://d1jkin67a303u2.cloudfront.net/videos/"+(fileName as String),
+                "video_url": "https://d1jkin67a303u2.cloudfront.net/videos/"+(fileName.stringByAppendingFormat(".mp4", fileName) as String),
                 "caption": CaptionText,
                 "category": self.categ,
                 "tagged_users": self.taggedUsers,

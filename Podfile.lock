@@ -8,6 +8,7 @@ PODS:
   - HanekeSwift (0.10.1)
   - QuadratTouch (1.1.1)
   - RecordButton (1.0.0)
+  - RNCryptor (4.0.0)
   - SDWebImage (3.7.5):
     - SDWebImage/Core (= 3.7.5)
   - SDWebImage/Core (3.7.5)
@@ -22,6 +23,7 @@ DEPENDENCIES:
   - HanekeSwift
   - QuadratTouch (>= 1.0)
   - RecordButton
+  - RNCryptor (~> 4.0.0-beta)
   - SDWebImage
   - XLActionController
 
@@ -33,6 +35,7 @@ SPEC CHECKSUMS:
   HanekeSwift: 08e47d3d0f2899ec58e5d257beba0de619aca9e8
   QuadratTouch: 296d83c63a4328f6f40af9fc728fe24f0e3b00d4
   RecordButton: 53e5cea9112aa2f09dccf83e55d3c4645197b58a
+  RNCryptor: 59d6483908115af5c12b884db23392024e52a5fe
   SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
   XLActionController: 97ed31237413db4d9401c6a559270f4d2b4de136
 
