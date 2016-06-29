@@ -8,6 +8,7 @@ class likeVideo: UIViewController, UITableViewDelegate, UITableViewDataSource  {
     @IBOutlet var toolBar: UIToolbar!
     @IBOutlet var tableView: UITableView!
     let refreshControl: UIRefreshControl = UIRefreshControl()
+    var pressedFollow: Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -58,41 +59,55 @@ class likeVideo: UIViewController, UITableViewDelegate, UITableViewDataSource  {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
+      
+            let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) as! likeVideoCell
+            
+            cell.username.setTitle("\(self.users[indexPath.row].username)", forState: .Normal)
+            cell.username.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
+            cell.username.tag = indexPath.row
+            cell.username.tintColor = swiftColor
+            cell.username.addTarget(self, action: #selector(likeVideo.pressedProfile(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+            
+            print("foloow:" + cell.followLike.hidden.description)
+            print("users" + users[indexPath.row].isFollowing.description)
         
-        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) as! likeVideoCell
-        
-        cell.username.setTitle("\(self.users[indexPath.row].username)", forState: .Normal)
-        cell.username.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
-        cell.username.tag = indexPath.row
-        cell.username.tintColor = swiftColor
-        cell.username.addTarget(self, action: #selector(likeVideo.pressedProfile(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-        
-        if(!users[indexPath.row].isFollowing && users[indexPath.row].username != MoleCurrentUser.username){
+        print(pressedFollow.description)
+        if !pressedFollow {
+                if(!users[indexPath.row].isFollowing && users[indexPath.row].username != MoleCurrentUser.username){
+                    cell.followLike.hidden = false
+                }else{
+                    cell.followLike.hidden = true
+                }
+        }else{
             cell.followLike.hidden = false
-        }else{
-            cell.followLike.hidden = true
+            cell.followLike.enabled = false
+            cell.followLike.setBackgroundImage(UIImage(named: "followTicked"), forState: .Normal)
         }
-        cell.followLike.tag = indexPath.row
-        cell.followLike.addTarget(self, action: #selector(likeVideo.pressedFollow(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+            
+            
+            
+            cell.followLike.tag = indexPath.row
+            cell.followLike.addTarget(self, action: #selector(likeVideo.pressedFollow(_:)), forControlEvents: UIControlEvents.TouchUpInside)
 
-        cell.profileImage.layer.borderWidth = 0.1
-        cell.profileImage.layer.masksToBounds = false
-        cell.profileImage.layer.borderColor = UIColor.whiteColor().CGColor
-        cell.profileImage.backgroundColor = profileBackgroundColor
-        cell.profileImage.layer.cornerRadius = cell.profileImage.frame.height/2
-        cell.profileImage.clipsToBounds = true
-        cell.profileImage.tag = indexPath.row
-        cell.profileImage.addTarget(self, action: #selector(likeVideo.pressedProfile(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-        
+            cell.profileImage.layer.borderWidth = 0.1
+            cell.profileImage.layer.masksToBounds = false
+            cell.profileImage.layer.borderColor = UIColor.whiteColor().CGColor
+            cell.profileImage.backgroundColor = profileBackgroundColor
+            cell.profileImage.layer.cornerRadius = cell.profileImage.frame.height/2
+            cell.profileImage.clipsToBounds = true
+            cell.profileImage.tag = indexPath.row
+            cell.profileImage.addTarget(self, action: #selector(likeVideo.pressedProfile(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+            
 
-        if(users[indexPath.row].profilePic.absoluteString != ""){
-            cell.profileImage.sd_setBackgroundImageWithURL(users[indexPath.row].profilePic, forState: .Normal)
-        }else{
-            cell.profileImage.setBackgroundImage(UIImage(named: "profile")!, forState:
-                UIControlState.Normal)
-        }
-        
-        return cell
+            if(users[indexPath.row].profilePic.absoluteString != ""){
+                cell.profileImage.sd_setBackgroundImageWithURL(users[indexPath.row].profilePic, forState: .Normal)
+            }else{
+                cell.profileImage.setBackgroundImage(UIImage(named: "profile")!, forState:
+                    UIControlState.Normal)
+            }
+            
+            return cell
+       
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -143,6 +158,7 @@ class likeVideo: UIViewController, UITableViewDelegate, UITableViewDataSource  {
     
     func pressedFollow(sender: UIButton) {
         //print("pressedfollow")
+        pressedFollow = true
         let buttonRow = sender.tag
         
         users[buttonRow].isFollowing = true
@@ -154,6 +170,8 @@ class likeVideo: UIViewController, UITableViewDelegate, UITableViewDataSource  {
         MolocateAccount.follow(users[buttonRow].username, completionHandler: { (data, response, error) -> () in
             //DBG: Check if it is succeed
         })
+        
+        pressedFollow = false
     }
     
     override func viewWillAppear(animated: Bool) {

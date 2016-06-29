@@ -13,6 +13,7 @@ class likeVideoCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         profileImage.backgroundColor = profileBackgroundColor
+       
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

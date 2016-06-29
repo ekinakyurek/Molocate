@@ -63,6 +63,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             redirectURL:    "molocate://foursquare")
         var configuration = Configuration(client:client)
         configuration.mode = "foursquare" // or "swarm"
+      
         configuration.shouldControllNetworkActivityIndicator = true
         Session.setupSharedSessionWithConfiguration(configuration)
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
