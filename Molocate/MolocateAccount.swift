@@ -584,15 +584,15 @@ public class MolocateAccount {
         //print(pureString)
         do {
             let pureData = pureString.dataUsingEncoding(NSUTF8StringEncoding)
-            let passwordEnc = "ebenisikimmemo"
+            let passwordEnc = "3+bHv9S_7Q+HZdW"
             let encriptedString = RNCryptor.encryptData(pureData!, password: passwordEnc)
-            //let jsonData = try NSJSONSerialization.dataWithJSONObject(json, options: .PrettyPrinted)
             
-            let url = NSURL(string: MolocateBaseUrl + "account/register/")!
+            let url = NSURL(string: MolocateBaseUrl + "account/regisnew/")!
             
             let request = NSMutableURLRequest(URL: url)
             request.HTTPMethod = "POST"
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.setValue("/*/", forHTTPHeaderField: "Content-Type")
+            request.setValue("attachment;filename=register", forHTTPHeaderField: "Content-Disposition")
             request.HTTPBody = encriptedString
             request.timeoutInterval = timeOut
             

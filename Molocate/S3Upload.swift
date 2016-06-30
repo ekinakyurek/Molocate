@@ -19,6 +19,9 @@ public class S3Upload {
     static var isUp = false
     static var uploadTask:AWSS3TransferUtilityTask?
     static var completionHandler:AWSS3TransferUtilityUploadCompletionHandlerBlock?
+    
+    
+    
     class func upload(retry:Bool = false,uploadRequest: AWSS3TransferManagerUploadRequest, fileURL: String, fileID: String, json:  [String:AnyObject]) {
         isUp = false
         if !retry {
@@ -76,69 +79,9 @@ public class S3Upload {
                     print("Error: Failed - Likely due to invalid region / filename")
                 }
                 else{
-                    let newheaders = [
-                        "authorization": "Token \(MoleUserToken!)",
-                        "content-type": "application/json",
-                        "cache-control": "no-cache"
-                    ]
-                    
-                    do {
-                        let jsonData = try NSJSONSerialization.dataWithJSONObject(json, options:  NSJSONWritingOptions.PrettyPrinted)
-                        
-                        
-                        
-                        let request = NSMutableURLRequest(URL: NSURL(string: MolocateBaseUrl + "video/update/")!,
-                            cachePolicy: .UseProtocolCachePolicy,
-                            timeoutInterval: 10.0)
-                        request.HTTPMethod = "POST"
-                        request.allHTTPHeaderFields = newheaders
-                        request.HTTPBody = jsonData
-                        
-                        
-                        let task = NSURLSession.sharedSession().dataTaskWithRequest(request){ data, response, error in
-                            
-                            dispatch_async(dispatch_get_main_queue(), {
-                                if error != nil{
-                                    
-                                    
-                                    return
-                                }
-                                
-                                do {
-                                    
-                                    _ = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)
-                                    
-                                    
-                                    
-                                    
-                                    
-                                } catch {
-                                    // //print("Error -> \(error)")
-                                }
-                                
-                            })
-                        }
-                        
-                        task.resume()
-                        
-                        
-                        
-                        
-                        
-                    } catch {
-                        //print(error)
-                        
-                        
-                    }
-                    
-                    let headers2 = ["content-type": "/*/", "content-disposition":"attachment;filename=molocate.png" ]
-                    
-                    let thumbnailRequest = NSMutableURLRequest(URL: NSURL(string: MolocateBaseUrl + "/video/api/upload_thumbnail/?video_id="+fileID)!, cachePolicy:.UseProtocolCachePolicy, timeoutInterval: 70.0)
-                    
-                    thumbnailRequest.HTTPMethod = "POST"
-                    thumbnailRequest.allHTTPHeaderFields = headers2
                     
                     
+
                     
                         var image = UIImageJPEGRepresentation(thumbnail, 0.5)
                         if image == nil {
@@ -146,53 +89,12 @@ public class S3Upload {
                             let nimage = UIImage(data: data!)
                             image = UIImageJPEGRepresentation(nimage!, 0.5)
                         }
+                    
+                    self.sendThumbnailandData(image!, info: json, completionHandler: { (data, thumbnailUrl, response, error) in
+                        
+                    })
 
-                    thumbnailRequest.addValue("Token " + MoleUserToken!, forHTTPHeaderField: "Authorization")
-                    thumbnailRequest.HTTPBody = image
-                    
-                    let thumbnailTask = NSURLSession.sharedSession().dataTaskWithRequest(thumbnailRequest){data, response, error  in
-                    //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
-                        
-                    //    let nsError = error;
-                        
-                        
-                        do {
-                            let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! NSDictionary
-                            
-                            
-                            dispatch_async(dispatch_get_main_queue()) {
-                                if result["result"] as! String == "success" {
-                                    isUp = true
-                                    do {
-                                        
-                                        GlobalVideoUploadRequest = nil
-                                        CaptionText = ""
-                                        NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isStuck")
-                                        try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
-                                        
-                                        dispatch_async(dispatch_get_main_queue()) {
-                                            progressBar?.hidden = true
-                                            n = 0
-                                            //print("yüklendi")
-                                        }
-                                    } catch _ {
-                                        
-                                    }
-                                }
-                                
-                            }
-                            
-                            
-                        } catch{
-                            
-                            
-                            //print(nsError)
-                        }
-                        
-                    }
-                    
-                    thumbnailTask.resume()
-                }
+                                   }
             
             })
         }
@@ -275,7 +177,132 @@ public class S3Upload {
         
     }
     
+    class func sendThumbnailandData(thumbnail: NSData, info: [String:AnyObject],completionHandler: (data: String!, thumbnailUrl: String, response: NSURLResponse!, error: NSError!) -> ()){
+        
+        var tagged_users: NSData = NSData()
+        var location: NSData = NSData()
+        
+        do {
+            tagged_users = try NSJSONSerialization.dataWithJSONObject(info["tagged_users"]!, options:  NSJSONWritingOptions.PrettyPrinted)
+            
+            location = try NSJSONSerialization.dataWithJSONObject(info["location"]!, options:  NSJSONWritingOptions.PrettyPrinted)
+            
+        }catch{
+            print("========CALL EKIN + 1 718 722 17 33 =========")
+        }
+        
+        let headers = [
+            "content-type": "multipart/form-data; boundary=---011000010111000001101001",
+            "authorization": "Token " + MoleUserToken!
+        ]
+        
+        let parameters = [
+            
+            [
+                "name": "thumbnail",
+                "fileName": ["0": []],
+                "content-type" : "image/jpeg"
+            ],
+            [
+                "name": "video_id",
+                "value": info["video_id"] as! String,
+                "content-type" : "text/plain"
+            ],
+            
+            [
+                "name": "video_url",
+                "value": info["video_url"] as! String,
+                "content-type" : "text/plain"
+            ],
+            
+            [
+                "name": "caption",
+                "value": info["caption"] as! String,
+                "content-type" : "text/plain"
+            ],
+            
+            [
+                "name": "category",
+                "value": info["category"] as! String,
+                "content-type" : "text/plain"
+            ],
+            
+            [
+                "name": "tagged_users",
+                "value":  String(data: tagged_users, encoding: NSUTF8StringEncoding)!,
+                "content-type" : "text/plain"
+            ],
+            [
+                "name": "location",
+                "value": String(data: location, encoding: NSUTF8StringEncoding)!,
+                "content-type" : "text/plain"
+            ]
+            
+        ]
+        
+        
+        
+        let boundary = "---011000010111000001101001"
+        
+        
+        let postData = NSMutableData()
+        
+        for param in parameters {
+            
+            var body = ""
+            let paramName = param["name"]!
+            
+            body += "--\(boundary)\r\n"
+            body += "Content-Disposition:form-data; name=\"\(paramName)\""
+            
+            if let filename = param["fileName"] {
+                let filename = param["fileName"]
+                let contentType = param["content-type"]!
+                
+                body += "; filename=\"\(filename)\"\r\n"
+                body += "Content-Type: \(contentType)\r\n\r\n"
+                postData.appendData(body.dataUsingEncoding(NSUTF8StringEncoding)!)
+                postData.appendData(thumbnail)
+                
+            }else{
+                body += "\r\n\r\n\(param["value"])"
+                postData.appendData(body.dataUsingEncoding(NSUTF8StringEncoding)!)
+            }
+            
+        }
+        
+        postData.appendData("--\(boundary)--\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
+        
+        let request = NSMutableURLRequest(URL: NSURL(string: MolocateBaseUrl + "/video/api/upload_video_thumbnail/")!,cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 5.0)
+        request.HTTPMethod = "POST"
+        request.allHTTPHeaderFields = headers
+        request.HTTPBody = postData
+        
+        let session = NSURLSession.sharedSession()
+        let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
+            do{
+                print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+                
+                let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String: String]
+                
+                if (error != nil) {
+                    completionHandler(data:"error" , thumbnailUrl: "",response: response , error: error  )
+                } else {
+                    
+                    completionHandler(data: "success", thumbnailUrl: result["thumbnail_url"]!,response: response , error: error  )
+                }
+            }catch{
+                completionHandler(data:"error" , thumbnailUrl: "",response: response , error: nil  )
+            }
+        })
+        
+        dataTask.resume()
+        
+    }
     
-    
-    
+
+
+
+
+
 }

@@ -241,7 +241,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
                 return rowHeight
             }
         
-            return 50
+            return 60
         
     }
     
