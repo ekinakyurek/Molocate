@@ -91,7 +91,7 @@ public class S3Upload {
                         }
                     
                     self.sendThumbnailandData(image!, info: json, completionHandler: { (data, thumbnailUrl, response, error) in
-                        
+                      print(data)
                     })
 
                                    }
@@ -199,7 +199,7 @@ public class S3Upload {
         let parameters = [
             
             [
-                "name": "thumbnail",
+                "name": "file",
                 "fileName": ["0": []],
                 "content-type" : "image/jpeg"
             ],
