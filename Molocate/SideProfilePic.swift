@@ -42,7 +42,7 @@ class sideProfilePic: UITableViewCell {
         contentView.addSubview(username)
         
         profilePhoto = UIImageView()
-        let image: UIImage = UIImage(named: "profilepic.png")!
+        let image: UIImage = UIImage(named: "profile")!
         profilePhoto = UIImageView(image: image)
         profilePhoto.layer.borderWidth = 0.5
         profilePhoto.layer.masksToBounds = false

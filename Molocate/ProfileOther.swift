@@ -322,7 +322,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
             videoIndex = 0
             isUploaded = true
             choosedIndex = 2
-            frame = CGRect()
+         
             MoleCurrentUser = MoleUser()
             MoleUserToken = nil
             isRegistered = false

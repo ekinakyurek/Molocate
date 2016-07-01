@@ -133,7 +133,7 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
         MolocateVideo.getExploreVideos(url, completionHandler: { (data, response, error,next) -> () in
             self.nextUrl  = next
             dispatch_async(dispatch_get_main_queue()){
-                if GlobalVideoUploadRequest == nil {
+                if GlobalVideoUploadRequest == nil || self.type != "HomePage" {
                     self.videoArray = data!
                 }else{
                     var queu = MoleVideoInformation()

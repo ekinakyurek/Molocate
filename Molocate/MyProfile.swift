@@ -325,14 +325,23 @@ class MyProfile: UIViewController , UIScrollViewDelegate, UITableViewDelegate, U
             videoIndex = 0
             isUploaded = true
             choosedIndex = 1
-            frame = CGRect()
-            MoleCurrentUser = MoleUser()
+                        MoleCurrentUser = MoleUser()
             MoleUserToken = nil
             isRegistered = false
             MoleGlobalVideo = nil
             GlobalVideoUploadRequest = nil
+            GlobalVideoUploadRequest = nil
+            CaptionText = ""
+            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isStuck")
+            do {
+                try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
+            }catch{
+                    
+            }
+            progressBar?.hidden = true
+            n = 0
            
-            self.parentViewController!.parentViewController!.performSegueWithIdentifier("logOut", sender: self)
+        self.parentViewController!.parentViewController!.performSegueWithIdentifier("logOut", sender: self)
         }
         
         

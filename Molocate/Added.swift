@@ -71,7 +71,7 @@ import AVFoundation
         MolocateVideo.getUserVideos(classUser.username, type: "user", completionHandler: { (data, response, error) in
             dispatch_async(dispatch_get_main_queue()) {
                
-                if GlobalVideoUploadRequest == nil || self.isItMyProfile {
+                if GlobalVideoUploadRequest == nil || !self.isItMyProfile {
                     self.videoArray = data!
                 }else{
                     var queu = MoleVideoInformation()

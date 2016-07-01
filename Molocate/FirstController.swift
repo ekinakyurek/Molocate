@@ -3,6 +3,8 @@ import FBSDKCoreKit
 import FBSDKLoginKit
 import CoreLocation
 
+var scrollWidth: CGFloat = 0.0
+var scrollHeight: CGFloat = 0.0
 
 class firstController: UIViewController , CLLocationManagerDelegate {
     
