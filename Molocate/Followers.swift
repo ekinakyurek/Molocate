@@ -130,7 +130,7 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
             cell.profilePhoto.setImage(UIImage(named: "profile"), forState: .Normal)
         }
         
-       
+       cell.profilePhoto.addTarget(self, action: "pressedProfile:", forControlEvents: .TouchUpInside)
 
         if(!userRelations.relations[indexPath.row].is_following){
             cell.followButton.setBackgroundImage(UIImage(named: "follow"), forState: UIControlState.Normal)
@@ -309,45 +309,37 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
         
     }
     
-//    func pressedProfile(sender: UIButton) {
-//        
-//        self.parentViewController!.navigationController?.setNavigationBarHidden(false, animated: false)
-//        let buttonRow = sender.tag
-//        
-//        activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
-//        activityIndicator.center = self.view.center
-//        activityIndicator.hidesWhenStopped = true
-//        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-//        view.addSubview(activityIndicator)
-//        activityIndicator.startAnimating()
-//        
-//        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
-//        
-//     
-//        let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
-//        
-//        if userRelations.relations[buttonRow].username  != MoleCurrentUser.username{
-//            controller.isItMyProfile = false
-//        }else{
-//            controller.isItMyProfile = true
-//        }
-//        
-//        
-//        self.navigationController?.pushViewController(controller, animated: true)
-//        MolocateAccount.getUser(userRelations.relations[buttonRow].username) { (data, response, error) -> () in
-//            dispatch_async(dispatch_get_main_queue()){
-//                //DBG: If it is mine profile?
-//                
-//                user = data
-//                controller.classUser = data
-//                
-//                controller.RefreshGuiWithData()
-//                
-//                //choosedIndex = 0
-//                self.activityIndicator.removeFromSuperview()
-//            }
-//        }
-//    }
+    func pressedProfile(sender: UIButton) {
+        let row = sender.tag
+        let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
+        
+        if userRelations.relations[row].username  != MoleCurrentUser.username{
+            controller.isItMyProfile = false
+        }else{
+            controller.isItMyProfile = true
+        }
+        
+        controller.classUser.username =  userRelations.relations[row].username
+        controller.classUser.profilePic = userRelations.relations[row].picture_url
+        controller.classUser.isFollowing = userRelations.relations[row].is_following
+        
+        self.navigationController?.pushViewController(controller, animated: true)
+        MolocateAccount.getUser(userRelations.relations[row].username) { (data, response, error) -> () in
+            dispatch_async(dispatch_get_main_queue()){
+                //DBG: If it is mine profile?
+                if data.username != ""{
+                    user = data
+                    controller.classUser = data
+                    controller.RefreshGuiWithData()
+                }
+                
+                UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                //choosedIndex = 0
+                self.activityIndicator.stopAnimating()
+                
+            }
+        }
+    }
     
  
     override func viewDidDisappear(animated: Bool) {

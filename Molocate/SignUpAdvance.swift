@@ -185,7 +185,7 @@ class SignUpAdvance: UIViewController , UITextFieldDelegate {
                     }else if (data != "error"){
                         self.displayAlert("Dikkat!", message: data)
                     }else{
-                        self.displayAlert("FatalError", message: "JsonError")
+                        self.displayAlert("Hata", message: "Ooops! Lütfen tekrar deneyiniz.")
                     }
                 })
             })

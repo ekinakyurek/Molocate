@@ -91,7 +91,23 @@ public class S3Upload {
                         }
                     
                     self.sendThumbnailandData(image!, info: json, completionHandler: { (data, thumbnailUrl, response, error) in
-                      print(data)
+                        if data as! String == "success" {
+                            isUp = true
+                            do {
+
+                        GlobalVideoUploadRequest = nil
+                        CaptionText = ""
+                                NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isStuck")
+                                try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
+                                dispatch_async(dispatch_get_main_queue()) {
+                                    progressBar?.hidden = true
+                                    n = 0
+           
+                }
+                    } catch _ {
+                        
+                            }
+                    }
                     })
 
                                    }
@@ -246,7 +262,7 @@ public class S3Upload {
         
         postData.appendData("--\(boundary)--\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
         
-        let request = NSMutableURLRequest(URL: NSURL(string:  MolocateBaseUrl + "video/api/upload_deneme/")!, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 5.0)
+        let request = NSMutableURLRequest(URL: NSURL(string:  MolocateBaseUrl + "video/api/upload_video_thumbnail/")!, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 5.0)
         request.HTTPMethod = "POST"
         request.allHTTPHeaderFields = headers
         request.HTTPBody = postData
@@ -254,14 +270,14 @@ public class S3Upload {
         let session = NSURLSession.sharedSession()
         let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
             do{
-                print("+++++++++" + String(data: data!, encoding: NSUTF8StringEncoding)! + "++++++++++++++++++")
+                //print("+++++++++" + String(data: data!, encoding: NSUTF8StringEncoding)! + "++++++++++++++++++")
                 
-                let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String: String]
+                let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String: AnyObject]
                 
                 if (error != nil) {
                     completionHandler(data:"error" , thumbnailUrl: "",response: response , error: error  )
                 } else {
-                    completionHandler(data: "success", thumbnailUrl: result["thumbnail_url"]!,response: response , error: error  )
+                    completionHandler(data: "success", thumbnailUrl: result["thumbnail"]! as! String,response: response , error: error  )
                 }
             }catch{
                 completionHandler(data:"error" , thumbnailUrl: "",response: response , error: nil  )

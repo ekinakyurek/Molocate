@@ -80,7 +80,7 @@ class likeVideo: UIViewController, UITableViewDelegate, UITableViewDataSource  {
                 }
         }else{
             cell.followLike.hidden = false
-            cell.followLike.enabled = false
+            //cell.followLike.enabled = false
             cell.followLike.setBackgroundImage(UIImage(named: "followTicked"), forState: .Normal)
         }
             
