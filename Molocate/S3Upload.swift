@@ -179,17 +179,17 @@ public class S3Upload {
     
     class func sendThumbnailandData(thumbnail: NSData, info: [String:AnyObject],completionHandler: (data: String!, thumbnailUrl: String, response: NSURLResponse!, error: NSError!) -> ()){
         
-        var tagged_users: NSData = NSData()
-        var location: NSData = NSData()
+        
+        var string_info:NSData = NSData()
         
         do {
-            tagged_users = try NSJSONSerialization.dataWithJSONObject(info["tagged_users"]!, options:  NSJSONWritingOptions.PrettyPrinted)
-            
-            location = try NSJSONSerialization.dataWithJSONObject(info["location"]!, options:  NSJSONWritingOptions.PrettyPrinted)
-            
+             string_info = try NSJSONSerialization.dataWithJSONObject(info, options:  NSJSONWritingOptions.PrettyPrinted)
         }catch{
-            print("========CALL EKIN + 1 718 722 17 33 =========")
+            
+            print("Errrorororororo")
         }
+        
+    
         
         let headers = [
             "content-type": "multipart/form-data; boundary=---011000010111000001101001",
@@ -201,46 +201,18 @@ public class S3Upload {
             [
                 "name": "file",
                 "fileName": ["0": []],
-                "content-type" : "image/jpeg"
+                "content-type" : "image/jpeg",
+                "value": thumbnail
             ],
             [
-                "name": "video_id",
-                "value": info["video_id"] as! String,
-                "content-type" : "text/plain"
-            ],
-            
-            [
-                "name": "video_url",
-                "value": info["video_url"] as! String,
-                "content-type" : "text/plain"
-            ],
-            
-            [
-                "name": "caption",
-                "value": info["caption"] as! String,
-                "content-type" : "text/plain"
-            ],
-            
-            [
-                "name": "category",
-                "value": info["category"] as! String,
-                "content-type" : "text/plain"
-            ],
-            
-            [
-                "name": "tagged_users",
-                "value":  String(data: tagged_users, encoding: NSUTF8StringEncoding)!,
-                "content-type" : "text/plain"
-            ],
-            [
-                "name": "location",
-                "value": String(data: location, encoding: NSUTF8StringEncoding)!,
-                "content-type" : "text/plain"
+                "name": "info",
+                "value": string_info,
+                "filename": ["0": []],
+                "content-type" : "application/json",
+                
             ]
             
         ]
-        
-        
         
         let boundary = "---011000010111000001101001"
         
@@ -265,15 +237,16 @@ public class S3Upload {
                 postData.appendData(thumbnail)
                 
             }else{
-                body += "\r\n\r\n\(param["value"])"
+                body+="\r\n\r\n"
                 postData.appendData(body.dataUsingEncoding(NSUTF8StringEncoding)!)
+                postData.appendData(param["value"] as! NSData)
             }
             
         }
         
         postData.appendData("--\(boundary)--\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
         
-        let request = NSMutableURLRequest(URL: NSURL(string: MolocateBaseUrl + "/video/api/upload_video_thumbnail/")!,cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 5.0)
+        let request = NSMutableURLRequest(URL: NSURL(string:  MolocateBaseUrl + "video/api/upload_deneme/")!, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 5.0)
         request.HTTPMethod = "POST"
         request.allHTTPHeaderFields = headers
         request.HTTPBody = postData
@@ -281,14 +254,13 @@ public class S3Upload {
         let session = NSURLSession.sharedSession()
         let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
             do{
-                print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+                print("+++++++++" + String(data: data!, encoding: NSUTF8StringEncoding)! + "++++++++++++++++++")
                 
                 let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String: String]
                 
                 if (error != nil) {
                     completionHandler(data:"error" , thumbnailUrl: "",response: response , error: error  )
                 } else {
-                    
                     completionHandler(data: "success", thumbnailUrl: result["thumbnail_url"]!,response: response , error: error  )
                 }
             }catch{

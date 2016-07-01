@@ -129,6 +129,7 @@
 		E33DCC6D1CB3FA2D0081C0DF /* MolocateNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33DCC6C1CB3FA2C0081C0DF /* MolocateNotifications.swift */; };
 		E33DCC6F1CB3FD7F0081C0DF /* MolocateRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33DCC6E1CB3FD7F0081C0DF /* MolocateRecord.swift */; };
 		E33DCC711CB3FE5D0081C0DF /* MolocateDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33DCC701CB3FE5D0081C0DF /* MolocateDevice.swift */; };
+		E37D043E1D25EFF000F5E5C7 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E37D043D1D25EFF000F5E5C7 /* TestViewController.swift */; };
 		E37D486D1C9B11DB00587406 /* profilepic.png in Resources */ = {isa = PBXBuildFile; fileRef = E37D486C1C9B11DB00587406 /* profilepic.png */; };
 		E3A2CD841D14630200CB4C7A /* FacebookFriends.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A2CD831D14630200CB4C7A /* FacebookFriends.swift */; };
 		E3AB5D131CBC781D00382252 /* appstore1024-1024.png in Resources */ = {isa = PBXBuildFile; fileRef = E3AB5D121CBC781D00382252 /* appstore1024-1024.png */; };
@@ -288,6 +289,7 @@
 		E33DCC6C1CB3FA2C0081C0DF /* MolocateNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MolocateNotifications.swift; sourceTree = "<group>"; };
 		E33DCC6E1CB3FD7F0081C0DF /* MolocateRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MolocateRecord.swift; sourceTree = "<group>"; };
 		E33DCC701CB3FE5D0081C0DF /* MolocateDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MolocateDevice.swift; sourceTree = "<group>"; };
+		E37D043D1D25EFF000F5E5C7 /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		E37D486C1C9B11DB00587406 /* profilepic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = profilepic.png; sourceTree = "<group>"; };
 		E3A2CD831D14630200CB4C7A /* FacebookFriends.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookFriends.swift; sourceTree = "<group>"; };
 		E3AB5D121CBC781D00382252 /* appstore1024-1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "appstore1024-1024.png"; sourceTree = "<group>"; };
@@ -459,6 +461,7 @@
 				C609053D1C486A7300614C7F /* NotInUse */,
 				C63FBD0D1BF3E5B900DBB34C /* Assets.xcassets */,
 				C63FBD0F1BF3E5B900DBB34C /* LaunchScreen.storyboard */,
+				E37D043D1D25EFF000F5E5C7 /* TestViewController.swift */,
 			);
 			path = Molocate;
 			sourceTree = "<group>";
@@ -899,6 +902,7 @@
 			files = (
 				C68872861C8CED2800BDBE00 /* OptionCell.swift in Sources */,
 				E33DCC691CB3F5250081C0DF /* MolocateVideo.swift in Sources */,
+				E37D043E1D25EFF000F5E5C7 /* TestViewController.swift in Sources */,
 				C6BA05121D13F90400AB89FF /* Twitter.swift in Sources */,
 				C63FBD091BF3E5B900DBB34C /* ViewController.swift in Sources */,
 				E3F57EE31CFF3BB2007C3DF7 /* ActiveLabel.swift in Sources */,
