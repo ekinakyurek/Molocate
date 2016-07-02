@@ -221,7 +221,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
 //        }
 
 
-            self.textField.textColor = UIColor(red: 54, green: 134, blue: 198)
+            self.textField.textColor = UIColor.whiteColor()
             self.textField.autocapitalizationType = .Words
             let index = NSIndexPath(forRow: 0, inSection: 0)
             self.collectionView.selectItemAtIndexPath(index, animated: false, scrollPosition: UICollectionViewScrollPosition.None)

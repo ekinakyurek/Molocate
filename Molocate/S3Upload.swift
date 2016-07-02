@@ -71,46 +71,34 @@ public class S3Upload {
                 if ((error) != nil){
                     print("Failed with error")
                     print("Error: %@",error!);
-                    
                 }
                 else if(progressBar?.progress != 1.0) {
-
-
                     print("Error: Failed - Likely due to invalid region / filename")
                 }
                 else{
-                    
-                    
-
-                    
-                        var image = UIImageJPEGRepresentation(thumbnail, 0.5)
-                        if image == nil {
-                            let data = NSData(contentsOfURL: (GlobalVideoUploadRequest?.thumbUrl)!)
-                            let nimage = UIImage(data: data!)
-                            image = UIImageJPEGRepresentation(nimage!, 0.5)
-                        }
-                    
+                    var image = UIImageJPEGRepresentation(thumbnail, 0.5)
+                    if image == nil {
+                        let data = NSData(contentsOfURL: (GlobalVideoUploadRequest?.thumbUrl)!)
+                        let nimage = UIImage(data: data!)
+                        image = UIImageJPEGRepresentation(nimage!, 0.5)
+                    }
                     self.sendThumbnailandData(image!, info: json, completionHandler: { (data, thumbnailUrl, response, error) in
                         if data as! String == "success" {
                             isUp = true
                             do {
-
-                        GlobalVideoUploadRequest = nil
-                        CaptionText = ""
+                                GlobalVideoUploadRequest = nil
+                                CaptionText = ""
                                 NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isStuck")
                                 try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
-                                dispatch_async(dispatch_get_main_queue()) {
-                                    progressBar?.hidden = true
-                                    n = 0
-           
-                }
-                    } catch _ {
+                                progressBar?.hidden = true
+                                n = 0
+                            } catch _ {
                         
                             }
-                    }
+                        }
                     })
 
-                                   }
+                }
             
             })
         }
@@ -129,7 +117,7 @@ public class S3Upload {
             if ((task.result) != nil) {
                 let uploadTask = task.result
                 // Do something with uploadTask.
-                let seconds = 70.0
+                let seconds = 20.0
                 let delay = seconds * Double(NSEC_PER_SEC)  // nanoseconds per seconds
                 let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
                 dispatch_after(dispatchTime, dispatch_get_main_queue(), {
