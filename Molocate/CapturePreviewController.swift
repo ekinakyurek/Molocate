@@ -220,15 +220,14 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
 //            
 //        }
 
-        
-        dispatch_async(dispatch_get_main_queue()) {
-            self.textField.backgroundColor = swiftColor2
+
+            self.textField.textColor = UIColor(red: 54, green: 134, blue: 198)
             self.textField.autocapitalizationType = .Words
             let index = NSIndexPath(forRow: 0, inSection: 0)
             self.collectionView.selectItemAtIndexPath(index, animated: false, scrollPosition: UICollectionViewScrollPosition.None)
             self.collectionView.contentSize.width = 60 * 9
             self.collectionView.backgroundColor = UIColor.whiteColor()
-        }
+        
         
         
         
@@ -289,13 +288,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
        self.downArrow.layer.zPosition = 2
         
         if placesArray.count == 0 {
-            activityIndicator = UIActivityIndicatorView(frame: self.textField.frame)
-            activityIndicator.center = CGPoint(x: self.view.frame.width/2, y: activityIndicator.center.y)
-            activityIndicator.hidesWhenStopped = true
-            activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.White
-            view.addSubview(activityIndicator)
-            activityIndicator.startAnimating()
-
+                textField.text = "Konum ara"
         } else {
             textField.text = "📌"+placesArray[0]
             let correctedRow = placeOrder.objectForKey(placesArray[0]) as! Int
@@ -499,7 +492,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
     }
     func textFieldDidEndEditing(textField: UITextField) {
         if textField.text == "" {
-            textField.attributedPlaceholder = NSAttributedString(string:"Bulunduğun yeri seç", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])
+            textField.attributedPlaceholder = NSAttributedString(string:"Konum ara", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])
        
         }
     }

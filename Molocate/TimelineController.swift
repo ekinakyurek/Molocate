@@ -133,9 +133,9 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
         MolocateVideo.getExploreVideos(url, completionHandler: { (data, response, error,next) -> () in
             self.nextUrl  = next
             dispatch_async(dispatch_get_main_queue()){
-                if GlobalVideoUploadRequest == nil || self.type != "HomePage" {
+                if GlobalVideoUploadRequest == nil{
                     self.videoArray = data!
-                }else{
+                }else if self.type == "HomePage"{
                     var queu = MoleVideoInformation()
                     let json = (GlobalVideoUploadRequest?.JsonData)!
                     let loc = json["location"] as! [[String:AnyObject]]
@@ -152,6 +152,8 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
                     self.videoArray.append(queu)
                     self.videoArray += data!
 
+                }else{
+                    self.videoArray = data!
                 }
 
                 self.tableView.reloadData()

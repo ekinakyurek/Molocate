@@ -71,9 +71,9 @@ import AVFoundation
         MolocateVideo.getUserVideos(classUser.username, type: "user", completionHandler: { (data, response, error) in
             dispatch_async(dispatch_get_main_queue()) {
                
-                if GlobalVideoUploadRequest == nil || !self.isItMyProfile {
+                if GlobalVideoUploadRequest == nil{
                     self.videoArray = data!
-                }else{
+                }else if self.isItMyProfile{
                     var queu = MoleVideoInformation()
                     let json = (GlobalVideoUploadRequest?.JsonData)!
                     let loc = json["location"] as! [[String:AnyObject]]
@@ -90,6 +90,8 @@ import AVFoundation
                     self.videoArray.append(queu)
                     self.videoArray += data!
                     
+                }else{
+                    self.videoArray = data!
                 }
                 self.tableView.reloadData()
             }
