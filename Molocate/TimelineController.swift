@@ -999,7 +999,7 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
         resendButton.setImage(UIImage(named: "retry"), forState: .Normal)
         resendButton.tintColor = UIColor.whiteColor()
         deleteButton = UIButton(frame: CGRect(x: 0.0, y: 0.0, width: 80.0, height: 80.0))
-        deleteButton.setImage(UIImage(named: "unfollow"), forState: .Normal)
+        deleteButton.setImage(UIImage(named: "cross"), forState: .Normal)
         deleteButton.tintColor = UIColor.whiteColor()
         errorLabel.textAlignment = NSTextAlignment.Center
         errorLabel.textColor = UIColor.whiteColor()

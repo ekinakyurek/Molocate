@@ -270,7 +270,11 @@ public class S3Upload {
                 if (error != nil) {
                     completionHandler(data:"error" , thumbnailUrl: "",response: response , error: error  )
                 } else {
+                    if result.indexForKey("thumbnail") != nil {
                     completionHandler(data: "success", thumbnailUrl: result["thumbnail"]! as! String,response: response , error: error  )
+                    }else{
+                    completionHandler(data:"error" , thumbnailUrl: "",response: response , error: nil  )  
+                    }
                 }
             }catch{
                 completionHandler(data:"error" , thumbnailUrl: "",response: response , error: nil  )
