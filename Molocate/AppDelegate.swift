@@ -56,7 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             credentialsProvider: credentialProvider)
         
         AWSServiceManager.defaultServiceManager().defaultServiceConfiguration = configuration1
-        AWSLogger.defaultLogger().logLevel = .None
+        AWSLogger.defaultLogger().logLevel = .Verbose
         // [Optional] Track statistics around application opens.
         let client = Client(clientID: "HKPVG4H554DNGF002XP30XKS1UL1MLX1XLRPZIZVBVMET5HX",
             clientSecret:   "1XXP2QTMACGMW5GSU4GRXZ2PZRLM5G1WEFM5EWQCBWKWCYRG",

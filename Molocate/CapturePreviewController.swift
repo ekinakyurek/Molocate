@@ -353,11 +353,13 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
     }
     func configurePlace() {
         self.activityIndicator.stopAnimating()
-        textField.text = "📌"+placesArray[0]
-        let correctedRow = placeOrder.objectForKey(placesArray[0]) as! Int
-        videoLocation = locationDict[correctedRow][placesArray[correctedRow]]
-        ////print(videoLocation.name)
-        isLocationSelected = true
+        if placesArray.count > 0 {
+            textField.text = "📌"+placesArray[0]
+            let correctedRow = placeOrder.objectForKey(placesArray[0]) as! Int
+            videoLocation = locationDict[correctedRow][placesArray[correctedRow]]
+            ////print(videoLocation.name)
+            isLocationSelected = true
+        }
     }
     func pressedCaption(sender: UIButton) {
         

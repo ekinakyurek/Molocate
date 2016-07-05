@@ -71,11 +71,7 @@ public class S3Upload {
                 if ((error) != nil){
                     print("Failed with error")
                     print("Error: %@",error!);
-                }
-                else if(progressBar?.progress != 1.0) {
-                    print("Error: Failed - Likely due to invalid region / filename")
-                }
-                else{
+                }else{
                     var image = UIImageJPEGRepresentation(thumbnail, 0.5)
                     if image == nil {
                         let data = NSData(contentsOfURL: (GlobalVideoUploadRequest?.thumbUrl)!)
@@ -85,16 +81,22 @@ public class S3Upload {
                     self.sendThumbnailandData(image!, info: json, completionHandler: { (data, thumbnailUrl, response, error) in
                         if data as! String == "success" {
                             isUp = true
+                         dispatch_async(dispatch_get_main_queue(), {
+                            progressBar?.progress = 0.0
+                            progressBar?.hidden = true
+                            progressBar = nil
                             do {
                                 GlobalVideoUploadRequest = nil
                                 CaptionText = ""
                                 NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isStuck")
                                 try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
-                                progressBar?.hidden = true
+                      
                                 n = 0
                             } catch _ {
                         
                             }
+                            
+                         })
                         }
                     })
 
@@ -117,11 +119,13 @@ public class S3Upload {
             if ((task.result) != nil) {
                 let uploadTask = task.result
                 // Do something with uploadTask.
-                let seconds = 20.0
+                let seconds = 8.0
                 let delay = seconds * Double(NSEC_PER_SEC)  // nanoseconds per seconds
                 let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
                 dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+                    print("20s passed")
                     if !isUp{
+                        print("cancellll")
                         uploadTask?.cancel()
                         NSNotificationCenter.defaultCenter().postNotificationName("prepareForRetry", object: nil)
                     
@@ -258,7 +262,8 @@ public class S3Upload {
         let session = NSURLSession.sharedSession()
         let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
             do{
-                //print("+++++++++" + String(data: data!, encoding: NSUTF8StringEncoding)! + "++++++++++++++++++")
+                progressBar?.hidden = true
+                print("+++++++++" + String(data: data!, encoding: NSUTF8StringEncoding)! + "++++++++++++++++++")
                 
                 let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String: AnyObject]
                 

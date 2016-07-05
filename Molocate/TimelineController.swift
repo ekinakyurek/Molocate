@@ -242,7 +242,7 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
             cell.videoComment.handleMentionTap { userHandle in  self.delegate?.pressedUsername(userHandle, profilePic: NSURL(), isFollowing: false)}
 
             if videoArray[indexPath.row].isUploading {
-
+                
                 let myprogress = progressBar==nil ? 0.0:(progressBar?.progress)!
                 progressBar = UIProgressView(frame: cell.label3.frame)
                 progressBar?.progress = myprogress
@@ -1009,21 +1009,23 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
         deleteButton.addTarget(self, action: #selector(TimelineController.deleteVideo), forControlEvents: UIControlEvents.TouchUpInside)
     }
     func prepareForRetry(){
-        if let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0,inSection: 0)) as? videoCell{
-            let rect = cell.newRect
-            blackView.frame = rect
-            cell.superview?.addSubview(blackView)
-            let videoView = UIView(frame: cell.newRect)
-            resendButton.center = CGPoint(x: videoView.center.x-50, y: videoView.center.y)
-            deleteButton.center = CGPoint(x: videoView.center.x+50, y: videoView.center.y)
-            errorLabel.frame = CGRect(x: 0, y: resendButton.frame.maxY+10, width: blackView.frame.width, height: 40)
-            cell.superview!.addSubview(resendButton)
-            cell.superview!.addSubview(deleteButton)
-            cell.superview!.addSubview(errorLabel)
-            resendButton.enabled = true
-            deleteButton.enabled = true
+        if type == "HomePage"{
+            initGUIforRetry()
+            if let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0,inSection: 0)) as? videoCell{
+                let rect = cell.newRect
+                blackView.frame = rect
+                cell.superview?.addSubview(blackView)
+                let videoView = UIView(frame: cell.newRect)
+                resendButton.center = CGPoint(x: videoView.center.x-50, y: videoView.center.y)
+                deleteButton.center = CGPoint(x: videoView.center.x+50, y: videoView.center.y)
+                errorLabel.frame = CGRect(x: 0, y: resendButton.frame.maxY+10, width: blackView.frame.width, height: 40)
+                cell.superview!.addSubview(resendButton)
+                cell.superview!.addSubview(deleteButton)
+                cell.superview!.addSubview(errorLabel)
+                resendButton.enabled = true
+                deleteButton.enabled = true
+            }
         }
-
     }
     func retryRequest(){
         resendButton.enabled = false
