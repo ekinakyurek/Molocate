@@ -368,6 +368,11 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
         if type == "HomePage" {
             NSNotificationCenter.defaultCenter().postNotificationName("showNavigation", object: nil)
         }
+        
+        if type == "MainController" {
+            NSNotificationCenter.defaultCenter().postNotificationName("showNavigationMain", object: nil)
+        }
+        
     }
 
     override func tableView(atableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {

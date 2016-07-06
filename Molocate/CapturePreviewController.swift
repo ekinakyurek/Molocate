@@ -64,11 +64,6 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
         }
         else {
 
-                        
-//                        let videoId2 = videoId
-//                        let videoUrl2 = videoUrl
-                        ////print(self.videoLocation)
-
             let random = randomStringWithLength(64)
             let fileName = random //.stringByAppendingFormat(".mp4", random)
             let fileURL = NSURL(fileURLWithPath: videoPath!)
@@ -95,19 +90,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
                 ]
             ]
             S3Upload.upload(uploadRequest:uploadRequest, fileURL: "https://d1jkin67a303u2.cloudfront.net/videos/"+(fileName as String), fileID: fileName as String ,json: json as! [String : AnyObject])
-       
-//        do {
-//            try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
-//            dispatch_async(dispatch_get_main_queue()) {
-//                //print("siiiiil")
-//                isUploaded = true
-//
-//            self.performSegueWithIdentifier("finishUpdate", sender: self)
-//            
-//            }
-//        } catch _ {
-//            
-//        }
+
 
             self.performSegueWithIdentifier("finishUpdate", sender: self)
         }
@@ -212,13 +195,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
         player.delegate = self
         self.player.playbackLoops = true
         videoLocation = locationss()
-//        if is4s{
-//            
-//        } else {
-//            self.share4s.setTitle("Kaydet", forState: .Normal)
-//            
-//            
-//        }
+
 
 
             self.textField.textColor = UIColor.whiteColor()
@@ -236,21 +213,13 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
         placeTable.dataSource = self
         placeTable.scrollEnabled = true
         placeTable.hidden = true
-     //   downArrow.hidden = true
-//        let imageName = "downarrows"
-//        let image = UIImage(named: imageName)
-//        downArrow = UIImageView(image: image!)
-//        downArrow.frame = CGRect(x: screenSize.width / 2 - 10 , y: 216 , width: 20, height: 20)
-//        view.addSubview(downArrow)
-//        downArrow.hidden = true
-        
         putVideo()
   
         newRect = CGRect(x: 0, y: self.collectionView.frame.maxY, width: self.view.frame.width, height: self.view.frame.width)
 
         view.layer.addSublayer(placeTable.layer)
         view.layer.addSublayer(textField.layer)
-        //view.layer.addSublayer(downArrow.layer)
+       
         
         caption = UIButton()
         caption.frame.size.width = screenSize.width
@@ -262,7 +231,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
             caption.frame.origin.y = newRect.origin.y + screenSize.width
         }
         
-        //caption.titleLabel!.textColor = UIColor.blackColor()
+        
         caption.backgroundColor = UIColor.whiteColor()
         if CaptionText == "" {
            
@@ -279,13 +248,7 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
         caption.addTarget(self, action: #selector(capturePreviewController.pressedCaption(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         caption.contentHorizontalAlignment = .Left
         self.view.addSubview(caption)
-        
-        //self.postO.enabled = false
-        
-//         NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(capturePreviewController.buttonEnable) , name: "buttonEnable", object: nil)
-        
-     
-       self.downArrow.layer.zPosition = 2
+        self.downArrow.layer.zPosition = 2
         
         if placesArray.count == 0 {
                 textField.text = "Konum ara"

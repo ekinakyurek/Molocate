@@ -199,7 +199,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         }
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MainController.changeView), name: "changeView", object: nil)
         venueTable.addSubview(findFriends)
-        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MainController.showNavigationMain), name: "showNavigationMain", object: nil)
     }
    
 
@@ -227,7 +227,9 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
             self.venueTable.reloadData()  }
     }
 
-    
+    func showNavigationMain() {
+        navigationController?.setNavigationBarHidden(false, animated: false)
+    }
 
     func scrollViewDidScroll(scrollView: UIScrollView) {
         searchText.resignFirstResponder()

@@ -27,7 +27,7 @@ class findFriendController: UIViewController,UITableViewDelegate , UITableViewDa
         tableView.delegate = self
         
         if MoleCurrentUser.isFaceUser {
-            tableView.frame = CGRect(x: 0, y: 44, width: self.view.frame.width, height: self.view.frame.height-44)
+            tableView.frame = CGRect(x: 0, y: 44, width: self.view.frame.width, height: self.view.frame.height-60-(self.navigationController?.navigationBar.frame.height)!)
             backgroundLabel = UILabel()
             backgroundLabel.frame = CGRectMake( 0 , 0 , MolocateDevice.size.width , 44)
             backgroundLabel.backgroundColor = UIColor.whiteColor()

@@ -388,20 +388,8 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                     let venues = response["venues"] as! [JSONParameters]?
                     for i in 0..<venues!.count{
                         let item = venues![i]
-//                        print(item["name"])
-//                        print(item["location"]!["distance"])
-//                        print(item["stats"]!["checkinsCount"])
                         let itemlocation = item["location"] as! [String:AnyObject]
                         let itemstats = item["stats"] as! [String:AnyObject]
-                        ////print(itemlocation)
-//                        let latL = itemlocation["lat"] as! Float
-//                        let lonL = itemlocation["lng"] as! Float
-//                        let latM = Float(self.location.coordinate.latitude)
-//                        let lonM = Float(self.location.coordinate.longitude)
-//                        var distancen = ((latM-latL)*(latM-latL))+((lonL-lonM)*(lonL-lonM))
-//                        distancen = sqrt(distancen)*111000
-                        ////print(distancen)
-                        //let distance = itemlocation["distance"] as! NSInteger
                         let isVerified = item["verified"] as! Bool
                         let checkinsCount = itemstats["checkinsCount"] as! NSInteger
                         let enoughCheckin:Bool = (checkinsCount > 300)
@@ -423,7 +411,6 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                                 for item in address {
                                     loc.adress = loc.adress + item
                                 }
-                                ////print(venues?.count)
                                 if item.indexForKey("photo") != nil {
                                     //////print("foto var")
                                 } else {
@@ -714,10 +701,9 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         
         videoClips.append(session.outputURL!)
         do {
-            
+         
             try NSFileManager.defaultManager().removeItemAtURL(turl)
-            print("siliniyor at handleExport")
-            //try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
+
             
         } catch _ {
         }
@@ -728,6 +714,8 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         }
         
     }
+    
+    
     func mergeVideoClips(){
         
         let composition = AVMutableComposition()
