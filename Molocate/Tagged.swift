@@ -6,7 +6,10 @@ import UIKit
 import Haneke
 import SDWebImage
 import AVFoundation
-class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,PlayerDelegate {
+import XLActionController
+import Photos
+import FBSDKShareKit
+class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,PlayerDelegate, FBSDKSharingDelegate {
 
     var lastOffset:CGPoint!
     var lastOffsetCapture:NSTimeInterval!
@@ -201,6 +204,7 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
                         cell.commentButton.addTarget(self, action: #selector(Tagged.pressedComment(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             cell.reportButton.addTarget(self, action: #selector(Tagged.pressedReport(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             cell.likeCount.addTarget(self, action: #selector(Tagged.pressedLikeCount(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+            cell.shareButton.addTarget(self, action: #selector(Tagged.pressedShare(_:)), forControlEvents: .TouchUpInside)
             let tap = UITapGestureRecognizer(target: self, action:#selector(TimelineController.doubleTapped(_:) ));
             tap.numberOfTapsRequired = 2
             cell.contentView.addGestureRecognizer(tap)
@@ -483,7 +487,181 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
         //Her gectigimiz ekranda activity indicatorı goster
         self.parentViewController!.navigationController?.pushViewController(controller, animated: true)
     }
-
+    
+    func pressedShare(sender: UIButton){
+        let Row = sender.tag
+        player1.pause()
+        player2.pause()
+        let username = self.videoArray[Row].username
+        var shareURL = NSURL()
+        if dictionary.objectForKey(self.videoArray[Row].id) != nil {
+            shareURL = dictionary.objectForKey(self.videoArray[Row].id) as! NSURL
+        } else {
+            let url = self.videoArray[Row].urlSta.absoluteString
+            if(url[0] == "h") {
+                shareURL = self.videoArray[Row].urlSta
+            }
+        }
+        let actionSheet = TwitterActionController()
+        // set up a header title
+        actionSheet.headerData = "Paylaş"
+        // Add some actions, note that the first parameter of `Action` initializer is `ActionData`.
+        actionSheet.addAction(Action(ActionData(title: "Facebook", subtitle: "Facebook'da paylaş", image: UIImage(named: "facebookLogo")!), style: .Default, handler: { action in
+            let videoLayer = CALayer()
+            let parentLayer = CALayer()
+            parentLayer.frame = videoLayer.frame
+            let sticker = UIImage(named: "videoSticker2")
+            let string = username
+            let tempasset = AVAsset(URL: shareURL)
+            let clipVideoTrack = (tempasset.tracksWithMediaType(AVMediaTypeVideo)[0]) as AVAssetTrack
+            let composition = AVMutableVideoComposition()
+            composition.frameDuration = CMTimeMake(1,30)
+            composition.renderSize = CGSizeMake(clipVideoTrack.naturalSize.width, clipVideoTrack.naturalSize.height)
+            let over = UIImageView(frame: CGRect(origin: CGPoint(x: clipVideoTrack.naturalSize.width-142,y:10), size: CGSize(width: 142, height: 42.8)))
+            over.image = sticker
+            let dist = CGFloat(string.characters.count*15)
+            let text = CATextLayer()
+            text.frame = CGRect(origin: CGPoint(x: clipVideoTrack.naturalSize.width-142-dist,y:5), size: CGSize(width: dist, height: 42.8))
+            text.alignmentMode = "left"
+            text.string = string
+            text.fontSize = 25
+            text.font = UIFont(name: "AvenirNext-Regular", size:5)!
+            parentLayer.frame = CGRectMake(0, 0,composition.renderSize.width, composition.renderSize.height)
+            videoLayer.frame = CGRectMake(0, 0,composition.renderSize.width, composition.renderSize.height)
+            parentLayer.addSublayer(videoLayer)
+            parentLayer.addSublayer(over.layer)
+            parentLayer.addSublayer(text)
+            composition.animationTool = AVVideoCompositionCoreAnimationTool(postProcessingAsVideoLayer: videoLayer, inLayer: parentLayer)
+            let instruction = AVMutableVideoCompositionInstruction()
+            instruction.timeRange = CMTimeRangeMake(kCMTimeZero,clipVideoTrack.timeRange.duration)
+            let transformer = AVMutableVideoCompositionLayerInstruction(assetTrack: clipVideoTrack)
+            transformer.setTransform(clipVideoTrack.preferredTransform, atTime: kCMTimeZero)
+            instruction.layerInstructions = NSArray(object: transformer) as! [AVVideoCompositionLayerInstruction]
+            composition.instructions = NSArray(object: instruction) as! [AVVideoCompositionInstructionProtocol]
+            let documentsPath = (NSTemporaryDirectory() as NSString)
+            let exportPath = documentsPath.stringByAppendingFormat("fbshare.mp4", documentsPath)
+            let exportURL = NSURL(fileURLWithPath: exportPath as String)
+            let exporter = AVAssetExportSession(asset: tempasset, presetName:AVAssetExportPresetHighestQuality )
+            exporter?.videoComposition = composition
+            exporter?.outputURL = exportURL
+            exporter?.outputFileType = AVFileTypeMPEG4
+            exporter?.exportAsynchronouslyWithCompletionHandler({ () -> Void in
+                dispatch_async(dispatch_get_main_queue(), {
+                    let photoLibrary = PHPhotoLibrary.sharedPhotoLibrary()
+                    var videoAssetPlaceholder:PHObjectPlaceholder!
+                    photoLibrary.performChanges({
+                        let request = PHAssetChangeRequest.creationRequestForAssetFromVideoAtFileURL(exportURL)
+                        videoAssetPlaceholder = request!.placeholderForCreatedAsset
+                        },
+                        completionHandler: { success, error in
+                            if success {
+                                do {
+                                    
+                                    try NSFileManager.defaultManager().removeItemAtURL(exportURL)
+                                    
+                                } catch _ {
+                                }
+                                let localID = videoAssetPlaceholder.localIdentifier
+                                let assetID =
+                                    localID.stringByReplacingOccurrencesOfString(
+                                        "/.*", withString: "",
+                                        options: NSStringCompareOptions.RegularExpressionSearch, range: nil)
+                                let ext = "mp4"
+                                let assetURLStr =
+                                    "assets-library://asset/asset.\(ext)?id=\(assetID)&ext=\(ext)"
+                                let url = NSURL(string: assetURLStr)
+                                let video = FBSDKShareVideo(videoURL: url)
+                                let content = FBSDKShareVideoContent()
+                                content.video = video
+                                FBSDKShareDialog.showFromViewController(self, withContent: content, delegate: self)
+                                
+                            }
+                    })
+                })
+            })
+        }))
+        
+        
+        
+        actionSheet.addAction(Action(ActionData(title: "Instagram", subtitle: "Instagram'da paylaş", image: UIImage(named: "instagramLogo")!), style: .Default, handler: { action in
+            let videoLayer = CALayer()
+            let parentLayer = CALayer()
+            parentLayer.frame = videoLayer.frame
+            let sticker = UIImage(named: "videoSticker2")
+            let string = username
+            let tempasset = AVAsset(URL: shareURL)
+            let clipVideoTrack = (tempasset.tracksWithMediaType(AVMediaTypeVideo)[0]) as AVAssetTrack
+            let composition = AVMutableVideoComposition()
+            composition.frameDuration = CMTimeMake(1,30)
+            composition.renderSize = CGSizeMake(clipVideoTrack.naturalSize.width, clipVideoTrack.naturalSize.height)
+            let over = UIImageView(frame: CGRect(origin: CGPoint(x: clipVideoTrack.naturalSize.width-142,y:10), size: CGSize(width: 142, height: 42.8)))
+            over.image = sticker
+            let dist = CGFloat(string.characters.count*15)
+            let text = CATextLayer()
+            text.frame = CGRect(origin: CGPoint(x: clipVideoTrack.naturalSize.width-142-dist,y:5), size: CGSize(width: dist, height: 42.8))
+            text.alignmentMode = "left"
+            text.string = string
+            text.fontSize = 25
+            text.font = UIFont(name: "AvenirNext-Regular", size:5)!
+            parentLayer.frame = CGRectMake(0, 0,composition.renderSize.width, composition.renderSize.height)
+            videoLayer.frame = CGRectMake(0, 0,composition.renderSize.width, composition.renderSize.height)
+            parentLayer.addSublayer(videoLayer)
+            parentLayer.addSublayer(over.layer)
+            parentLayer.addSublayer(text)
+            composition.animationTool = AVVideoCompositionCoreAnimationTool(postProcessingAsVideoLayer: videoLayer, inLayer: parentLayer)
+            let instruction = AVMutableVideoCompositionInstruction()
+            instruction.timeRange = CMTimeRangeMake(kCMTimeZero,clipVideoTrack.timeRange.duration)
+            let transformer = AVMutableVideoCompositionLayerInstruction(assetTrack: clipVideoTrack)
+            transformer.setTransform(clipVideoTrack.preferredTransform, atTime: kCMTimeZero)
+            instruction.layerInstructions = NSArray(object: transformer) as! [AVVideoCompositionLayerInstruction]
+            composition.instructions = NSArray(object: instruction) as! [AVVideoCompositionInstructionProtocol]
+            let documentsPath = (NSTemporaryDirectory() as NSString)
+            let exportPath = documentsPath.stringByAppendingFormat("instashare.mp4", documentsPath)
+            let exportURL = NSURL(fileURLWithPath: exportPath as String)
+            let exporter = AVAssetExportSession(asset: tempasset, presetName:AVAssetExportPresetHighestQuality )
+            exporter?.videoComposition = composition
+            exporter?.outputURL = exportURL
+            exporter?.outputFileType = AVFileTypeMPEG4
+            exporter?.exportAsynchronouslyWithCompletionHandler({ () -> Void in
+                dispatch_async(dispatch_get_main_queue(), {
+                    
+                    let photoLibrary = PHPhotoLibrary.sharedPhotoLibrary()
+                    var videoAssetPlaceholder:PHObjectPlaceholder!
+                    photoLibrary.performChanges({
+                        let request = PHAssetChangeRequest.creationRequestForAssetFromVideoAtFileURL(exportURL)
+                        videoAssetPlaceholder = request!.placeholderForCreatedAsset
+                        },
+                        completionHandler: { success, error in
+                            if success {
+                                do {
+                                    
+                                    try NSFileManager.defaultManager().removeItemAtURL(exportURL)
+                                    
+                                } catch _ {
+                                }
+                                let localID = videoAssetPlaceholder.localIdentifier
+                                let assetID =
+                                    localID.stringByReplacingOccurrencesOfString(
+                                        "/.*", withString: "",
+                                        options: NSStringCompareOptions.RegularExpressionSearch, range: nil)
+                                let ext = "mp4"
+                                let assetURLStr =
+                                    "assets-library://asset/asset.\(ext)?id=\(assetID)&ext=\(ext)"
+                                let instagramURL = NSURL(string:"instagram://library?AssetPath=\(assetURLStr)")
+                                if (UIApplication.sharedApplication().canOpenURL(instagramURL!)) {
+                                    UIApplication.sharedApplication().openURL(instagramURL!)
+                                    self.activityIndicator.stopAnimating()
+                                }
+                                
+                            } else {
+                                print(error)
+                            }
+                    })
+                })
+            })        }))
+        // present actionSheet like any other view controller
+        presentViewController(actionSheet, animated: true, completion: nil)
+    }
 
     func pressedComment(sender: UIButton) {
         navigationController?.navigationBarHidden = false
@@ -801,7 +979,6 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
         }
     }
     override func viewDidDisappear(animated: Bool) {
-        //self.tableView.removeFromSuperview()
         SDImageCache.sharedImageCache().cleanDisk()
         SDImageCache.sharedImageCache().clearMemory()
         player1.stop()
@@ -810,7 +987,15 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
         player2.removeFromParentViewController()
     }
 
-
+    func sharer(sharer: FBSDKSharing!, didCompleteWithResults results: [NSObject : AnyObject]!) {
+        print(results)
+    }
+    func sharerDidCancel(sharer: FBSDKSharing!) {
+        
+    }
+    func sharer(sharer: FBSDKSharing!, didFailWithError error: NSError!) {
+        
+    }
 
 
 

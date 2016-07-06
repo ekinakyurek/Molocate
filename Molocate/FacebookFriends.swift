@@ -24,7 +24,7 @@ class FacebookFriends: UIViewController {
         
         MolocateUtility.setStatusBarBackgroundColor(swiftColor)
  
-        tableView.frame = CGRectMake(0, 60, MolocateDevice.size.width, MolocateDevice.size.height-60)
+        tableView.frame = CGRectMake(0, 60, MolocateDevice.size.width, MolocateDevice.size.height-60-(self.navigationController?.navigationBar.frame.height)!)
         
         facebookInfo.frame = CGRectMake(0, 16, MolocateDevice.size.width, 44)
         facebookInfo.textAlignment = .Center
@@ -125,8 +125,7 @@ class FacebookFriends: UIViewController {
     
     func pressedFollow(sender: UIButton){
         let Row=sender.tag
-        
-        print("pressed follow")
+
         MolocateAccount.follow(userRelations.relations[Row].username) { (data, response, error) in
             
         }
