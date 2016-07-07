@@ -208,7 +208,7 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 
-        if !likeorFollowClicked {
+        if !likeorFollowClicked && indexPath.row < videoArray.count {
             let cell = videoCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "timelineCell")
             cell.initialize(indexPath.row, videoInfo:  videoArray[indexPath.row])
 
@@ -312,7 +312,7 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
                 //  }
             }
             return cell
-        }else{
+        }else if indexPath.row < videoArray.count{
             let cell = tableView.cellForRowAtIndexPath(indexPath) as! videoCell
             print("cell created")
             if(videoArray[indexPath.row].isLiked == 0) {
@@ -333,6 +333,9 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
             return cell
 
 
+        }else{
+               let cell = tableView.cellForRowAtIndexPath(indexPath) as! videoCell
+                return cell
         }
     }
 
@@ -1035,49 +1038,16 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
     func retryRequest(){
         resendButton.enabled = false
         deleteButton.enabled = false
+        if GlobalVideoUploadRequest != nil {
+            S3Upload.upload(false, uploadRequest: (GlobalVideoUploadRequest?.uploadRequest)!, fileURL:(GlobalVideoUploadRequest?.filePath)!, fileID: (GlobalVideoUploadRequest?.fileId)!, json: (GlobalVideoUploadRequest?.JsonData)!)
 
-        S3Upload.upload(false, uploadRequest: (GlobalVideoUploadRequest?.uploadRequest)!, fileURL:(GlobalVideoUploadRequest?.filePath)!, fileID: (GlobalVideoUploadRequest?.fileId)!, json: (GlobalVideoUploadRequest?.JsonData)!)
+            if let _ = tabBarController?.viewControllers![1] as? MainController {
+                let main = tabBarController?.viewControllers![1] as? MainController
 
-        if let _ = tabBarController?.viewControllers![1] as? MainController {
-            let main = tabBarController?.viewControllers![1] as? MainController
-
-            if  main?.tableController.videoArray.count != 0 {
-
-                if main?.tableController.videoArray[0].urlSta.absoluteString[0] != "h"{
-                    print("main siliniyor")
-                    main?.tableController.resendButton.removeFromSuperview()
-                    main?.tableController.blackView.removeFromSuperview()
-                    main?.tableController.deleteButton.removeFromSuperview()
-                    main?.tableController.errorLabel.removeFromSuperview()
-                    main?.tableController.tableView.reloadData()
-
-                }
-            }
-        }
-        progressBar?.progress =  0
-        progressBar?.hidden = false
-        self.resendButton.removeFromSuperview()
-        self.blackView.removeFromSuperview()
-        self.deleteButton.removeFromSuperview()
-        self.errorLabel.removeFromSuperview()
-        self.tableView.reloadData()
-
-    }
-
-    func deleteVideo(){
-        resendButton.enabled = false
-        deleteButton.enabled = false
-        do {
-            self.videoArray.removeAtIndex(0)
-            GlobalVideoUploadRequest = nil
-            CaptionText = ""
-            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isStuck")
-            try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
-            if let _ = tabBarController?.viewControllers![0] as? MainController {
-                let main = tabBarController?.viewControllers![0] as? MainController
                 if  main?.tableController.videoArray.count != 0 {
+
                     if main?.tableController.videoArray[0].urlSta.absoluteString[0] != "h"{
-                        main?.tableController.videoArray.removeFirst()
+                        print("main siliniyor")
                         main?.tableController.resendButton.removeFromSuperview()
                         main?.tableController.blackView.removeFromSuperview()
                         main?.tableController.deleteButton.removeFromSuperview()
@@ -1087,21 +1057,47 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
                     }
                 }
             }
+            progressBar?.progress =  0
+            progressBar?.hidden = false
+            self.resendButton.removeFromSuperview()
+            self.blackView.removeFromSuperview()
+            self.deleteButton.removeFromSuperview()
+            self.errorLabel.removeFromSuperview()
+            self.tableView.reloadData()
+        }else{
+            progressBar?.progress =  0
+            progressBar?.hidden = true
+            self.resendButton.removeFromSuperview()
+            self.blackView.removeFromSuperview()
+            self.deleteButton.removeFromSuperview()
+            self.errorLabel.removeFromSuperview()
+            self.tableView.reloadData()
+        }
 
+    }
+
+    
+    func deleteVideo(){
+        resendButton.enabled = false
+        deleteButton.enabled = false
+        do {
+            self.videoArray.removeAtIndex(0)
+            GlobalVideoUploadRequest = nil
+            CaptionText = ""
             self.resendButton.removeFromSuperview()
             self.blackView.removeFromSuperview()
             self.deleteButton.removeFromSuperview()
             self.errorLabel.removeFromSuperview()
             self.tableView.reloadData()
             progressBar?.hidden = true
-
+            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isStuck")
+            try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
         } catch _ {
             print("error")
         }
-
-
+        
+        
     }
-
     func doubleTapped(sender: UITapGestureRecognizer) {
         //animateLike and updatecells
         let Row = sender.view!.tag

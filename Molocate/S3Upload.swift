@@ -119,13 +119,13 @@ public class S3Upload {
             if ((task.result) != nil) {
                 let uploadTask = task.result
                 // Do something with uploadTask.
-                let seconds = 8.0
+                let seconds = 18.0
                 let delay = seconds * Double(NSEC_PER_SEC)  // nanoseconds per seconds
                 let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
                 dispatch_after(dispatchTime, dispatch_get_main_queue(), {
-                    print("20s passed")
+                    print("18s passed")
                     if !isUp{
-                        print("cancellll")
+                        print("cancel")
                         uploadTask?.cancel()
                         NSNotificationCenter.defaultCenter().postNotificationName("prepareForRetry", object: nil)
                     
@@ -263,18 +263,22 @@ public class S3Upload {
         let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
             do{
                 progressBar?.hidden = true
-                print("+++++++++" + String(data: data!, encoding: NSUTF8StringEncoding)! + "++++++++++++++++++")
-                
-                let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String: AnyObject]
-                
-                if (error != nil) {
-                    completionHandler(data:"error" , thumbnailUrl: "",response: response , error: error  )
-                } else {
-                    if result.indexForKey("thumbnail") != nil {
-                    completionHandler(data: "success", thumbnailUrl: result["thumbnail"]! as! String,response: response , error: error  )
-                    }else{
-                    completionHandler(data:"error" , thumbnailUrl: "",response: response , error: nil  )  
+                let data_string  = String(data: data!, encoding: NSUTF8StringEncoding)!
+                print("data_string:" + data_string)
+                if data_string[0] == "{" {
+                    let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String: AnyObject]
+                    
+                    if (error != nil) {
+                        completionHandler(data:"error" , thumbnailUrl: "",response: response , error: error  )
+                    } else {
+                        if result.indexForKey("thumbnail") != nil {
+                        completionHandler(data: "success", thumbnailUrl: result["thumbnail"]! as! String,response: response , error: error  )
+                        }else{
+                        completionHandler(data:"error" , thumbnailUrl: "",response: response , error: nil  )  
+                        }
                     }
+                }else{
+                       completionHandler(data:"error" , thumbnailUrl: "",response: response , error: nil  ) 
                 }
             }catch{
                 completionHandler(data:"error" , thumbnailUrl: "",response: response , error: nil  )

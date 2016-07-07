@@ -1096,12 +1096,20 @@ public class MolocateAccount {
         let session = NSURLSession.sharedSession()
         let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
             do{
-                let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String: String]
+               
                 
                 if (error != nil) {
                     completionHandler(data:"error" , pictureUrl: "", thumbnailUrl: "",response: response , error: error  )
                 } else {
+                    
+                     let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String: String]
+                    if result.indexForKey("thumbnail_url") != nil  {
+                    
                     completionHandler(data: "success", pictureUrl: result["picture_url"]!, thumbnailUrl: result["thumbnail_url"]!,response: response , error: error  )
+                        
+                    }else{
+                          completionHandler(data:"error" , pictureUrl: "", thumbnailUrl: "",response: response , error: nil  )
+                    }
                 }
             }catch{
                 completionHandler(data:"error" , pictureUrl: "", thumbnailUrl: "",response: response , error: nil  )

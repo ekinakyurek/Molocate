@@ -6,7 +6,7 @@ import UIKit
 
 class tagComment: UIViewController, UITextViewDelegate {
 
-    var relationNextUrl = ""
+    var relationNextUrl: String?
     var userRelations = MoleUserRelations()
     var numbers = [Int]()
 
@@ -80,7 +80,7 @@ class tagComment: UIViewController, UITextViewDelegate {
         
         MolocateAccount.getFollowers(username:MoleCurrentUser.username) { (data, response, error, count, next, previous) -> () in
              dispatch_async(dispatch_get_main_queue()){
-                self.relationNextUrl = next!
+                self.relationNextUrl = next
                 self.userRelations = data
                 self.tableView.reloadData()
             }
@@ -102,8 +102,8 @@ class tagComment: UIViewController, UITextViewDelegate {
     
     
     func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        if((indexPath.row%50 == 35)&&(relationNextUrl != "")){
-            MolocateAccount.getFollowers(relationNextUrl, username: MoleCurrentUser.username, completionHandler: { (data, response, error, count, next, previous) in
+        if((indexPath.row%50 == 35)&&(relationNextUrl != nil)){
+            MolocateAccount.getFollowers(relationNextUrl!, username: MoleCurrentUser.username, completionHandler: { (data, response, error, count, next, previous) in
                 if next != nil {
                     self.relationNextUrl = next!
                 }

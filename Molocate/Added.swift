@@ -419,49 +419,16 @@ import FBSDKShareKit
     func retryRequest(){
         resendButton.enabled = false
         deleteButton.enabled = false
-        
-        S3Upload.upload(false, uploadRequest: (GlobalVideoUploadRequest?.uploadRequest)!, fileURL:(GlobalVideoUploadRequest?.filePath)!, fileID: (GlobalVideoUploadRequest?.fileId)!, json: (GlobalVideoUploadRequest?.JsonData)!)
-        
-        if let _ = tabBarController?.viewControllers![1] as? MainController {
-            let main = tabBarController?.viewControllers![1] as? MainController
+        if GlobalVideoUploadRequest != nil {
+            S3Upload.upload(false, uploadRequest: (GlobalVideoUploadRequest?.uploadRequest)!, fileURL:(GlobalVideoUploadRequest?.filePath)!, fileID: (GlobalVideoUploadRequest?.fileId)!, json: (GlobalVideoUploadRequest?.JsonData)!)
             
-            if  main?.tableController.videoArray.count != 0 {
+            if let _ = tabBarController?.viewControllers![1] as? MainController {
+                let main = tabBarController?.viewControllers![1] as? MainController
                 
-                if main?.tableController.videoArray[0].urlSta.absoluteString[0] != "h"{
-                    print("main siliniyor")
-                    main?.tableController.resendButton.removeFromSuperview()
-                    main?.tableController.blackView.removeFromSuperview()
-                    main?.tableController.deleteButton.removeFromSuperview()
-                    main?.tableController.errorLabel.removeFromSuperview()
-                    main?.tableController.tableView.reloadData()
-                    
-                }
-            }
-        }
-        progressBar?.progress =  0
-        progressBar?.hidden = false
-        self.resendButton.removeFromSuperview()
-        self.blackView.removeFromSuperview()
-        self.deleteButton.removeFromSuperview()
-        self.errorLabel.removeFromSuperview()
-        self.tableView.reloadData()
-        
-    }
-    
-    func deleteVideo(){
-        resendButton.enabled = false
-        deleteButton.enabled = false
-        do {
-            self.videoArray.removeAtIndex(0)
-            GlobalVideoUploadRequest = nil
-            CaptionText = ""
-            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isStuck")
-            try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
-            if let _ = tabBarController?.viewControllers![0] as? MainController {
-                let main = tabBarController?.viewControllers![0] as? MainController
                 if  main?.tableController.videoArray.count != 0 {
+                    
                     if main?.tableController.videoArray[0].urlSta.absoluteString[0] != "h"{
-                        main?.tableController.videoArray.removeFirst()
+                        print("main siliniyor")
                         main?.tableController.resendButton.removeFromSuperview()
                         main?.tableController.blackView.removeFromSuperview()
                         main?.tableController.deleteButton.removeFromSuperview()
@@ -471,14 +438,41 @@ import FBSDKShareKit
                     }
                 }
             }
-            
+            progressBar?.progress =  0
+            progressBar?.hidden = false
+            self.resendButton.removeFromSuperview()
+            self.blackView.removeFromSuperview()
+            self.deleteButton.removeFromSuperview()
+            self.errorLabel.removeFromSuperview()
+            self.tableView.reloadData()
+        }else{
+            progressBar?.progress =  0
+            progressBar?.hidden = true
+            self.resendButton.removeFromSuperview()
+            self.blackView.removeFromSuperview()
+            self.deleteButton.removeFromSuperview()
+            self.errorLabel.removeFromSuperview()
+            self.tableView.reloadData()
+        }
+        
+    }
+
+    
+    func deleteVideo(){
+        resendButton.enabled = false
+        deleteButton.enabled = false
+        do {
+            self.videoArray.removeAtIndex(0)
+            GlobalVideoUploadRequest = nil
+            CaptionText = ""
             self.resendButton.removeFromSuperview()
             self.blackView.removeFromSuperview()
             self.deleteButton.removeFromSuperview()
             self.errorLabel.removeFromSuperview()
             self.tableView.reloadData()
             progressBar?.hidden = true
-            
+            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isStuck")
+            try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
         } catch _ {
             print("error")
         }
