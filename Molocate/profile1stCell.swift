@@ -14,7 +14,7 @@ class profile1stCell:  UITableViewCell {
     let buttonFollowerVenue: UIButton = UIButton()
     let buttonFollow: UIButton = UIButton()
     let buttonDifVenue: UIButton = UIButton()
-    let usernameLabel: UILabel = UILabel()
+    let nameLabel: UILabel = UILabel()
     let profilePhoto: UIImageView = UIImageView()
     let caption: UILabel = UILabel()
     
@@ -31,21 +31,32 @@ class profile1stCell:  UITableViewCell {
         
         
         
-        usernameLabel.frame = CGRectMake(10 , 4 , screenSize.width - 100, 20)
-        usernameLabel.textColor = UIColor.blackColor()
-        usernameLabel.textAlignment = .Center
-        usernameLabel.text = ""
-        usernameLabel.font = UIFont(name: "AvenirNext-Regular", size:17)
-        contentView.addSubview(usernameLabel)
+        nameLabel.frame = CGRectMake( 10  , 90 , screenSize.width - 20, 15)
+        nameLabel.textColor = UIColor.blackColor()
+        nameLabel.textAlignment = .Center
+        nameLabel.text = "Mehmet Ali"
+        nameLabel.font = UIFont(name: "AvenirNext-Medium", size:18)
+        nameLabel.numberOfLines = 0
+        nameLabel.lineBreakMode = NSLineBreakMode.ByWordWrapping
+       
+        contentView.addSubview(nameLabel)
+        
+       
         
         
         
-        caption.frame = CGRectMake(10 , 26 , screenSize.width - 100, 14)
+        caption.frame = CGRectMake(10 , 110 , screenSize.width - 20, 60)
         caption.textColor = UIColor.grayColor()
-        caption.textAlignment = .Left
-        caption.text = "-"
-        caption.font = UIFont(name: "AvenirNext-Regular", size:13)
+        caption.textAlignment = .Center
+        caption.text = "abi çok iyi müthiş bir adamım ben 10 numara adamım"
+        caption.font = UIFont(name: "AvenirNext-Regular", size:14)
+        caption.numberOfLines = 0
+        caption.lineBreakMode = NSLineBreakMode.ByWordWrapping
         contentView.addSubview(caption)
+        let b = CGSizeMake(caption.frame.width, caption.frame.height)
+        let c : UIFont = UIFont (name: "AvenirNext-Medium", size: 18)!
+        var a = numberOfLinesForString(caption.text!, size: b, font: c)
+        print(a)
         
      
         buttonFollow.frame = CGRectMake( 42 , 106 + screenSize.width , 44 , 36)
@@ -83,15 +94,40 @@ class profile1stCell:  UITableViewCell {
         
        
         
-        let imageName = "yourImage.png"
+        let imageName = "appstore1024-1024.png"
         let image = UIImage(named: imageName)
         let profilePhoto = UIImageView(image: image!)
-        profilePhoto.frame = CGRect(x: 0, y: 0, width: 100, height: 200)
+        profilePhoto.frame = CGRect(x: screenSize.width/2 - 33, y: 12, width: 66, height: 66)
+        profilePhoto.layer.cornerRadius = profilePhoto.frame.size.width / 2;
+        profilePhoto.clipsToBounds = true
         self.contentView.addSubview(profilePhoto)
         
     }
     
     deinit{
+    }
+    
+    func numberOfLinesForString(string: String, size: CGSize, font: UIFont) -> Int {
+        let textStorage = NSTextStorage(string: string, attributes: [NSFontAttributeName: font])
+        
+        let textContainer = NSTextContainer(size: size)
+        textContainer.lineBreakMode = .ByWordWrapping
+        textContainer.maximumNumberOfLines = 0
+        textContainer.lineFragmentPadding = 0
+        
+        let layoutManager = NSLayoutManager()
+        layoutManager.textStorage = textStorage
+        layoutManager.addTextContainer(textContainer)
+        
+        var numberOfLines = 0
+        var index = 0
+        var lineRange : NSRange = NSMakeRange(0, 0)
+        for (; index < layoutManager.numberOfGlyphs; numberOfLines += 1) {
+            layoutManager.lineFragmentRectForGlyphAtIndex(index, effectiveRange: &lineRange)
+            index = NSMaxRange(lineRange)
+        }
+        
+        return numberOfLines
     }
     
     

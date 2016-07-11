@@ -30,6 +30,7 @@
 		C6287C471CFF54D2002C4B6B /* LogInController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6287C461CFF54D2002C4B6B /* LogInController.swift */; };
 		C62B17F11D0B2EC8004CD060 /* shirt-2.png in Resources */ = {isa = PBXBuildFile; fileRef = C62B17F01D0B2EC8004CD060 /* shirt-2.png */; };
 		C62E31081D08F79200BE8377 /* venueInCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62E31071D08F79200BE8377 /* venueInCamera.swift */; };
+		C6350C221D3437C400A2398D /* profile2ndCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6350C211D3437C400A2398D /* profile2ndCell.swift */; };
 		C63629491CCCEE210071E6BF /* SearchUsername.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63629481CCCEE210071E6BF /* SearchUsername.swift */; };
 		C638AFF31C9C7E74003085E8 /* LikeVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C638AFF21C9C7E74003085E8 /* LikeVideo.swift */; };
 		C638AFF71C9C80B3003085E8 /* LikeVideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C638AFF61C9C80B3003085E8 /* LikeVideoCell.swift */; };
@@ -104,7 +105,7 @@
 		C6D720D41D23439C00FF1998 /* foursquare.png in Resources */ = {isa = PBXBuildFile; fileRef = C6D720D31D23439C00FF1998 /* foursquare.png */; };
 		C6D785431D05FB3000DA59B3 /* profileUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D785421D05FB3000DA59B3 /* profileUser.swift */; };
 		C6D785451D0600FF00DA59B3 /* profile1stCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D785441D0600FF00DA59B3 /* profile1stCell.swift */; };
-		C6D785471D0604C900DA59B3 /* profileCell2.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D785461D0604C900DA59B3 /* profileCell2.swift */; };
+		C6D785471D0604C900DA59B3 /* profile3thCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D785461D0604C900DA59B3 /* profile3thCell.swift */; };
 		C6DA6BE21C4332D100E24392 /* VideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DA6BE11C4332D100E24392 /* VideoCell.swift */; };
 		C6E53DC31C8A9C4E00379C31 /* Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = C6E53DC21C8A9C4E00379C31 /* Logo.png */; };
 		C6E86EAF1CB0E68E00203513 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C6E86EAE1CB0E68D00203513 /* Launch Screen.storyboard */; };
@@ -178,6 +179,7 @@
 		C6287C461CFF54D2002C4B6B /* LogInController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInController.swift; sourceTree = "<group>"; };
 		C62B17F01D0B2EC8004CD060 /* shirt-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shirt-2.png"; sourceTree = "<group>"; };
 		C62E31071D08F79200BE8377 /* venueInCamera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = venueInCamera.swift; sourceTree = "<group>"; };
+		C6350C211D3437C400A2398D /* profile2ndCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = profile2ndCell.swift; sourceTree = "<group>"; };
 		C63629481CCCEE210071E6BF /* SearchUsername.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchUsername.swift; sourceTree = "<group>"; };
 		C638AFF21C9C7E74003085E8 /* LikeVideo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikeVideo.swift; sourceTree = "<group>"; };
 		C638AFF61C9C80B3003085E8 /* LikeVideoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikeVideoCell.swift; sourceTree = "<group>"; };
@@ -258,7 +260,7 @@
 		C6D720D31D23439C00FF1998 /* foursquare.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = foursquare.png; sourceTree = "<group>"; };
 		C6D785421D05FB3000DA59B3 /* profileUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = profileUser.swift; sourceTree = "<group>"; };
 		C6D785441D0600FF00DA59B3 /* profile1stCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = profile1stCell.swift; sourceTree = "<group>"; };
-		C6D785461D0604C900DA59B3 /* profileCell2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = profileCell2.swift; sourceTree = "<group>"; };
+		C6D785461D0604C900DA59B3 /* profile3thCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = profile3thCell.swift; sourceTree = "<group>"; };
 		C6DA6BE11C4332D100E24392 /* VideoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoCell.swift; sourceTree = "<group>"; };
 		C6E53DC21C8A9C4E00379C31 /* Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Logo.png; sourceTree = "<group>"; };
 		C6E86EAE1CB0E68D00203513 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
@@ -426,9 +428,10 @@
 				3862A5891CAA005D00D41791 /* Molocate.entitlements */,
 				C67D5B891D206259003DFC45 /* tutorial */,
 				C6D785421D05FB3000DA59B3 /* profileUser.swift */,
-				C6CBA4FE1C876EC300AE65AD /* ProfileOther.swift */,
 				C6D785441D0600FF00DA59B3 /* profile1stCell.swift */,
-				C6D785461D0604C900DA59B3 /* profileCell2.swift */,
+				C6350C211D3437C400A2398D /* profile2ndCell.swift */,
+				C6D785461D0604C900DA59B3 /* profile3thCell.swift */,
+				C6CBA4FE1C876EC300AE65AD /* ProfileOther.swift */,
 				C63FBD061BF3E5B900DBB34C /* AppDelegate.swift */,
 				C60905381C48140A00614C7F /* Navigation */,
 				385FC3531C926A8300F85B29 /* Giriş- Üyelik */,
@@ -900,7 +903,7 @@
 				E33DCC6D1CB3FA2D0081C0DF /* MolocateNotifications.swift in Sources */,
 				C64B601E1C81D6A500E510DC /* MolocateAccount.swift in Sources */,
 				C6E92F781CCFD0F900CAE237 /* SearchVenue.swift in Sources */,
-				C6D785471D0604C900DA59B3 /* profileCell2.swift in Sources */,
+				C6D785471D0604C900DA59B3 /* profile3thCell.swift in Sources */,
 				C6287C471CFF54D2002C4B6B /* LogInController.swift in Sources */,
 				C609053A1C48143C00614C7F /* MainController.swift in Sources */,
 				E33DCC6F1CB3FD7F0081C0DF /* MolocateRecord.swift in Sources */,
@@ -919,6 +922,7 @@
 				C60905361C4812A100614C7F /* ContainerController.swift in Sources */,
 				C6F9B5C81C80DD9300C7E9FC /* HomePageViewController.swift in Sources */,
 				C63FBD071BF3E5B900DBB34C /* AppDelegate.swift in Sources */,
+				C6350C221D3437C400A2398D /* profile2ndCell.swift in Sources */,
 				C6BA05161D13F97900AB89FF /* ActionData.swift in Sources */,
 				C69B823F1CA0D6F5008658CF /* OneVideo.swift in Sources */,
 				E3F57EE71CFF3C31007C3DF7 /* RegexParser.swift in Sources */,

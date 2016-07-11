@@ -8,7 +8,7 @@
 
 import UIKit
 
-class profileCell2: UITableViewCell {
+class profile3thCell: UITableViewCell {
 
     var buttonAdded: UIButton = UIButton()
     var buttonTagged: UIButton = UIButton()

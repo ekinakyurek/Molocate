@@ -6,7 +6,7 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
     @IBOutlet var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.estimatedRowHeight = 68
+        tableView.estimatedRowHeight = 250
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.allowsSelection = false
         //tableView.tableFooterView = UIView()
@@ -19,13 +19,13 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
     }
  
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 44
+        return 250
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         
-        let cell = profileCell2(style: UITableViewCellStyle.Default, reuseIdentifier: "myIdentifier")
+        let cell = profile1stCell(style: UITableViewCellStyle.Default, reuseIdentifier: "myIdentifier")
 
         
         return cell
