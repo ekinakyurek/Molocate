@@ -334,7 +334,9 @@ class MyProfile: UIViewController , UIScrollViewDelegate, UITableViewDelegate, U
         if indexPath.row == 2 {
             MolocateAccount.unregisterDevice({ (data, response, error) in
             })
-            NSUserDefaults.standardUserDefaults().setObject(nil, forKey: "userToken")
+            if let bid = NSBundle.mainBundle().bundleIdentifier {
+                NSUserDefaults.standardUserDefaults().removePersistentDomainForName(bid)
+            }
             sideClicked = false
             profileOn = 0
             category = "All"
