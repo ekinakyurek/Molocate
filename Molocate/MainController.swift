@@ -509,6 +509,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         MolocateAccount.getUser(username) { (data, response, error) -> () in
             dispatch_async(dispatch_get_main_queue()){
                 //DBG: If it is mine profile?
+                
                 if data.username != "" {
                     user = data
                     controller.classUser = data

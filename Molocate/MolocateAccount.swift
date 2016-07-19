@@ -901,6 +901,7 @@ public class MolocateAccount {
                 do {
                     //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
                     let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String: AnyObject]
+                    //print(result)
                     if result.indexForKey("email") != nil {
                         var user = MoleUser()
                         user.email = result["email"] as! String

@@ -17,12 +17,9 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
     
     //errormessage: UILabel!
     @IBOutlet var username: UILabel!
-    
     @IBOutlet var profilePhoto: UIImageView!
-    
     @IBOutlet var addedButton: UIButton!
     @IBOutlet var taggedButton: UIButton!
-  
     @IBOutlet var followingsCount: UIButton!
     @IBOutlet var followersCount: UIButton!
     @IBOutlet var FollowButton: UIBarButtonItem!

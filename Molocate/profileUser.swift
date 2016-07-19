@@ -1,8 +1,11 @@
 import UIKit
 
 class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,UIScrollViewDelegate,  UIGestureRecognizerDelegate{
-    
-    
+    let AVc :Added =  Added(nibName: "Added", bundle: nil);
+    let BVc :Tagged =  Tagged(nibName: "Tagged", bundle: nil);
+     var isItMyProfile = true
+    var classUser = MoleUser()
+    var username2 = ""
     @IBOutlet var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -11,92 +14,140 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
         tableView.allowsSelection = false
         //tableView.tableFooterView = UIView()
         tableView.separatorColor = UIColor.clearColor()
-        
+        print(classUser.first_name)
     }
     
     override func viewWillDisappear(animated: Bool) {
        
     }
+    
+    func RefreshGuiWithData(){
+       
+        
+       username2 = classUser.first_name
+        
+        
+        
+        AVc.classUser = classUser
+        AVc.isItMyProfile = self.isItMyProfile
+        BVc.isItMyProfile = self.isItMyProfile
+        BVc.classUser = classUser
+        AVc.getData()
+        BVc.getData()
+        
+    }
+
  
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 250
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        
-        let cell = profile1stCell(style: UITableViewCellStyle.Default, reuseIdentifier: "myIdentifier")
-
-        
-        return cell
-    }
-    
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
-    }
-    
-    func updateParentController(plus: Bool){
-        let i = plus ? 1:-1
-        
-        if(myViewController == "MainController"){
-            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! MainController).tableController.videoArray[videoIndex].commentCount += i
-            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! MainController).tableController.tableView.reloadRowsAtIndexPaths(
-                [NSIndexPath(forRow: videoIndex, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Left)
-        }else if myViewController == "HomeController"{
-            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! HomePageViewController).tableController.videoArray[videoIndex].commentCount += i
-            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! HomePageViewController).tableController.tableView.reloadRowsAtIndexPaths(
-                [NSIndexPath(forRow: videoIndex, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Left)
-            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! HomePageViewController).tableController.player1.stop()
-            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! HomePageViewController).tableController.player2.stop()
-            //(navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! profileOther).AVc.player2.stop()
-        }else if myViewController == "MyAdded"{
-            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! MyProfile).AVc.videoArray[videoIndex].commentCount += i
-            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! MyProfile).AVc.tableView.reloadRowsAtIndexPaths(
-                [NSIndexPath(forRow: videoIndex, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Left)
-            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! MyProfile).AVc.player1.stop()
-            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! MyProfile).AVc.player2.stop()
-        }else if myViewController == "MyTagged"{
-            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! MyProfile).BVc.videoArray[videoIndex].commentCount += i
-            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! MyProfile).BVc.tableView.reloadRowsAtIndexPaths(
-                [NSIndexPath(forRow: videoIndex, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Left)
-            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! MyProfile).BVc.player1.stop()
-            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! MyProfile).BVc.player2.stop()
-            
-        }else if myViewController == "Added"{
-            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! profileOther).AVc.videoArray[videoIndex].commentCount += i
-            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! profileOther).AVc.tableView.reloadRowsAtIndexPaths(
-                [NSIndexPath(forRow: videoIndex, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Left)
-            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! profileOther).AVc.player1.stop()
-            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! profileOther).AVc.player2.stop()
-        }else if myViewController == "Tagged"{
-            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! profileOther).BVc.videoArray[videoIndex].commentCount += i
-            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! profileOther).BVc.tableView.reloadRowsAtIndexPaths(
-                [NSIndexPath(forRow: videoIndex, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Left)
-            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! profileOther).BVc.player1.stop()
-            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! profileOther).BVc.player2.stop()
-            
-        }else if myViewController == "profileLocation"{
-            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! profileLocation).tableController.videoArray[videoIndex].commentCount += i
-            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! profileLocation).tableController.tableView.reloadRowsAtIndexPaths(
-                [NSIndexPath(forRow: videoIndex, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Left)
-            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! profileLocation).tableController.player1.stop()
-            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! profileLocation).tableController.player2.stop()
-        }else if myViewController == "oneVideo"{
-            MoleGlobalVideo.commentCount += i
-            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! oneVideo).tableView.reloadRowsAtIndexPaths(
-                [NSIndexPath(forRow: videoIndex, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Left)
-            (navigationController?.viewControllers[(navigationController?.viewControllers.endIndex)!-2] as! oneVideo).player.stop()
+        if indexPath.row == 1{
+            return 80
+        }
+        else if indexPath.row == 2{
+            return 45
+        }
+        else if indexPath.row == 0 {
+            return UITableViewAutomaticDimension}
+        else{
+        return 180
         }
         
     }
     
-        func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return true
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        print("")
+        
+        if indexPath.row == 0 {
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell1", forIndexPath: indexPath) as! profile1stCell
+            
+            cell.userCaption.numberOfLines = 0
+            cell.userCaption.lineBreakMode = NSLineBreakMode.ByWordWrapping
+            cell.profilePhoto.layer.borderWidth = 0.1
+            cell.profilePhoto.layer.masksToBounds = false
+            cell.profilePhoto.layer.borderColor = UIColor.whiteColor().CGColor
+            cell.profilePhoto.backgroundColor = profileBackgroundColor
+            cell.profilePhoto.layer.cornerRadius = cell.profilePhoto.frame.height/2
+            cell.profilePhoto.clipsToBounds = true
+            cell.profilePhoto.tag = indexPath.row
+            if(classUser.profilePic.absoluteString != ""){
+                cell.profilePhoto.sd_setImageWithURL(classUser.profilePic)
+                
+            }else{
+                cell.profilePhoto.image = UIImage(named: "profile")!
+               
+            }
+            
+            if(classUser.first_name == ""){
+                cell.name.text = classUser.username
+            }else{
+                cell.name.text = username2
+            }
+            
+          
+            return cell
+            
+        }
+        
+        else if indexPath.row == 1 {
+            let cell = tableView.dequeueReusableCellWithIdentifier("cell2", forIndexPath: indexPath) as! profile2ndCell
+            return cell
+            
+        }
+        
+        else if indexPath.row == 2 {
+            let cell = tableView.dequeueReusableCellWithIdentifier("cell3", forIndexPath: indexPath) as! profile3thCell
+            cell.videosButton.setTitle("VİDEOLAR(\(classUser.post_count))", forState: .Normal)
+            cell.taggedButton.setTitle("ETİKET(\(classUser.tag_count))", forState: .Normal)
+           
+            
+            return cell
+            
+        }
+        
+        else  {
+            let cell = tableView.dequeueReusableCellWithIdentifier("cell4", forIndexPath: indexPath) as! profile4thCell
+            AVc.view.frame.origin.x = 0
+            AVc.view.frame.origin.y = 0
+            AVc.view.frame.size.width = MolocateDevice.size.width
+            AVc.view.frame.size.height = cell.scrollView.frame.height
+            self.addChildViewController(AVc);
+            AVc.didMoveToParentViewController(self)
+            
+            var adminFrame :CGRect = AVc.view.frame;
+            adminFrame.origin.x = MolocateDevice.size.width
+            var deneme :CGRect = AVc.view.frame;
+            deneme.origin.x = 0
+            
+            BVc.classUser = classUser
+            BVc.isItMyProfile = isItMyProfile
+            BVc.view.frame = adminFrame;
+            self.addChildViewController(BVc);
+            BVc.didMoveToParentViewController(self)
+            
+            cell.scrollView.setContentOffset(deneme.origin, animated: true)
+            cell.scrollView.addSubview(AVc.view);
+            cell.scrollView.addSubview(BVc.view);
+            scrollWidth = MolocateDevice.size.width*2
+            cell.scrollView.contentSize.width = scrollWidth
+            cell.scrollView.delegate = self
+            cell.scrollView.scrollEnabled = true
+            
+            return cell
+            
+        }
+        
+       
+        
+        
+        
     }
     
     
-    override func viewWillAppear(animated: Bool) {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 4
+    }
+    
+        override func viewWillAppear(animated: Bool) {
         //(self.parentViewController?.parentViewController?.parentViewController as! ContainerController).scrollView.scrollEnabled = false
     }
     

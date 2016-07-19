@@ -23,6 +23,7 @@
 		C61023161C1B407600E9CA73 /* Followers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61023151C1B407600E9CA73 /* Followers.swift */; };
 		C610D38C1CC399F20080D48D /* backButton.png in Resources */ = {isa = PBXBuildFile; fileRef = C610D38B1CC399F20080D48D /* backButton.png */; };
 		C61199C01CCAD4FB00DF70F3 /* S3Upload.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61199BF1CCAD4FB00DF70F3 /* S3Upload.swift */; };
+		C617E2E71D3E5F8F001C7EC7 /* profile4thCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C617E2E61D3E5F8F001C7EC7 /* profile4thCell.swift */; };
 		C620B55B1D2041B70083953E /* tutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C620B55A1D2041B60083953E /* tutorialViewController.swift */; };
 		C620B5611D2054450083953E /* tutorialPageContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C620B5601D2054450083953E /* tutorialPageContentViewController.swift */; };
 		C6287C431CFF549C002C4B6B /* FirstController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6287C421CFF549C002C4B6B /* FirstController.swift */; };
@@ -172,6 +173,7 @@
 		C61023151C1B407600E9CA73 /* Followers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Followers.swift; sourceTree = "<group>"; };
 		C610D38B1CC399F20080D48D /* backButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backButton.png; sourceTree = "<group>"; };
 		C61199BF1CCAD4FB00DF70F3 /* S3Upload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = S3Upload.swift; sourceTree = "<group>"; };
+		C617E2E61D3E5F8F001C7EC7 /* profile4thCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = profile4thCell.swift; sourceTree = "<group>"; };
 		C620B55A1D2041B60083953E /* tutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = tutorialViewController.swift; sourceTree = "<group>"; };
 		C620B5601D2054450083953E /* tutorialPageContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = tutorialPageContentViewController.swift; sourceTree = "<group>"; };
 		C6287C421CFF549C002C4B6B /* FirstController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstController.swift; sourceTree = "<group>"; };
@@ -431,6 +433,7 @@
 				C6D785441D0600FF00DA59B3 /* profile1stCell.swift */,
 				C6350C211D3437C400A2398D /* profile2ndCell.swift */,
 				C6D785461D0604C900DA59B3 /* profile3thCell.swift */,
+				C617E2E61D3E5F8F001C7EC7 /* profile4thCell.swift */,
 				C6CBA4FE1C876EC300AE65AD /* ProfileOther.swift */,
 				C63FBD061BF3E5B900DBB34C /* AppDelegate.swift */,
 				C60905381C48140A00614C7F /* Navigation */,
@@ -906,6 +909,7 @@
 				C6D785471D0604C900DA59B3 /* profile3thCell.swift in Sources */,
 				C6287C471CFF54D2002C4B6B /* LogInController.swift in Sources */,
 				C609053A1C48143C00614C7F /* MainController.swift in Sources */,
+				C617E2E71D3E5F8F001C7EC7 /* profile4thCell.swift in Sources */,
 				E33DCC6F1CB3FD7F0081C0DF /* MolocateRecord.swift in Sources */,
 				E3FC416F1CB6B3EF00EE8995 /* MolocateUtility.swift in Sources */,
 				E33DCC711CB3FE5D0081C0DF /* MolocateDevice.swift in Sources */,
