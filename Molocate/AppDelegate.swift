@@ -43,6 +43,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             })
         }
         
+        if NSUserDefaults.standardUserDefaults().objectForKey("profile_picture") == nil && MoleCurrentUser.profilePic != NSURL(){
+            MolocateAccount.setProfilePictures()
+        }
+        
         registerForPushNotifications(application)
         
         SDImageCache.sharedImageCache().clearMemory()

@@ -1168,6 +1168,34 @@ public class MolocateAccount {
         
     }
     
+    class func setProfilePictures(){
+        getDataFromUrl(MoleCurrentUser.profilePic) { (data, response, error) in
+            dispatch_async(dispatch_get_main_queue(), {
+                if data != nil{
+                    NSUserDefaults.standardUserDefaults().setObject(data, forKey: "profile_picture")
+                }
+            })
+        }
+        getDataFromUrl(MoleCurrentUser.thumbnailPic ) { (data, response, error) in
+            dispatch_async(dispatch_get_main_queue(), {
+                if data != nil{
+                    NSUserDefaults.standardUserDefaults().setObject(data, forKey: "thumbnail_picture")
+                }
+            })
+        }
+    }
+    
+    
+    class func getDataFromUrl(url: NSURL, completionHandler: (data: NSData?, response: NSURLResponse?, error: NSError? ) -> ()) {
+        
+        let task =  NSURLSession.sharedSession().dataTaskWithURL(url) {
+            (data, response, error) in
+            completionHandler(data: data, response: response, error: error)
+        }
+        
+        task.resume()
+    }
+    
     class func getCurrentUser(completionHandler: (data: MoleUser, response: NSURLResponse!, error: NSError!) -> ()) {
         
         let url = NSURL(string: MolocateBaseUrl +  "/account/api/current/")!
@@ -1188,7 +1216,15 @@ public class MolocateAccount {
                         MoleCurrentUser.username = result["username"] as! String
                         MoleCurrentUser.first_name = result["first_name"] as! String
                         MoleCurrentUser.last_name = result["last_name"] as! String
-                        MoleCurrentUser.profilePic = result["picture_url"] is NSNull ? NSURL():NSURL(string: result["picture_url"] as! String)!
+                        
+                        let profile_picture = result["picture_url"] is NSNull ? NSURL():NSURL(string: result["picture_url"] as! String)!
+                        
+                        if profile_picture.absoluteString != MoleCurrentUser.profilePic.absoluteString{
+                            MoleCurrentUser.profilePic = result["picture_url"] is NSNull ? NSURL():NSURL(string: result["picture_url"] as! String)!
+                            MoleCurrentUser.thumbnailPic = result["thumbnail_url"] is NSNull ? MoleCurrentUser.profilePic :NSURL(string: result["picture_url"] as! String)!
+                            setProfilePictures()
+                        }
+                        
                         MoleCurrentUser.tag_count = result["tag_count"] as! Int
                         MoleCurrentUser.post_count = result["post_count"] as! Int
                         MoleCurrentUser.follower_count = result["follower_count"] as! Int

@@ -10,6 +10,8 @@ class MyProfile: UIViewController , UIScrollViewDelegate, UITableViewDelegate, U
     let names = ["AYARLAR","PROFİLİ DÜZENLE", "ÇIKIŞ YAP"]
     var isItMyProfile = true
     
+    var profile_picture: UIImage?
+    var thumbnail_picture: UIImage?
     
     @IBOutlet var settings: UITableView!
     @IBOutlet var scrollView: UIScrollView!
@@ -61,14 +63,24 @@ class MyProfile: UIViewController , UIScrollViewDelegate, UITableViewDelegate, U
         profilePhoto.backgroundColor = profileBackgroundColor
         profilePhoto.clipsToBounds = true
         
+        
         if(classUser.profilePic.absoluteString != ""){
-            profilePhoto.sd_setImageWithURL(classUser.profilePic)
+            if profile_picture != nil {
+                profilePhoto.image = profile_picture
+            }else if let thumbnail = NSUserDefaults.standardUserDefaults().objectForKey("thumbnail_url"){
+                profile_picture = UIImage(data: thumbnail as! NSData)
+                profilePhoto.image = profile_picture
+            }else{
+                profilePhoto.sd_setImageWithURL(MoleCurrentUser.profilePic)
+            }
             ProfileButton.enabled = true
-           
+            
         }else{
             profilePhoto.image = UIImage(named: "profile")!
             ProfileButton.enabled = false
         }
+        
+       
         
         addedButton.backgroundColor = swiftColor
         addedButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
@@ -116,8 +128,16 @@ class MyProfile: UIViewController , UIScrollViewDelegate, UITableViewDelegate, U
         addedButton.setTitle("▶︎GÖNDERİ(\(MoleCurrentUser.post_count))", forState: .Normal)
         taggedButton.setTitle("@ETİKET(\(MoleCurrentUser.tag_count))", forState: .Normal)
        
+        
         if(classUser.profilePic.absoluteString != ""){
-            profilePhoto.sd_setImageWithURL(MoleCurrentUser.profilePic)
+            if profile_picture != nil {
+                profilePhoto.image = profile_picture
+            }else if let thumbnail = NSUserDefaults.standardUserDefaults().objectForKey("thumbnail_url"){
+                profile_picture = UIImage(data: thumbnail as! NSData)
+                profilePhoto.image = profile_picture
+            }else{
+                profilePhoto.sd_setImageWithURL(MoleCurrentUser.profilePic)
+            }
             ProfileButton.enabled = true
             
         }else{
@@ -125,7 +145,6 @@ class MyProfile: UIViewController , UIScrollViewDelegate, UITableViewDelegate, U
             ProfileButton.enabled = false
         }
         
-      
         FollowButton.image = UIImage(named: "settings")
         back.image = UIImage(named:"sideMenu")
     

@@ -15,6 +15,7 @@ class SideBarController: UITableViewController {
     var tableData: [String] = ["home", "explore", "notifications","avatar"]
     let cellIdentifier = "cell"
     var attractionImages = [String]()
+    var profile_picture: UIImage?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,7 +98,17 @@ class SideBarController: UITableViewController {
         
         if indexPath.row == 0 {
             let cell =  sideProfilePic(style: UITableViewCellStyle.Value1, reuseIdentifier: "customCell")
-            cell.profilePhoto.sd_setImageWithURL(MoleCurrentUser.profilePic)
+            
+            if profile_picture != nil {
+                cell.profilePhoto.image = profile_picture
+                
+            }else if let thumbnail = NSUserDefaults.standardUserDefaults().objectForKey("thumbnail_url"){
+                profile_picture = UIImage(data: thumbnail as! NSData)
+                cell.profilePhoto.image = profile_picture
+            }else{
+                cell.profilePhoto.sd_setImageWithURL(MoleCurrentUser.profilePic)
+            }
+            
             cell.username.text = MoleCurrentUser.username
             let bgColorView2 = UIView()
             
