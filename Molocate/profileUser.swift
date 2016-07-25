@@ -15,7 +15,7 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
         tableView.allowsSelection = false
         //tableView.tableFooterView = UIView()
         tableView.separatorColor = UIColor.clearColor()
-        print(classUser.first_name)
+        
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -57,7 +57,7 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        print("")
+       
         
         if indexPath.row == 0 {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell1", forIndexPath: indexPath) as! profile1stCell
@@ -82,7 +82,7 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
             if(classUser.first_name == ""){
                 cell.name.text = classUser.username
             }else{
-                cell.name.text = username2
+                cell.name.text = classUser.first_name
             }
             
           
@@ -92,6 +92,8 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
         
         else if indexPath.row == 1 {
             let cell = tableView.dequeueReusableCellWithIdentifier("cell2", forIndexPath: indexPath) as! profile2ndCell
+            cell.numberFollower.text = "\(classUser.follower_count)"
+            cell.numberFollowUser.text = "\(classUser.following_count)"
             return cell
             
         }
@@ -100,10 +102,9 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
             let cell = tableView.dequeueReusableCellWithIdentifier("cell3", forIndexPath: indexPath) as! profile3thCell
             cell.videosButton.setTitle("VİDEOLAR(\(classUser.post_count))", forState: .Normal)
             cell.taggedButton.setTitle("ETİKET(\(classUser.tag_count))", forState: .Normal)
+            cell.videosButton.addTarget(self, action: #selector(profileUser.videosButtonTapped(_:)), forControlEvents: .TouchUpInside)
+             cell.taggedButton.addTarget(self, action: #selector(profileUser.taggedButtonTapped(_:)), forControlEvents: .TouchUpInside)
             
-            cell.videosButton.addTarget(self, action: Selector("videosButtonTapped"), forControlEvents: .TouchUpInside)
-            cell.taggedButton.addTarget(self, action: Selector("taggedButtonTapped"), forControlEvents: .TouchUpInside)
-            cell.redLabel.tag = indexPath.row;
             
             return cell
            
@@ -130,13 +131,19 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
             BVc.didMoveToParentViewController(self)
             
             cell.scrollView.setContentOffset(deneme.origin, animated: true)
-            cell.scrollView.addSubview(AVc.view);
-            cell.scrollView.addSubview(BVc.view);
+            
             scrollWidth = MolocateDevice.size.width*2
             cell.scrollView.contentSize.width = scrollWidth
             cell.scrollView.delegate = self
             cell.scrollView.scrollEnabled = true
-            
+            if owntagged == true {
+                cell.scrollView.setContentOffset(deneme.origin, animated: true)
+            }
+            else {
+                cell.scrollView.setContentOffset(adminFrame.origin, animated: true)
+            }
+            cell.scrollView.addSubview(AVc.view);
+            cell.scrollView.addSubview(BVc.view);
             return cell
             
         }
@@ -154,20 +161,39 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
         let cell = tableView.dequeueReusableCellWithIdentifier("cell3", forIndexPath: indexPath) as! profile3thCell
         
         cell.redLabel.frame.origin.x = scrollView.contentOffset.x / 2
+        if scrollView.contentOffset.x < MolocateDevice.size.width{
+            cell.videosButton.titleLabel!.font = UIFont(name: "AvenirNext-DemiBold", size: 14)
+            cell.taggedButton.titleLabel!.font = UIFont(name: "AvenirNext-Regular", size: 14)
+            cell.videosButton.setTitleColor(swiftColor, forState: .Normal)
+            cell.taggedButton.setTitleColor(greyColor1, forState: .Normal)
+        }
+        else{
+            cell.videosButton.titleLabel!.font = UIFont(name: "AvenirNext-Regular", size: 14)
+            cell.taggedButton.titleLabel!.font = UIFont(name: "AvenirNext-DemiBold", size: 14)
+            cell.videosButton.setTitleColor(greyColor1, forState: .Normal)
+            cell.taggedButton.setTitleColor(swiftColor, forState: .Normal)
+        }
         tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
         
         
     }
     func videosButtonTapped(sender: UIButton) {
         owntagged = true
-        
+        print("bastı lan")
+        BVc.player2.stop()
+        BVc.player1.stop()
         let indexPath = NSIndexPath(forRow: 2, inSection: 0)
         let cell = tableView.dequeueReusableCellWithIdentifier("cell3", forIndexPath: indexPath) as! profile3thCell
+        
         cell.redLabel.frame.origin.x = 0
+        cell.videosButton.titleLabel!.font = UIFont(name: "AvenirNext-DemiBold", size: 14)
+        cell.taggedButton.titleLabel!.font = UIFont(name: "AvenirNext-Regular", size: 14)
+        cell.videosButton.setTitleColor(swiftColor, forState: .Normal)
+        cell.taggedButton.setTitleColor(greyColor1, forState: .Normal)
+        
         let indexPath2 = NSIndexPath(forRow: 3, inSection: 0)
-        let cell2 = tableView.dequeueReusableCellWithIdentifier("cell4", forIndexPath: indexPath) as! profile4thCell
-        cell2.scrollView.contentOffset.x = 0
-        tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+        
+        tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
         tableView.reloadRowsAtIndexPaths([indexPath2], withRowAnimation: .None)
         
         
@@ -176,14 +202,18 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
     
     func taggedButtonTapped(sender: UIButton) {
         owntagged = false
-        
+        print("bastı lan2")
+        AVc.player2.stop()
+        AVc.player1.stop()
         let indexPath = NSIndexPath(forRow: 2, inSection: 0)
         let cell = tableView.dequeueReusableCellWithIdentifier("cell3", forIndexPath: indexPath) as! profile3thCell
         let indexPath2 = NSIndexPath(forRow: 3, inSection: 0)
-        let cell2 = tableView.dequeueReusableCellWithIdentifier("cell4", forIndexPath: indexPath) as! profile4thCell
-        cell2.scrollView.contentOffset.x = MolocateDevice.size.width
-        cell.redLabel.frame.origin.x = MolocateDevice.size.width
-        tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+        cell.redLabel.frame.origin.x = MolocateDevice.size.width / 2
+        cell.videosButton.titleLabel!.font = UIFont(name: "AvenirNext-Regular", size: 14)
+        cell.taggedButton.titleLabel!.font = UIFont(name: "AvenirNext-DemiBold", size: 14)
+        cell.videosButton.setTitleColor(greyColor1, forState: .Normal)
+        cell.taggedButton.setTitleColor(swiftColor, forState: .Normal)
+        tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
         tableView.reloadRowsAtIndexPaths([indexPath2], withRowAnimation: .None)
         
     }

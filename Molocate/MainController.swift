@@ -13,6 +13,7 @@ var profileOn = 0
 var category = "All"
 let swiftColor = UIColor(netHex: 0xEB2B5D)
 let swiftColor2 = UIColor(netHex: 0xC92451)
+let greyColor1 = UIColor(netHex: 0xCCCCCC)
 let swiftColor3 = UIColor(red: 249/255, green: 223/255, blue: 230/255, alpha: 1)
 var comments = [MoleVideoComment]()
 var video_id: String = ""

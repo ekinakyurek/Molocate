@@ -2098,7 +2098,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="272"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" directionalLockEnabled="YES" bounces="NO" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7pd-SU-Tve">
+                                                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" directionalLockEnabled="YES" bounces="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7pd-SU-Tve">
                                                     <rect key="frame" x="0.0" y="8" width="375" height="256"/>
                                                     <connections>
                                                         <outlet property="delegate" destination="gtr-N2-rOL" id="sBt-2G-k5F"/>
