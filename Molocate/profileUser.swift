@@ -6,6 +6,7 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
      var isItMyProfile = true
     var classUser = MoleUser()
     var username2 = ""
+    var owntagged = true
     @IBOutlet var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +35,7 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
         BVc.classUser = classUser
         AVc.getData()
         BVc.getData()
+        tableView.reloadData()
         
     }
 
@@ -49,7 +51,7 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
         else if indexPath.row == 0 {
             return UITableViewAutomaticDimension}
         else{
-        return 180
+        return MolocateDevice.size.height
         }
         
     }
@@ -98,10 +100,13 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
             let cell = tableView.dequeueReusableCellWithIdentifier("cell3", forIndexPath: indexPath) as! profile3thCell
             cell.videosButton.setTitle("VİDEOLAR(\(classUser.post_count))", forState: .Normal)
             cell.taggedButton.setTitle("ETİKET(\(classUser.tag_count))", forState: .Normal)
-           
+            
+            cell.videosButton.addTarget(self, action: Selector("videosButtonTapped"), forControlEvents: .TouchUpInside)
+            cell.taggedButton.addTarget(self, action: Selector("taggedButtonTapped"), forControlEvents: .TouchUpInside)
+            cell.redLabel.tag = indexPath.row;
             
             return cell
-            
+           
         }
         
         else  {
@@ -141,7 +146,47 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
         
         
     }
+   
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        
+        let indexPath = NSIndexPath(forRow: 2, inSection: 0)
+       
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell3", forIndexPath: indexPath) as! profile3thCell
+        
+        cell.redLabel.frame.origin.x = scrollView.contentOffset.x / 2
+        tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+        
+        
+    }
+    func videosButtonTapped(sender: UIButton) {
+        owntagged = true
+        
+        let indexPath = NSIndexPath(forRow: 2, inSection: 0)
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell3", forIndexPath: indexPath) as! profile3thCell
+        cell.redLabel.frame.origin.x = 0
+        let indexPath2 = NSIndexPath(forRow: 3, inSection: 0)
+        let cell2 = tableView.dequeueReusableCellWithIdentifier("cell4", forIndexPath: indexPath) as! profile4thCell
+        cell2.scrollView.contentOffset.x = 0
+        tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+        tableView.reloadRowsAtIndexPaths([indexPath2], withRowAnimation: .None)
+        
+        
+        
+    }
     
+    func taggedButtonTapped(sender: UIButton) {
+        owntagged = false
+        
+        let indexPath = NSIndexPath(forRow: 2, inSection: 0)
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell3", forIndexPath: indexPath) as! profile3thCell
+        let indexPath2 = NSIndexPath(forRow: 3, inSection: 0)
+        let cell2 = tableView.dequeueReusableCellWithIdentifier("cell4", forIndexPath: indexPath) as! profile4thCell
+        cell2.scrollView.contentOffset.x = MolocateDevice.size.width
+        cell.redLabel.frame.origin.x = MolocateDevice.size.width
+        tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+        tableView.reloadRowsAtIndexPaths([indexPath2], withRowAnimation: .None)
+        
+    }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 4
