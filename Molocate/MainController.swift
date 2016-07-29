@@ -531,7 +531,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         navigationController?.setNavigationBarHidden(false, animated: false)
         activityIndicator.startAnimating()
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
-        let controller:profileLocation = self.storyboard!.instantiateViewControllerWithIdentifier("profileLocation") as! profileLocation
+        let controller:profileVenue = self.storyboard!.instantiateViewControllerWithIdentifier("profileVenue") as! profileVenue
         self.navigationController?.pushViewController(controller, animated: true)
         
         MolocatePlace.getPlace(placeId) { (data, response, error) -> () in
