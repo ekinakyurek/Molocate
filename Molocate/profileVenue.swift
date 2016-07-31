@@ -12,13 +12,13 @@ import Haneke
 import AVFoundation
 import MapKit
 
-class profileVenue: UIViewController,UITableViewDelegate , UIScrollViewDelegate,  UIGestureRecognizerDelegate {
+class profileVenue: UIViewController, UICollectionViewDelegateFlowLayout,NSURLConnectionDataDelegate{
 
     
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     
     var classPlace = MolePlace()
-    
+    var tableController: TimelineController!
     
     @IBOutlet var tableView: UITableView!
     
@@ -31,46 +31,93 @@ class profileVenue: UIViewController,UITableViewDelegate , UIScrollViewDelegate,
         tableView.allowsSelection = false
         //tableView.tableFooterView = UIView()
         tableView.separatorColor = UIColor.clearColor()
+        
+        
+        tableController = self.storyboard?.instantiateViewControllerWithIdentifier("timelineController") as! TimelineController
+        tableController.type = "ProfileLocation"
+        tableController.placeId = thePlace.id
+        tableController.videoArray = thePlace.videoArray
+        //tableController.delegate = self
+        tableController.view.frame = CGRectMake(0, 350, MolocateDevice.size
+            .width, MolocateDevice.size.height - 114)
+        
+        tableController.view.layer.zPosition = 0
+        self.view.addSubview(tableController.view)
+        self.addChildViewController(tableController);
+
+        
+        initGui()
+        
+        
+        try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
+        UIApplication.sharedApplication().endIgnoringInteractionEvents()
      
         // Do any additional setup after loading the view.
     }
+    func initGui(){
+      
+    }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    
-    
-    
-    
+   
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        
+        if tableView == tableController{
+            return 200
+        }
+        else{
         if indexPath.row == 0{
             return UITableViewAutomaticDimension
         }
         else {
             return 80}
-        
+        }
         
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         
+        
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCellWithIdentifier("cell1", forIndexPath: indexPath) as! profileVenue1stCell
+           
+            let longitude :CLLocationDegrees = thePlace.lon
+            let latitude :CLLocationDegrees = thePlace.lat
+            let span = MKCoordinateSpanMake(0.005, 0.005)
+            let location:CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+            let region:MKCoordinateRegion = MKCoordinateRegion(center: location, span: span)
+             cell.mapView.setRegion(region, animated: false)
+             cell.mapView.userInteractionEnabled = false
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = location
+             cell.mapView.addAnnotation(annotation)
+            
+            
+            cell.nameVenue.text = thePlace.name
+            self.navigationController!.topViewController!.title = thePlace.name
+            //LocationTitle.text = thePlace.name
+            cell.adressVenue.text = thePlace.address
+            
             return cell
         }
             
         else  {
             let cell = tableView.dequeueReusableCellWithIdentifier("cell2", forIndexPath: indexPath) as! profileVenue2ndCell
+            cell.numberVideo.text = "\(thePlace.video_count)"
+            cell.numberFollower.text = "\(thePlace.follower_count)"
+            
         
             return cell
             
         }
     }
+    
         func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
             return 2
         }
@@ -118,7 +165,10 @@ class profileVenue: UIViewController,UITableViewDelegate , UIScrollViewDelegate,
 //        map.addAnnotation(annotation)
 //        self.tableController.tableView.reloadData()
     }
-    
+    override func viewWillAppear(animated: Bool) {
+        (self.parentViewController?.parentViewController?.parentViewController as! ContainerController).scrollView.scrollEnabled = false
+        
+    }
 
         
         

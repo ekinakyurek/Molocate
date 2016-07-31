@@ -2156,7 +2156,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="305" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ghz-8o-64R">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="457"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell1" rowHeight="305" id="CWT-s0-hld" customClass="profileVenue1stCell" customModule="Molocate" customModuleProvider="target">
@@ -2341,10 +2341,18 @@ These Services are operated and provided by Molocate. If you have any questions 
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="ghz-8o-64R" firstAttribute="top" secondItem="jd9-WC-wOQ" secondAttribute="bottom" id="Fso-Wr-jeN"/>
+                            <constraint firstItem="qyz-d8-Wkq" firstAttribute="top" secondItem="ghz-8o-64R" secondAttribute="bottom" constant="190" id="KBj-gk-Ay7"/>
                             <constraint firstItem="ghz-8o-64R" firstAttribute="centerX" secondItem="yQT-P7-NK0" secondAttribute="centerX" id="Sw3-0V-xni"/>
                             <constraint firstItem="qyz-d8-Wkq" firstAttribute="top" secondItem="ghz-8o-64R" secondAttribute="bottom" id="hzm-gw-zGF"/>
                             <constraint firstItem="ghz-8o-64R" firstAttribute="width" secondItem="yQT-P7-NK0" secondAttribute="width" id="kpj-c1-q5y"/>
+                            <constraint firstItem="qyz-d8-Wkq" firstAttribute="top" secondItem="ghz-8o-64R" secondAttribute="bottom" constant="190" id="xUR-LR-dLe"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="hzm-gw-zGF"/>
+                                <exclude reference="xUR-LR-dLe"/>
+                            </mask>
+                        </variation>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>

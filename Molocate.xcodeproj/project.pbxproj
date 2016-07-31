@@ -441,6 +441,7 @@
 				C6D785461D0604C900DA59B3 /* profile3thCell.swift */,
 				C617E2E61D3E5F8F001C7EC7 /* profile4thCell.swift */,
 				C6D2BB3A1D4A6FE9000AE25E /* profileVenue.swift */,
+				C6D2BB3E1D4A8218000AE25E /* profileVenue1stCell.swift */,
 				C6D2BB3C1D4A78A8000AE25E /* profileVenue2ndCell.swift */,
 				C6B7C9EA1C7BE7EF005607EC /* ProfileLocation.swift */,
 				C6CBA4FE1C876EC300AE65AD /* ProfileOther.swift */,
@@ -511,7 +512,6 @@
 		C67D5B891D206259003DFC45 /* tutorial */ = {
 			isa = PBXGroup;
 			children = (
-				C6D2BB3E1D4A8218000AE25E /* profileVenue1stCell.swift */,
 				C6D720D01D21ED1C00FF1998 /* tutorial image */,
 				C620B55A1D2041B60083953E /* tutorialViewController.swift */,
 				C620B5601D2054450083953E /* tutorialPageContentViewController.swift */,
