@@ -7,16 +7,37 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
     var classUser = MoleUser()
     var username2 = ""
     var owntagged = true
+    var page = 1
     @IBOutlet var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.estimatedRowHeight = 250
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.allowsSelection = false
-        //tableView.tableFooterView = UIView()
         tableView.separatorColor = UIColor.clearColor()
-        
+        //tableView.scrollEnabled = false
+        tableView.pagingEnabled = true
+//        
+        let gesture = UISwipeGestureRecognizer(target: self, action: #selector(profileUser.heey))
+        gesture.delegate = self
+        gesture.direction = .Down
+        self.view.addGestureRecognizer(gesture)
     }
+    
+    func heey() {
+        if page == 2 {
+           if AVc.tableView.contentOffset.y == 0 {
+                AVc.tableView.scrollEnabled = false
+                self.tableView.pagingEnabled = true
+                self.navigationController?.setNavigationBarHidden(false, animated: true)
+            }
+        }
+    }
+    
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+    
     
     override func viewWillDisappear(animated: Bool) {
        
@@ -51,10 +72,12 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
         else if indexPath.row == 0 {
             return UITableViewAutomaticDimension}
         else{
-        return MolocateDevice.size.height
+        return MolocateDevice.size.height-75
         }
         
     }
+    
+
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
        
@@ -144,6 +167,8 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
             }
             cell.scrollView.addSubview(AVc.view);
             cell.scrollView.addSubview(BVc.view);
+            AVc.tableView.scrollEnabled = false
+            AVc.tableView.bounces = false
             return cell
             
         }
@@ -153,30 +178,55 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
         
         
     }
+    
+ 
    
     func scrollViewDidScroll(scrollView: UIScrollView) {
         
-        let indexPath = NSIndexPath(forRow: 2, inSection: 0)
-       
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell3", forIndexPath: indexPath) as! profile3thCell
+//        let indexPath = NSIndexPath(forRow: 2, inSection: 0)
+//       
+//        let cell = tableView.dequeueReusableCellWithIdentifier("cell3", forIndexPath: indexPath) as! profile3thCell
+//        
+//        cell.redLabel.frame.origin.x = scrollView.contentOffset.x / 2
+//        if scrollView.contentOffset.x < MolocateDevice.size.width{
+//            cell.videosButton.titleLabel!.font = UIFont(name: "AvenirNext-DemiBold", size: 14)
+//            cell.taggedButton.titleLabel!.font = UIFont(name: "AvenirNext-Regular", size: 14)
+//            cell.videosButton.setTitleColor(swiftColor, forState: .Normal)
+//            cell.taggedButton.setTitleColor(greyColor1, forState: .Normal)
+//        }
+//        else{
+//            cell.videosButton.titleLabel!.font = UIFont(name: "AvenirNext-Regular", size: 14)
+//            cell.taggedButton.titleLabel!.font = UIFont(name: "AvenirNext-DemiBold", size: 14)
+//            cell.videosButton.setTitleColor(greyColor1, forState: .Normal)
+//            cell.taggedButton.setTitleColor(swiftColor, forState: .Normal)
+//        }
+//        tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+//        
+//        if (scrollView.contentOffset.y != 0) {
+//        if (scrollView.contentSize.height-scrollView.contentOffset.y < MolocateDevice.size.height+70) {
+////            let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 3, inSection: 0)) as! profile4thCell
+////            cell.scrollView.scrollEnabled = true
+//            AVc.tableView.scrollEnabled = true
+//            tableView.scrollEnabled = false
+//            
+//        }
+//        }
+    }
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         
-        cell.redLabel.frame.origin.x = scrollView.contentOffset.x / 2
-        if scrollView.contentOffset.x < MolocateDevice.size.width{
-            cell.videosButton.titleLabel!.font = UIFont(name: "AvenirNext-DemiBold", size: 14)
-            cell.taggedButton.titleLabel!.font = UIFont(name: "AvenirNext-Regular", size: 14)
-            cell.videosButton.setTitleColor(swiftColor, forState: .Normal)
-            cell.taggedButton.setTitleColor(greyColor1, forState: .Normal)
+                if (scrollView.contentSize.height-scrollView.contentOffset.y < MolocateDevice.size.height+70) {
+                    AVc.tableView.scrollEnabled = true
+                    tableView.pagingEnabled = false
+                    page = 2
+                } else {
+                    AVc.tableView.scrollEnabled = false
+                    tableView.pagingEnabled = true
+                    page = 1
         }
-        else{
-            cell.videosButton.titleLabel!.font = UIFont(name: "AvenirNext-Regular", size: 14)
-            cell.taggedButton.titleLabel!.font = UIFont(name: "AvenirNext-DemiBold", size: 14)
-            cell.videosButton.setTitleColor(greyColor1, forState: .Normal)
-            cell.taggedButton.setTitleColor(swiftColor, forState: .Normal)
-        }
-        tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
-        
         
     }
+    
+
     func videosButtonTapped(sender: UIButton) {
         owntagged = true
         print("bastı lan")

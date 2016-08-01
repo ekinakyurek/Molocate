@@ -31,6 +31,7 @@ import FBSDKShareKit
     var player1Turn = false
     var classUser = MoleUser()
     var isItMyProfile = true
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,7 +58,7 @@ import FBSDKShareKit
         self.player2.delegate = self
         self.player2.playbackLoops = true
         // tableView.center = CGPointMake(screenSize.width/2,screenSize.height/2)
-        tableView.frame         =   CGRectMake(0, 0 , screenSize.width, screenSize.height - 190);
+        tableView.frame         =   CGRectMake(0, 0 , screenSize.width, screenSize.height);
         tableView.delegate      =   self
         tableView.dataSource    =   self
         
@@ -769,6 +770,7 @@ import FBSDKShareKit
     }
     
 
+
     func tableView(atableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         if atableView == tableView{
             
@@ -784,7 +786,7 @@ import FBSDKShareKit
                             atableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Bottom)
                             
                         }
-                        
+                        NSNotificationCenter.defaultCenter().postNotificationName("changeHeightofScrollView", object: nil)
                         IsExploreInProcess = false
                     }
                     
