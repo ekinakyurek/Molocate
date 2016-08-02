@@ -12,13 +12,14 @@ import Haneke
 import AVFoundation
 import MapKit
 
-class profileVenue: UIViewController, UICollectionViewDelegateFlowLayout,NSURLConnectionDataDelegate{
+class profileVenue: UIViewController, UICollectionViewDelegateFlowLayout,NSURLConnectionDataDelegate, TimelineControllerDelegate, UIGestureRecognizerDelegate{
 
     
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     
     var classPlace = MolePlace()
     var tableController: TimelineController!
+    var page = 1
     
     @IBOutlet var tableView: UITableView!
     
@@ -31,20 +32,24 @@ class profileVenue: UIViewController, UICollectionViewDelegateFlowLayout,NSURLCo
         tableView.allowsSelection = false
         //tableView.tableFooterView = UIView()
         tableView.separatorColor = UIColor.clearColor()
-        
+        tableView.pagingEnabled = true
         
         tableController = self.storyboard?.instantiateViewControllerWithIdentifier("timelineController") as! TimelineController
         tableController.type = "ProfileLocation"
         tableController.placeId = thePlace.id
         tableController.videoArray = thePlace.videoArray
-        //tableController.delegate = self
-        tableController.view.frame = CGRectMake(0, 350, MolocateDevice.size
-            .width, MolocateDevice.size.height - 114)
-        
+        tableController.delegate = self
         tableController.view.layer.zPosition = 0
-        self.view.addSubview(tableController.view)
-        self.addChildViewController(tableController);
-
+        self.navigationController?.hidesBarsOnSwipe = true
+        //self.view.addSubview(tableController.view)
+        //self.addChildViewController(tableController);
+        tableController.tableView.scrollEnabled = false
+        tableController.tableView.bounces = false 
+        
+        let gesture = UISwipeGestureRecognizer(target: self, action: #selector(profileUser.adjustTable))
+        gesture.delegate = self
+        gesture.direction = .Down
+        self.view.addGestureRecognizer(gesture)
         
         initGui()
         
@@ -54,6 +59,25 @@ class profileVenue: UIViewController, UICollectionViewDelegateFlowLayout,NSURLCo
      
         // Do any additional setup after loading the view.
     }
+    
+    func adjustTable() {
+        if page == 2 {
+
+                if tableController.tableView.contentOffset.y == 0 {
+                    tableController.tableView.scrollEnabled = false
+                    self.tableView.pagingEnabled = true
+                    self.navigationController?.setNavigationBarHidden(false, animated: true)
+                    // self.tableView.setContentOffset(CGPoint(x: 0,y:0), animated: true)
+                }
+            
+            
+        }
+    }
+    
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+
     func initGui(){
       
     }
@@ -64,19 +88,42 @@ class profileVenue: UIViewController, UICollectionViewDelegateFlowLayout,NSURLCo
         // Dispose of any resources that can be recreated.
     }
     
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        
+        if scrollView == self.tableView {
+            
+            if (scrollView.contentSize.height-scrollView.contentOffset.y < MolocateDevice.size.height+70) {
+                tableController.tableView.scrollEnabled = true
+                tableView.pagingEnabled = false
+                page = 2
+            } else {
+                tableController.tableView.scrollEnabled = false
+                tableView.pagingEnabled = true
+                page = 1
+            }
+        }
+        
+        
+    }
+
    
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if tableView == tableController{
-            return 200
-        }
-        else{
+//        if tableView == tableController{
+//            return 200
+//        }
+//        else{
         if indexPath.row == 0{
             return UITableViewAutomaticDimension
         }
         else {
-            return 80}
+            if indexPath.row == 1 {
+            return 80
+            } else {
+                return MolocateDevice.size.height-25
+            }
         }
+ //       }
         
     }
     
@@ -108,18 +155,26 @@ class profileVenue: UIViewController, UICollectionViewDelegateFlowLayout,NSURLCo
         }
             
         else  {
+            if indexPath.row == 1 {
             let cell = tableView.dequeueReusableCellWithIdentifier("cell2", forIndexPath: indexPath) as! profileVenue2ndCell
             cell.numberVideo.text = "\(thePlace.video_count)"
             cell.numberFollower.text = "\(thePlace.follower_count)"
             
         
             return cell
+            } else {
+                let cell = tableView.dequeueReusableCellWithIdentifier("cell3", forIndexPath: indexPath) as! profileVenue3rdCell
+                cell.backgroundColor = UIColor.blackColor()
+                tableController.view.frame = cell.contentView.frame
+                cell.addSubview(tableController.view)
+                return cell
+            }
             
         }
     }
     
         func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return 2
+            return 3
         }
         
     
@@ -130,7 +185,7 @@ class profileVenue: UIViewController, UICollectionViewDelegateFlowLayout,NSURLCo
 //        self.navigationController!.topViewController!.title = thePlace.name
 //        address.text = thePlace.address
 //        videoCount.text = "Videos(\(thePlace.video_count))"
-//        tableController.videoArray = thePlace.videoArray
+        
 //        if(thePlace.is_following==0 ){
 //            
 //        }else{
@@ -151,7 +206,7 @@ class profileVenue: UIViewController, UICollectionViewDelegateFlowLayout,NSURLCo
 //            followButton.enabled = true
 //            self.tableController.tableView.hidden = false
 //        }
-//        
+//
 //        //mekanın koordinatları eklenecek
 //        let longitude :CLLocationDegrees = thePlace.lon
 //        let latitude :CLLocationDegrees = thePlace.lat
@@ -163,12 +218,111 @@ class profileVenue: UIViewController, UICollectionViewDelegateFlowLayout,NSURLCo
 //        let annotation = MKPointAnnotation()
 //        annotation.coordinate = location
 //        map.addAnnotation(annotation)
-//        self.tableController.tableView.reloadData()
+        tableController.videoArray = thePlace.videoArray
+        self.tableController.tableView.reloadData()
+        self.tableView.reloadData()
     }
     override func viewWillAppear(animated: Bool) {
         (self.parentViewController?.parentViewController?.parentViewController as! ContainerController).scrollView.scrollEnabled = false
         
     }
+    
+    
+    func pressedUsername(username: String, profilePic: NSURL, isFollowing: Bool) {
+        
+        navigationController?.setNavigationBarHidden(false, animated: false)
+        activityIndicator.startAnimating()
+        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+        
+        let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
+        
+        if username != MoleCurrentUser.username{
+            controller.isItMyProfile = false
+        }else{
+            controller.isItMyProfile = true
+        }
+        
+        controller.classUser.username = username
+        controller.classUser.profilePic = profilePic
+        controller.classUser.isFollowing = isFollowing
+        
+        
+        self.navigationController?.pushViewController(controller, animated: true)
+        MolocateAccount.getUser(username) { (data, response, error) -> () in
+            dispatch_async(dispatch_get_main_queue()){
+                //DBG: If it is mine profile?
+                if data.username != "" {
+                    user = data
+                    controller.classUser = data
+                    controller.RefreshGuiWithData()
+                }
+                
+                //choosedIndex = 0
+                self.activityIndicator.stopAnimating()
+                UIApplication.sharedApplication().endIgnoringInteractionEvents()
+            }
+        }
+        
+    }
+    
+    
+    func pressedPlace(placeId: String, Row: Int) {
+        
+        //Empty it isnot logical
+    }
+    
+    func pressedComment(videoId: String, Row: Int) {
+        
+        navigationController?.setNavigationBarHidden(false, animated: false)
+        activityIndicator.startAnimating()
+        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+        video_id = videoId
+        videoIndex = Row
+        myViewController = "MainController"
+        
+        
+        let controller:commentController = self.storyboard!.instantiateViewControllerWithIdentifier("commentController") as! commentController
+        
+        comments.removeAll()
+        MolocateVideo.getComments(videoId) { (data, response, error, count, next, previous) -> () in
+            dispatch_async(dispatch_get_main_queue()){
+                comments = data
+                controller.tableView.reloadData()
+                UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                self.activityIndicator.removeFromSuperview()
+            }
+        }
+        self.navigationController?.pushViewController(controller, animated: true)
+        
+    }
+    
+    func pressedLikeCount(videoId: String, Row: Int) {
+        
+        navigationController?.setNavigationBarHidden(false, animated: false)
+        activityIndicator.startAnimating()
+        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+        
+        video_id = videoId
+        videoIndex = Row
+        
+        let controller:likeVideo = self.storyboard!.instantiateViewControllerWithIdentifier("likeVideo") as! likeVideo
+        
+        MolocateVideo.getLikes(videoId) { (data, response, error, count, next, previous) -> () in
+            dispatch_async(dispatch_get_main_queue()){
+                controller.users = data
+                controller.tableView.reloadData()
+                UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                self.activityIndicator.stopAnimating()
+            }
+            
+        }
+        
+        //DBG: Burda  likeları çağır,
+        //Her gectigimiz ekranda activity indicatorı goster
+        self.navigationController?.pushViewController(controller, animated: true)
+        
+    }
+
 
         
         

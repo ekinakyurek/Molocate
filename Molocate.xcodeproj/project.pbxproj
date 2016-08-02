@@ -54,6 +54,7 @@
 		C65A45141C694E8D00E9DA6F /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C65A45131C694E8D00E9DA6F /* Bolts.framework */; };
 		C65C4F751C8E20B300DB5068 /* CaptureCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65C4F741C8E20B300DB5068 /* CaptureCollectionCell.swift */; };
 		C66743831CEB84410020D514 /* SideProfilePic.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66743821CEB84410020D514 /* SideProfilePic.swift */; };
+		C67787421D50279B00DF8AED /* profileVenue3rdCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67787411D50279B00DF8AED /* profileVenue3rdCell.swift */; };
 		C67830191C9CC76E00DC969D /* LatoTR-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C67830151C9CC72700DC969D /* LatoTR-Bold.ttf */; };
 		C678301A1C9CC76E00DC969D /* LatoTR-Hairline.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C67830161C9CC72700DC969D /* LatoTR-Hairline.ttf */; };
 		C678301B1C9CC76E00DC969D /* LatoTR-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C67830171C9CC72700DC969D /* LatoTR-Light.ttf */; };
@@ -213,6 +214,7 @@
 		C65A45131C694E8D00E9DA6F /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		C65C4F741C8E20B300DB5068 /* CaptureCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptureCollectionCell.swift; sourceTree = "<group>"; };
 		C66743821CEB84410020D514 /* SideProfilePic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideProfilePic.swift; sourceTree = "<group>"; };
+		C67787411D50279B00DF8AED /* profileVenue3rdCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = profileVenue3rdCell.swift; sourceTree = "<group>"; };
 		C67830151C9CC72700DC969D /* LatoTR-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "LatoTR-Bold.ttf"; sourceTree = "<group>"; };
 		C67830161C9CC72700DC969D /* LatoTR-Hairline.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "LatoTR-Hairline.ttf"; sourceTree = "<group>"; };
 		C67830171C9CC72700DC969D /* LatoTR-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "LatoTR-Light.ttf"; sourceTree = "<group>"; };
@@ -443,6 +445,7 @@
 				C6D2BB3A1D4A6FE9000AE25E /* profileVenue.swift */,
 				C6D2BB3E1D4A8218000AE25E /* profileVenue1stCell.swift */,
 				C6D2BB3C1D4A78A8000AE25E /* profileVenue2ndCell.swift */,
+				C67787411D50279B00DF8AED /* profileVenue3rdCell.swift */,
 				C6B7C9EA1C7BE7EF005607EC /* ProfileLocation.swift */,
 				C6CBA4FE1C876EC300AE65AD /* ProfileOther.swift */,
 				C63FBD061BF3E5B900DBB34C /* AppDelegate.swift */,
@@ -906,6 +909,7 @@
 				C6CBA4FF1C876EC300AE65AD /* ProfileOther.swift in Sources */,
 				C62E31081D08F79200BE8377 /* venueInCamera.swift in Sources */,
 				C6D2BB3B1D4A6FE9000AE25E /* profileVenue.swift in Sources */,
+				C67787421D50279B00DF8AED /* profileVenue3rdCell.swift in Sources */,
 				E3A2CD841D14630200CB4C7A /* FacebookFriends.swift in Sources */,
 				C65C4F751C8E20B300DB5068 /* CaptureCollectionCell.swift in Sources */,
 				C63629491CCCEE210071E6BF /* SearchUsername.swift in Sources */,
