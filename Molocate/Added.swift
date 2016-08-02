@@ -58,7 +58,7 @@ import FBSDKShareKit
         self.player2.delegate = self
         self.player2.playbackLoops = true
         // tableView.center = CGPointMake(screenSize.width/2,screenSize.height/2)
-        tableView.frame         =   CGRectMake(0, 0 , screenSize.width, screenSize.height);
+        tableView.frame         =   CGRectMake(0, 0 , screenSize.width, screenSize.height-80);
         tableView.delegate      =   self
         tableView.dataSource    =   self
         
