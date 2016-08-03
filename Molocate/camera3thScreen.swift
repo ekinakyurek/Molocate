@@ -9,6 +9,17 @@
 import UIKit
 
 class camera3thScreen: UIViewController,UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    
+    
+    @IBOutlet var venueName: UILabel!
+    @IBOutlet var toolBar: UIToolbar!
+    
+    
+    @IBAction func buttonVenues(sender: AnyObject) {
+    }
+    
+    
     var categoryImagesWhite : [String]  = [ "fun", "food", "travel", "fashion", "beauty", "sport", "event", "campus"]
     var categoryImagesBlack : [String]  = [ "funb", "foodb", "travelb", "fashionb", "beautyb", "sportb", "eventb", "campusb"]
     var categories = ["EĞLENCE","YEMEK","GEZİ","MODA" , "GÜZELLİK", "SPOR","ETKİNLİK","KAMPÜS"]

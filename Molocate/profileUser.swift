@@ -12,8 +12,14 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
     var estRowH = 150.0 as! CGFloat
     var vidortag = false // videoysa false
     @IBOutlet var tableView: UITableView!
+    
+    @IBOutlet var followButton: UIBarButtonItem!
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        
         //tableView.estimatedRowHeight = 20
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.allowsSelection = false
@@ -25,8 +31,44 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
         gesture.delegate = self
         gesture.direction = .Down
         self.view.addGestureRecognizer(gesture)
+        
+        initGui()
+        if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
+            UIApplication.sharedApplication().endIgnoringInteractionEvents()
+        }
+
+        
     }
-    
+    func initGui(){
+        
+        
+        
+        if(classUser.isFollowing){
+            followButton.image = UIImage(named: "unfollow")
+        }else if classUser.username == MoleCurrentUser.username{
+            followButton.image = UIImage(named: "settings")
+        }else{
+            followButton.image = UIImage(named: "follow")
+        }
+        
+        self.navigationItem.title = classUser.username
+        
+        
+        
+//        
+//        settings.layer.zPosition = 1
+//        settings.hidden = true
+//        settings.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.width, self.view.frame.width)
+//        settings.layer.cornerRadius = 0
+//        settings.tintColor = UIColor.clearColor()
+        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        self.navigationController?.hidesBarsOnSwipe = false
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+  
+
+     
+    }
+
     
     func adjustTable() {
         if page == 2 {
@@ -121,6 +163,7 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
             cell.profilePhoto.layer.borderColor = UIColor.whiteColor().CGColor
             cell.profilePhoto.backgroundColor = profileBackgroundColor
             cell.profilePhoto.layer.cornerRadius = cell.profilePhoto.frame.height/2
+            cell.profilePhotoPressed.addTarget(self, action: #selector(profileUser.photoPressed), forControlEvents: UIControlEvents.TouchUpInside)
             cell.profilePhoto.clipsToBounds = true
             cell.profilePhoto.tag = indexPath.row
             if(classUser.profilePic.absoluteString != ""){
@@ -146,6 +189,10 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
             let cell = tableView.dequeueReusableCellWithIdentifier("cell2", forIndexPath: indexPath) as! profile2ndCell
             cell.numberFollower.text = "\(classUser.follower_count)"
             cell.numberFollowUser.text = "\(classUser.following_count)"
+            cell.followers.addTarget(self, action: #selector(profileUser.followersPressed), forControlEvents: UIControlEvents.TouchUpInside)
+            cell.followUser.addTarget(self, action: #selector(profileUser.followUserPressed), forControlEvents: UIControlEvents.TouchUpInside)
+            cell.followVenue.addTarget(self, action: #selector(profileUser.followVenuePressed), forControlEvents: UIControlEvents.TouchUpInside)
+            cell.postedVenue.addTarget(self, action: #selector(profileUser.postedVenuePressed), forControlEvents: UIControlEvents.TouchUpInside)
             return cell
             
         }
@@ -226,8 +273,41 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
         
     }
     
- 
-   
+    func photoPressed(sender: UIButton){
+     print ("x<<")
+        let controller:onePhoto = self.storyboard!.instantiateViewControllerWithIdentifier("onePhoto") as! onePhoto
+        controller.classUser = classUser
+        navigationController?.pushViewController(controller, animated: true)
+    }
+    func followUserPressed(sender: UIButton){
+        AVc.player2.stop()
+        AVc.player1.stop()
+        BVc.player2.stop()
+        BVc.player1.stop()
+        
+        let controller:Followers = self.storyboard!.instantiateViewControllerWithIdentifier("Followers") as! Followers
+        controller.classUser = classUser
+        controller.followersclicked = false
+        navigationController?.pushViewController(controller, animated: true)
+    }
+    func followVenuePressed(sender: UIButton){
+    
+    }
+    func followersPressed(sender: UIButton){
+        AVc.player2.stop()
+        AVc.player1.stop()
+        BVc.player2.stop()
+        BVc.player1.stop()
+        let controller:Followers = self.storyboard!.instantiateViewControllerWithIdentifier("Followers") as! Followers
+        controller.classUser = classUser
+        controller.followersclicked = true
+        navigationController?.pushViewController(controller, animated: true)
+    }
+    func postedVenuePressed(sender: UIButton){
+        
+    }
+    
+    
     func scrollViewDidScroll(scrollView: UIScrollView) {
         
         if tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 2, inSection: 0)) != nil {

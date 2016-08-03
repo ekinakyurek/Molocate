@@ -17,6 +17,7 @@ class profile1stCell: UITableViewCell {
     
     @IBOutlet var userCaption: UILabel!
     
+    @IBOutlet var profilePhotoPressed: UIButton!
     
     
     override func awakeFromNib() {
