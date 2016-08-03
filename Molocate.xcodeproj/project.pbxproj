@@ -54,6 +54,10 @@
 		C65A45141C694E8D00E9DA6F /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C65A45131C694E8D00E9DA6F /* Bolts.framework */; };
 		C65C4F751C8E20B300DB5068 /* CaptureCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65C4F741C8E20B300DB5068 /* CaptureCollectionCell.swift */; };
 		C66743831CEB84410020D514 /* SideProfilePic.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66743821CEB84410020D514 /* SideProfilePic.swift */; };
+		C66E37DF1D52306F0015F602 /* collection3thCameraCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66E37DE1D52306F0015F602 /* collection3thCameraCell.swift */; };
+		C66E37E21D5238D40015F602 /* filledCircleSwift.png in Resources */ = {isa = PBXBuildFile; fileRef = C66E37E01D5238D40015F602 /* filledCircleSwift.png */; };
+		C66E37E31D5238D40015F602 /* filledCircleGrey.png in Resources */ = {isa = PBXBuildFile; fileRef = C66E37E11D5238D40015F602 /* filledCircleGrey.png */; };
+		C66E37E51D523CAD0015F602 /* filledCircleWhite.png in Resources */ = {isa = PBXBuildFile; fileRef = C66E37E41D523CAD0015F602 /* filledCircleWhite.png */; };
 		C67787421D50279B00DF8AED /* profileVenue3rdCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67787411D50279B00DF8AED /* profileVenue3rdCell.swift */; };
 		C67830191C9CC76E00DC969D /* LatoTR-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C67830151C9CC72700DC969D /* LatoTR-Bold.ttf */; };
 		C678301A1C9CC76E00DC969D /* LatoTR-Hairline.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C67830161C9CC72700DC969D /* LatoTR-Hairline.ttf */; };
@@ -85,6 +89,8 @@
 		C6BA0A171BFA423E0091E088 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C6BA0A161BFA423E0091E088 /* libsqlite3.tbd */; };
 		C6C5DA4C1C951B6F00DC16EF /* leftarrow.png in Resources */ = {isa = PBXBuildFile; fileRef = C6C5DA4B1C951B6F00DC16EF /* leftarrow.png */; };
 		C6CBA4FF1C876EC300AE65AD /* ProfileOther.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CBA4FE1C876EC300AE65AD /* ProfileOther.swift */; };
+		C6D06F131D521E4300B8DEC4 /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = C6D06F121D521E4300B8DEC4 /* placeholder.png */; };
+		C6D06F151D52263D00B8DEC4 /* camera3thScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D06F141D52263D00B8DEC4 /* camera3thScreen.swift */; };
 		C6D0CDF31C44200F006AAFF0 /* TableViewCellFollowerFollowing.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D0CDF21C44200F006AAFF0 /* TableViewCellFollowerFollowing.swift */; };
 		C6D0D2B81C8BD74F00462BB7 /* FacebookButton.png in Resources */ = {isa = PBXBuildFile; fileRef = C6D0D2B71C8BD74F00462BB7 /* FacebookButton.png */; };
 		C6D2BB3B1D4A6FE9000AE25E /* profileVenue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D2BB3A1D4A6FE9000AE25E /* profileVenue.swift */; };
@@ -214,6 +220,10 @@
 		C65A45131C694E8D00E9DA6F /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		C65C4F741C8E20B300DB5068 /* CaptureCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptureCollectionCell.swift; sourceTree = "<group>"; };
 		C66743821CEB84410020D514 /* SideProfilePic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideProfilePic.swift; sourceTree = "<group>"; };
+		C66E37DE1D52306F0015F602 /* collection3thCameraCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = collection3thCameraCell.swift; sourceTree = "<group>"; };
+		C66E37E01D5238D40015F602 /* filledCircleSwift.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = filledCircleSwift.png; sourceTree = "<group>"; };
+		C66E37E11D5238D40015F602 /* filledCircleGrey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = filledCircleGrey.png; sourceTree = "<group>"; };
+		C66E37E41D523CAD0015F602 /* filledCircleWhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = filledCircleWhite.png; sourceTree = "<group>"; };
 		C67787411D50279B00DF8AED /* profileVenue3rdCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = profileVenue3rdCell.swift; sourceTree = "<group>"; };
 		C67830151C9CC72700DC969D /* LatoTR-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "LatoTR-Bold.ttf"; sourceTree = "<group>"; };
 		C67830161C9CC72700DC969D /* LatoTR-Hairline.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "LatoTR-Hairline.ttf"; sourceTree = "<group>"; };
@@ -245,6 +255,8 @@
 		C6BA0A161BFA423E0091E088 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		C6C5DA4B1C951B6F00DC16EF /* leftarrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leftarrow.png; sourceTree = "<group>"; };
 		C6CBA4FE1C876EC300AE65AD /* ProfileOther.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileOther.swift; sourceTree = "<group>"; };
+		C6D06F121D521E4300B8DEC4 /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholder.png; sourceTree = "<group>"; };
+		C6D06F141D52263D00B8DEC4 /* camera3thScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = camera3thScreen.swift; sourceTree = "<group>"; };
 		C6D0CDF21C44200F006AAFF0 /* TableViewCellFollowerFollowing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCellFollowerFollowing.swift; sourceTree = "<group>"; };
 		C6D0D2B71C8BD74F00462BB7 /* FacebookButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FacebookButton.png; sourceTree = "<group>"; };
 		C6D2BB3A1D4A6FE9000AE25E /* profileVenue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = profileVenue.swift; sourceTree = "<group>"; };
@@ -384,6 +396,7 @@
 				C67C444E1C75D69700FCB157 /* MyCollectionViewCell.swift */,
 				C66743821CEB84410020D514 /* SideProfilePic.swift */,
 				C65C4F741C8E20B300DB5068 /* CaptureCollectionCell.swift */,
+				C66E37DE1D52306F0015F602 /* collection3thCameraCell.swift */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -391,12 +404,14 @@
 		C60905381C48140A00614C7F /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				C6D06F141D52263D00B8DEC4 /* camera3thScreen.swift */,
+				C6F9F5501C12574500E62856 /* CapturePreviewController.swift */,
 				C60905351C4812A100614C7F /* ContainerController.swift */,
 				C609053B1C48145700614C7F /* SideBarController.swift */,
 				C6411C3F1D1AFCEA00E29DA6 /* termsPrivacy.swift */,
+				C6D06F121D521E4300B8DEC4 /* placeholder.png */,
 				C60905391C48143C00614C7F /* MainController.swift */,
 				38EAEA611CF111870053249F /* EventController.swift */,
-				C6F9F5501C12574500E62856 /* CapturePreviewController.swift */,
 				C6917F911BFA60B700CA501A /* CameraViewController.swift */,
 				C6F9B5C71C80DD9300C7E9FC /* HomePageViewController.swift */,
 				C6F9B5C91C80DDF400C7E9FC /* NotificationsViewController.swift */,
@@ -446,6 +461,9 @@
 				C6D2BB3E1D4A8218000AE25E /* profileVenue1stCell.swift */,
 				C6D2BB3C1D4A78A8000AE25E /* profileVenue2ndCell.swift */,
 				C67787411D50279B00DF8AED /* profileVenue3rdCell.swift */,
+				C66E37E01D5238D40015F602 /* filledCircleSwift.png */,
+				C66E37E11D5238D40015F602 /* filledCircleGrey.png */,
+				C66E37E41D523CAD0015F602 /* filledCircleWhite.png */,
 				C6B7C9EA1C7BE7EF005607EC /* ProfileLocation.swift */,
 				C6CBA4FE1C876EC300AE65AD /* ProfileOther.swift */,
 				C63FBD061BF3E5B900DBB34C /* AppDelegate.swift */,
@@ -762,6 +780,7 @@
 				C6D720CB1D21ECFC00FF1998 /* 4paylaş.jpg in Resources */,
 				C678301B1C9CC76E00DC969D /* LatoTR-Light.ttf in Resources */,
 				C6537F511CA9F4E8005EE0BA /* Sent-96.png in Resources */,
+				C66E37E31D5238D40015F602 /* filledCircleGrey.png in Resources */,
 				C678301C1C9CC76E00DC969D /* LatoTR-Regular.ttf in Resources */,
 				C63FBD111BF3E5B900DBB34C /* LaunchScreen.storyboard in Resources */,
 				C6D720C71D21ECFC00FF1998 /* 5paylas.jpg in Resources */,
@@ -779,6 +798,7 @@
 				C6D720C21D21ECFC00FF1998 /* Plushaber.jpg in Resources */,
 				C6E86EAF1CB0E68E00203513 /* Launch Screen.storyboard in Resources */,
 				C6537F591CAD64F9005EE0BA /* Menunew.png in Resources */,
+				C6D06F131D521E4300B8DEC4 /* placeholder.png in Resources */,
 				C6F7B26B1C1351A20062E408 /* Added.xib in Resources */,
 				C62B17F11D0B2EC8004CD060 /* shirt-2.png in Resources */,
 				C610D38C1CC399F20080D48D /* backButton.png in Resources */,
@@ -788,12 +808,14 @@
 				E37D486D1C9B11DB00587406 /* profilepic.png in Resources */,
 				C6BA05141D13F90E00AB89FF /* TwitterCell.xib in Resources */,
 				C6D720CC1D21ECFC00FF1998 /* 4kesfer.jpg in Resources */,
+				C66E37E51D523CAD0015F602 /* filledCircleWhite.png in Resources */,
 				C6D720C41D21ECFC00FF1998 /* 6kesfet.jpg in Resources */,
 				C6D720CE1D21ECFC00FF1998 /* 4haber.jpg in Resources */,
 				C6F7B26D1C1351BB0062E408 /* Tagged.xib in Resources */,
 				C6D0D2B81C8BD74F00462BB7 /* FacebookButton.png in Resources */,
 				C610230A1C19FDCA00E9CA73 /* Main.storyboard in Resources */,
 				C69B824B1CA1102D008658CF /* sign-2.png in Resources */,
+				C66E37E21D5238D40015F602 /* filledCircleSwift.png in Resources */,
 				C6D720C91D21ECFC00FF1998 /* 5hosgeldin.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -881,6 +903,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C6D06F151D52263D00B8DEC4 /* camera3thScreen.swift in Sources */,
 				C68872861C8CED2800BDBE00 /* OptionCell.swift in Sources */,
 				E33DCC691CB3F5250081C0DF /* MolocateVideo.swift in Sources */,
 				E37D043E1D25EFF000F5E5C7 /* TestViewController.swift in Sources */,
@@ -920,6 +943,7 @@
 				E33DCC6D1CB3FA2D0081C0DF /* MolocateNotifications.swift in Sources */,
 				C64B601E1C81D6A500E510DC /* MolocateAccount.swift in Sources */,
 				C6D2BB3D1D4A78A8000AE25E /* profileVenue2ndCell.swift in Sources */,
+				C66E37DF1D52306F0015F602 /* collection3thCameraCell.swift in Sources */,
 				C6D2BB3F1D4A8218000AE25E /* profileVenue1stCell.swift in Sources */,
 				C6E92F781CCFD0F900CAE237 /* SearchVenue.swift in Sources */,
 				C6D785471D0604C900DA59B3 /* profile3thCell.swift in Sources */,
