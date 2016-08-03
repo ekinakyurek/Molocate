@@ -21,9 +21,7 @@ class MyProfile: UIViewController , UIScrollViewDelegate, UITableViewDelegate, U
     
     //errormessage: UILabel!
     @IBOutlet var username: UILabel!
-    
     @IBOutlet var profilePhoto: UIImageView!
-    
     @IBOutlet var addedButton: UIButton!
     @IBOutlet var taggedButton: UIButton!
     @IBOutlet var back: UIBarButtonItem!

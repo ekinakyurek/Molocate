@@ -86,7 +86,7 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
         else if indexPath.row == 0 {
             return estRowH}
         else{
-            return MolocateDevice.size.height-75
+            return MolocateDevice.size.height - 75
         }
     }
  
@@ -162,12 +162,15 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
                 cell.taggedButton.titleLabel!.font = UIFont(name: "AvenirNext-Regular", size: 14)
                 cell.videosButton.setTitleColor(swiftColor, forState: .Normal)
                 cell.taggedButton.setTitleColor(greyColor1, forState: .Normal)
+               
+                
             } else {
+                
+                
                 cell.videosButton.titleLabel!.font = UIFont(name: "AvenirNext-Regular", size: 14)
                 cell.taggedButton.titleLabel!.font = UIFont(name: "AvenirNext-DemiBold", size: 14)
                 cell.videosButton.setTitleColor(greyColor1, forState: .Normal)
                 cell.taggedButton.setTitleColor(swiftColor, forState: .Normal)
-                
             }
             cell.redLabel.frame.origin.x = redLabelOrigin
             
@@ -235,7 +238,7 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
                     let cell = tableView.cellForRowAtIndexPath(indexPath) as! profile3thCell
             
                     redLabelOrigin  = scrollView.contentOffset.x / 2
-                    if scrollView.contentOffset.x < MolocateDevice.size.width{
+                    if scrollView.contentOffset.x < MolocateDevice.size.width / 2{
                         vidortag = false
                     }
                     else{
@@ -291,7 +294,9 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
         BVc.player2.stop()
         BVc.player1.stop()
         let indexPath = NSIndexPath(forRow: 2, inSection: 0)
-        redLabelOrigin = 0
+      
+            self.redLabelOrigin = 0
+       
         let cell = tableView.cellForRowAtIndexPath(indexPath) as! profile3thCell
         
 //        cell.redLabel.frame.origin.x = 0
@@ -302,7 +307,7 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
         
         let indexPath2 = NSIndexPath(forRow: 3, inSection: 0)
         
-        tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
         tableView.reloadRowsAtIndexPaths([indexPath2], withRowAnimation: .None)
         
         
@@ -317,14 +322,15 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
         AVc.player1.stop()
         let indexPath = NSIndexPath(forRow: 2, inSection: 0)
         let cell = tableView.cellForRowAtIndexPath(indexPath) as! profile3thCell
-        redLabelOrigin = MolocateDevice.size.width/2
+        
+            self.redLabelOrigin = MolocateDevice.size.width/2
         let indexPath2 = NSIndexPath(forRow: 3, inSection: 0)
 //        cell.redLabel.frame.origin.x = MolocateDevice.size.width / 2
 //        cell.videosButton.titleLabel!.font = UIFont(name: "AvenirNext-Regular", size: 14)
 //        cell.taggedButton.titleLabel!.font = UIFont(name: "AvenirNext-DemiBold", size: 14)
 //        cell.videosButton.setTitleColor(greyColor1, forState: .Normal)
 //        cell.taggedButton.setTitleColor(swiftColor, forState: .Normal)
-        tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
         tableView.reloadRowsAtIndexPaths([indexPath2], withRowAnimation: .None)
         
     }
