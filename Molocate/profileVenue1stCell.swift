@@ -17,7 +17,7 @@ class profileVenue1stCell: UITableViewCell {
     @IBOutlet var adressVenue: UILabel!
     @IBOutlet var nameVenue: UILabel!
     @IBOutlet var mapView: MKMapView!
-    
+    @IBOutlet var goMapButton: UIButton!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

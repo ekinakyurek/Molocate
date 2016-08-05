@@ -1,7 +1,10 @@
 import UIKit
 
 class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,UIScrollViewDelegate,  UIGestureRecognizerDelegate{
+    
+    @IBOutlet var optionsTable: UITableView!
     let AVc :Added =  Added(nibName: "Added", bundle: nil);
+    @IBOutlet var followButton: UIBarButtonItem!
     let BVc :Tagged =  Tagged(nibName: "Tagged", bundle: nil);
      var isItMyProfile = true
     var classUser = MoleUser()
@@ -11,9 +14,9 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
     var redLabelOrigin = 0.0 as! CGFloat
     var estRowH = 150.0 as! CGFloat
     var vidortag = false // videoysa false
+    let names = ["AYARLAR","PROFİLİ DÜZENLE", "ÇIKIŞ YAP"]
     @IBOutlet var tableView: UITableView!
-    
-    @IBOutlet var followButton: UIBarButtonItem!
+  
  
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +29,12 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
         tableView.separatorColor = UIColor.clearColor()
         //tableView.scrollEnabled = false
         tableView.pagingEnabled = true
+        
+        optionsTable.layer.zPosition = 1
+        optionsTable.hidden = true
+        optionsTable.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.width, self.view.frame.width)
+        optionsTable.layer.cornerRadius = 0
+        optionsTable.tintColor = UIColor.clearColor()
        
         let gesture = UISwipeGestureRecognizer(target: self, action: #selector(profileUser.adjustTable))
         gesture.delegate = self
@@ -133,7 +142,16 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
     }
  
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if tableView == optionsTable {
+            if indexPath.row == 0{
+                return 90
+            }
+            else{
+                return 60
+            }
+        }
         
+        else {
         if indexPath.row == 1{
             return 80
         }
@@ -145,14 +163,90 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
         else{
         return MolocateDevice.size.height-75
         }
+    }
         
     }
     
 
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+         if tableView == optionsTable {
+            
+            
+            self.tableView.scrollEnabled = true
+            //???What is doing that animation
+            if(indexPath.row == 0){
+                UIView.animateWithDuration(0.75) { () -> Void in
+                    self.tableView.userInteractionEnabled = true
+                    self.tableView.alpha = 1
+                    self.optionsTable.hidden = true
+                    
+                    self.navigationController?.navigationBarHidden = false
+                    
+                    
+                }
+            }
+            if indexPath.row == 1 {
+                self.tableView.userInteractionEnabled = true
+                self.tableView.alpha = 1
+                self.performSegueWithIdentifier("goEditProfile", sender: self)
+                self.optionsTable.hidden = true
+            }
+            if indexPath.row == 2 {
+                MolocateAccount.unregisterDevice({ (data, response, error) in
+                })
+                NSUserDefaults.standardUserDefaults().setObject(nil, forKey: "userToken")
+                sideClicked = false
+                profileOn = 0
+                category = "All"
+                comments = [MoleVideoComment]()
+                video_id = ""
+                user = MoleUser()
+                videoIndex = 0
+                isUploaded = true
+                choosedIndex = 2
+                frame = CGRect()
+                MoleCurrentUser = MoleUser()
+                MoleUserToken = nil
+                isRegistered = false
+                MoleGlobalVideo = nil
+                GlobalVideoUploadRequest = nil
+                
+                //navigationın düzelmesi sonrası bu böyle olucak
+                //self.parentViewController!.parentViewController!.performSegueWithIdentifier("logOut", sender: self)
+                self.parentViewController!.parentViewController!.performSegueWithIdentifier("logout", sender: self)
+            }
+        
+        }
+    }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
        
+    if tableView == optionsTable{
         
+        let cell = optionCell(style: UITableViewCellStyle.Default, reuseIdentifier: "myIdentifier")
+        
+        if indexPath.row == 0 {
+            cell.nameOption.frame = CGRectMake(MolocateDevice.size.width / 2 - 50, 40 , 100, 30)
+            cell.nameOption.textAlignment = .Center
+            cell.nameOption.textColor = UIColor.blackColor()
+            cell.arrow.hidden = true
+            cell.cancelLabel.hidden = false
+        }else {
+            cell.cancelLabel.hidden = true
+        }
+        cell.nameOption.text = names[indexPath.row]
+        cell.backgroundColor = UIColor.whiteColor()
+        
+        return cell
+
+
+        }
+            
+            
+            
+            
+            
+    else {
         if indexPath.row == 0 {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell1", forIndexPath: indexPath) as! profile1stCell
             
@@ -270,7 +364,7 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
        
         
         
-        
+        }
     }
     
     func photoPressed(sender: UIButton){
@@ -307,6 +401,19 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
         
     }
     
+    func showTable(){
+        UIView.animateWithDuration(0.25) { () -> Void in
+            self.navigationController?.navigationBarHidden = true
+            self.tableView.userInteractionEnabled = false
+            
+            self.tableView.scrollEnabled = false
+            self.optionsTable.hidden = false
+            self.optionsTable.frame = CGRectMake(self.view.frame.origin.x,self.view.frame.origin.y,self.view.frame.width,self.view.frame.size.width)
+            self.tableView.alpha = 0.4
+        }
+        
+    }
+    
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         
@@ -314,15 +421,19 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
         let sv = (tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 3, inSection: 0)) as! profile4thCell).scrollView
         if scrollView == sv {
                     let indexPath = NSIndexPath(forRow: 2, inSection: 0)
-            
                     let cell = tableView.cellForRowAtIndexPath(indexPath) as! profile3thCell
             
                     redLabelOrigin  = scrollView.contentOffset.x / 2
                     if scrollView.contentOffset.x < MolocateDevice.size.width / 2{
                         vidortag = false
+                      
+                        BVc.player2.stop()
+                        BVc.player1.stop()
                     }
                     else{
                         vidortag = true
+                        AVc.player2.stop()
+                        AVc.player1.stop()
                     }
                     //tableView.reloadData()
                     //tableView.cellForRowAtIndexPath(indexPath)
@@ -376,7 +487,7 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
         let indexPath = NSIndexPath(forRow: 2, inSection: 0)
       
             self.redLabelOrigin = 0
-       
+        
         let cell = tableView.cellForRowAtIndexPath(indexPath) as! profile3thCell
         
 //        cell.redLabel.frame.origin.x = 0
@@ -391,6 +502,66 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
         tableView.reloadRowsAtIndexPaths([indexPath2], withRowAnimation: .None)
         
         
+        
+    }
+    @IBAction func followButton(sender: AnyObject) {
+        if(classUser.username == MoleCurrentUser.username){
+            showTable() //Settings table
+            tableView.userInteractionEnabled = false // can be apply for search in maincontroller
+        }else {
+            if !classUser.isFollowing{
+                followButton.image = UIImage(named: "unfollow")
+                classUser.isFollowing = true
+                classUser.follower_count+=1
+                MoleCurrentUser.following_count += 1
+                let indexPath = NSIndexPath(forRow: 1, inSection: 0)
+
+                let cell = tableView.cellForRowAtIndexPath(indexPath) as! profile2ndCell
+                cell.numberFollower.text = "\(self.classUser.follower_count)"
+                tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+                
+                MolocateAccount.follow(classUser.username, completionHandler: { (data, response, error) -> () in
+                    //IMP:if request is failed delete change
+                })
+            }else {
+                let actionSheetController: UIAlertController = UIAlertController(title: "Takibi bırakmak istediğine emin misin?", message: nil, preferredStyle: .ActionSheet)
+                let cancelAction: UIAlertAction = UIAlertAction(title: "Vazgeç", style: .Cancel) { action -> Void in}
+                actionSheetController.addAction(cancelAction)
+                
+                let takePictureAction: UIAlertAction = UIAlertAction(title: "Takibi Bırak", style: .Default)
+                { action -> Void in
+                    
+                    self.followButton.image = UIImage(named: "follow")
+                    self.classUser.isFollowing = false
+                    self.classUser.follower_count -= 1
+                    let indexPath = NSIndexPath(forRow: 1, inSection: 0)
+                    let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! profile2ndCell
+                    cell.numberFollower.text = "\(self.classUser.follower_count)"
+                    self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+                    
+                    cell.numberFollower.text = "\(self.classUser.follower_count)"
+                    MoleCurrentUser.following_count -= 1
+                    MolocateAccount.unfollow(self.classUser.username, completionHandler: { (data, response, error) -> () in
+                        //IMP:if request is failed delete change
+                        if let parentVC = self.parentViewController {
+                            if let parentVC = parentVC as? Followers{
+                                MolocateAccount.getFollowings(username: MoleCurrentUser.username, completionHandler: { (data, response, error, count, next, previous) in
+                                    dispatch_async(dispatch_get_main_queue()) {
+                                        parentVC.userRelations = data
+                                        parentVC.myTable.reloadData()
+                                    }
+                                })
+                            }
+                        }
+                    })
+                }
+                
+                actionSheetController.addAction(takePictureAction)
+                actionSheetController.popoverPresentationController?.sourceView = sender as? UIView
+                self.presentViewController(actionSheetController, animated: true, completion: nil)
+            }
+            
+        }
         
     }
     
@@ -416,7 +587,13 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if tableView == optionsTable {
+        return 3
+        }
+        
+        else {
         return 4
+        }
     }
     
         override func viewWillAppear(animated: Bool) {

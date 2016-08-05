@@ -31,6 +31,9 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
     let imagePicker = UIImagePickerController()
     let erkekimage : UILabel = UILabel()
     let kadınimage :UILabel = UILabel()
+    let caption :UITextView = UITextView()
+    
+    let lineColor = UIColor(netHex: 0xCCCCCC)
     
     var thumbnail: UIImage?
     var selected: UIImage?
@@ -94,22 +97,11 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
     func addNotificationsPart(screenWidth: CGFloat, screenHeight: CGFloat){
         let scr = screenHeight-0
    
-        notification.frame = CGRectMake(0, 0 + (scr * (43 / 120)), screenWidth / 3, (scr * 6) / 120)
-        notification.text = "Bildirimler:"
+        notification.frame = CGRectMake(0, 0 + (scr * (42 / 120)), screenWidth / 3, (scr * 6) / 120)
+        notification.text = "Durum:"
         notification.textAlignment = .Right
         notification.font = UIFont (name: "AvenirNext-Regular", size: 16)
         self.view.addSubview(notification)
-        
-        let xvalue : CGFloat = (screenWidth - screenWidth / 3 ) / 2 + screenWidth / 3 - 20
-        let yvalue : CGFloat = 0 + (scr * (46 / 120))
-        
-  
-        switchDemo.center.x = xvalue
-        switchDemo.center.y = yvalue
-        switchDemo.transform = CGAffineTransformMakeScale( screenHeight / 667 , screenHeight / 667 )
-        switchDemo.addTarget(self, action: #selector(editProfile.switchValueDidChange(_:)), forControlEvents: .ValueChanged)
-        self.view.addSubview(switchDemo)
-        
 
     }
     
@@ -124,7 +116,7 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
             photo.image = UIImage(named: "profile")!
         }
         
-        photo.frame = CGRectMake((screenWidth / 2) - ((scr * 21) / 240) , 0 + (scr * 2) / 120 , (scr * 21) / 120 , (scr * 21) / 120)
+        photo.frame = CGRectMake((screenWidth / 2) - ((scr * 19) / 240) , 0 + (scr * 2) / 120 , (scr * 19) / 120 , (scr * 19) / 120)
         photo.layer.borderWidth = 0.1
         photo.layer.masksToBounds = false
         photo.backgroundColor = profileBackgroundColor
@@ -134,7 +126,7 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
         
         
         let changePhoto   = UIButton(type: UIButtonType.System) as UIButton
-        changePhoto.frame = CGRectMake((screenWidth / 2) - 40, 0 + (scr * 24) / 120 , 80 , (scr * 5) / 120)
+        changePhoto.frame = CGRectMake((screenWidth / 2) - 40, 0 + (scr * 22) / 120 , 80 , (scr * 5) / 120)
         changePhoto.backgroundColor = swiftColor
         changePhoto.layer.cornerRadius = 10
         changePhoto.layer.borderWidth = 0
@@ -181,14 +173,18 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
     func addNamePart(screenWidth: CGFloat, screenHeight: CGFloat){
         let scr = screenHeight-0
      
-        name.frame = CGRectMake(0, 0 + (scr * (33 / 120)), screenWidth / 3, (scr * 6) / 120)
+        name.frame = CGRectMake(0, 0 + (scr * (31 / 120)), screenWidth / 3, (scr * 6) / 120)
         name.text = "İsim Soyisim:"
         name.textAlignment = .Right
         name.font = UIFont (name: "AvenirNext-Regular", size: 16)
+        name.layer.borderWidth = 0.3
+        name.layer.borderColor = lineColor.CGColor
         self.view.addSubview(name)
         
     
-        nameText.frame = CGRectMake(screenWidth / 3 + 10 , 0 + (scr * (33 / 120)), (screenWidth - (screenWidth / 3) - 30)  - 5, (scr * 6) / 120)
+        
+        
+        nameText.frame = CGRectMake(screenWidth / 3 + 10 , 0 + (scr * (31 / 120)), (screenWidth - (screenWidth / 3) - 30)  - 5, (scr * 6) / 120)
         nameText.borderStyle = .RoundedRect
         nameText.textColor = UIColor.blackColor()
         nameText.keyboardType = .Default
@@ -196,6 +192,19 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
         nameText.font = UIFont(name: "AvenirNext-Regular", size: 14)
         nameText.text = user.first_name
         self.view.addSubview(nameText)
+        
+        caption.frame = CGRectMake(screenWidth / 3 + 10 , 0 + (scr * (41 / 120)), (screenWidth - (screenWidth / 3) - 30)  - 5, (scr * 8) / 120)
+        
+        caption.layer.borderColor = lineColor.CGColor
+        caption.layer.borderWidth = 0.5
+        caption.layer.cornerRadius = 10
+        //ca = .RoundedRect
+        caption.textColor = UIColor.blackColor()
+        caption.keyboardType = .Default
+        //user.printUser()
+        caption.font = UIFont(name: "AvenirNext-Regular", size: 14)
+        caption.text = ""
+        self.view.addSubview(caption)
         
       
         
@@ -263,39 +272,39 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
     func addlines(screenWidth: CGFloat, screenHeight: CGFloat){
         let scr = screenHeight - 0
         
-        let line1 = UIView(frame: CGRectMake(0 , 0 + (scr * (31 / 120)) , screenWidth , 1.0))
+        let line1 = UIView(frame: CGRectMake(0 , 0 + (scr * (29 / 120)) , screenWidth , 1.0))
         line1.layer.borderWidth = 1.0
-        line1.layer.borderColor = UIColor.lightGrayColor().CGColor
+        line1.layer.borderColor = lineColor.CGColor
         self.view.addSubview(line1)
         
         
-        let line3 = UIView(frame: CGRectMake(0 , 0 + (scr * (41 / 120)) , screenWidth , 1.0))
+        let line3 = UIView(frame: CGRectMake(0 , 0 + (scr * (39 / 120)) , screenWidth , 1.0))
         line3.layer.borderWidth = 1.0
-        line3.layer.borderColor = UIColor.lightGrayColor().CGColor
+        line3.layer.borderColor = lineColor.CGColor
         self.view.addSubview(line3)
         
         
         
-        let line5 = UIView(frame: CGRectMake(0 , 0 + (scr * (51 / 120)) , screenWidth , 1.0))
-        line5.layer.borderWidth = 1.0
-        line5.layer.borderColor = UIColor.lightGrayColor().CGColor
+        let line5 = UIView(frame: CGRectMake(0 , 0 + (scr * (51 / 120)) , screenWidth , 0.5))
+        line5.layer.borderWidth = 0.5
+        line5.layer.borderColor = lineColor.CGColor
         self.view.addSubview(line5)
         
         
-        let line7 = UIView(frame: CGRectMake(0 , 0 + (scr * (61 / 120)) , screenWidth , 1.0))
-        line7.layer.borderWidth = 1.0
-        line7.layer.borderColor = UIColor.lightGrayColor().CGColor
+        let line7 = UIView(frame: CGRectMake(0 , 0 + (scr * (61 / 120)) , screenWidth , 0.5))
+        line7.layer.borderWidth = 0.5
+        line7.layer.borderColor = lineColor.CGColor
         self.view.addSubview(line7)
         
         
-        let line11 = UIView(frame: CGRectMake(0 , 0 + (scr * (81 / 120)) , screenWidth , 1.0))
-        line11.layer.borderWidth = 1.0
-        line11.layer.borderColor = UIColor.lightGrayColor().CGColor
+        let line11 = UIView(frame: CGRectMake(0 , 0 + (scr * (81 / 120)) , screenWidth , 0.5))
+        line11.layer.borderWidth = 0.5
+        line11.layer.borderColor = lineColor.CGColor
         self.view.addSubview(line11)
         
-        let line12 = UIView(frame: CGRectMake(0 , 0 + (scr * (89 / 120)) , screenWidth , 1.0))
-        line12.layer.borderWidth = 1.0
-        line12.layer.borderColor = UIColor.lightGrayColor().CGColor
+        let line12 = UIView(frame: CGRectMake(0 , 0 + (scr * (89 / 120)) , screenWidth , 0.5))
+        line12.layer.borderWidth = 0.5
+        line12.layer.borderColor = lineColor.CGColor
         self.view.addSubview(line12)
         
     }
@@ -324,7 +333,6 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
         
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        
         user.birthday = dateFormatter.stringFromDate(datepicker.date)
         MoleCurrentUser = user
         
@@ -465,19 +473,19 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
         //print("picker cancel.")
     }
     
-    
-    //buradan  cinsiyeti yolla
-    func switchValueDidChange(sender:UISwitch!)
-    {
-        if (sender.on == true){
-            print("on")
-            
-        }
-        else{
-            print("off")
-        }
-    }
-    
+//    
+//    //buradan  cinsiyeti yolla
+//    func switchValueDidChange(sender:UISwitch!)
+//    {
+//        if (sender.on == true){
+//            print("on")
+//            
+//        }
+//        else{
+//            print("off")
+//        }
+//    }
+//    
     
     func displayAlert(title: String, message: String) {
         

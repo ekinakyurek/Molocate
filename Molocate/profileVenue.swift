@@ -144,8 +144,7 @@ class profileVenue: UIViewController, UICollectionViewDelegateFlowLayout,NSURLCo
             let annotation = MKPointAnnotation()
             annotation.coordinate = location
              cell.mapView.addAnnotation(annotation)
-            
-            
+            cell.goMapButton.addTarget(self, action: #selector(profileVenue.launchMap(_:)), forControlEvents: .TouchUpInside)
             cell.nameVenue.text = thePlace.name
             self.navigationController!.topViewController!.title = thePlace.name
             //LocationTitle.text = thePlace.name
@@ -176,7 +175,53 @@ class profileVenue: UIViewController, UICollectionViewDelegateFlowLayout,NSURLCo
         func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
             return 3
         }
+    
+    func launchMap(sender: UIButton) {
         
+        let actionSheetController: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        
+        
+        let cancelAction: UIAlertAction = UIAlertAction(title: "Vazgeç", style: .Cancel) { action -> Void in
+            //Just dismiss the action sheet
+        }
+        actionSheetController.addAction(cancelAction)
+        //Create and add first option action
+        let takePictureAction: UIAlertAction = UIAlertAction(title: "Haritaya Yönlendir", style: .Default)
+        { action -> Void in
+            
+            self.openMapForPlace()
+            
+        }
+        actionSheetController.addAction(takePictureAction)
+        //We need to provide a popover sourceView when using it on iPad
+        actionSheetController.popoverPresentationController?.sourceView = sender as? UIView
+        
+        //Present the AlertController
+        self.presentViewController(actionSheetController, animated: true, completion: nil)
+ 
+    }
+
+    func openMapForPlace() {
+        let regionDistance: CLLocationDistance = 10000
+        //mekanın koordinatları eklenecek
+        
+        let coordinates = CLLocationCoordinate2DMake(thePlace.lat , thePlace.lon)
+        let regionSpan = MKCoordinateRegionMakeWithDistance(coordinates, regionDistance, regionDistance)
+        let options = [
+            MKLaunchOptionsMapCenterKey: NSValue(MKCoordinate: regionSpan.center),
+            MKLaunchOptionsMapSpanKey: NSValue(MKCoordinateSpan: regionSpan.span)
+        ]
+        
+        let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
+        let mapItem = MKMapItem(placemark: placemark)
+        //mekanın adı eklenecek
+        mapItem.name = thePlace.name
+        
+        MKMapItem.openMapsWithItems([mapItem], launchOptions: options)
+    }
+    
+  
+    
     
     func RefreshGuiWithData(){
         

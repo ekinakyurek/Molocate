@@ -251,6 +251,8 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
             
             BVc.player1.stop()
             BVc.player2.stop()
+            AVc.player1.playFromCurrentTime()
+            AVc.player2.playFromCurrentTime()
             if(classUser.post_count != 0 || classUser.tag_count != 0 ) {
                 //errormessage.hidden = true
             }
@@ -260,7 +262,8 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
             taggedButton.titleLabel?.textColor = UIColor.blackColor()
         }
         else{
-            
+            BVc.player1.playFromBeginning()
+            BVc.player2.playFromCurrentTime()
             AVc.player1.stop()
             AVc.player2.stop()
             if(classUser.tag_count != 0  && classUser.post_count != 0) {
