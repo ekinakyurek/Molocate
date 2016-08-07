@@ -25,8 +25,8 @@ class profileVenue: UIViewController, UICollectionViewDelegateFlowLayout,NSURLCo
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        thePlace = MolePlace()
         
+        thePlace = MolePlace()
         tableView.estimatedRowHeight = 250
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.allowsSelection = false

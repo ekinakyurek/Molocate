@@ -409,9 +409,6 @@
 		C60905381C48140A00614C7F /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
-				C6D06F141D52263D00B8DEC4 /* camera3thScreen.swift */,
-				C6F9F5501C12574500E62856 /* CapturePreviewController.swift */,
-				C6917F911BFA60B700CA501A /* CameraViewController.swift */,
 				C60905351C4812A100614C7F /* ContainerController.swift */,
 				C609053B1C48145700614C7F /* SideBarController.swift */,
 				C6411C3F1D1AFCEA00E29DA6 /* termsPrivacy.swift */,
@@ -453,10 +450,10 @@
 			isa = PBXGroup;
 			children = (
 				C61023091C19FDCA00E9CA73 /* Main.storyboard */,
-				C6A461581D54E208003BB342 /* cameraSearchVenue.swift */,
 				C6E86EAE1CB0E68D00203513 /* Launch Screen.storyboard */,
 				C63FBD121BF3E5B900DBB34C /* Info.plist */,
 				3862A5891CAA005D00D41791 /* Molocate.entitlements */,
+				C6D4C18F1D574DDE005FBC9D /* camera */,
 				C67D5B891D206259003DFC45 /* tutorial */,
 				C6D785421D05FB3000DA59B3 /* profileUser.swift */,
 				C6CBA4FE1C876EC300AE65AD /* ProfileOther.swift */,
@@ -578,6 +575,17 @@
 				C67830181C9CC72700DC969D /* LatoTR-Regular.ttf */,
 			);
 			name = "fonts-lato";
+			sourceTree = "<group>";
+		};
+		C6D4C18F1D574DDE005FBC9D /* camera */ = {
+			isa = PBXGroup;
+			children = (
+				C6A461581D54E208003BB342 /* cameraSearchVenue.swift */,
+				C6D06F141D52263D00B8DEC4 /* camera3thScreen.swift */,
+				C6917F911BFA60B700CA501A /* CameraViewController.swift */,
+				C6F9F5501C12574500E62856 /* CapturePreviewController.swift */,
+			);
+			name = camera;
 			sourceTree = "<group>";
 		};
 		C6D720D01D21ED1C00FF1998 /* tutorial image */ = {

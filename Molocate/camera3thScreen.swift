@@ -7,14 +7,42 @@
 //
 
 import UIKit
+import AVFoundation
+import AVKit
+import AWSS3
+import Photos
+import QuadratTouch
 
-class camera3thScreen: UIViewController,UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+
+class camera3thScreen: UIViewController,UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,UITextViewDelegate {
     
     
     
-    @IBOutlet var venueName: UILabel!
+    @IBOutlet var selectVenue: UIButton!
     @IBOutlet var toolBar: UIToolbar!
+    @IBOutlet var textView: UITextView!
+    @IBOutlet var venueName: UILabel!
+    var searchDict:[[String:locationss]]!
+    var searchArray:[String]!
+    var isCategorySelected = false
+    var isLocationSelected = false
+    var autocompleteUrls = [String]()
+    var videoURL: NSURL?
     
+    @IBAction func selectVenue(sender: AnyObject) {
+       
+        let controller:cameraSearchVenue = self.storyboard!.instantiateViewControllerWithIdentifier("cameraSearchVenue") as! cameraSearchVenue
+        controller.view.layer.zPosition = 1
+        
+        //controller.ANYPROPERTY=THEVALUE // If you want to pass value
+        controller.view.frame = self.view.bounds;
+        //controller.numbers = numbers
+        controller.willMoveToParentViewController(self)
+        self.view.addSubview(controller.view)
+        self.addChildViewController(controller)
+        controller.didMoveToParentViewController(self)
+        
+    }
     struct locationss{
         var id = ""
         var name = ""
@@ -23,7 +51,42 @@ class camera3thScreen: UIViewController,UICollectionViewDelegate, UICollectionVi
         var adress = ""
     }
     
+    @IBAction func backButton(sender: AnyObject) {
+        let alertController = UIAlertController(title: "Emin misiniz?", message: "Geriye giderseniz videonuz silinecektir.", preferredStyle: .Alert)
+        
+        let cancelAction = UIAlertAction(title: "Vazgeç", style: .Cancel) { (action) in
+            // ...
+        }
+        alertController.addAction(cancelAction)
+        
+        let OKAction = UIAlertAction(title: "Evet", style: .Default) { (action) in
+            dispatch_async(dispatch_get_main_queue()) {
+                let cleanup: dispatch_block_t = {
+                    do {
+                        try NSFileManager.defaultManager().removeItemAtURL(self.videoURL!)
+                        
+                    } catch _ {}
+                    
+                }
+                cleanup()
+                placesArray.removeAll()
+                placeOrder.removeAllObjects()
+                self.performSegueWithIdentifier("backToCamera", sender: self)
+                
+                
+                
+            }
+        }
+        alertController.addAction(OKAction)
+        
+        self.presentViewController(alertController, animated: true) {
+            // ...
+        }
+        
+        
+    }
     @IBAction func buttonVenues(sender: AnyObject) {
+        
     }
     
     var videoLocation:locationss!
@@ -34,6 +97,8 @@ class camera3thScreen: UIViewController,UICollectionViewDelegate, UICollectionVi
     let greyColor = UIColor(netHex: 0xCCCCCC)
      @IBOutlet var collectionView: UICollectionView!
     
+    var CaptionText = ""
+    var selectedVenue = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         //let index = NSIndexPath(forRow: 0, inSection: 0)
@@ -41,10 +106,38 @@ class camera3thScreen: UIViewController,UICollectionViewDelegate, UICollectionVi
        
         self.collectionView.contentSize.width = MolocateDevice.size.width
         self.collectionView.backgroundColor = UIColor.whiteColor()
-   
-        
+        textView.delegate = self
+        view.layer.addSublayer(textView.layer)
         // Do any additional setup after loading the view.
+        
+        
+        if placesArray.count == 0 {
+            venueName.text = "Konum ara"
+        } else {
+            selectedVenue = placesArray[0]
+            venueName.text = selectedVenue
+            isLocationSelected = true
+        }
+        
+          NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(capturePreviewController.configurePlace), name: "configurePlace", object: nil)
+        
     }
+    
+    func randomStringWithLength (len : Int) -> NSString {
+        
+        let letters : NSString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        
+        let randomString : NSMutableString = NSMutableString(capacity: len)
+        
+        for _ in 0..<len{
+            let length = UInt32 (letters.length)
+            let rand = arc4random_uniform(length)
+            randomString.appendFormat("%C", letters.characterAtIndex(Int(rand)))
+        }
+        
+        return randomString
+    }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -55,6 +148,10 @@ class camera3thScreen: UIViewController,UICollectionViewDelegate, UICollectionVi
         
         
         return a
+    }
+    
+    
+    @IBAction func postVideo(sender: AnyObject) {
     }
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -94,27 +191,14 @@ class camera3thScreen: UIViewController,UICollectionViewDelegate, UICollectionVi
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath){
         
-        //dispatch_async(dispatch_get_main_queue()) {
-        
-        
         selectedCell = indexPath.row
         self.collectionView.reloadData()
-       
-        
-        //}
-        //  cell.backgroundColor = UIColor.purpleColor()
-        
+
     }
 
     
-        
-        //}
-        //  cell.backgroundColor = UIColor.purpleColor()
-        
     
-
     
-
     /*
     // MARK: - Navigation
 
