@@ -14,10 +14,11 @@ import Photos
 import QuadratTouch
 
 
+var selectedVenue = ""
+
 class camera3thScreen: UIViewController,UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,UITextViewDelegate {
     
-    
-    
+    let lineColor = UIColor(netHex: 0xCCCCCC)
     @IBOutlet var selectVenue: UIButton!
     @IBOutlet var toolBar: UIToolbar!
     @IBOutlet var textView: UITextView!
@@ -28,7 +29,7 @@ class camera3thScreen: UIViewController,UICollectionViewDelegate, UICollectionVi
     var isLocationSelected = false
     var autocompleteUrls = [String]()
     var videoURL: NSURL?
-    
+     var categ:String!
     @IBAction func selectVenue(sender: AnyObject) {
        
         let controller:cameraSearchVenue = self.storyboard!.instantiateViewControllerWithIdentifier("cameraSearchVenue") as! cameraSearchVenue
@@ -98,18 +99,22 @@ class camera3thScreen: UIViewController,UICollectionViewDelegate, UICollectionVi
      @IBOutlet var collectionView: UICollectionView!
     
     var CaptionText = ""
-    var selectedVenue = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //let index = NSIndexPath(forRow: 0, inSection: 0)
         //self.collectionView.selectItemAtIndexPath(index, animated: false, scrollPosition: UICollectionViewScrollPosition.None)
-       
+        selectVenue.layer.borderWidth = 0.5
+        selectVenue.layer.borderColor = lineColor.CGColor
         self.collectionView.contentSize.width = MolocateDevice.size.width
         self.collectionView.backgroundColor = UIColor.whiteColor()
         textView.delegate = self
         view.layer.addSublayer(textView.layer)
         // Do any additional setup after loading the view.
         
+        textView!.layer.borderWidth = 0.5
+        textView!.layer.borderColor = lineColor.CGColor
+
         
         if placesArray.count == 0 {
             venueName.text = "Konum ara"
@@ -152,7 +157,56 @@ class camera3thScreen: UIViewController,UICollectionViewDelegate, UICollectionVi
     
     
     @IBAction func postVideo(sender: AnyObject) {
+        if (!isLocationSelected || !isCategorySelected){
+            //self.postO.enabled = false
+            displayAlert("Dikkat", message: "Lütfen Kategori ve Konum seçiniz.")
+        }
+        else {
+            
+            let random = randomStringWithLength(64)
+            let fileName = random //.stringByAppendingFormat(".mp4", random)
+            let fileURL = NSURL(fileURLWithPath: videoPath!)
+            NSUserDefaults.standardUserDefaults().setObject(videoPath, forKey: "videoPath")
+            let uploadRequest = AWSS3TransferManagerUploadRequest()
+            uploadRequest.body = fileURL
+            uploadRequest.key = "videos/" + (fileName.stringByAppendingFormat(".mp4", fileName) as String)
+            uploadRequest.bucket = S3BucketName
+            
+            let json = [
+                "video_id": fileName as String,
+                "video_url": "https://d1jkin67a303u2.cloudfront.net/videos/"+(fileName.stringByAppendingFormat(".mp4", fileName) as String),
+                "caption": CaptionText,
+                "category": self.categ,
+                "tagged_users": "",
+                "location": [
+                    [
+                        "id": self.videoLocation.id,
+                        "latitude": self.videoLocation.lat,
+                        "longitude": self.videoLocation.lon,
+                        "name": self.videoLocation.name,
+                        "address": self.videoLocation.adress
+                    ]
+                ]
+            ]
+            S3Upload.upload(uploadRequest:uploadRequest, fileURL: "https://d1jkin67a303u2.cloudfront.net/videos/"+(fileName as String), fileID: fileName as String ,json: json as! [String : AnyObject])
+            
+            
+            self.performSegueWithIdentifier("finishUpdate", sender: self)
+        }
+
     }
+    
+    func displayAlert(title: String, message: String) {
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction((UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
+//            if !self.postO.enabled {
+//                self.postO.enabled = true
+//            }
+        })))
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
@@ -193,7 +247,9 @@ class camera3thScreen: UIViewController,UICollectionViewDelegate, UICollectionVi
         
         selectedCell = indexPath.row
         self.collectionView.reloadData()
-
+        self.categ = MoleCategoriesDictionary[self.categories[indexPath.row]]
+       
+        selectedCell = indexPath.row
     }
 
     

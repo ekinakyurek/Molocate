@@ -196,8 +196,6 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
         self.player.playbackLoops = true
         videoLocation = locationss()
 
-
-
             self.textField.textColor = UIColor.whiteColor()
             self.textField.autocapitalizationType = .Words
             let index = NSIndexPath(forRow: 0, inSection: 0)

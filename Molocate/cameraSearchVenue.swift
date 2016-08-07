@@ -168,9 +168,9 @@ class cameraSearchVenue: UIViewController, UITextFieldDelegate, UITableViewDeleg
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        textField.text = ""
+        
         let selectedCell  = tableView.cellForRowAtIndexPath(indexPath) as! searchCameraCell
-        textField.text = selectedCell.nameLabel.text
+        
         //placeTable.hidden = true
         self.view.endEditing(true)
         if isSearch {
@@ -179,11 +179,9 @@ class cameraSearchVenue: UIViewController, UITextFieldDelegate, UITableViewDeleg
         } else {
             videoLocation = searchDict[indexPath.row][searchArray[indexPath.row]]
         }
-        print(videoLocation.name)
+        
         isLocationSelected = true
-        if isCategorySelected {
-            //self.bottomToolbar.barTintColor = swiftColor
-        }
+        selectedVenue = selectedCell.nameLabel.text!
         
     }
 

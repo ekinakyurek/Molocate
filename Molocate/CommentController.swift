@@ -43,11 +43,6 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
         self.view.addGestureRecognizer(tap)
         
         sendImage.layer.zPosition = 3
-        
-//        toolBar.clipsToBounds = true
-//        toolBar.translucent = false
-//        toolBar.barTintColor = swiftColor
-        
         sendButton.layer.zPosition = 2
         sendButton.layer.cornerRadius = 5
         sendButton.layer.borderWidth = 1
