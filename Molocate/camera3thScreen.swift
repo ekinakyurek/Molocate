@@ -15,10 +15,18 @@ class camera3thScreen: UIViewController,UICollectionViewDelegate, UICollectionVi
     @IBOutlet var venueName: UILabel!
     @IBOutlet var toolBar: UIToolbar!
     
+    struct locationss{
+        var id = ""
+        var name = ""
+        var lat:Float!
+        var lon:Float!
+        var adress = ""
+    }
     
     @IBAction func buttonVenues(sender: AnyObject) {
     }
     
+    var videoLocation:locationss!
     
     var categoryImagesWhite : [String]  = [ "fun", "food", "travel", "fashion", "beauty", "sport", "event", "campus"]
     var categoryImagesBlack : [String]  = [ "funb", "foodb", "travelb", "fashionb", "beautyb", "sportb", "eventb", "campusb"]

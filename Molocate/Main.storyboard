@@ -2998,6 +2998,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                         <segue destination="XJp-AN-JyV" kind="show" identifier="finishUpdate" id="iVR-Yc-KKO"/>
                         <segue destination="dO5-Or-5MK" kind="show" identifier="backToCamera" id="iX5-7U-zGl"/>
                         <segue destination="xw2-8m-NHJ" kind="show" identifier="goComment" id="qR6-Xg-rLo"/>
+                        <segue destination="zUC-Ih-PbK" kind="show" identifier="deneme" id="PGz-S6-K8W"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b8D-MU-KUn" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3211,6 +3212,66 @@ These Services are operated and provided by Molocate. If you have any questions 
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Enb-V0-qg0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2520.5" y="-850.5"/>
+        </scene>
+        <!--Camera Search Venue-->
+        <scene sceneID="085-um-FOD">
+            <objects>
+                <viewController storyboardIdentifier="cameraSearchVenue" id="zUC-Ih-PbK" customClass="cameraSearchVenue" customModule="Molocate" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="MSh-dL-Ric"/>
+                        <viewControllerLayoutGuide type="bottom" id="5Pd-jP-cKF"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="xYN-mZ-W3W">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="lFn-C3-2rm">
+                                <rect key="frame" x="0.0" y="183" width="375" height="484"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" id="Q2E-sv-8EP">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Q2E-sv-8EP" id="IK8-JV-Ahk">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="zUC-Ih-PbK" id="Ymg-KO-Rq8"/>
+                                    <outlet property="delegate" destination="zUC-Ih-PbK" id="ERi-3Z-l6S"/>
+                                </connections>
+                            </tableView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="saX-Ez-NiN">
+                                <rect key="frame" x="47" y="80" width="281" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="nIe-2K-ear"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="lFn-C3-2rm" firstAttribute="centerX" secondItem="xYN-mZ-W3W" secondAttribute="centerX" id="Cjt-pb-3Qz"/>
+                            <constraint firstItem="lFn-C3-2rm" firstAttribute="width" secondItem="xYN-mZ-W3W" secondAttribute="width" id="PQT-2v-6lv"/>
+                            <constraint firstItem="lFn-C3-2rm" firstAttribute="top" secondItem="saX-Ez-NiN" secondAttribute="bottom" constant="5" id="XJh-0s-pdI"/>
+                            <constraint firstItem="saX-Ez-NiN" firstAttribute="width" secondItem="xYN-mZ-W3W" secondAttribute="width" multiplier="0.75" id="eeN-pe-J5Y"/>
+                            <constraint firstItem="5Pd-jP-cKF" firstAttribute="top" secondItem="lFn-C3-2rm" secondAttribute="bottom" id="m1S-5d-308"/>
+                            <constraint firstItem="saX-Ez-NiN" firstAttribute="top" secondItem="MSh-dL-Ric" secondAttribute="bottom" constant="60" id="s0b-OT-90k"/>
+                            <constraint firstItem="saX-Ez-NiN" firstAttribute="centerX" secondItem="xYN-mZ-W3W" secondAttribute="centerX" id="t5X-GU-ItU"/>
+                        </constraints>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="placeTable" destination="lFn-C3-2rm" id="bte-bW-plj"/>
+                        <outlet property="textField" destination="saX-Ez-NiN" id="wKW-o7-QtX"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="k1z-9l-fx8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2549.5" y="-1284.5"/>
         </scene>
         <!--Side Bar Controller-->
         <scene sceneID="pVK-jr-jtJ">
@@ -4388,8 +4449,8 @@ These Services are operated and provided by Molocate. If you have any questions 
         <segue reference="QdI-VY-wKQ"/>
         <segue reference="hW6-pa-tyf"/>
         <segue reference="r8V-JF-m1L"/>
-        <segue reference="i6B-xP-GmW"/>
         <segue reference="hbw-G4-OLI"/>
+        <segue reference="dId-8z-o5l"/>
         <segue reference="iX5-7U-zGl"/>
     </inferredMetricsTieBreakers>
 </document>

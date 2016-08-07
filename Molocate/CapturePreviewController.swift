@@ -326,18 +326,18 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
     }
     func pressedCaption(sender: UIButton) {
         
-        let controller:tagComment = self.storyboard!.instantiateViewControllerWithIdentifier("tagComment") as! tagComment
-        controller.view.layer.zPosition = 1
-        
-        //controller.ANYPROPERTY=THEVALUE // If you want to pass value
-        controller.view.frame = self.view.bounds;
-        controller.numbers = numbers
-        controller.willMoveToParentViewController(self)
-        self.view.addSubview(controller.view)
-        self.addChildViewController(controller)
-        controller.didMoveToParentViewController(self)
-        self.downArrow.hidden = true
-        
+//        let controller:cameraSearchVenue = self.storyboard!.instantiateViewControllerWithIdentifier("cameraSearchVenue") as! cameraSearchVenue
+//        controller.view.layer.zPosition = 1
+//        
+//        //controller.ANYPROPERTY=THEVALUE // If you want to pass value
+//        controller.view.frame = self.view.bounds;
+//        //controller.numbers = numbers
+//        controller.willMoveToParentViewController(self)
+//        self.view.addSubview(controller.view)
+//        self.addChildViewController(controller)
+//        controller.didMoveToParentViewController(self)
+        //self.downArrow.hidden = true
+        self.performSegueWithIdentifier("deneme", sender: self)
 
     }
     

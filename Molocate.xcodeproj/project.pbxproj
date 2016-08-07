@@ -72,6 +72,7 @@
 		C69B823F1CA0D6F5008658CF /* OneVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69B823E1CA0D6F5008658CF /* OneVideo.swift */; };
 		C69B824B1CA1102D008658CF /* sign-2.png in Resources */ = {isa = PBXBuildFile; fileRef = C69B824A1CA1102D008658CF /* sign-2.png */; };
 		C69DB1BF1C99079D0042DA03 /* TagComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69DB1BE1C99079D0042DA03 /* TagComment.swift */; };
+		C6A461591D54E208003BB342 /* cameraSearchVenue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A461581D54E208003BB342 /* cameraSearchVenue.swift */; };
 		C6B19B431CD3A38500A9C602 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6B19B421CD3A38500A9C602 /* StoreKit.framework */; };
 		C6B7C9EB1C7BE7EF005607EC /* ProfileLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B7C9EA1C7BE7EF005607EC /* ProfileLocation.swift */; };
 		C6BA05121D13F90400AB89FF /* Twitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BA05111D13F90400AB89FF /* Twitter.swift */; };
@@ -96,6 +97,7 @@
 		C6D2BB3B1D4A6FE9000AE25E /* profileVenue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D2BB3A1D4A6FE9000AE25E /* profileVenue.swift */; };
 		C6D2BB3D1D4A78A8000AE25E /* profileVenue2ndCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D2BB3C1D4A78A8000AE25E /* profileVenue2ndCell.swift */; };
 		C6D2BB3F1D4A8218000AE25E /* profileVenue1stCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D2BB3E1D4A8218000AE25E /* profileVenue1stCell.swift */; };
+		C6D4C18E1D55F0F3005FBC9D /* searchCameraCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D4C18D1D55F0F3005FBC9D /* searchCameraCell.swift */; };
 		C6D6D4631CD6501000E37138 /* OnePhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D6D4621CD6501000E37138 /* OnePhoto.swift */; };
 		C6D720C01D21ECFC00FF1998 /* Pluskesfet.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C6D720B01D21ECFC00FF1998 /* Pluskesfet.jpg */; };
 		C6D720C11D21ECFC00FF1998 /* Plushosgeldin.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C6D720B11D21ECFC00FF1998 /* Plushosgeldin.jpg */; };
@@ -238,6 +240,7 @@
 		C69B823E1CA0D6F5008658CF /* OneVideo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OneVideo.swift; sourceTree = "<group>"; };
 		C69B824A1CA1102D008658CF /* sign-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sign-2.png"; sourceTree = "<group>"; };
 		C69DB1BE1C99079D0042DA03 /* TagComment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagComment.swift; sourceTree = "<group>"; };
+		C6A461581D54E208003BB342 /* cameraSearchVenue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = cameraSearchVenue.swift; sourceTree = "<group>"; };
 		C6B19B421CD3A38500A9C602 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		C6B7C9EA1C7BE7EF005607EC /* ProfileLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileLocation.swift; sourceTree = "<group>"; };
 		C6BA05111D13F90400AB89FF /* Twitter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Twitter.swift; sourceTree = "<group>"; };
@@ -262,6 +265,7 @@
 		C6D2BB3A1D4A6FE9000AE25E /* profileVenue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = profileVenue.swift; sourceTree = "<group>"; };
 		C6D2BB3C1D4A78A8000AE25E /* profileVenue2ndCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = profileVenue2ndCell.swift; sourceTree = "<group>"; };
 		C6D2BB3E1D4A8218000AE25E /* profileVenue1stCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = profileVenue1stCell.swift; sourceTree = "<group>"; };
+		C6D4C18D1D55F0F3005FBC9D /* searchCameraCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = searchCameraCell.swift; sourceTree = "<group>"; };
 		C6D6D4621CD6501000E37138 /* OnePhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnePhoto.swift; sourceTree = "<group>"; };
 		C6D720B01D21ECFC00FF1998 /* Pluskesfet.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Pluskesfet.jpg; sourceTree = "<group>"; };
 		C6D720B11D21ECFC00FF1998 /* Plushosgeldin.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Plushosgeldin.jpg; sourceTree = "<group>"; };
@@ -382,6 +386,7 @@
 		3871AAA11C947F9E00DDD83E /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				C6D4C18D1D55F0F3005FBC9D /* searchCameraCell.swift */,
 				38EAEA5F1CF10A5B0053249F /* EventCell.swift */,
 				388173F61C97ABE20064EBB5 /* CommentCell.swift */,
 				C62E31071D08F79200BE8377 /* venueInCamera.swift */,
@@ -448,6 +453,7 @@
 			isa = PBXGroup;
 			children = (
 				C61023091C19FDCA00E9CA73 /* Main.storyboard */,
+				C6A461581D54E208003BB342 /* cameraSearchVenue.swift */,
 				C6E86EAE1CB0E68D00203513 /* Launch Screen.storyboard */,
 				C63FBD121BF3E5B900DBB34C /* Info.plist */,
 				3862A5891CAA005D00D41791 /* Molocate.entitlements */,
@@ -920,6 +926,7 @@
 				388173F71C97ABE20064EBB5 /* CommentCell.swift in Sources */,
 				C609053C1C48145700614C7F /* SideBarController.swift in Sources */,
 				C67C444F1C75D69700FCB157 /* MyCollectionViewCell.swift in Sources */,
+				C6D4C18E1D55F0F3005FBC9D /* searchCameraCell.swift in Sources */,
 				C6D6D4631CD6501000E37138 /* OnePhoto.swift in Sources */,
 				C63D1F1C1C1FA20D003B2CC1 /* SignUpAdvance.swift in Sources */,
 				C620B5611D2054450083953E /* tutorialPageContentViewController.swift in Sources */,
@@ -944,6 +951,7 @@
 				C64B601E1C81D6A500E510DC /* MolocateAccount.swift in Sources */,
 				C6D2BB3D1D4A78A8000AE25E /* profileVenue2ndCell.swift in Sources */,
 				C66E37DF1D52306F0015F602 /* collection3thCameraCell.swift in Sources */,
+				C6A461591D54E208003BB342 /* cameraSearchVenue.swift in Sources */,
 				C6D2BB3F1D4A8218000AE25E /* profileVenue1stCell.swift in Sources */,
 				C6E92F781CCFD0F900CAE237 /* SearchVenue.swift in Sources */,
 				C6D785471D0604C900DA59B3 /* profile3thCell.swift in Sources */,
