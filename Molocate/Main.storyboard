@@ -3017,13 +3017,15 @@ These Services are operated and provided by Molocate. If you have any questions 
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fqw-ly-Me1">
+                            <toolbar clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fqw-ly-Me1">
                                 <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <color key="backgroundColor" red="0.92156862745098034" green="0.16862745098039217" blue="0.36470588235294116" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="tbn-Wh-HaX"/>
                                 </constraints>
                                 <items>
                                     <barButtonItem image="leftArrow" id="rPw-x2-xdO">
+                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <action selector="backButton:" destination="KJV-8O-3Zu" id="cKv-QR-wKN"/>
                                         </connections>
@@ -3062,10 +3064,10 @@ These Services are operated and provided by Molocate. If you have any questions 
                                 </constraints>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder.png" translatesAutoresizingMaskIntoConstraints="NO" id="iMx-Mt-aHJ">
-                                <rect key="frame" x="30" y="113" width="30" height="36"/>
+                                <rect key="frame" x="30" y="115" width="30" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="21O-12-BVw"/>
-                                    <constraint firstAttribute="height" constant="36" id="Ac8-BK-KNI"/>
+                                    <constraint firstAttribute="height" constant="32" id="Ac8-BK-KNI"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Konum Seç" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ONe-Gp-iLb">
@@ -3073,7 +3075,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                                 <constraints>
                                     <constraint firstAttribute="height" constant="24" id="PSU-dM-yGX"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="16"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="15"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -3093,17 +3095,17 @@ These Services are operated and provided by Molocate. If you have any questions 
                                     <constraint firstAttribute="height" constant="101" id="cg1-PV-ezB"/>
                                 </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="0.0" id="Guf-59-BBX">
-                                    <size key="itemSize" width="151" height="50"/>
+                                    <size key="itemSize" width="143" height="50"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="1" maxX="0.0" maxY="1"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="myCell" id="mpi-YR-RNR" customClass="collection3thCameraCell" customModule="Molocate" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="1" width="151" height="50"/>
+                                        <rect key="frame" x="0.0" y="1" width="143" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="151" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="143" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qGF-dF-zwG">
@@ -3113,7 +3115,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                                                         <constraint firstAttribute="height" constant="15" id="uGC-OH-6So"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EĞLENCE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dh3-aI-1pU">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="EĞLENCE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dh3-aI-1pU">
                                                     <rect key="frame" x="23" y="18" width="120" height="14"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="50" id="8VV-ps-eWL"/>
@@ -3151,13 +3153,12 @@ These Services are operated and provided by Molocate. If you have any questions 
                                     <outlet property="delegate" destination="KJV-8O-3Zu" id="UHX-2U-cbX"/>
                                 </connections>
                             </collectionView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="G5R-7N-4H1">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" text="Güzel yorum" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="G5R-7N-4H1">
                                 <rect key="frame" x="0.0" y="379" width="375" height="80"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="GNN-2Q-oIe"/>
                                 </constraints>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -3202,13 +3203,18 @@ These Services are operated and provided by Molocate. If you have any questions 
                         </constraints>
                     </view>
                     <toolbarItems>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="jEG-fZ-MbM"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="jEG-fZ-MbM">
+                            <color key="tintColor" red="0.92156862745098034" green="0.16862745098039217" blue="0.36470588235294116" alpha="1" colorSpace="calibratedRGB"/>
+                        </barButtonItem>
                         <barButtonItem title="PAYLAŞ" id="nQq-Zg-j9U">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="postVideo:" destination="KJV-8O-3Zu" id="5g4-V2-c8g"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="m17-3k-NE1"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="m17-3k-NE1">
+                            <color key="tintColor" red="0.92156862745098034" green="0.16862745098039217" blue="0.36470588235294116" alpha="1" colorSpace="calibratedRGB"/>
+                        </barButtonItem>
                     </toolbarItems>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
@@ -3223,7 +3229,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Enb-V0-qg0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1912.5" y="-1215.5"/>
+            <point key="canvasLocation" x="1842.5" y="-1237.5"/>
         </scene>
         <!--Camera Search Venue-->
         <scene sceneID="085-um-FOD">
@@ -3237,8 +3243,39 @@ These Services are operated and provided by Molocate. If you have any questions 
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="lFn-C3-2rm">
-                                <rect key="frame" x="0.0" y="183" width="375" height="484"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Mekan ara..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="saX-Ez-NiN">
+                                <rect key="frame" x="47" y="80" width="281" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="nIe-2K-ear"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="12"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ÖNERİLEN" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6gK-SX-xaP">
+                                <rect key="frame" x="26" y="118" width="110" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="Mhj-Vu-osh"/>
+                                    <constraint firstAttribute="width" constant="110" id="elL-2K-P6T"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="12"/>
+                                <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <toolbar clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sKo-6x-8aw">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <color key="backgroundColor" red="0.92156862745098034" green="0.16862745098039217" blue="0.36470588235294116" alpha="1" colorSpace="calibratedRGB"/>
+                                <items>
+                                    <barButtonItem title="Back" id="T5p-1B-yLy">
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <action selector="backButton:" destination="zUC-Ih-PbK" id="LQ1-12-4gn"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                                <color key="barTintColor" red="0.92156862745098034" green="0.16862745098039217" blue="0.36470588235294116" alpha="1" colorSpace="calibratedRGB"/>
+                            </toolbar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="lFn-C3-2rm">
+                                <rect key="frame" x="0.0" y="147" width="375" height="520"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" id="Q2E-sv-8EP">
@@ -3255,35 +3292,33 @@ These Services are operated and provided by Molocate. If you have any questions 
                                     <outlet property="delegate" destination="zUC-Ih-PbK" id="ERi-3Z-l6S"/>
                                 </connections>
                             </tableView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="saX-Ez-NiN">
-                                <rect key="frame" x="47" y="80" width="281" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="nIe-2K-ear"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="sKo-6x-8aw" firstAttribute="width" secondItem="xYN-mZ-W3W" secondAttribute="width" id="82k-rv-mEM"/>
                             <constraint firstItem="lFn-C3-2rm" firstAttribute="centerX" secondItem="xYN-mZ-W3W" secondAttribute="centerX" id="Cjt-pb-3Qz"/>
                             <constraint firstItem="lFn-C3-2rm" firstAttribute="width" secondItem="xYN-mZ-W3W" secondAttribute="width" id="PQT-2v-6lv"/>
-                            <constraint firstItem="lFn-C3-2rm" firstAttribute="top" secondItem="saX-Ez-NiN" secondAttribute="bottom" constant="5" id="XJh-0s-pdI"/>
+                            <constraint firstItem="6gK-SX-xaP" firstAttribute="leading" secondItem="xYN-mZ-W3W" secondAttribute="leadingMargin" constant="10" id="Ujt-Rs-Oyj"/>
+                            <constraint firstItem="sKo-6x-8aw" firstAttribute="top" secondItem="MSh-dL-Ric" secondAttribute="bottom" id="VAl-7W-ZY3"/>
+                            <constraint firstItem="6gK-SX-xaP" firstAttribute="top" secondItem="saX-Ez-NiN" secondAttribute="bottom" constant="8" id="ZO5-nf-Lj0"/>
                             <constraint firstItem="saX-Ez-NiN" firstAttribute="width" secondItem="xYN-mZ-W3W" secondAttribute="width" multiplier="0.75" id="eeN-pe-J5Y"/>
                             <constraint firstItem="5Pd-jP-cKF" firstAttribute="top" secondItem="lFn-C3-2rm" secondAttribute="bottom" id="m1S-5d-308"/>
                             <constraint firstItem="saX-Ez-NiN" firstAttribute="top" secondItem="MSh-dL-Ric" secondAttribute="bottom" constant="60" id="s0b-OT-90k"/>
                             <constraint firstItem="saX-Ez-NiN" firstAttribute="centerX" secondItem="xYN-mZ-W3W" secondAttribute="centerX" id="t5X-GU-ItU"/>
+                            <constraint firstItem="lFn-C3-2rm" firstAttribute="top" secondItem="6gK-SX-xaP" secondAttribute="bottom" constant="8" id="vF4-bT-LeV"/>
+                            <constraint firstItem="sKo-6x-8aw" firstAttribute="centerX" secondItem="xYN-mZ-W3W" secondAttribute="centerX" id="vTk-f9-8fK"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="placeTable" destination="lFn-C3-2rm" id="bte-bW-plj"/>
                         <outlet property="textField" destination="saX-Ez-NiN" id="wKW-o7-QtX"/>
+                        <outlet property="toolBar" destination="sKo-6x-8aw" id="tHc-po-xgG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k1z-9l-fx8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2675.5" y="-1477.5"/>
+            <point key="canvasLocation" x="2395.5" y="-1325.5"/>
         </scene>
         <!--Side Bar Controller-->
         <scene sceneID="pVK-jr-jtJ">
@@ -3774,7 +3809,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                         <viewControllerLayoutGuide type="bottom" id="l4A-y1-gmQ"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="3vR-td-2V3">
-                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                        <rect key="frame" x="0.0" y="44" width="375" height="623"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="sDO-do-oSn">
@@ -3915,7 +3950,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                                 <nil key="highlightedColor"/>
                             </label>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" directionalLockEnabled="YES" bounces="NO" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kga-sg-XlE">
-                                <rect key="frame" x="0.0" y="130" width="375" height="473"/>
+                                <rect key="frame" x="0.0" y="130" width="375" height="493"/>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -4459,7 +4494,7 @@ These Services are operated and provided by Molocate. If you have any questions 
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="iVR-Yc-KKO"/>
-        <segue reference="iX5-7U-zGl"/>
+        <segue reference="yAb-2S-41N"/>
         <segue reference="hbw-G4-OLI"/>
         <segue reference="QdI-VY-wKQ"/>
         <segue reference="hW6-pa-tyf"/>

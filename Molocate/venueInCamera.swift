@@ -31,16 +31,16 @@ class venueInCamera: UITableViewCell {
         nameLabel.textColor = UIColor.blackColor()
         nameLabel.textAlignment = .Left
         nameLabel.text = ""
-        nameLabel.font = UIFont(name: "AvenirNext-Regular", size:17)
+        nameLabel.font = UIFont(name: "AvenirNext-Regular", size:15)
         contentView.addSubview(nameLabel)
         
         
         
-        addressNameLabel.frame = CGRectMake(10 , 26 , screenSize.width - 100, 14)
+        addressNameLabel.frame = CGRectMake(10 , 26 , screenSize.width - 20, 14)
         addressNameLabel.textColor = UIColor.grayColor()
         addressNameLabel.textAlignment = .Left
         addressNameLabel.text = "-"
-        addressNameLabel.font = UIFont(name: "AvenirNext-Regular", size:13)
+        addressNameLabel.font = UIFont(name: "AvenirNext-Regular", size:12)
         contentView.addSubview(addressNameLabel)
         
         

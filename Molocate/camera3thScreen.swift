@@ -102,10 +102,12 @@ class camera3thScreen: UIViewController,UICollectionViewDelegate, UICollectionVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        selectVenue.layer.borderColor = lineColor.CGColor
+        selectVenue.layer.borderWidth = 0.5
+        
         //let index = NSIndexPath(forRow: 0, inSection: 0)
         //self.collectionView.selectItemAtIndexPath(index, animated: false, scrollPosition: UICollectionViewScrollPosition.None)
-        selectVenue.layer.borderWidth = 0.5
-        selectVenue.layer.borderColor = lineColor.CGColor
+      
         self.collectionView.contentSize.width = MolocateDevice.size.width
         self.collectionView.backgroundColor = UIColor.whiteColor()
         textView.delegate = self

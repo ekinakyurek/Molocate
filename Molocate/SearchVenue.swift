@@ -32,7 +32,7 @@ class searchVenue: UITableViewCell {
         nameLabel.textColor = UIColor.blackColor()
         nameLabel.textAlignment = .Left
         nameLabel.text = ""
-        nameLabel.font = UIFont(name: "AvenirNext-Regular", size:17)
+        nameLabel.font = UIFont(name: "AvenirNext-Regular", size:15)
         contentView.addSubview(nameLabel)
         
         
@@ -41,7 +41,7 @@ class searchVenue: UITableViewCell {
         addressNameLabel.textColor = UIColor.grayColor()
         addressNameLabel.textAlignment = .Left
         addressNameLabel.text = "-"
-        addressNameLabel.font = UIFont(name: "AvenirNext-Regular", size:13)
+        addressNameLabel.font = UIFont(name: "AvenirNext-Regular", size:12)
         contentView.addSubview(addressNameLabel)
         
         

@@ -23,6 +23,15 @@ class cameraSearchVenue: UIViewController, UITextFieldDelegate, UITableViewDeleg
     
     var autocompleteUrls = [String]()
     
+    @IBOutlet var toolBar: UIToolbar!
+    
+    @IBAction func backButton(sender: AnyObject) {
+        
+        self.willMoveToParentViewController(nil)
+        self.view.removeFromSuperview()
+        self.removeFromParentViewController()
+        
+    }
     struct placeVar {
         var name: String!
         var province: String
@@ -154,7 +163,7 @@ class cameraSearchVenue: UIViewController, UITextFieldDelegate, UITableViewDeleg
         }
     }
     func textFieldDidBeginEditing(textField: UITextField) {
-        placeTable.hidden = false
+        //placeTable.hidden = false
         autocompleteUrls = placesArray
         placeTable.reloadData()
         dispatch_async(dispatch_get_main_queue()){
@@ -164,24 +173,24 @@ class cameraSearchVenue: UIViewController, UITextFieldDelegate, UITableViewDeleg
 
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 60
+        return 44
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         let selectedCell  = tableView.cellForRowAtIndexPath(indexPath) as! searchCameraCell
+        autocompleteUrls = placesArray
         
-        //placeTable.hidden = true
-        self.view.endEditing(true)
+        //self.view.endEditing(true)
         if isSearch {
             let correctedRow = placeOrder.objectForKey(textField.text!) as! Int
             videoLocation = locationDict[correctedRow][placesArray[correctedRow]]
         } else {
             videoLocation = searchDict[indexPath.row][searchArray[indexPath.row]]
         }
-        
-        isLocationSelected = true
         selectedVenue = selectedCell.nameLabel.text!
+        isLocationSelected = true
+        //selectedVenue = selectedCell.nameLabel.text!
         
     }
 
