@@ -15,7 +15,9 @@ import QuadratTouch
 
 
 var selectedVenue = ""
-
+var isCategorySelected = false
+var isLocationSelected = false
+var videoLocation:locationss!
 class camera3thScreen: UIViewController,UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,UITextViewDelegate {
     
     let lineColor = UIColor(netHex: 0xCCCCCC)
@@ -25,25 +27,72 @@ class camera3thScreen: UIViewController,UICollectionViewDelegate, UICollectionVi
     @IBOutlet var venueName: UILabel!
     var searchDict:[[String:locationss]]!
     var searchArray:[String]!
-    var isCategorySelected = false
-    var isLocationSelected = false
+
     var autocompleteUrls = [String]()
     var videoURL: NSURL?
-     var categ:String!
-    @IBAction func selectVenue(sender: AnyObject) {
-       
-        let controller:cameraSearchVenue = self.storyboard!.instantiateViewControllerWithIdentifier("cameraSearchVenue") as! cameraSearchVenue
-        controller.view.layer.zPosition = 1
+    var categ:String!
+    var taggedUsers = [String]()
+    
+    @IBAction func postVideo(sender: AnyObject) {
         
-        //controller.ANYPROPERTY=THEVALUE // If you want to pass value
-        controller.view.frame = self.view.bounds;
-        //controller.numbers = numbers
-        controller.willMoveToParentViewController(self)
-        self.view.addSubview(controller.view)
-        self.addChildViewController(controller)
-        controller.didMoveToParentViewController(self)
+
+                        if (!isLocationSelected || !isCategorySelected){
+                            //self.postO.enabled = false
+                            displayAlert("Dikkat", message: "Lütfen Kategori ve Konum seçiniz.")
+                        }
+                        else {
+        
+                            let random = randomStringWithLength(64)
+                            let fileName = random //.stringByAppendingFormat(".mp4", random)
+                            let fileURL = NSURL(fileURLWithPath: videoPath!)
+                            NSUserDefaults.standardUserDefaults().setObject(videoPath, forKey: "videoPath")
+                            let uploadRequest = AWSS3TransferManagerUploadRequest()
+                            uploadRequest.body = fileURL
+                            uploadRequest.key = "videos/" + (fileName.stringByAppendingFormat(".mp4", fileName) as String)
+                            uploadRequest.bucket = S3BucketName
+        
+                            let json = [
+                                "video_id": fileName as String,
+                                "video_url": "https://d1jkin67a303u2.cloudfront.net/videos/"+(fileName.stringByAppendingFormat(".mp4", fileName) as String),
+                                "caption": CaptionText,
+                                "category": self.categ,
+                                "tagged_users": self.taggedUsers,
+                                "location": [
+                                    [
+                                        "id": videoLocation.id,
+                                        "latitude": videoLocation.lat,
+                                        "longitude": videoLocation.lon,
+                                        "name": videoLocation.name,
+                                        "address": videoLocation.adress
+                                    ]
+                                ]
+                            ]
+                            S3Upload.upload(uploadRequest:uploadRequest, fileURL: "https://d1jkin67a303u2.cloudfront.net/videos/"+(fileName as String), fileID: fileName as String ,json: json as! [String : AnyObject])
+                
+                
+                            self.performSegueWithIdentifier("finishUpdate", sender: self)
+                        }
+
+    }
+
+    @IBAction func selectVenue(sender: AnyObject) {
+        
+        self.performSegueWithIdentifier("goTo4th", sender: self)
+        
+//       
+//        let controller:cameraSearchVenue = self.storyboard!.instantiateViewControllerWithIdentifier("cameraSearchVenue") as! cameraSearchVenue
+//        controller.view.layer.zPosition = 1
+//        
+//        //controller.ANYPROPERTY=THEVALUE // If you want to pass value
+//        controller.view.frame = self.view.bounds;
+//        //controller.numbers = numbers
+//        controller.willMoveToParentViewController(self)
+//        self.view.addSubview(controller.view)
+//        self.addChildViewController(controller)
+//        controller.didMoveToParentViewController(self)
         
     }
+    @IBOutlet var bottomToolbar: UIToolbar!
     struct locationss{
         var id = ""
         var name = ""
@@ -51,6 +100,8 @@ class camera3thScreen: UIViewController,UICollectionViewDelegate, UICollectionVi
         var lon:Float!
         var adress = ""
     }
+    
+    
     
     @IBAction func backButton(sender: AnyObject) {
         let alertController = UIAlertController(title: "Emin misiniz?", message: "Geriye giderseniz videonuz silinecektir.", preferredStyle: .Alert)
@@ -72,7 +123,7 @@ class camera3thScreen: UIViewController,UICollectionViewDelegate, UICollectionVi
                 cleanup()
                 placesArray.removeAll()
                 placeOrder.removeAllObjects()
-                self.performSegueWithIdentifier("backToCamera", sender: self)
+                self.performSegueWithIdentifier("backFrom3th", sender: self)
                 
                 
                 
@@ -90,7 +141,7 @@ class camera3thScreen: UIViewController,UICollectionViewDelegate, UICollectionVi
         
     }
     
-    var videoLocation:locationss!
+    
     
     var categoryImagesWhite : [String]  = [ "fun", "food", "travel", "fashion", "beauty", "sport", "event", "campus"]
     var categoryImagesBlack : [String]  = [ "funb", "foodb", "travelb", "fashionb", "beautyb", "sportb", "eventb", "campusb"]
@@ -118,15 +169,21 @@ class camera3thScreen: UIViewController,UICollectionViewDelegate, UICollectionVi
         textView!.layer.borderColor = lineColor.CGColor
 
         
-        if placesArray.count == 0 {
-            venueName.text = "Konum ara"
-        } else {
-            selectedVenue = placesArray[0]
-            venueName.text = selectedVenue
-            isLocationSelected = true
+//        if placesArray.count == 0 {
+//            venueName.text = "Konum ara"
+//        } else {
+//            selectedVenue = placesArray[0]
+//            venueName.text = selectedVenue
+//            isLocationSelected = true
+//        }
+    
+        self.categ = ""
+        if isLocationSelected {
+            venueName.text =  selectedVenue
         }
         
-          NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(capturePreviewController.configurePlace), name: "configurePlace", object: nil)
+
+        
         
     }
     
@@ -158,46 +215,47 @@ class camera3thScreen: UIViewController,UICollectionViewDelegate, UICollectionVi
     }
     
     
-    @IBAction func postVideo(sender: AnyObject) {
-        if (!isLocationSelected || !isCategorySelected){
-            //self.postO.enabled = false
-            displayAlert("Dikkat", message: "Lütfen Kategori ve Konum seçiniz.")
-        }
-        else {
-            
-            let random = randomStringWithLength(64)
-            let fileName = random //.stringByAppendingFormat(".mp4", random)
-            let fileURL = NSURL(fileURLWithPath: videoPath!)
-            NSUserDefaults.standardUserDefaults().setObject(videoPath, forKey: "videoPath")
-            let uploadRequest = AWSS3TransferManagerUploadRequest()
-            uploadRequest.body = fileURL
-            uploadRequest.key = "videos/" + (fileName.stringByAppendingFormat(".mp4", fileName) as String)
-            uploadRequest.bucket = S3BucketName
-            
-            let json = [
-                "video_id": fileName as String,
-                "video_url": "https://d1jkin67a303u2.cloudfront.net/videos/"+(fileName.stringByAppendingFormat(".mp4", fileName) as String),
-                "caption": CaptionText,
-                "category": self.categ,
-                "tagged_users": "",
-                "location": [
-                    [
-                        "id": self.videoLocation.id,
-                        "latitude": self.videoLocation.lat,
-                        "longitude": self.videoLocation.lon,
-                        "name": self.videoLocation.name,
-                        "address": self.videoLocation.adress
-                    ]
-                ]
-            ]
-            S3Upload.upload(uploadRequest:uploadRequest, fileURL: "https://d1jkin67a303u2.cloudfront.net/videos/"+(fileName as String), fileID: fileName as String ,json: json as! [String : AnyObject])
-            
-            
-            self.performSegueWithIdentifier("finishUpdate", sender: self)
-        }
-
-    }
-    
+//    @IBAction func postVideo(sender: AnyObject) {
+//        if (!isLocationSelected || !isCategorySelected){
+//            //self.postO.enabled = false
+//            displayAlert("Dikkat", message: "Lütfen Kategori ve Konum seçiniz.")
+//        }
+//        else {
+//            
+//            let random = randomStringWithLength(64)
+//            let fileName = random //.stringByAppendingFormat(".mp4", random)
+//            let fileURL = NSURL(fileURLWithPath: videoPath!)
+//            NSUserDefaults.standardUserDefaults().setObject(videoPath, forKey: "videoPath")
+//            let uploadRequest = AWSS3TransferManagerUploadRequest()
+//            uploadRequest.body = fileURL
+//            uploadRequest.key = "videos/" + (fileName.stringByAppendingFormat(".mp4", fileName) as String)
+//            uploadRequest.bucket = S3BucketName
+//            
+//            let json = [
+//                "video_id": fileName as String,
+//                "video_url": "https://d1jkin67a303u2.cloudfront.net/videos/"+(fileName.stringByAppendingFormat(".mp4", fileName) as String),
+//                "caption": CaptionText,
+//                "category": self.categ,
+//                "tagged_users": "",
+//                "location": [
+//                    [
+//                        "id": videoLocation.id,
+//                        "latitude": videoLocation.lat,
+//                        "longitude": videoLocation.lon,
+//                        "name": videoLocation.name,
+//                        "address": videoLocation.adress
+//                    ]
+//                ]
+//            ]
+//            S3Upload.upload(uploadRequest:uploadRequest, fileURL: "https://d1jkin67a303u2.cloudfront.net/videos/"+(fileName as String), fileID: fileName as String ,json: json as! [String : AnyObject])
+//            
+//            
+//            self.performSegueWithIdentifier("finishUpdate", sender: self)
+//
+//        }
+//
+//    }
+//    
     func displayAlert(title: String, message: String) {
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
@@ -250,13 +308,17 @@ class camera3thScreen: UIViewController,UICollectionViewDelegate, UICollectionVi
         selectedCell = indexPath.row
         self.collectionView.reloadData()
         self.categ = MoleCategoriesDictionary[self.categories[indexPath.row]]
-       
-        selectedCell = indexPath.row
+        print(self.categ)
+        isCategorySelected = true
+        
     }
 
     
+    override func viewWillAppear(animated: Bool) {
+
+    }
     
-    
+
     /*
     // MARK: - Navigation
 

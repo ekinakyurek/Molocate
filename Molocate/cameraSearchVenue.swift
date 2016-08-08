@@ -17,7 +17,7 @@ class cameraSearchVenue: UIViewController, UITextFieldDelegate, UITableViewDeleg
     
     @IBOutlet var placeTable: UITableView!
     
-    var videoLocation:locationss!
+    
     var searchDict:[[String:locationss]]!
     var searchArray:[String]!
     
@@ -27,10 +27,10 @@ class cameraSearchVenue: UIViewController, UITextFieldDelegate, UITableViewDeleg
     
     @IBAction func backButton(sender: AnyObject) {
         
-        self.willMoveToParentViewController(nil)
-        self.view.removeFromSuperview()
-        self.removeFromParentViewController()
-        
+//        self.willMoveToParentViewController(nil)
+//        self.view.removeFromSuperview()
+//        self.removeFromParentViewController()
+        self.performSegueWithIdentifier("backFrom4th", sender: self)
     }
     struct placeVar {
         var name: String!
@@ -45,8 +45,7 @@ class cameraSearchVenue: UIViewController, UITextFieldDelegate, UITableViewDeleg
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     
     var isSearch = true
-    var isCategorySelected = false
-    var isLocationSelected = false
+
     
     
     @IBOutlet var textField: UITextField!
@@ -183,16 +182,19 @@ class cameraSearchVenue: UIViewController, UITextFieldDelegate, UITableViewDeleg
         autocompleteUrls = placesArray
         
         //self.view.endEditing(true)
+        print(selectedCell.nameLabel.text!)
         if isSearch {
-            let correctedRow = placeOrder.objectForKey(textField.text!) as! Int
+            let correctedRow = placeOrder.objectForKey(selectedCell.nameLabel.text!) as! Int
             videoLocation = locationDict[correctedRow][placesArray[correctedRow]]
         } else {
             videoLocation = searchDict[indexPath.row][searchArray[indexPath.row]]
         }
-        selectedVenue = selectedCell.nameLabel.text!
+        //print(videoLocation.id)
+        selectedVenue = videoLocation.name
         isLocationSelected = true
+        //print(selectedVenue)
         //selectedVenue = selectedCell.nameLabel.text!
-        
+        self.performSegueWithIdentifier("backFrom4th", sender: self)
     }
 
     
