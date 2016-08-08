@@ -68,16 +68,17 @@ class cameraSearchVenue: UIViewController, UITextFieldDelegate, UITableViewDeleg
         view.layer.addSublayer(placeTable.layer)
         view.layer.addSublayer(textField.layer)
         //placeTable.hidden = true
+        placeTable.reloadData()
         if placesArray.count == 0 {
             textField.text = "Konum ara"
         } else {
-            textField.text = "📌"+placesArray[0]
+            //textField.text = "📌"+placesArray[0]
             let correctedRow = placeOrder.objectForKey(placesArray[0]) as! Int
             videoLocation = locationDict[correctedRow][placesArray[correctedRow]]
-            print(videoLocation.name)
             isLocationSelected = true
         }
-
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(cameraSearchVenue.reloadPlaces), name: "reloadPlaces", object: nil)
+       autocompleteUrls = placesArray
         
     }
     func randomStringWithLength (len : Int) -> NSString {
@@ -199,6 +200,7 @@ class cameraSearchVenue: UIViewController, UITextFieldDelegate, UITableViewDeleg
     
     func searchAutocompleteEntriesWithSubstring(substring: String)
     {
+        
         autocompleteUrls.removeAll(keepCapacity: false)
         isSearch = true
         var n = 0
@@ -298,6 +300,10 @@ class cameraSearchVenue: UIViewController, UITextFieldDelegate, UITableViewDeleg
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func reloadPlaces() {
+        self.placeTable.reloadData()
     }
     
 

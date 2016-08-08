@@ -425,7 +425,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                         }
                     
                     NSNotificationCenter.defaultCenter().postNotificationName("configurePlace", object: nil)
-                    
+                    NSNotificationCenter.defaultCenter().postNotificationName("reloadPlaces", object: nil)
                 }
                 
                 

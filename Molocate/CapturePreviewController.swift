@@ -318,9 +318,9 @@ class capturePreviewController: UIViewController, UITextFieldDelegate, UITableVi
             textField.text = "📌"+placesArray[0]
             let correctedRow = placeOrder.objectForKey(placesArray[0]) as! Int
             videoLocation = locationDict[correctedRow][placesArray[correctedRow]]
-            ////print(videoLocation.name)
             isLocationSelected = true
         }
+        
     }
     func pressedCaption(sender: UIButton) {
         
