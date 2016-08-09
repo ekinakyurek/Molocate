@@ -32,7 +32,7 @@ class camera3thScreen: UIViewController,UICollectionViewDelegate, UICollectionVi
     var videoURL: NSURL?
     var categ:String!
     var taggedUsers = [String]()
-    
+    var kbHeight: CGFloat!
     @IBAction func postVideo(sender: AnyObject) {
         
 
@@ -101,7 +101,10 @@ class camera3thScreen: UIViewController,UICollectionViewDelegate, UICollectionVi
         var adress = ""
     }
     
-    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?){
+        view.endEditing(true)
+        super.touchesBegan(touches, withEvent: event)
+    }
     
     @IBAction func backButton(sender: AnyObject) {
         let alertController = UIAlertController(title: "Emin misiniz?", message: "Geriye giderseniz videonuz silinecektir.", preferredStyle: .Alert)
@@ -151,20 +154,30 @@ class camera3thScreen: UIViewController,UICollectionViewDelegate, UICollectionVi
     
     var CaptionText = ""
     
+    override func viewWillAppear(animated:Bool) {
+        super.viewWillAppear(animated)
+        
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(camera3thScreen.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(camera3thScreen.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         selectVenue.layer.borderColor = lineColor.CGColor
         selectVenue.layer.borderWidth = 0.5
         
-        //let index = NSIndexPath(forRow: 0, inSection: 0)
+//        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(camera3thScreen.dismissKeyboard))
+//        view.addGestureRecognizer(tap)
+        
+               //let index = NSIndexPath(forRow: 0, inSection: 0)
         //self.collectionView.selectItemAtIndexPath(index, animated: false, scrollPosition: UICollectionViewScrollPosition.None)
       
         self.collectionView.contentSize.width = MolocateDevice.size.width
         self.collectionView.backgroundColor = UIColor.whiteColor()
         textView.delegate = self
         view.layer.addSublayer(textView.layer)
-        // Do any additional setup after loading the view.
-        
+        // Do any additional setup after loading
         textView!.layer.borderWidth = 0.5
         textView!.layer.borderColor = lineColor.CGColor
 
@@ -186,7 +199,10 @@ class camera3thScreen: UIViewController,UICollectionViewDelegate, UICollectionVi
         
         
     }
-    
+    func textViewShouldReturn(textField: UITextView!) -> Bool  {
+        textView.resignFirstResponder()
+        return true
+    }
     func randomStringWithLength (len : Int) -> NSString {
         
         let letters : NSString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
@@ -207,15 +223,30 @@ class camera3thScreen: UIViewController,UICollectionViewDelegate, UICollectionVi
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    func keyboardWillShow(notification: NSNotification) {
+        
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
+            self.view.frame.origin.y = 0 + (MolocateDevice.size.height - (MolocateDevice.size.height * 0.3 + 255 )) - keyboardSize.height
+            self.toolBar.hidden = true
+        }
+        
+    }
+    func keyboardWillHide(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
+            self.view.frame.origin.y = 0
+            self.toolBar.hidden = false
+        }
+    }
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        
         let a : CGSize = CGSize.init(width: MolocateDevice.size.width / 4, height: 45)
         
         
         return a
     }
-    
-    
-//    @IBAction func postVideo(sender: AnyObject) {
+   
+  //    @IBAction func postVideo(sender: AnyObject) {
 //        if (!isLocationSelected || !isCategorySelected){
 //            //self.postO.enabled = false
 //            displayAlert("Dikkat", message: "Lütfen Kategori ve Konum seçiniz.")
@@ -313,11 +344,7 @@ class camera3thScreen: UIViewController,UICollectionViewDelegate, UICollectionVi
         
     }
 
-    
-    override func viewWillAppear(animated: Bool) {
-
-    }
-    
+   
 
     /*
     // MARK: - Navigation

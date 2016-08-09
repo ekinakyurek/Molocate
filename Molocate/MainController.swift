@@ -40,13 +40,14 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
     var bestEffortAtLocation : CLLocation!
     var venueButton2: UIButton!
     var usernameButton2: UIButton!
-    var backgroundLabel: UILabel!
+    var lineLabel: UILabel!
+    var redLabel: UILabel!
     var linee: UILabel!
     var on = true
     var tableController: TimelineController!
     var findFriends: UIButton!
+    let lineColor = UIColor(netHex: 0xCCCCCC)
     @IBOutlet var venueTable: UITableView!
-    @IBOutlet var rightArrow: UIImageView!
     @IBOutlet var collectionView: UICollectionView!
     var searchText = UISearchBar(frame: CGRectZero)
 
@@ -93,68 +94,70 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         searchText.delegate = self
     
         findFriends = UIButton()
-        findFriends.frame = CGRect(x: self.view.center.x-50, y: self.view.frame.height*0.2, width: 100, height: 40)
+        findFriends.frame = CGRect(x: self.view.center.x-70, y: self.view.frame.height*0.2, width: 140, height: 40)
         findFriends.backgroundColor = UIColor.blueColor()
         findFriends.setTitle("Arkadaş bul", forState: .Normal)
-        findFriends.titleLabel?.font = UIFont(name: "AvenirNext-Medium", size: 15)
+        findFriends.titleLabel?.font = UIFont(name: "AvenirNext-Medium", size: 14)
         findFriends.addTarget(self, action: #selector(MainController.pressedFindFriend(_:)), forControlEvents: .TouchUpInside)
         
         findFriends.hidden = true
         
-        backgroundLabel = UILabel()
-        backgroundLabel.frame = CGRectMake( 0 , 0 , MolocateDevice.size.width , 44)
-        backgroundLabel.backgroundColor = UIColor.whiteColor()
-        backgroundLabel.layer.borderWidth = 0.2
-        backgroundLabel.layer.masksToBounds = false
-        backgroundLabel.layer.borderColor = swiftColor.CGColor
-        view.addSubview(backgroundLabel)
-        
-        
+
+  
         
         usernameButton2 = UIButton()
-        usernameButton2.frame = CGRectMake(MolocateDevice.size.width / 2  ,7 , MolocateDevice.size.width / 2 - 20, 30)
-        usernameButton2.setTitleColor(UIColor.blackColor(), forState: .Normal)
+        usernameButton2.frame = CGRectMake(MolocateDevice.size.width / 2  , 2 , MolocateDevice.size.width / 2 , 40)
+        usernameButton2.setTitleColor(lineColor, forState: .Normal)
         usernameButton2.contentHorizontalAlignment = .Center
         usernameButton2.setTitle("KONUMLAR", forState: .Normal)
-        usernameButton2.titleLabel?.font = UIFont(name: "AvenirNext-Medium", size:13)
+        usernameButton2.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size:14)
         usernameButton2.addTarget(self, action: #selector(MainController.pressedUsernameButton(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         view.addSubview(usernameButton2)
         
         venueButton2 = UIButton()
-        venueButton2.frame = CGRectMake(20 ,7 , MolocateDevice.size
-            .width / 2 - 20, 30)
-        venueButton2.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        venueButton2.frame = CGRectMake(0 ,2 , MolocateDevice.size
+            .width / 2, 40)
+        venueButton2.setTitleColor(swiftColor, forState: .Normal)
         venueButton2.contentHorizontalAlignment = .Center
         venueButton2.setTitle("KİŞİLER", forState: .Normal)
-        venueButton2.titleLabel?.font = UIFont(name: "AvenirNext-Medium", size:13)
+        venueButton2.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size:14)
         
         venueButton2.addTarget(self, action: #selector(MainController.pressedVenue(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         view.addSubview(venueButton2)
-        venueButton2.backgroundColor = swiftColor2
+        //venueButton2.backgroundColor = swiftColor2
         venueButton2.hidden = true
-        usernameButton2.backgroundColor = swiftColor3
         usernameButton2.hidden = true
-        backgroundLabel.hidden = true
         
+        lineLabel = UILabel()
+        lineLabel.frame = CGRectMake( 0 , 43.5 , MolocateDevice.size.width , 0.5)
+        lineLabel.backgroundColor = lineColor
+        view.addSubview(lineLabel)
         
-        let rectShape = CAShapeLayer()
-        rectShape.bounds = self.usernameButton2.frame
-        rectShape.position = self.usernameButton2.center
-        rectShape.path = UIBezierPath(roundedRect: self.usernameButton2.bounds, byRoundingCorners: [.BottomRight , .TopRight] , cornerRadii: CGSize(width: 8, height: 8)).CGPath
-        rectShape.borderWidth = 1.0
-        rectShape.borderColor = swiftColor2.CGColor
-        self.usernameButton2.layer.backgroundColor = swiftColor3.CGColor
-        //Here I'm masking the textView's layer with rectShape layer
-        self.usernameButton2.layer.mask = rectShape
+        redLabel = UILabel()
+        redLabel.frame = CGRectMake( 0 , 43 , MolocateDevice.size.width / 2 , 1.5)
+        redLabel.backgroundColor = swiftColor
+        view.addSubview(redLabel)
+        lineLabel.hidden = true
+        redLabel.hidden = true
         
-        let rectShape2 = CAShapeLayer()
-        rectShape2.bounds = self.venueButton2.frame
-        rectShape2.position = self.venueButton2.center
-        rectShape2.path = UIBezierPath(roundedRect: self.venueButton2.bounds, byRoundingCorners: [.BottomLeft , .TopLeft] , cornerRadii: CGSize(width: 8, height: 8)).CGPath
-        rectShape2.borderWidth = 1.0
-        rectShape2.borderColor = swiftColor2.CGColor
-        self.venueButton2.layer.backgroundColor = swiftColor2.CGColor
-        self.venueButton2.layer.mask = rectShape2
+//        let rectShape = CAShapeLayer()
+//        rectShape.bounds = self.usernameButton2.frame
+//        rectShape.position = self.usernameButton2.center
+//        rectShape.path = UIBezierPath(roundedRect: self.usernameButton2.bounds, byRoundingCorners: [.BottomRight , .TopRight] , cornerRadii: CGSize(width: 8, height: 8)).CGPath
+//        rectShape.borderWidth = 1.0
+//        rectShape.borderColor = swiftColor2.CGColor
+//        self.usernameButton2.layer.backgroundColor = swiftColor3.CGColor
+//        //Here I'm masking the textView's layer with rectShape layer
+//        self.usernameButton2.layer.mask = rectShape
+//        
+//        let rectShape2 = CAShapeLayer()
+//        rectShape2.bounds = self.venueButton2.frame
+//        rectShape2.position = self.venueButton2.center
+//        rectShape2.path = UIBezierPath(roundedRect: self.venueButton2.bounds, byRoundingCorners: [.BottomLeft , .TopLeft] , cornerRadii: CGSize(width: 8, height: 8)).CGPath
+//        rectShape2.borderWidth = 1.0
+//        rectShape2.borderColor = swiftColor2.CGColor
+//        self.venueButton2.layer.backgroundColor = swiftColor2.CGColor
+//        self.venueButton2.layer.mask = rectShape2
         searchText.backgroundColor = swiftColor
         let bartextField = searchText.valueForKey("searchField") as! UITextField
         bartextField.backgroundColor = swiftColor2
@@ -167,8 +170,8 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         rectShape3.position = self.findFriends.center
         rectShape3.path = UIBezierPath(roundedRect: self.findFriends.bounds, byRoundingCorners: [.BottomRight , .TopRight , .BottomLeft , .TopLeft ] , cornerRadii: CGSize(width: 8, height: 8)).CGPath
         rectShape3.borderWidth = 1.0
-        rectShape3.borderColor = swiftColor2.CGColor
-        self.findFriends.layer.backgroundColor = swiftColor2.CGColor
+        rectShape3.borderColor = swiftColor.CGColor
+        self.findFriends.layer.backgroundColor = swiftColor.CGColor
         //Here I'm masking the textView's layer with rectShape layer
         self.findFriends.layer.mask = rectShape3
 
@@ -208,10 +211,14 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
     func pressedVenue(sender: UIButton) {
         
         venueoruser = false
-        self.venueButton2.backgroundColor = swiftColor2
-        self.usernameButton2.backgroundColor = swiftColor3
-        self.venueButton2.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        self.usernameButton2.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+        self.venueButton2.setTitleColor(swiftColor, forState: UIControlState.Normal)
+        self.usernameButton2.setTitleColor(lineColor, forState: UIControlState.Normal)
+        self.redLabel.frame.origin.x = 0
+        self.usernameButton2.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size:14)
+        self.venueButton2.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size:14)
+        self.usernameButton2.setTitleColor(lineColor, forState: .Normal)
+        self.venueButton2.setTitleColor(swiftColor, forState: .Normal)
+        self.findFriends.setTitle("Arkadaşlarını Bul", forState: .Normal)
         if self.venueTable.numberOfRowsInSection(0) > 0 {
             self.venueTable.reloadData()}
         
@@ -220,10 +227,14 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
     
     func pressedUsernameButton(sender: UIButton) {
         venueoruser = true
-        self.venueButton2.backgroundColor = swiftColor3
-        self.venueButton2.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-        self.usernameButton2.backgroundColor = swiftColor2
-        self.usernameButton2.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        self.venueButton2.setTitleColor(swiftColor, forState: UIControlState.Normal)
+        self.usernameButton2.setTitleColor(lineColor, forState: UIControlState.Normal)
+        self.usernameButton2.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size:14)
+        self.venueButton2.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size:14)
+        self.redLabel.frame.origin.x = MolocateDevice.size.width / 2
+        self.usernameButton2.setTitleColor(swiftColor, forState: .Normal)
+        self.venueButton2.setTitleColor(lineColor, forState: .Normal)
+        self.findFriends.setTitle("Yakın Konumları Bul", forState: .Normal)
         if self.venueTable.numberOfRowsInSection(0) > 0 {
             self.venueTable.reloadData()  }
     }
@@ -683,8 +694,9 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
                 self.searchText.placeholder = "Ara"
                 self.isSearching = false
                 self.venueButton2.hidden = true
+                self.lineLabel.hidden = true
+                self.redLabel.hidden = true
                 self.usernameButton2.hidden = true
-                self.backgroundLabel.hidden = true
                 self.collectionView.hidden = false
                 self.venueTable.hidden = true
                 self.findFriends.hidden = true
@@ -845,8 +857,9 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
             self.venueTable.hidden = true
             self.findFriends.hidden = true
             self.venueButton2.hidden = true
+            self.lineLabel.hidden = true
+            self.redLabel.hidden = true
             self.usernameButton2.hidden = true
-            self.backgroundLabel.hidden = true
             self.collectionView.hidden = false
             self.searchText.resignFirstResponder()
         }
@@ -873,15 +886,14 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         venueTable.hidden = false
         findFriends.hidden = false
         venueButton2.hidden = false
+        self.lineLabel.hidden = false
+        self.redLabel.hidden = false
         usernameButton2.hidden = false
-        backgroundLabel.hidden = false
         collectionView.hidden = true
         
         
         self.view.layer.addSublayer(venueTable.layer)
-        self.view.layer.addSublayer(backgroundLabel.layer)
         self.view.layer.addSublayer(venueButton2.layer)
-        self.view.layer.addSublayer(usernameButton2.layer)
         
         
     }
@@ -893,7 +905,8 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         findFriends.hidden = true
         self.venueButton2.hidden = false
         self.usernameButton2.hidden = false
-        self.backgroundLabel.hidden = false
+        self.lineLabel.hidden = false
+        self.redLabel.hidden = false
         self.collectionView.hidden = true
         let whitespaceCharacterSet = NSCharacterSet.symbolCharacterSet()
         let strippedString = searchText.text!.stringByTrimmingCharactersInSet(whitespaceCharacterSet) + text
