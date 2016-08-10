@@ -330,7 +330,7 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
         sender.hidden = true
         
         user.first_name = nameText.text!
-        
+        user.bio = caption.text!
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         user.birthday = dateFormatter.stringFromDate(datepicker.date)

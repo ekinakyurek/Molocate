@@ -42,6 +42,7 @@ struct MoleUser{
     var gender = "male"
     var birthday = "2016-10-12"
     var isFaceUser:Bool = false
+    var bio = ""
     func printUser() -> Void {
         print("username: " + username)
         print("email: " + email)
@@ -901,7 +902,7 @@ public class MolocateAccount {
                 do {
                     //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
                     let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String: AnyObject]
-                    //print(result)
+                    print(result)
                     if result.indexForKey("email") != nil {
                         var user = MoleUser()
                         user.email = result["email"] as! String
@@ -909,6 +910,7 @@ public class MolocateAccount {
                         user.first_name = result["first_name"] as! String
                         user.last_name = result["last_name"] as! String
                         user.profilePic = result["picture_url"] is NSNull ? NSURL():NSURL(string: result["picture_url"] as! String)!
+                        user.bio = result["caption"] is NSNull ? String() : result["caption"] as! String
                         user.follower_count = result["follower_count"] as! Int
                         user.following_count = result["following_count"]as! Int
                         user.tag_count = result["tag_count"] as! Int
@@ -990,7 +992,8 @@ public class MolocateAccount {
                         "first_name": MoleCurrentUser.first_name,
                         "last_name": MoleCurrentUser.last_name,
                         "gender": MoleCurrentUser.gender,
-                        "birthday": MoleCurrentUser.birthday
+                        "birthday": MoleCurrentUser.birthday,
+                        "caption":MoleCurrentUser.bio
             ]
             
             let jsonData = try NSJSONSerialization.dataWithJSONObject(Body, options: NSJSONWritingOptions())
@@ -1224,7 +1227,7 @@ public class MolocateAccount {
                             MoleCurrentUser.thumbnailPic = result["thumbnail_url"] is NSNull ? MoleCurrentUser.profilePic :NSURL(string: result["picture_url"] as! String)!
                             setProfilePictures()
                         }
-                        
+                        MoleCurrentUser.bio = result["caption"] is NSNull ? String() : result["caption"] as! String
                         MoleCurrentUser.tag_count = result["tag_count"] as! Int
                         MoleCurrentUser.post_count = result["post_count"] as! Int
                         MoleCurrentUser.follower_count = result["follower_count"] as! Int

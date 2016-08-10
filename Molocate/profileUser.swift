@@ -252,6 +252,7 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
             
             cell.userCaption.numberOfLines = 0
             cell.userCaption.lineBreakMode = NSLineBreakMode.ByWordWrapping
+            cell.userCaption.text = classUser.bio
             cell.profilePhoto.layer.borderWidth = 0.1
             cell.profilePhoto.layer.masksToBounds = false
             cell.profilePhoto.layer.borderColor = UIColor.whiteColor().CGColor
