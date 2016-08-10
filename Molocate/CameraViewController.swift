@@ -570,12 +570,14 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         }
         
         var success = true
-        
+    
         if error != nil {
-            //NSLog("Movie file finishing error: %@", error!)
+            //NSLog("Movie file finishing error: %@", error!) "The recording reached the maximum allowable length."
+            if error.localizedRecoverySuggestion == "There is not enough available space to continue the file writing. Make room by deleting existing videos or photos." {
             success = error!.userInfo[AVErrorRecordingSuccessfullyFinishedKey] as! Bool? ?? false
             self.holdRelease()
             self.displayRecordAlert("Hata", message: "Telefonunuzda yeterli yer yok.")
+            }
         }
         self.cropVideoSquare(outputFileURL)
     

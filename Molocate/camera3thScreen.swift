@@ -107,36 +107,36 @@ class camera3thScreen: UIViewController,UICollectionViewDelegate, UICollectionVi
     }
     
     @IBAction func backButton(sender: AnyObject) {
-        let alertController = UIAlertController(title: "Emin misiniz?", message: "Geriye giderseniz videonuz silinecektir.", preferredStyle: .Alert)
-        
-        let cancelAction = UIAlertAction(title: "Vazgeç", style: .Cancel) { (action) in
-            // ...
-        }
-        alertController.addAction(cancelAction)
-        
-        let OKAction = UIAlertAction(title: "Evet", style: .Default) { (action) in
-            dispatch_async(dispatch_get_main_queue()) {
-                let cleanup: dispatch_block_t = {
-                    do {
-                        try NSFileManager.defaultManager().removeItemAtURL(self.videoURL!)
-                        
-                    } catch _ {}
-                    
-                }
-                cleanup()
-                placesArray.removeAll()
-                placeOrder.removeAllObjects()
+//        let alertController = UIAlertController(title: "Emin misiniz?", message: "Geriye giderseniz videonuz silinecektir.", preferredStyle: .Alert)
+//        
+//        let cancelAction = UIAlertAction(title: "Vazgeç", style: .Cancel) { (action) in
+//            // ...
+//        }
+//        alertController.addAction(cancelAction)
+//        
+//        let OKAction = UIAlertAction(title: "Evet", style: .Default) { (action) in
+//            dispatch_async(dispatch_get_main_queue()) {
+//                let cleanup: dispatch_block_t = {
+//                    do {
+//                        try NSFileManager.defaultManager().removeItemAtURL(self.videoURL!)
+//                        
+//                    } catch _ {}
+//                    
+//                }
+//                cleanup()
+//                placesArray.removeAll()
+//                placeOrder.removeAllObjects()
                 self.performSegueWithIdentifier("backFrom3th", sender: self)
                 
                 
                 
-            }
-        }
-        alertController.addAction(OKAction)
-        
-        self.presentViewController(alertController, animated: true) {
-            // ...
-        }
+//            }
+//        }
+//        alertController.addAction(OKAction)
+//        
+//        self.presentViewController(alertController, animated: true) {
+//            // ...
+//        }
         
         
     }
