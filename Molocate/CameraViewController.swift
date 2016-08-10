@@ -712,6 +712,20 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         self.videoDone.enabled = true
         self.recordButton.enabled = true
         }
+        if ((self.progress > 0.9999)) {
+            
+            tempAssetURL = nil
+            firstAsset = nil
+            secondAsset = nil
+            activityIndicator = UIActivityIndicatorView(frame: self.view.frame)
+            activityIndicator.center = self.view.center
+            activityIndicator.hidesWhenStopped = true
+            activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
+            view.addSubview(activityIndicator)
+            activityIndicator.startAnimating()
+            UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+            self.mergeVideoClips()
+        }
         
     }
     
@@ -996,7 +1010,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
 
 
     func holdRelease(){
-        
+        print("hop")
         self.progressTimer.invalidate()
 
         if self.isFlashMode {
@@ -1020,7 +1034,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         } catch _ {}
             
         }
-        
+    
         if self.videoOutput!.recording {
         self.videoOutput?.stopRecording()
         }
