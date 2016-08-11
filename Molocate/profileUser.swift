@@ -284,6 +284,7 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
             let cell = tableView.dequeueReusableCellWithIdentifier("cell2", forIndexPath: indexPath) as! profile2ndCell
             cell.numberFollower.text = "\(classUser.follower_count)"
             cell.numberFollowUser.text = "\(classUser.following_count)"
+            cell.numberFollowVenue.text = "\(classUser.place_following_count)"
             cell.followers.addTarget(self, action: #selector(profileUser.followersPressed), forControlEvents: UIControlEvents.TouchUpInside)
             cell.followUser.addTarget(self, action: #selector(profileUser.followUserPressed), forControlEvents: UIControlEvents.TouchUpInside)
             cell.followVenue.addTarget(self, action: #selector(profileUser.followVenuePressed), forControlEvents: UIControlEvents.TouchUpInside)

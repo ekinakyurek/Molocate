@@ -38,6 +38,7 @@ struct MoleUser{
     var tag_count = 0;
     var follower_count = 0;
     var following_count = 0;
+    var place_following_count = 0;
     var isFollowing:Bool = false;
     var gender = "male"
     var birthday = "2016-10-12"
@@ -902,7 +903,7 @@ public class MolocateAccount {
                 do {
                     //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
                     let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String: AnyObject]
-                    print(result)
+                    //print(result)
                     if result.indexForKey("email") != nil {
                         var user = MoleUser()
                         user.email = result["email"] as! String
@@ -912,7 +913,8 @@ public class MolocateAccount {
                         user.profilePic = result["picture_url"] is NSNull ? NSURL():NSURL(string: result["picture_url"] as! String)!
                         user.bio = result["caption"] is NSNull ? String() : result["caption"] as! String
                         user.follower_count = result["follower_count"] as! Int
-                        user.following_count = result["following_count"]as! Int
+                        user.following_count = result["following_count"] as! Int
+                        user.place_following_count = result["place_count"] as! Int
                         user.tag_count = result["tag_count"] as! Int
                         user.post_count = result["post_count"]as! Int
                         user.isFollowing = result["is_following"] as! Int == 1 ? true:false
@@ -1213,7 +1215,7 @@ public class MolocateAccount {
             
                 do {
                     let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String: AnyObject]
-                    //print(result)
+                    print(result)
                     if result.indexForKey("email") != nil{
                         MoleCurrentUser.email = result["email"] as! String
                         MoleCurrentUser.username = result["username"] as! String
@@ -1232,6 +1234,7 @@ public class MolocateAccount {
                         MoleCurrentUser.post_count = result["post_count"] as! Int
                         MoleCurrentUser.follower_count = result["follower_count"] as! Int
                         MoleCurrentUser.following_count = result["following_count"]as! Int
+                        MoleCurrentUser.place_following_count = result["place_count"] as! Int
                         MoleCurrentUser.gender =  result["gender"] is NSNull ? "": (result["gender"] as! String)
                         MoleCurrentUser.birthday = result["birthday"] is NSNull || (result["birthday"] as! String)   == "" ? "1970-01-01" : result["birthday"] as! String
                         
