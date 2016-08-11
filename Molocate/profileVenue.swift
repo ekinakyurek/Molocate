@@ -266,6 +266,22 @@ class profileVenue: UIViewController, UICollectionViewDelegateFlowLayout,NSURLCo
 //        let annotation = MKPointAnnotation()
 //        annotation.coordinate = location
 //        map.addAnnotation(annotation)
+        //                let searchTask = Session.sharedSession().venues.get(classPlace.id) {
+        //                    (result) -> Void in
+        //                    dispatch_async(dispatch_get_main_queue(), {
+        //                        if let response = result.response {
+        //
+        //                            let venue = response["venue"]
+        //                            let hereNow = venue!["hereNow"]!
+        //                            //self.hereNowCount =
+        //                            print(venue)
+        //                            ///self.tableView.reloadData()
+        //
+        //                        }
+        //                        })
+        //                }
+        //                searchTask.start()
+
         tableController.videoArray = thePlace.videoArray
         self.tableController.tableView.reloadData()
         self.tableView.reloadData()
