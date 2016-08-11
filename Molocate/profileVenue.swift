@@ -61,13 +61,16 @@ class profileVenue: UIViewController, UICollectionViewDelegateFlowLayout,NSURLCo
     }
     
     func adjustTable() {
+        
         if page == 2 {
-
+            
                 if tableController.tableView.contentOffset.y == 0 {
                     tableController.tableView.scrollEnabled = false
                     self.tableView.pagingEnabled = true
                     self.navigationController?.setNavigationBarHidden(false, animated: true)
-                    // self.tableView.setContentOffset(CGPoint(x: 0,y:0), animated: true)
+                    if classPlace.video_count > 1 {
+                    self.tableView.setContentOffset(CGPoint(x: 0,y:0), animated: true)
+                    }
                 }
             
             

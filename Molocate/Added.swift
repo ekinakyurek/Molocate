@@ -617,7 +617,7 @@ import FBSDKShareKit
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         pointNow = scrollView.contentOffset.y
         lastOffsetCapture = NSDate().timeIntervalSinceReferenceDate
-        
+     
     }
     func scrollViewDidScroll(scrollView: UIScrollView) {
         
