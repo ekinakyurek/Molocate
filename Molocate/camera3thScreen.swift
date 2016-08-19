@@ -196,20 +196,19 @@ class camera3thScreen: UIViewController,UICollectionViewDelegate, UICollectionVi
         mentionTable.hidden = true
         mentionTable.tableFooterView = UIView()
         self.view.backgroundColor = UIColor.whiteColor()
-        NSNotificationCenter.defaultCenter().addObserver(self,
-                                                         selector: #selector(self.keyboardNotification(_:)),
-                                                         name: UIKeyboardWillChangeFrameNotification,
-                                                         object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,selector: #selector(self.keyboardNotification(_:)),name: UIKeyboardWillChangeFrameNotification,object: nil)
         
         
         
-        //        if placesArray.count == 0 {
-        //            venueName.text = "Konum ara"
-        //        } else {
-        //            selectedVenue = placesArray[0]
-        //            venueName.text = selectedVenue
-        //            isLocationSelected = true
-        //        }
+        if placesArray.count == 0 {
+            venueName.text = "Konum ara"
+            } else {
+            selectedVenue = placesArray[0]
+            venueName.text = selectedVenue
+            let correctedRow = placeOrder.objectForKey(placesArray[0]) as! Int
+            videoLocation = locationDict[correctedRow][placesArray[correctedRow]]
+            isLocationSelected = true
+            }
         
         self.categ = ""
         if isLocationSelected {
@@ -401,7 +400,7 @@ class camera3thScreen: UIViewController,UICollectionViewDelegate, UICollectionVi
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 48
+        return 60
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -422,7 +421,7 @@ class camera3thScreen: UIViewController,UICollectionViewDelegate, UICollectionVi
                 cell.profilePhoto.setImage(UIImage(named: "profile"), forState: .Normal)
             }
             
-            cell.profilePhoto.addTarget(self, action: #selector(MainController.pressedProfileSearch(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+//            cell.profilePhoto.addTarget(self, action: #selector(MainController.pressedProfileSearch(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             //cell.followButton.addTarget(self, action: Selector("pressedFollowSearch"), forControlEvents: .TouchUpInside)
             cell.followButton.tag = indexPath.row
             cell.profilePhoto.tag = indexPath.row
@@ -498,6 +497,7 @@ class camera3thScreen: UIViewController,UICollectionViewDelegate, UICollectionVi
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
             self.view.frame.origin.y = 0
             self.toolBar.hidden = false
+            self.CaptionText = captionView.text
         }
     }
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
