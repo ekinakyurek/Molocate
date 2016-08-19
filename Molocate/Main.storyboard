@@ -120,7 +120,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="68"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="z9w-cd-OPG" id="obK-Au-r1F">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="67.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="67"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fWb-Ej-YVV">
@@ -278,7 +278,7 @@
                                         <rect key="frame" x="0.0" y="28" width="383" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dSw-kf-gEf" id="13T-sa-khp">
-                                            <rect key="frame" x="0.0" y="0.0" width="383" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="383" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eSu-xo-ceV">
@@ -372,6 +372,26 @@
             </objects>
             <point key="canvasLocation" x="4499.5" y="1315.5"/>
         </scene>
+        <!--Find Venue Controller-->
+        <scene sceneID="R7g-Te-gqC">
+            <objects>
+                <viewController storyboardIdentifier="findVenueController" id="mQm-YK-DXb" customClass="findVenueController" customModule="Molocate" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="gk4-7y-pQ4"/>
+                        <viewControllerLayoutGuide type="bottom" id="vcQ-t1-H3x"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ZMa-GA-I7n">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="S7P-Kb-2u4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4977.5" y="1325.5"/>
+        </scene>
         <!--One Video-->
         <scene sceneID="iSm-dK-OVS">
             <objects>
@@ -392,7 +412,7 @@
                                         <rect key="frame" x="0.0" y="92" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qE0-pW-Mlr" id="TSz-ZN-cBr">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -441,7 +461,7 @@
                                         <rect key="frame" x="0.0" y="28" width="383" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XQV-r9-eot" id="8lz-wL-sas">
-                                            <rect key="frame" x="0.0" y="0.0" width="383" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="383" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -1331,7 +1351,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                                         <rect key="frame" x="0.0" y="28" width="383" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="OHu-lt-Jgu" id="UL5-KN-mmK">
-                                            <rect key="frame" x="0.0" y="0.0" width="383" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="383" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -1623,7 +1643,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                                         <rect key="frame" x="0.0" y="28" width="343" height="155"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xIh-mc-ZHT" id="vOJ-N6-BlH">
-                                            <rect key="frame" x="0.0" y="0.0" width="343" height="154.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="154"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Başlık" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Orm-bK-g34">
@@ -1726,10 +1746,10 @@ These Services are operated and provided by Molocate. If you have any questions 
             </objects>
             <point key="canvasLocation" x="5807.5" y="-4149.5"/>
         </scene>
-        <!--Title-->
+        <!--profileUser-->
         <scene sceneID="XXh-Yr-8ZV">
             <objects>
-                <viewController storyboardIdentifier="profileUser" id="gtr-N2-rOL" customClass="profileUser" customModule="Molocate" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="profileUser" title="profileUser" id="gtr-N2-rOL" userLabel="profileUser" customClass="profileUser" customModule="Molocate" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="zB1-P2-nO1"/>
                         <viewControllerLayoutGuide type="bottom" id="XrG-LE-t3l"/>
@@ -1758,7 +1778,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                                         <rect key="frame" x="0.0" y="28" width="375" height="222"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QUL-do-73s" id="0bb-0y-hY4">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="221.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="221"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Mole" translatesAutoresizingMaskIntoConstraints="NO" id="COI-ON-vJp">
@@ -1778,14 +1798,13 @@ These Services are operated and provided by Molocate. If you have any questions 
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Molocateapp.com , Galatasaray , KOÇ 17' , BFL12'" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DbF-KZ-Nre">
-                                                    <rect key="frame" x="33" y="122" width="309" height="91"/>
+                                                    <rect key="frame" x="33" y="126" width="309" height="87"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="quw-Db-lba">
                                                     <rect key="frame" x="155" y="20" width="65" height="65"/>
-                                                    <state key="normal" title="Button"/>
                                                 </button>
                                             </subviews>
                                             <constraints>
@@ -1799,7 +1818,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                                                 <constraint firstItem="u4l-yU-11e" firstAttribute="centerX" secondItem="0bb-0y-hY4" secondAttribute="centerX" id="YKS-Gu-DNf"/>
                                                 <constraint firstItem="u4l-yU-11e" firstAttribute="leading" secondItem="0bb-0y-hY4" secondAttribute="leadingMargin" constant="20" id="caz-sY-Se6"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="DbF-KZ-Nre" secondAttribute="bottom" id="ehc-nh-Lvs"/>
-                                                <constraint firstItem="DbF-KZ-Nre" firstAttribute="top" secondItem="u4l-yU-11e" secondAttribute="bottom" id="f9M-FS-1xH"/>
+                                                <constraint firstItem="DbF-KZ-Nre" firstAttribute="top" secondItem="u4l-yU-11e" secondAttribute="bottom" constant="4" id="f9M-FS-1xH"/>
                                                 <constraint firstItem="DbF-KZ-Nre" firstAttribute="centerX" secondItem="0bb-0y-hY4" secondAttribute="centerX" id="m5O-ED-IxW"/>
                                                 <constraint firstItem="quw-Db-lba" firstAttribute="width" secondItem="COI-ON-vJp" secondAttribute="width" id="ms0-eQ-JgJ"/>
                                             </constraints>
@@ -1815,7 +1834,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                                         <rect key="frame" x="0.0" y="250" width="375" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="AEk-hV-gqd" id="bL3-yw-Ium">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="79.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="79"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nfc-NE-p43">
@@ -1933,25 +1952,25 @@ These Services are operated and provided by Molocate. If you have any questions 
                                                     <color key="textColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ttc-4n-zE2">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ttc-4n-zE2">
                                                     <rect key="frame" x="17" y="21" width="60" height="22"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aQd-7Y-AHI">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aQd-7Y-AHI">
                                                     <rect key="frame" x="111" y="21" width="60" height="22"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OGX-jz-f8u">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OGX-jz-f8u">
                                                     <rect key="frame" x="204" y="21" width="60" height="22"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CK6-pj-IYr">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CK6-pj-IYr">
                                                     <rect key="frame" x="288" y="21" width="80" height="22"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -2026,7 +2045,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                                         <rect key="frame" x="0.0" y="330" width="375" height="54"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="X7Q-ib-rUf" id="aEx-R2-JGw">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="53.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="53"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HeF-Lh-P22">
@@ -2106,7 +2125,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                                         <rect key="frame" x="0.0" y="384" width="375" height="273"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5Zq-IY-ONz" id="V67-bm-Hhk">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="272.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="272"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" directionalLockEnabled="YES" bounces="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7pd-SU-Tve">
@@ -2165,12 +2184,12 @@ These Services are operated and provided by Molocate. If you have any questions 
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mmj-q2-7dr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3711.5" y="-795.5"/>
+            <point key="canvasLocation" x="3501.5" y="-1177.5"/>
         </scene>
-        <!--Profile Venue-->
+        <!--locationProfile-->
         <scene sceneID="OVe-ZR-inL">
             <objects>
-                <viewController storyboardIdentifier="profileVenue" id="Qco-Cs-MA6" customClass="profileVenue" customModule="Molocate" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="profileVenue" title="locationProfile" id="Qco-Cs-MA6" customClass="profileVenue" customModule="Molocate" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jd9-WC-wOQ"/>
                         <viewControllerLayoutGuide type="bottom" id="qyz-d8-Wkq"/>
@@ -2187,7 +2206,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                                         <rect key="frame" x="0.0" y="92" width="375" height="305"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CWT-s0-hld" id="A8M-7T-0hc">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="304.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="304"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="XMM-yB-Zen">
@@ -2207,12 +2226,12 @@ These Services are operated and provided by Molocate. If you have any questions 
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K30-dU-j6X">
-                                                    <rect key="frame" x="38" y="161" width="299" height="131"/>
+                                                    <rect key="frame" x="38" y="161" width="299" height="134"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="13"/>
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vMv-Zh-0vy">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vMv-Zh-0vy">
                                                     <rect key="frame" x="0.0" y="-3" width="375" height="121"/>
                                                 </button>
                                             </subviews>
@@ -2225,7 +2244,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                                                 <constraint firstItem="vMv-Zh-0vy" firstAttribute="centerY" secondItem="XMM-yB-Zen" secondAttribute="centerY" id="EEp-UK-R0T"/>
                                                 <constraint firstItem="vMv-Zh-0vy" firstAttribute="width" secondItem="XMM-yB-Zen" secondAttribute="width" id="VHd-DG-OX1"/>
                                                 <constraint firstItem="vMv-Zh-0vy" firstAttribute="centerX" secondItem="XMM-yB-Zen" secondAttribute="centerX" id="WNR-5c-HaL"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="K30-dU-j6X" secondAttribute="bottom" constant="4" id="XoT-Tk-EOT"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="K30-dU-j6X" secondAttribute="bottom" constant="1" id="XoT-Tk-EOT"/>
                                                 <constraint firstItem="K30-dU-j6X" firstAttribute="width" secondItem="xEa-MY-2lK" secondAttribute="width" id="k0k-YP-LD9"/>
                                                 <constraint firstItem="XMM-yB-Zen" firstAttribute="centerX" secondItem="A8M-7T-0hc" secondAttribute="centerX" id="kEb-OX-XKQ"/>
                                                 <constraint firstItem="XMM-yB-Zen" firstAttribute="top" secondItem="A8M-7T-0hc" secondAttribute="topMargin" constant="-10" id="pO5-r1-eWv"/>
@@ -2246,10 +2265,10 @@ These Services are operated and provided by Molocate. If you have any questions 
                                         <rect key="frame" x="0.0" y="397" width="375" height="81"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gwj-go-L71" id="0Oh-rc-YTF">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="80.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jiu-25-tmH">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jiu-25-tmH">
                                                     <rect key="frame" x="-1" y="9" width="376" height="1"/>
                                                     <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
@@ -2259,7 +2278,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sDj-bp-Ovl">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sDj-bp-Ovl">
                                                     <rect key="frame" x="-1" y="68" width="376" height="0.0"/>
                                                     <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
@@ -2269,8 +2288,8 @@ These Services are operated and provided by Molocate. If you have any questions 
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gmj-zo-qUY">
-                                                    <rect key="frame" x="65" y="25" width="58" height="15"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gmj-zo-qUY">
+                                                    <rect key="frame" x="97" y="25" width="58" height="15"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="15" id="AZN-Jq-jkB"/>
                                                         <constraint firstAttribute="width" constant="58" id="OiO-QQ-DNM"/>
@@ -2279,18 +2298,8 @@ These Services are operated and provided by Molocate. If you have any questions 
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ŞİMDİ BURADA" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R1Q-a4-RfW">
-                                                    <rect key="frame" x="261" y="38" width="40" height="25"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="40" id="FRz-Fq-cEn"/>
-                                                        <constraint firstAttribute="height" constant="25" id="xMt-Mc-PPQ"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="8"/>
-                                                    <color key="textColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="VİDEO " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OYY-HT-md8">
-                                                    <rect key="frame" x="74" y="40" width="40" height="12"/>
+                                                    <rect key="frame" x="106" y="40" width="40" height="12"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="12" id="DQa-Ys-bZM"/>
                                                         <constraint firstAttribute="width" constant="40" id="snt-bK-Ryf"/>
@@ -2300,7 +2309,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TAKİPÇİ" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J0j-Of-nAA">
-                                                    <rect key="frame" x="168" y="38" width="40" height="16"/>
+                                                    <rect key="frame" x="229" y="38" width="40" height="16"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="16" id="DkU-Ah-kwx"/>
                                                         <constraint firstAttribute="width" constant="40" id="vr4-ly-ZGD"/>
@@ -2309,21 +2318,11 @@ These Services are operated and provided by Molocate. If you have any questions 
                                                     <color key="textColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RH1-zE-8Ep">
-                                                    <rect key="frame" x="159" y="25" width="58" height="15"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RH1-zE-8Ep">
+                                                    <rect key="frame" x="220" y="25" width="58" height="15"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="58" id="9YS-RG-cBo"/>
                                                         <constraint firstAttribute="height" constant="15" id="FYM-BE-hyC"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rnn-4z-aCj">
-                                                    <rect key="frame" x="252" y="25" width="58" height="15"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="58" id="Ue8-bl-V7c"/>
-                                                        <constraint firstAttribute="height" constant="15" id="w97-rY-2aJ"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -2333,21 +2332,17 @@ These Services are operated and provided by Molocate. If you have any questions 
                                             <constraints>
                                                 <constraint firstItem="sDj-bp-Ovl" firstAttribute="centerX" secondItem="0Oh-rc-YTF" secondAttribute="centerX" id="18H-WF-bPD"/>
                                                 <constraint firstItem="Jiu-25-tmH" firstAttribute="top" secondItem="0Oh-rc-YTF" secondAttribute="topMargin" constant="1" id="1hw-V2-k0C"/>
-                                                <constraint firstItem="rnn-4z-aCj" firstAttribute="centerY" secondItem="0Oh-rc-YTF" secondAttribute="centerY" constant="-8" id="33H-Ns-3mq"/>
-                                                <constraint firstItem="R1Q-a4-RfW" firstAttribute="centerY" secondItem="0Oh-rc-YTF" secondAttribute="centerY" constant="10" id="D5R-fc-NmS"/>
                                                 <constraint firstItem="sDj-bp-Ovl" firstAttribute="width" secondItem="0Oh-rc-YTF" secondAttribute="width" id="DNw-Vz-kXz"/>
                                                 <constraint firstItem="OYY-HT-md8" firstAttribute="centerX" secondItem="Gmj-zo-qUY" secondAttribute="centerX" id="Dqo-mp-fe4"/>
-                                                <constraint firstItem="RH1-zE-8Ep" firstAttribute="centerX" secondItem="0Oh-rc-YTF" secondAttribute="centerX" id="OzD-ku-XPy"/>
+                                                <constraint firstItem="RH1-zE-8Ep" firstAttribute="centerX" secondItem="0Oh-rc-YTF" secondAttribute="centerX" multiplier="1.33" id="OzD-ku-XPy"/>
                                                 <constraint firstItem="Jiu-25-tmH" firstAttribute="centerX" secondItem="0Oh-rc-YTF" secondAttribute="centerX" id="ThK-LY-3wk"/>
                                                 <constraint firstItem="sDj-bp-Ovl" firstAttribute="bottom" secondItem="0Oh-rc-YTF" secondAttribute="bottomMargin" constant="-4" id="ZAa-iK-ztH"/>
                                                 <constraint firstItem="RH1-zE-8Ep" firstAttribute="centerY" secondItem="0Oh-rc-YTF" secondAttribute="centerY" constant="-8" id="dBt-3i-bDJ"/>
                                                 <constraint firstItem="J0j-Of-nAA" firstAttribute="centerY" secondItem="0Oh-rc-YTF" secondAttribute="centerY" constant="6" id="gJk-0w-rNe"/>
-                                                <constraint firstItem="R1Q-a4-RfW" firstAttribute="centerX" secondItem="rnn-4z-aCj" secondAttribute="centerX" id="i9J-ba-Jz1"/>
                                                 <constraint firstItem="J0j-Of-nAA" firstAttribute="centerX" secondItem="RH1-zE-8Ep" secondAttribute="centerX" id="ilo-xN-sea"/>
                                                 <constraint firstItem="Jiu-25-tmH" firstAttribute="width" secondItem="0Oh-rc-YTF" secondAttribute="width" id="rh5-Fv-JjJ"/>
                                                 <constraint firstItem="OYY-HT-md8" firstAttribute="centerY" secondItem="0Oh-rc-YTF" secondAttribute="centerY" constant="6" id="rrL-Js-Hzt"/>
-                                                <constraint firstItem="Gmj-zo-qUY" firstAttribute="centerX" secondItem="0Oh-rc-YTF" secondAttribute="centerX" multiplier="0.5" id="s0z-lA-USh"/>
-                                                <constraint firstItem="rnn-4z-aCj" firstAttribute="centerX" secondItem="0Oh-rc-YTF" secondAttribute="centerX" multiplier="1.5" id="shd-l0-lqO"/>
+                                                <constraint firstItem="Gmj-zo-qUY" firstAttribute="centerX" secondItem="0Oh-rc-YTF" secondAttribute="centerX" multiplier="0.67" id="s0z-lA-USh"/>
                                                 <constraint firstItem="Gmj-zo-qUY" firstAttribute="centerY" secondItem="0Oh-rc-YTF" secondAttribute="centerY" constant="-8" id="xsm-Qm-pcG"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -2355,8 +2350,6 @@ These Services are operated and provided by Molocate. If you have any questions 
                                             <outlet property="bottomLabel" destination="sDj-bp-Ovl" id="0gf-jM-jzf"/>
                                             <outlet property="label1" destination="OYY-HT-md8" id="RWs-Uq-1PK"/>
                                             <outlet property="label2" destination="J0j-Of-nAA" id="YwZ-OO-kU8"/>
-                                            <outlet property="label3" destination="R1Q-a4-RfW" id="wbZ-Ej-AcP"/>
-                                            <outlet property="numberCheckIn" destination="rnn-4z-aCj" id="nyc-s7-CWk"/>
                                             <outlet property="numberFollower" destination="RH1-zE-8Ep" id="fdV-99-bSZ"/>
                                             <outlet property="numberVideo" destination="Gmj-zo-qUY" id="2gM-5u-epW"/>
                                             <outlet property="topLabel" destination="Jiu-25-tmH" id="fzw-OH-vPg"/>
@@ -2366,7 +2359,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                                         <rect key="frame" x="0.0" y="478" width="375" height="81"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eeq-ra-QoE" id="oNf-9G-GiZ">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="80.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -2385,15 +2378,78 @@ These Services are operated and provided by Molocate. If you have any questions 
                             <constraint firstItem="ghz-8o-64R" firstAttribute="width" secondItem="yQT-P7-NK0" secondAttribute="width" id="kpj-c1-q5y"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Title" id="EcK-zS-Wd5">
+                        <barButtonItem key="rightBarButtonItem" image="follow" id="zqj-05-v46">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="followButton:" destination="Qco-Cs-MA6" id="V6N-cg-GWU"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="followButton" destination="zqj-05-v46" id="k3b-fL-v4p"/>
                         <outlet property="tableView" destination="ghz-8o-64R" id="tDk-Bl-MpZ"/>
+                        <outlet property="titleToolbar" destination="EcK-zS-Wd5" id="2yf-Vu-Llb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZLn-xN-uDf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4156.5" y="-795.5"/>
+            <point key="canvasLocation" x="3992.5" y="-1177.5"/>
+        </scene>
+        <!--Title-->
+        <scene sceneID="tHR-6M-8Ef">
+            <objects>
+                <viewController storyboardIdentifier="oneMap" id="aSU-4O-HTh" customClass="oneMap" customModule="Molocate" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ZWc-1u-z1f"/>
+                        <viewControllerLayoutGuide type="bottom" id="rua-wu-Tqa"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="hng-RE-eeK">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bm8-Ny-uP7">
+                                <rect key="frame" x="-1" y="0.0" width="376" height="667"/>
+                            </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hvy-BG-cYw">
+                                <rect key="frame" x="233" y="621" width="96" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="36" id="ru5-P8-yoh"/>
+                                    <constraint firstAttribute="width" constant="96" id="sVK-yL-CUv"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="15"/>
+                                <state key="normal" title="Yol Tarifi Al">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="getDirection:" destination="aSU-4O-HTh" eventType="touchUpInside" id="6gc-MX-lX2"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="bm8-Ny-uP7" firstAttribute="width" secondItem="hng-RE-eeK" secondAttribute="width" id="A4T-Zg-spf"/>
+                            <constraint firstItem="bm8-Ny-uP7" firstAttribute="centerX" secondItem="hng-RE-eeK" secondAttribute="centerX" id="RxM-hz-uIX"/>
+                            <constraint firstItem="rua-wu-Tqa" firstAttribute="top" secondItem="hvy-BG-cYw" secondAttribute="bottom" constant="10" id="Uyu-CT-SVW"/>
+                            <constraint firstItem="hvy-BG-cYw" firstAttribute="trailing" secondItem="hng-RE-eeK" secondAttribute="trailingMargin" constant="-30" id="VD2-6U-gvp"/>
+                            <constraint firstItem="bm8-Ny-uP7" firstAttribute="centerY" secondItem="hng-RE-eeK" secondAttribute="centerY" id="Vv9-B9-97k"/>
+                            <constraint firstItem="bm8-Ny-uP7" firstAttribute="height" secondItem="hng-RE-eeK" secondAttribute="height" id="sS2-ck-HVy"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Title" id="BpY-UN-JO9"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="getDirection" destination="hvy-BG-cYw" id="WZ4-i3-iYM"/>
+                        <outlet property="mapView" destination="bm8-Ny-uP7" id="pff-BW-J1I"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Kyr-oH-57V" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4490.5" y="-1159.5"/>
         </scene>
         <!--Profile-->
         <scene sceneID="pYS-jB-53J">
@@ -2602,7 +2658,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AYE-Lu-5qE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2705.5" y="1389.5"/>
+            <point key="canvasLocation" x="2677.5" y="1401.5"/>
         </scene>
         <!--Change Passwordd-->
         <scene sceneID="mq8-lb-Wu8">
@@ -2813,64 +2869,55 @@ These Services are operated and provided by Molocate. If you have any questions 
                         <subviews>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A0W-5J-K2r">
                                 <rect key="frame" x="0.0" y="20" width="375" height="44"/>
-                                <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.92156862745098034" green="0.16862745098039217" blue="0.36470588235294116" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="wyO-GK-dvU"/>
                                 </constraints>
                                 <items>
                                     <barButtonItem image="cross" id="B7F-t4-Q4X">
-                                        <color key="tintColor" red="0.92156862745098034" green="0.16862745098039217" blue="0.36470588235294116" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <action selector="backToCamera:" destination="KaE-bU-5kG" id="d7c-j2-Lrd"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="5gM-C5-WO8"/>
                                     <barButtonItem image="download" style="plain" id="uSq-ze-UZj">
-                                        <color key="tintColor" red="0.92156862745098034" green="0.16862745098039217" blue="0.36470588235294116" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <action selector="share44s:" destination="KaE-bU-5kG" id="nqb-lM-1Ty"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
                                 <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="barTintColor" red="0.92156862745098034" green="0.16862745098039217" blue="0.36470588235294116" alpha="1" colorSpace="calibratedRGB"/>
                             </toolbar>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Qm-0t-BEd">
                                 <rect key="frame" x="0.0" y="623" width="375" height="44"/>
-                                <color key="backgroundColor" red="0.78823529410000004" green="0.14117647059999999" blue="0.31764705879999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.92156862745098034" green="0.16862745098039217" blue="0.36470588235294116" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="uCp-iR-NfW"/>
                                 </constraints>
                                 <items>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="dy2-AX-0y9"/>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="fe4-Qb-jy0"/>
-                                    <barButtonItem style="plain" id="RpB-Cl-Qh6">
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="Whe-KY-1l6"/>
+                                    <barButtonItem title="İlerle" style="plain" id="RpB-Cl-Qh6">
                                         <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="k4Z-6M-DOq">
-                                            <rect key="frame" x="-10" y="5.5" width="369" height="33"/>
+                                            <rect key="frame" x="64" y="6" width="247" height="33"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="30" id="0oq-8n-RAJ"/>
-                                                <constraint firstAttribute="width" constant="46" id="EXB-Sd-nDH"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="15"/>
-                                            <state key="normal" title="İLERLE">
+                                            <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
+                                            <state key="normal" title="İlerle">
                                                 <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             </state>
-                                            <variation key="default">
-                                                <mask key="constraints">
-                                                    <exclude reference="0oq-8n-RAJ"/>
-                                                    <exclude reference="EXB-Sd-nDH"/>
-                                                </mask>
-                                            </variation>
                                             <connections>
                                                 <action selector="post:" destination="KaE-bU-5kG" eventType="touchUpInside" id="yuS-dE-xZa"/>
                                             </connections>
                                         </button>
                                     </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="ALv-Eh-wmw"/>
                                 </items>
                                 <color key="barTintColor" red="0.92156862745098034" green="0.16862745098039217" blue="0.36470588235294116" alpha="1" colorSpace="calibratedRGB"/>
                             </toolbar>
                         </subviews>
-                        <color key="backgroundColor" red="0.92156862745098034" green="0.16862745098039217" blue="0.36470588235294116" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="A0W-5J-K2r" firstAttribute="centerX" secondItem="3fg-W9-KY2" secondAttribute="centerX" id="8nG-w2-kw6"/>
                             <constraint firstItem="3Qm-0t-BEd" firstAttribute="width" secondItem="3fg-W9-KY2" secondAttribute="width" id="LbI-oC-zru"/>
@@ -2985,8 +3032,8 @@ These Services are operated and provided by Molocate. If you have any questions 
                                                         <constraint firstAttribute="height" constant="15" id="uGC-OH-6So"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EĞLENCE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dh3-aI-1pU">
-                                                    <rect key="frame" x="23" y="18" width="112" height="14"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="EĞLENCE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dh3-aI-1pU">
+                                                    <rect key="frame" x="23" y="18" width="120" height="14"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="50" id="8VV-ps-eWL"/>
                                                         <constraint firstAttribute="height" constant="21" id="kzw-5G-Mpv"/>
@@ -3023,6 +3070,18 @@ These Services are operated and provided by Molocate. If you have any questions 
                                     <outlet property="delegate" destination="KJV-8O-3Zu" id="UHX-2U-cbX"/>
                                 </connections>
                             </collectionView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" text="Güzel yorum" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="G5R-7N-4H1">
+                                <rect key="frame" x="0.0" y="362" width="375" height="80"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="80" id="GNN-2Q-oIe"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <connections>
+                                    <outlet property="delegate" destination="KJV-8O-3Zu" id="KXI-Q6-J83"/>
+                                </connections>
+                            </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="YORUM VE VİDEODAKİLERİ EKLE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8tu-lT-q0v">
                                 <rect key="frame" x="26" y="327" width="200" height="20"/>
                                 <constraints>
@@ -3035,7 +3094,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                             </label>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2jw-0r-CNC">
                                 <rect key="frame" x="0.0" y="579" width="375" height="44"/>
-                                <color key="backgroundColor" red="0.78823529410000004" green="0.14117647059999999" blue="0.31764705879999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.92156862745098034" green="0.16862745098039217" blue="0.36470588235294116" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="gpC-IG-Wg8"/>
                                 </constraints>
@@ -3071,26 +3130,6 @@ These Services are operated and provided by Molocate. If you have any questions 
                                 </items>
                                 <color key="barTintColor" red="0.92156862745098034" green="0.16862745098039217" blue="0.36470588235294116" alpha="1" colorSpace="calibratedRGB"/>
                             </toolbar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="aYe-wg-mmC">
-                                <rect key="frame" x="-4" y="64" width="383" height="298"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="KJV-8O-3Zu" id="KDA-NS-Kwy"/>
-                                    <outlet property="delegate" destination="KJV-8O-3Zu" id="y2g-dc-WZT"/>
-                                </connections>
-                            </tableView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" text="Güzel yorum" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="G5R-7N-4H1">
-                                <rect key="frame" x="0.0" y="362" width="375" height="80"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="80" id="GNN-2Q-oIe"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                <connections>
-                                    <outlet property="delegate" destination="KJV-8O-3Zu" id="KXI-Q6-J83"/>
-                                </connections>
-                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -3098,7 +3137,6 @@ These Services are operated and provided by Molocate. If you have any questions 
                             <constraint firstItem="2jw-0r-CNC" firstAttribute="centerX" secondItem="4Bb-WR-3Oa" secondAttribute="centerX" id="5iz-6X-6K7"/>
                             <constraint firstItem="G5R-7N-4H1" firstAttribute="top" secondItem="8tu-lT-q0v" secondAttribute="bottom" constant="15" id="6kO-Tb-TJ7"/>
                             <constraint firstItem="lZt-uB-ikW" firstAttribute="centerX" secondItem="4Bb-WR-3Oa" secondAttribute="centerX" id="AIx-la-gK3"/>
-                            <constraint firstItem="aYe-wg-mmC" firstAttribute="leading" secondItem="4Bb-WR-3Oa" secondAttribute="leadingMargin" constant="-20" id="ALP-ri-lLk"/>
                             <constraint firstItem="iMx-Mt-aHJ" firstAttribute="centerY" secondItem="OZ5-mm-La3" secondAttribute="centerY" id="DG3-sV-Qef"/>
                             <constraint firstItem="G5R-7N-4H1" firstAttribute="width" secondItem="4Bb-WR-3Oa" secondAttribute="width" id="ERf-Yh-8zs"/>
                             <constraint firstItem="4xK-IH-O67" firstAttribute="top" secondItem="2jw-0r-CNC" secondAttribute="bottom" id="MH4-LJ-GLR"/>
@@ -3116,14 +3154,11 @@ These Services are operated and provided by Molocate. If you have any questions 
                             <constraint firstItem="9Kq-yu-MdX" firstAttribute="leading" secondItem="4Bb-WR-3Oa" secondAttribute="leadingMargin" constant="10" id="g6G-zN-sxP"/>
                             <constraint firstItem="oPY-ln-Gdh" firstAttribute="leading" secondItem="4Bb-WR-3Oa" secondAttribute="leadingMargin" constant="10" id="jzX-zo-IHS"/>
                             <constraint firstItem="ONe-Gp-iLb" firstAttribute="centerY" secondItem="OZ5-mm-La3" secondAttribute="centerY" id="l3p-NJ-sFd"/>
-                            <constraint firstItem="aYe-wg-mmC" firstAttribute="top" secondItem="fqw-ly-Me1" secondAttribute="bottom" id="l7h-7K-0R0"/>
                             <constraint firstItem="8tu-lT-q0v" firstAttribute="leading" secondItem="4Bb-WR-3Oa" secondAttribute="leadingMargin" constant="10" id="lwY-e9-68R"/>
                             <constraint firstItem="fqw-ly-Me1" firstAttribute="top" secondItem="4g1-sZ-yum" secondAttribute="bottom" id="lwx-NG-UTV"/>
                             <constraint firstItem="lZt-uB-ikW" firstAttribute="top" secondItem="9Kq-yu-MdX" secondAttribute="bottom" constant="15" id="m4f-Ew-WFl"/>
-                            <constraint firstItem="G5R-7N-4H1" firstAttribute="top" secondItem="aYe-wg-mmC" secondAttribute="bottom" id="mdi-qq-M1a"/>
                             <constraint firstItem="oPY-ln-Gdh" firstAttribute="top" secondItem="4Bb-WR-3Oa" secondAttribute="topMargin" constant="76" id="nFl-oC-OHU"/>
                             <constraint firstItem="fqw-ly-Me1" firstAttribute="width" secondItem="4Bb-WR-3Oa" secondAttribute="width" id="oox-DD-7ns"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="aYe-wg-mmC" secondAttribute="trailing" constant="-20" id="r7L-7q-3MM"/>
                             <constraint firstItem="8tu-lT-q0v" firstAttribute="centerY" secondItem="4Bb-WR-3Oa" secondAttribute="centerY" multiplier="0.6" constant="150" id="xjC-Vr-Rqm"/>
                             <constraint firstItem="9Kq-yu-MdX" firstAttribute="centerY" secondItem="4Bb-WR-3Oa" secondAttribute="centerY" multiplier="0.6" id="zLj-hN-4zI"/>
                         </constraints>
@@ -3133,10 +3168,9 @@ These Services are operated and provided by Molocate. If you have any questions 
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="bottomToolbar" destination="2jw-0r-CNC" id="G9u-NB-B5n"/>
-                        <outlet property="captionView" destination="G5R-7N-4H1" id="Ri2-yq-RTQ"/>
                         <outlet property="collectionView" destination="lZt-uB-ikW" id="WvP-xU-wVY"/>
-                        <outlet property="mentionTable" destination="aYe-wg-mmC" id="EU2-R8-hJK"/>
                         <outlet property="selectVenue" destination="OZ5-mm-La3" id="gSZ-YT-JnL"/>
+                        <outlet property="textView" destination="G5R-7N-4H1" id="Dbo-s6-Wof"/>
                         <outlet property="toolBar" destination="fqw-ly-Me1" id="asa-Fr-NbZ"/>
                         <outlet property="venueName" destination="ONe-Gp-iLb" id="ffv-Su-tgc"/>
                         <segue destination="KaE-bU-5kG" kind="show" identifier="backFrom3th" id="Dku-Wb-Giu"/>
@@ -3199,7 +3233,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Q2E-sv-8EP" id="IK8-JV-Ahk">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -3251,7 +3285,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                                 <rect key="frame" x="0.0" y="28" width="600" height="91"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="anM-Ny-BXk" id="E3e-QF-pdg">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="90.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="90"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ILq-mB-5vY">
@@ -3323,7 +3357,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                                         <rect key="frame" x="0.0" y="28" width="375" height="54"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8g7-hu-PdX" id="FgD-9L-RNP">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="53.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="53"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UWm-na-zuH">
@@ -3425,7 +3459,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nRD-f7-FQk" id="apf-PQ-g2y">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -3568,12 +3602,12 @@ These Services are operated and provided by Molocate. If you have any questions 
                         <segue destination="TaJ-Sh-2OM" kind="relationship" relationship="viewControllers" id="6J3-mA-Zuw"/>
                         <segue destination="NJ6-v5-a2W" kind="relationship" relationship="viewControllers" id="AIv-Ss-6mG"/>
                         <segue destination="ZzN-fS-FBy" kind="relationship" relationship="viewControllers" id="5WV-NM-6Cj"/>
-                        <segue destination="Uek-31-GU9" kind="show" identifier="logOut" id="ON5-bH-Lzp"/>
+                        <segue destination="Uek-31-GU9" kind="show" identifier="logout" id="ON5-bH-Lzp"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mSC-4o-IAj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1057.5" y="-428.5"/>
+            <point key="canvasLocation" x="923.5" y="-372.5"/>
         </scene>
         <!--HomeNavigation-->
         <scene sceneID="hB6-Ia-a91">
@@ -3614,7 +3648,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gqN-A5-BNi" id="eBM-eJ-PWT">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -3701,7 +3735,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="yEu-4o-WM5" kind="relationship" relationship="rootViewController" id="Gki-4B-zK9"/>
+                        <segue destination="mQ9-5f-RMM" kind="relationship" relationship="rootViewController" id="wN6-ui-vUN"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4u7-vE-Zuh" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3834,7 +3868,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KTk-Md-Iip">
+                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KTk-Md-Iip">
                                 <rect key="frame" x="187" y="80" width="192" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="45B-hb-g7r"/>
@@ -3847,7 +3881,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                                     <action selector="taggedButton:" destination="yEu-4o-WM5" eventType="touchUpInside" id="8hD-WO-nhg"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g4k-wa-ZG4">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g4k-wa-ZG4">
                                 <rect key="frame" x="187" y="80" width="0.0" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="width" id="sjM-Yd-Nf6"/>
@@ -3939,7 +3973,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3sI-9m-f8g" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2186.5" y="1389.5"/>
+            <point key="canvasLocation" x="1542.5" y="2309.5"/>
         </scene>
         <!--Profile Other Seperate-->
         <scene sceneID="h31-9v-Anb">
@@ -4376,6 +4410,449 @@ These Services are operated and provided by Molocate. If you have any questions 
             </objects>
             <point key="canvasLocation" x="1652.5" y="-3473.5"/>
         </scene>
+        <!--profileUser-->
+        <scene sceneID="qZd-Fy-squ">
+            <objects>
+                <viewController storyboardIdentifier="profileCurrentUser" title="profileCurrentUser" id="mQ9-5f-RMM" userLabel="profileUser" customClass="myProfile" customModule="Molocate" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="rPh-nP-PWc"/>
+                        <viewControllerLayoutGuide type="bottom" id="f1A-CJ-oPU"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="pfc-9b-pOn">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CeO-Ab-j7e">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="210"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="210" id="0SX-0G-B61"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="210" id="bGI-Ep-O9Y"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="dataSource" destination="mQ9-5f-RMM" id="kE9-9o-Geg"/>
+                                    <outlet property="delegate" destination="mQ9-5f-RMM" id="0WR-By-6VR"/>
+                                </connections>
+                            </tableView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="220" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="r7Y-IO-saQ">
+                                <rect key="frame" x="0.0" y="64" width="375" height="653"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell1" rowHeight="222" id="CA2-P9-a6L" customClass="profile1stCell" customModule="Molocate" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="222"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CA2-P9-a6L" id="P2z-k8-9nl">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="221"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Mole" translatesAutoresizingMaskIntoConstraints="NO" id="2xO-hI-Fo1">
+                                                    <rect key="frame" x="155" y="20" width="65" height="65"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="65" id="Hom-vZ-MSH"/>
+                                                        <constraint firstAttribute="width" constant="65" id="snT-DB-CTE"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kağan Cenan" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lev-5A-VmI">
+                                                    <rect key="frame" x="28" y="97" width="319" height="25"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="25" id="JfO-LC-AYZ"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="18"/>
+                                                    <color key="textColor" red="0.92156862750000001" green="0.16862745100000001" blue="0.36470588240000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Molocateapp.com , Galatasaray , KOÇ 17' , BFL12'" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Tj-VB-SpO">
+                                                    <rect key="frame" x="33" y="126" width="309" height="87"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
+                                                    <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dob-rc-7xQ">
+                                                    <rect key="frame" x="155" y="20" width="65" height="65"/>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottomMargin" secondItem="5Tj-VB-SpO" secondAttribute="bottom" id="23U-CL-1Sl"/>
+                                                <constraint firstItem="dob-rc-7xQ" firstAttribute="width" secondItem="2xO-hI-Fo1" secondAttribute="width" id="2Q1-ov-0eD"/>
+                                                <constraint firstItem="5Tj-VB-SpO" firstAttribute="centerX" secondItem="P2z-k8-9nl" secondAttribute="centerX" id="BLG-CH-591"/>
+                                                <constraint firstItem="2xO-hI-Fo1" firstAttribute="centerX" secondItem="P2z-k8-9nl" secondAttribute="centerX" id="IaE-No-3AZ"/>
+                                                <constraint firstItem="dob-rc-7xQ" firstAttribute="centerX" secondItem="2xO-hI-Fo1" secondAttribute="centerX" id="Ptl-Co-KUq"/>
+                                                <constraint firstItem="5Tj-VB-SpO" firstAttribute="top" secondItem="Lev-5A-VmI" secondAttribute="bottom" constant="4" id="RPG-67-UiZ"/>
+                                                <constraint firstItem="2xO-hI-Fo1" firstAttribute="top" secondItem="P2z-k8-9nl" secondAttribute="topMargin" constant="12" id="Wlr-wT-89g"/>
+                                                <constraint firstItem="dob-rc-7xQ" firstAttribute="centerY" secondItem="2xO-hI-Fo1" secondAttribute="centerY" id="YVL-Vg-1pk"/>
+                                                <constraint firstItem="dob-rc-7xQ" firstAttribute="height" secondItem="2xO-hI-Fo1" secondAttribute="height" id="ajR-gm-wVh"/>
+                                                <constraint firstItem="5Tj-VB-SpO" firstAttribute="leading" secondItem="P2z-k8-9nl" secondAttribute="leadingMargin" constant="25" id="cph-rV-ash"/>
+                                                <constraint firstItem="Lev-5A-VmI" firstAttribute="centerX" secondItem="P2z-k8-9nl" secondAttribute="centerX" id="dwY-ZO-hgC"/>
+                                                <constraint firstItem="Lev-5A-VmI" firstAttribute="leading" secondItem="P2z-k8-9nl" secondAttribute="leadingMargin" constant="20" id="tYO-Pk-UDt"/>
+                                                <constraint firstItem="Lev-5A-VmI" firstAttribute="top" secondItem="2xO-hI-Fo1" secondAttribute="bottom" constant="12" id="wEH-h3-It7"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="name" destination="Lev-5A-VmI" id="uOh-rQ-znR"/>
+                                            <outlet property="profilePhoto" destination="2xO-hI-Fo1" id="DOs-0K-658"/>
+                                            <outlet property="profilePhotoPressed" destination="dob-rc-7xQ" id="Vvw-PM-mvN"/>
+                                            <outlet property="userCaption" destination="5Tj-VB-SpO" id="0KZ-xl-cfY"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell2" rowHeight="80" id="U8z-Cp-Iqq" customClass="profile2ndCell" customModule="Molocate" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="250" width="375" height="80"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="U8z-Cp-Iqq" id="cGP-Ag-3QQ">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="79"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vmb-6h-rxW">
+                                                    <rect key="frame" x="16" y="9" width="343" height="1"/>
+                                                    <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="0.5" id="pjT-aL-zEW"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="012-5p-pjc">
+                                                    <rect key="frame" x="18" y="71" width="341" height="0.0"/>
+                                                    <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="0.5" id="jge-GW-uqb"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kpu-nj-e9x">
+                                                    <rect key="frame" x="17" y="16" width="60" height="48"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="48" id="3mN-0J-2gm"/>
+                                                        <constraint firstAttribute="width" constant="60" id="bRs-tz-cTP"/>
+                                                    </constraints>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BQ7-ud-LU9">
+                                                    <rect key="frame" x="111" y="16" width="60" height="48"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="48" id="Uxf-0v-813"/>
+                                                        <constraint firstAttribute="width" constant="60" id="jTL-ad-em2"/>
+                                                    </constraints>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8fR-sl-6Wv">
+                                                    <rect key="frame" x="204" y="16" width="60" height="48"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="60" id="KU8-mD-Iaj"/>
+                                                        <constraint firstAttribute="height" constant="48" id="yb2-bX-2Wv"/>
+                                                    </constraints>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7LQ-rF-hPO">
+                                                    <rect key="frame" x="298" y="16" width="60" height="48"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="60" id="HKd-fG-wx0"/>
+                                                        <constraint firstAttribute="height" constant="48" id="Vac-w1-oRd"/>
+                                                    </constraints>
+                                                </button>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Zp-Kb-dwt">
+                                                    <rect key="frame" x="93" y="22" width="0.0" height="35"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="0.5" id="AWn-q6-uck"/>
+                                                        <constraint firstAttribute="height" constant="35" id="KGE-SK-E7G"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8QA-ci-jkE">
+                                                    <rect key="frame" x="188" y="22" width="0.0" height="35"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="0.5" id="bUW-i9-5p6"/>
+                                                        <constraint firstAttribute="height" constant="35" id="vFp-hn-AyA"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L4m-JZ-MTy">
+                                                    <rect key="frame" x="281" y="22" width="1" height="35"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="0.5" id="HNp-Ff-tok"/>
+                                                        <constraint firstAttribute="height" constant="35" id="kQ0-1P-RXP"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TAKİP ETTİĞİ KİŞİLER" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q0V-gO-U16">
+                                                    <rect key="frame" x="111" y="39" width="60" height="22"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="60" id="Ska-zU-h8z"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="8"/>
+                                                    <color key="textColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TAKİP ETTİĞİ MEKANLAR" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QTY-yj-ZAD">
+                                                    <rect key="frame" x="17" y="39" width="60" height="22"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="60" id="FWX-So-8ua"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="8"/>
+                                                    <color key="textColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TAKİPÇİLER" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pzN-Es-3Hd">
+                                                    <rect key="frame" x="204" y="40" width="60" height="11"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="60" id="Af5-HK-mqg"/>
+                                                        <constraint firstAttribute="height" constant="11" id="rLL-TE-hKM"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="8"/>
+                                                    <color key="textColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PAYLAŞIM YAPTIĞI MEKANLAR" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gd1-fh-ocj">
+                                                    <rect key="frame" x="288" y="39" width="80" height="22"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="80" id="Wpz-uN-fiT"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="8"/>
+                                                    <color key="textColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1sk-Lb-Iyh">
+                                                    <rect key="frame" x="17" y="21" width="60" height="22"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gtn-qU-yPU">
+                                                    <rect key="frame" x="111" y="21" width="60" height="22"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IK6-kS-h39">
+                                                    <rect key="frame" x="204" y="21" width="60" height="22"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LCX-Og-kEC">
+                                                    <rect key="frame" x="288" y="21" width="80" height="22"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstItem="kpu-nj-e9x" firstAttribute="centerY" secondItem="cGP-Ag-3QQ" secondAttribute="centerY" id="3ob-RC-bob"/>
+                                                <constraint firstItem="vmb-6h-rxW" firstAttribute="top" secondItem="cGP-Ag-3QQ" secondAttribute="topMargin" constant="1" id="7Qp-xf-ihP"/>
+                                                <constraint firstItem="kpu-nj-e9x" firstAttribute="centerX" secondItem="cGP-Ag-3QQ" secondAttribute="centerX" multiplier="0.25" id="9gE-Zt-aTC"/>
+                                                <constraint firstItem="BQ7-ud-LU9" firstAttribute="centerY" secondItem="cGP-Ag-3QQ" secondAttribute="centerY" id="Boz-Ec-wCt"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="012-5p-pjc" secondAttribute="trailing" constant="8" id="FcU-vc-ehm"/>
+                                                <constraint firstItem="7LQ-rF-hPO" firstAttribute="centerX" secondItem="cGP-Ag-3QQ" secondAttribute="centerX" multiplier="1.75" id="G4M-19-oIK"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="vmb-6h-rxW" secondAttribute="trailing" constant="8" id="IB0-1I-0g0"/>
+                                                <constraint firstItem="2Zp-Kb-dwt" firstAttribute="centerX" secondItem="cGP-Ag-3QQ" secondAttribute="centerX" multiplier="0.5" id="JHw-r9-dyW"/>
+                                                <constraint firstItem="8fR-sl-6Wv" firstAttribute="centerY" secondItem="cGP-Ag-3QQ" secondAttribute="centerY" id="Kgh-xM-OE8"/>
+                                                <constraint firstItem="1sk-Lb-Iyh" firstAttribute="centerY" secondItem="cGP-Ag-3QQ" secondAttribute="centerY" constant="-8" id="KqS-Uf-xuD"/>
+                                                <constraint firstItem="pzN-Es-3Hd" firstAttribute="centerY" secondItem="cGP-Ag-3QQ" secondAttribute="centerY" constant="6" id="LHw-4n-mSa"/>
+                                                <constraint firstItem="012-5p-pjc" firstAttribute="bottom" secondItem="cGP-Ag-3QQ" secondAttribute="bottomMargin" id="Lid-B5-chD"/>
+                                                <constraint firstItem="LCX-Og-kEC" firstAttribute="width" secondItem="Gd1-fh-ocj" secondAttribute="width" id="N1v-bN-S7b"/>
+                                                <constraint firstItem="Gd1-fh-ocj" firstAttribute="centerY" secondItem="cGP-Ag-3QQ" secondAttribute="centerY" constant="10" id="NOU-dE-vKJ"/>
+                                                <constraint firstItem="LCX-Og-kEC" firstAttribute="centerY" secondItem="cGP-Ag-3QQ" secondAttribute="centerY" constant="-8" id="OS9-xT-Fgd"/>
+                                                <constraint firstItem="LCX-Og-kEC" firstAttribute="centerX" secondItem="cGP-Ag-3QQ" secondAttribute="centerX" multiplier="1.75" id="OYg-X8-FXQ"/>
+                                                <constraint firstItem="2Zp-Kb-dwt" firstAttribute="centerY" secondItem="cGP-Ag-3QQ" secondAttribute="centerY" id="PN8-T8-eHO"/>
+                                                <constraint firstItem="012-5p-pjc" firstAttribute="leading" secondItem="cGP-Ag-3QQ" secondAttribute="leadingMargin" constant="10" id="Phv-as-wAv"/>
+                                                <constraint firstItem="gtn-qU-yPU" firstAttribute="centerX" secondItem="cGP-Ag-3QQ" secondAttribute="centerX" multiplier="0.75" id="WJ1-UV-tfV"/>
+                                                <constraint firstItem="IK6-kS-h39" firstAttribute="centerY" secondItem="cGP-Ag-3QQ" secondAttribute="centerY" constant="-8" id="ZDP-6u-JWV"/>
+                                                <constraint firstItem="Gd1-fh-ocj" firstAttribute="centerX" secondItem="cGP-Ag-3QQ" secondAttribute="centerX" multiplier="1.75" id="Zn0-7p-LWV"/>
+                                                <constraint firstItem="8fR-sl-6Wv" firstAttribute="centerX" secondItem="cGP-Ag-3QQ" secondAttribute="centerX" multiplier="1.25" id="blK-qY-1ZV"/>
+                                                <constraint firstItem="8QA-ci-jkE" firstAttribute="centerY" secondItem="cGP-Ag-3QQ" secondAttribute="centerY" id="cHx-sJ-4LO"/>
+                                                <constraint firstItem="IK6-kS-h39" firstAttribute="centerX" secondItem="cGP-Ag-3QQ" secondAttribute="centerX" multiplier="1.25" id="caD-3d-X5q"/>
+                                                <constraint firstItem="1sk-Lb-Iyh" firstAttribute="centerX" secondItem="cGP-Ag-3QQ" secondAttribute="centerX" multiplier="0.25" id="cs8-ek-qUf"/>
+                                                <constraint firstItem="QTY-yj-ZAD" firstAttribute="centerX" secondItem="cGP-Ag-3QQ" secondAttribute="centerX" multiplier="0.25" id="fc9-VY-Tnq"/>
+                                                <constraint firstItem="q0V-gO-U16" firstAttribute="centerY" secondItem="cGP-Ag-3QQ" secondAttribute="centerY" constant="10" id="g9z-Cm-VuW"/>
+                                                <constraint firstItem="BQ7-ud-LU9" firstAttribute="centerX" secondItem="cGP-Ag-3QQ" secondAttribute="centerX" multiplier="0.75" id="hiN-4j-QsP"/>
+                                                <constraint firstItem="QTY-yj-ZAD" firstAttribute="centerY" secondItem="cGP-Ag-3QQ" secondAttribute="centerY" constant="10" id="iAC-TF-8iP"/>
+                                                <constraint firstItem="7LQ-rF-hPO" firstAttribute="centerY" secondItem="cGP-Ag-3QQ" secondAttribute="centerY" id="k2y-Au-Ds6"/>
+                                                <constraint firstItem="q0V-gO-U16" firstAttribute="centerX" secondItem="cGP-Ag-3QQ" secondAttribute="centerX" multiplier="0.75" id="occ-Ll-rhi"/>
+                                                <constraint firstItem="IK6-kS-h39" firstAttribute="width" secondItem="pzN-Es-3Hd" secondAttribute="width" id="peh-Xn-FFY"/>
+                                                <constraint firstItem="pzN-Es-3Hd" firstAttribute="centerX" secondItem="cGP-Ag-3QQ" secondAttribute="centerX" multiplier="1.25" id="q8r-i7-656"/>
+                                                <constraint firstItem="vmb-6h-rxW" firstAttribute="leading" secondItem="cGP-Ag-3QQ" secondAttribute="leadingMargin" constant="8" id="tXo-jK-ZXj"/>
+                                                <constraint firstItem="gtn-qU-yPU" firstAttribute="centerY" secondItem="cGP-Ag-3QQ" secondAttribute="centerY" constant="-8" id="wYD-8u-9Ui"/>
+                                                <constraint firstItem="8QA-ci-jkE" firstAttribute="centerX" secondItem="cGP-Ag-3QQ" secondAttribute="centerX" id="wol-PY-obV"/>
+                                                <constraint firstItem="1sk-Lb-Iyh" firstAttribute="width" secondItem="QTY-yj-ZAD" secondAttribute="width" id="xkq-9y-Vwo"/>
+                                                <constraint firstItem="L4m-JZ-MTy" firstAttribute="centerX" secondItem="cGP-Ag-3QQ" secondAttribute="centerX" multiplier="1.5" id="yF5-WP-Bkt"/>
+                                                <constraint firstItem="gtn-qU-yPU" firstAttribute="width" secondItem="q0V-gO-U16" secondAttribute="width" id="zEA-3Q-dGC"/>
+                                                <constraint firstItem="L4m-JZ-MTy" firstAttribute="centerY" secondItem="cGP-Ag-3QQ" secondAttribute="centerY" id="zZf-Jn-coF"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="bottomExp1" destination="q0V-gO-U16" id="VMV-w7-nMe"/>
+                                            <outlet property="bottomExp2" destination="QTY-yj-ZAD" id="wgN-2S-9H7"/>
+                                            <outlet property="bottomExp3" destination="pzN-Es-3Hd" id="T7Q-gn-OwG"/>
+                                            <outlet property="bottomExp4" destination="Gd1-fh-ocj" id="GFH-O9-qdL"/>
+                                            <outlet property="bottomLabel" destination="012-5p-pjc" id="JhI-6J-52n"/>
+                                            <outlet property="followUser" destination="BQ7-ud-LU9" id="x3m-2P-9to"/>
+                                            <outlet property="followVenue" destination="kpu-nj-e9x" id="GgL-fs-r2K"/>
+                                            <outlet property="followers" destination="8fR-sl-6Wv" id="WBv-B4-Ag5"/>
+                                            <outlet property="numberFollowUser" destination="gtn-qU-yPU" id="0I7-sw-RNx"/>
+                                            <outlet property="numberFollowVenue" destination="1sk-Lb-Iyh" id="kaG-7E-dgC"/>
+                                            <outlet property="numberFollower" destination="IK6-kS-h39" id="D5C-PV-BHD"/>
+                                            <outlet property="numberPostedVenue" destination="LCX-Og-kEC" id="vvv-kg-CmI"/>
+                                            <outlet property="postedVenue" destination="7LQ-rF-hPO" id="ExZ-tk-s0L"/>
+                                            <outlet property="subLabel1" destination="2Zp-Kb-dwt" id="et2-4A-U77"/>
+                                            <outlet property="subLabel2" destination="8QA-ci-jkE" id="XVI-FL-zYv"/>
+                                            <outlet property="subLabel3" destination="L4m-JZ-MTy" id="sr7-5k-prD"/>
+                                            <outlet property="topLabel" destination="vmb-6h-rxW" id="nI4-H4-hfC"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell3" rowHeight="54" id="I5N-IG-oJj" customClass="profile3thCell" customModule="Molocate" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="330" width="375" height="54"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="I5N-IG-oJj" id="k7F-du-nt5">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="53"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S0i-Nu-RzM">
+                                                    <rect key="frame" x="8" y="8" width="180" height="23"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="14"/>
+                                                    <state key="normal" title="VİDEOLAR(0)">
+                                                        <color key="titleColor" red="0.92156862750000001" green="0.16862745100000001" blue="0.36470588240000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </state>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iBt-X9-sSx">
+                                                    <rect key="frame" x="188" y="2" width="179" height="35"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
+                                                    <state key="normal" title="ETİKET(0)">
+                                                        <color key="titleColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </state>
+                                                </button>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gJI-9V-dph">
+                                                    <rect key="frame" x="188" y="7" width="0.0" height="40"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="40" id="0ns-MR-6kw"/>
+                                                        <constraint firstAttribute="width" id="CuA-uV-NE5"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NIn-KC-udG">
+                                                    <rect key="frame" x="0.0" y="50" width="375" height="0.0"/>
+                                                    <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="0.5" id="VLL-nf-1Wf"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gzY-sV-Mpj">
+                                                    <rect key="frame" x="0.0" y="49" width="188" height="1"/>
+                                                    <color key="backgroundColor" red="0.92156862750000001" green="0.16862745100000001" blue="0.36470588240000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="1.5" id="lYb-lE-Gk8"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.92156862750000001" green="0.16862745100000001" blue="0.36470588240000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstItem="gJI-9V-dph" firstAttribute="leading" secondItem="gzY-sV-Mpj" secondAttribute="trailing" id="1XC-MF-l3o"/>
+                                                <constraint firstItem="NIn-KC-udG" firstAttribute="centerX" secondItem="k7F-du-nt5" secondAttribute="centerX" id="2sT-Za-91T"/>
+                                                <constraint firstItem="gJI-9V-dph" firstAttribute="centerY" secondItem="k7F-du-nt5" secondAttribute="centerY" id="58r-Ra-VvX"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="iBt-X9-sSx" secondAttribute="bottom" constant="8" id="Mfv-hP-vpC"/>
+                                                <constraint firstItem="gzY-sV-Mpj" firstAttribute="width" secondItem="k7F-du-nt5" secondAttribute="width" multiplier="0.5" id="Q1E-rp-jRX"/>
+                                                <constraint firstItem="S0i-Nu-RzM" firstAttribute="centerY" secondItem="k7F-du-nt5" secondAttribute="centerY" constant="-7" id="Qxc-p5-60P"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="gzY-sV-Mpj" secondAttribute="bottom" constant="-5" id="RpU-o9-LBb"/>
+                                                <constraint firstItem="gJI-9V-dph" firstAttribute="leading" secondItem="S0i-Nu-RzM" secondAttribute="trailing" id="SYf-lh-vjx"/>
+                                                <constraint firstItem="NIn-KC-udG" firstAttribute="width" secondItem="k7F-du-nt5" secondAttribute="width" id="UHx-bs-dxl"/>
+                                                <constraint firstItem="iBt-X9-sSx" firstAttribute="leading" secondItem="gJI-9V-dph" secondAttribute="trailing" id="Vj5-sk-PKB"/>
+                                                <constraint firstItem="gJI-9V-dph" firstAttribute="centerX" secondItem="k7F-du-nt5" secondAttribute="centerX" id="bwv-WL-lge"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="NIn-KC-udG" secondAttribute="bottom" constant="-5" id="dmW-la-Z0E"/>
+                                                <constraint firstItem="S0i-Nu-RzM" firstAttribute="leading" secondItem="k7F-du-nt5" secondAttribute="leadingMargin" id="hiQ-7K-vuw"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="iBt-X9-sSx" secondAttribute="trailing" id="tUO-px-dta"/>
+                                                <constraint firstItem="S0i-Nu-RzM" firstAttribute="top" secondItem="k7F-du-nt5" secondAttribute="topMargin" id="tVs-UQ-8Tf"/>
+                                                <constraint firstItem="iBt-X9-sSx" firstAttribute="centerY" secondItem="k7F-du-nt5" secondAttribute="centerY" constant="-7" id="uef-G4-kyL"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="bottomLabel" destination="NIn-KC-udG" id="XjA-T8-9Fj"/>
+                                            <outlet property="redLabel" destination="gzY-sV-Mpj" id="8au-Cw-ZKM"/>
+                                            <outlet property="subLabel" destination="gJI-9V-dph" id="K2m-fh-e1v"/>
+                                            <outlet property="taggedButton" destination="iBt-X9-sSx" id="zS0-vN-mCT"/>
+                                            <outlet property="videosButton" destination="S0i-Nu-RzM" id="4V5-Gd-bwb"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell4" rowHeight="273" id="vN6-6h-1hk" customClass="profile4thCell" customModule="Molocate" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="384" width="375" height="273"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vN6-6h-1hk" id="Wcc-RX-xOj">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="272"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" directionalLockEnabled="YES" bounces="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iDz-jN-6Ar">
+                                                    <rect key="frame" x="0.0" y="8" width="375" height="272"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="mQ9-5f-RMM" id="zRq-x6-WjU"/>
+                                                    </connections>
+                                                </scrollView>
+                                            </subviews>
+                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstItem="iDz-jN-6Ar" firstAttribute="top" secondItem="Wcc-RX-xOj" secondAttribute="topMargin" id="EdI-vb-JQI"/>
+                                                <constraint firstItem="iDz-jN-6Ar" firstAttribute="width" secondItem="Wcc-RX-xOj" secondAttribute="width" id="KOQ-js-4W8"/>
+                                                <constraint firstItem="iDz-jN-6Ar" firstAttribute="centerX" secondItem="Wcc-RX-xOj" secondAttribute="centerX" id="rbk-Y9-7VH"/>
+                                                <constraint firstItem="iDz-jN-6Ar" firstAttribute="height" secondItem="Wcc-RX-xOj" secondAttribute="height" id="veR-CT-KyX"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="scrollView" destination="iDz-jN-6Ar" id="Bge-Uq-Qha"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="mQ9-5f-RMM" id="NnE-bd-M6r"/>
+                                    <outlet property="delegate" destination="mQ9-5f-RMM" id="BdG-mw-obr"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="CeO-Ab-j7e" firstAttribute="centerX" secondItem="pfc-9b-pOn" secondAttribute="centerX" id="EF0-EI-mTC"/>
+                            <constraint firstItem="CeO-Ab-j7e" firstAttribute="width" secondItem="pfc-9b-pOn" secondAttribute="width" id="Lar-i3-xaU"/>
+                            <constraint firstItem="r7Y-IO-saQ" firstAttribute="top" secondItem="rPh-nP-PWc" secondAttribute="bottom" id="OEY-Up-PsK"/>
+                            <constraint firstItem="r7Y-IO-saQ" firstAttribute="width" secondItem="pfc-9b-pOn" secondAttribute="width" id="bpK-FR-jze"/>
+                            <constraint firstItem="CeO-Ab-j7e" firstAttribute="top" secondItem="pfc-9b-pOn" secondAttribute="topMargin" id="e18-jb-0FL"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="r7Y-IO-saQ" secondAttribute="bottom" constant="-50" id="xiw-cj-L0P"/>
+                            <constraint firstItem="r7Y-IO-saQ" firstAttribute="centerX" secondItem="pfc-9b-pOn" secondAttribute="centerX" id="y8L-nB-p1x"/>
+                        </constraints>
+                    </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Title" id="KBv-Ei-0f2">
+                        <barButtonItem key="leftBarButtonItem" id="xhq-FX-DCS"/>
+                        <barButtonItem key="rightBarButtonItem" id="FPL-uQ-zTV">
+                            <connections>
+                                <action selector="followButton:" destination="mQ9-5f-RMM" id="GZS-AB-hQX"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="back" destination="xhq-FX-DCS" id="U5U-Ay-dwB"/>
+                        <outlet property="followButton" destination="FPL-uQ-zTV" id="EPW-eD-7L3"/>
+                        <outlet property="optionsTable" destination="CeO-Ab-j7e" id="q4G-cA-5tx"/>
+                        <outlet property="tableView" destination="r7Y-IO-saQ" id="fyp-Lt-7c3"/>
+                        <segue destination="dPF-RH-rDm" kind="show" identifier="goEditProfile" id="jbm-Zw-bxA"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Zic-1E-4l6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2186.5" y="1401.5"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Camera" width="30" height="30"/>
@@ -4399,13 +4876,13 @@ These Services are operated and provided by Molocate. If you have any questions 
         <image name="switch" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="DUt-Pk-5LV"/>
-        <segue reference="r8V-JF-m1L"/>
         <segue reference="ON5-bH-Lzp"/>
         <segue reference="SZn-yz-fad"/>
         <segue reference="Czt-sH-vGP"/>
         <segue reference="Dku-Wb-Giu"/>
-        <segue reference="iX5-7U-zGl"/>
+        <segue reference="cGX-Xw-vdc"/>
         <segue reference="QdI-VY-wKQ"/>
+        <segue reference="r8V-JF-m1L"/>
+        <segue reference="DUt-Pk-5LV"/>
     </inferredMetricsTieBreakers>
 </document>

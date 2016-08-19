@@ -140,7 +140,7 @@ class oneVideo: UIViewController,PlayerDelegate {
         
         
         
-        let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
+        let controller:profileUser = self.storyboard!.instantiateViewControllerWithIdentifier("profileUser") as! profileUser
         if MoleGlobalVideo.username != MoleCurrentUser.username{
             controller.isItMyProfile = false
         }else{
@@ -189,7 +189,7 @@ class oneVideo: UIViewController,PlayerDelegate {
         self.navigationController?.navigationBarHidden = false
         
         
-        let controller:profileLocation = self.storyboard!.instantiateViewControllerWithIdentifier("profileLocation") as! profileLocation
+        let controller:profileVenue = self.storyboard!.instantiateViewControllerWithIdentifier("profileVenue") as! profileVenue
         self.navigationController?.pushViewController(controller, animated: true)
         
         

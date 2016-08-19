@@ -45,7 +45,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
     var linee: UILabel!
     var on = true
     var tableController: TimelineController!
-    var findFriends: UIButton!
+    var findfriendsVenue: UIButton!
     let lineColor = UIColor(netHex: 0xCCCCCC)
     @IBOutlet var venueTable: UITableView!
     @IBOutlet var collectionView: UICollectionView!
@@ -93,14 +93,14 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         venueTable.hidden = true
         searchText.delegate = self
     
-        findFriends = UIButton()
-        findFriends.frame = CGRect(x: self.view.center.x-70, y: self.view.frame.height*0.2, width: 140, height: 40)
-        findFriends.backgroundColor = UIColor.blueColor()
-        findFriends.setTitle("Arkadaş bul", forState: .Normal)
-        findFriends.titleLabel?.font = UIFont(name: "AvenirNext-Medium", size: 14)
-        findFriends.addTarget(self, action: #selector(MainController.pressedFindFriend(_:)), forControlEvents: .TouchUpInside)
+        findfriendsVenue = UIButton()
+        findfriendsVenue.frame = CGRect(x: self.view.center.x-70, y: self.view.frame.height*0.2, width: 140, height: 40)
+        findfriendsVenue.backgroundColor = UIColor.blueColor()
+        findfriendsVenue.setTitle("Arkadaş bul", forState: .Normal)
+        findfriendsVenue.titleLabel?.font = UIFont(name: "AvenirNext-Medium", size: 14)
+        findfriendsVenue.addTarget(self, action: #selector(MainController.pressedFindFriend(_:)), forControlEvents: .TouchUpInside)
         
-        findFriends.hidden = true
+        findfriendsVenue.hidden = true
         
 
   
@@ -166,14 +166,14 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         bartextField.attributedPlaceholder =  NSAttributedString(string: "Ara", attributes: [NSForegroundColorAttributeName:UIColor.whiteColor(), NSFontAttributeName: UIFont(name: "AvenirNext-Regular", size: 14)! ])
         
         let rectShape3 = CAShapeLayer()
-        rectShape3.bounds = self.findFriends.frame
-        rectShape3.position = self.findFriends.center
-        rectShape3.path = UIBezierPath(roundedRect: self.findFriends.bounds, byRoundingCorners: [.BottomRight , .TopRight , .BottomLeft , .TopLeft ] , cornerRadii: CGSize(width: 8, height: 8)).CGPath
+        rectShape3.bounds = self.findfriendsVenue.frame
+        rectShape3.position = self.findfriendsVenue.center
+        rectShape3.path = UIBezierPath(roundedRect: self.findfriendsVenue.bounds, byRoundingCorners: [.BottomRight , .TopRight , .BottomLeft , .TopLeft ] , cornerRadii: CGSize(width: 8, height: 8)).CGPath
         rectShape3.borderWidth = 1.0
         rectShape3.borderColor = swiftColor.CGColor
-        self.findFriends.layer.backgroundColor = swiftColor.CGColor
+        self.findfriendsVenue.layer.backgroundColor = swiftColor.CGColor
         //Here I'm masking the textView's layer with rectShape layer
-        self.findFriends.layer.mask = rectShape3
+        self.findfriendsVenue.layer.mask = rectShape3
 
         
         let magnifyingGlass = bartextField.leftView as! UIImageView
@@ -202,7 +202,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
             UIApplication.sharedApplication().endIgnoringInteractionEvents()
         }
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MainController.changeView), name: "changeView", object: nil)
-        venueTable.addSubview(findFriends)
+        venueTable.addSubview(findfriendsVenue)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MainController.showNavigationMain), name: "showNavigationMain", object: nil)
     }
    
@@ -218,9 +218,14 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         self.venueButton2.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size:14)
         self.usernameButton2.setTitleColor(lineColor, forState: .Normal)
         self.venueButton2.setTitleColor(swiftColor, forState: .Normal)
-        self.findFriends.setTitle("Arkadaşlarını Bul", forState: .Normal)
+        self.findfriendsVenue.setTitle("Arkadaşlarını Bul", forState: .Normal)
         if self.venueTable.numberOfRowsInSection(0) > 0 {
-            self.venueTable.reloadData()}
+            self.venueTable.reloadData()
+        }
+        self.findfriendsVenue.addTarget(self, action: #selector(MainController.pressedFindFriend(_:)), forControlEvents: .TouchUpInside)
+        
+        self.findfriendsVenue.removeTarget(self, action: #selector(MainController.pressedFindVenue(_:)), forControlEvents: .TouchUpInside)
+        
         
         
     }
@@ -234,7 +239,11 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         self.redLabel.frame.origin.x = MolocateDevice.size.width / 2
         self.usernameButton2.setTitleColor(swiftColor, forState: .Normal)
         self.venueButton2.setTitleColor(lineColor, forState: .Normal)
-        self.findFriends.setTitle("Yakın Konumları Bul", forState: .Normal)
+        self.findfriendsVenue.setTitle("Yakın Konumları Bul", forState: .Normal)
+        self.findfriendsVenue.removeTarget(self, action: #selector(MainController.pressedFindFriend(_:)), forControlEvents: .TouchUpInside)
+        
+        self.findfriendsVenue.addTarget(self, action: #selector(MainController.pressedFindVenue(_:)), forControlEvents: .TouchUpInside)
+        
         if self.venueTable.numberOfRowsInSection(0) > 0 {
             self.venueTable.reloadData()  }
     }
@@ -333,7 +342,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
                 UIApplication.sharedApplication().beginIgnoringInteractionEvents()
                 navigationController?.setNavigationBarHidden(false, animated: false)
                 
-                let controller:profileLocation = self.storyboard!.instantiateViewControllerWithIdentifier("profileLocation") as! profileLocation
+                let controller:profileVenue = self.storyboard!.instantiateViewControllerWithIdentifier("profileVenue") as! profileVenue
                 tableController.tableView.scrollEnabled = true
                 tableController.tableView.userInteractionEnabled = true
                 
@@ -351,7 +360,9 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
                             for item in addressArr{
                                 thePlace.address = thePlace.address + item
                             }
-                            controller.followButton.tintColor = UIColor.clearColor()
+                            
+                            //v1.2 buna bak
+                            //controller..tintColor = UIColor.clearColor()
                             
                         }
                         controller.RefreshGuiWithData()
@@ -378,7 +389,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         activityIndicator.startAnimating()
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
         
-        let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
+        let controller:profileUser = self.storyboard!.instantiateViewControllerWithIdentifier("profileUser") as! profileUser
         if username != MoleCurrentUser.username{
             controller.isItMyProfile = false
         }else{
@@ -454,7 +465,27 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
             self.tableController.tableView.frame = CGRectMake(0, 50, MolocateDevice.size.width, MolocateDevice.size.height - 50)
         }
     }
+    
+    func pressedFindVenue(sender: UIButton) {
+        navigationController?.setNavigationBarHidden(false, animated: false)
+        activityIndicator.startAnimating()
+        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+        let controller:findVenueController = self.storyboard!.instantiateViewControllerWithIdentifier("findVenueController") as! findVenueController
+        self.navigationController?.pushViewController(controller, animated: true)
+        print(self.bestEffortAtLocation.coordinate.latitude)
+        let lat = Float(self.bestEffortAtLocation.coordinate.latitude)
+        let lon = Float(self.bestEffortAtLocation.coordinate.longitude)
+        MolocatePlace.getNearbyPlace(lat, placeLon: lon) { (data, response, error) in
+            dispatch_async(dispatch_get_main_queue()){
+                controller.venues = data
+                controller.tableView.reloadData()
+            }
+        }
+        self.activityIndicator.stopAnimating()
+        UIApplication.sharedApplication().endIgnoringInteractionEvents()
         
+    }
+    
     
     func pressedFindFriend(sender: UIButton) {
         
@@ -504,7 +535,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         activityIndicator.startAnimating()
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
         
-        let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
+        let controller:profileUser = self.storyboard!.instantiateViewControllerWithIdentifier("profileUser") as! profileUser
         
         if username != MoleCurrentUser.username{
             controller.isItMyProfile = false
@@ -699,7 +730,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
                 self.usernameButton2.hidden = true
                 self.collectionView.hidden = false
                 self.venueTable.hidden = true
-                self.findFriends.hidden = true
+                self.findfriendsVenue.hidden = true
                 self.searchText.resignFirstResponder()
                 if searchedUsers != nil {
                     searchedUsers.removeAll()
@@ -855,7 +886,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
             self.cameraButton.title = nil
             self.isSearching = false
             self.venueTable.hidden = true
-            self.findFriends.hidden = true
+            self.findfriendsVenue.hidden = true
             self.venueButton2.hidden = true
             self.lineLabel.hidden = true
             self.redLabel.hidden = true
@@ -884,7 +915,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         cameraButton.image = nil
         cameraButton.title = "Vazgeç"
         venueTable.hidden = false
-        findFriends.hidden = false
+        findfriendsVenue.hidden = false
         venueButton2.hidden = false
         self.lineLabel.hidden = false
         self.redLabel.hidden = false
@@ -902,7 +933,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
     
     func searchBar(searchBar: UISearchBar, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         self.venueTable.hidden = false
-        findFriends.hidden = true
+        findfriendsVenue.hidden = true
         self.venueButton2.hidden = false
         self.usernameButton2.hidden = false
         self.lineLabel.hidden = false

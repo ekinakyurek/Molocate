@@ -944,7 +944,7 @@ import FBSDKShareKit
         self.navigationController?.navigationBarHidden = false
         
         
-        let controller:profileLocation = self.parentViewController!.storyboard!.instantiateViewControllerWithIdentifier("profileLocation") as! profileLocation
+        let controller:profileVenue = self.parentViewController!.storyboard!.instantiateViewControllerWithIdentifier("profileVenue") as! profileVenue
        
         
         self.parentViewController!.navigationController?.pushViewController(controller, animated: true)
@@ -1006,7 +1006,7 @@ import FBSDKShareKit
         
         
         
-        let controller:profileOther = self.parentViewController!.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
+        let controller:profileUser = self.parentViewController!.storyboard!.instantiateViewControllerWithIdentifier("profileUser") as! profileUser
         
         if videoArray[buttonRow].username != MoleCurrentUser.username{
             controller.isItMyProfile = false

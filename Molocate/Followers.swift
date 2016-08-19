@@ -203,7 +203,7 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
             UIApplication.sharedApplication().beginIgnoringInteractionEvents()
             
             
-            let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
+            let controller:profileUser = self.storyboard!.instantiateViewControllerWithIdentifier("profileUser") as! profileUser
             
             if userRelations.relations[indexPath.row].username  != MoleCurrentUser.username{
                 controller.isItMyProfile = false
@@ -311,7 +311,7 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
     
     func pressedProfile(sender: UIButton) {
         let row = sender.tag
-        let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
+        let controller:profileUser = self.storyboard!.instantiateViewControllerWithIdentifier("profileUser") as! profileUser
         
         if userRelations.relations[row].username  != MoleCurrentUser.username{
             controller.isItMyProfile = false

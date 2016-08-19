@@ -174,6 +174,48 @@ public class MolocatePlace {
         task.resume()
     }
     
+    
+    class func getNearbyPlace(placeLat: Float,placeLon: Float, completionHandler: (data: [MolePlace], response: NSURLResponse!, error: NSError!) -> ()) {
+        
+        let url = NSURL(string: "http://molocate-test.eu-central-1.elasticbeanstalk.com/" +  "place/api/nearby_places/?lat=\(placeLat)&lon=\(placeLon)")
+        let request = NSMutableURLRequest(URL: url!)
+        request.HTTPMethod = "GET"
+        request.addValue("Token " + MoleUserToken!, forHTTPHeaderField: "Authorization")
+        request.timeoutInterval = timeout
+        let task = NSURLSession.sharedSession().dataTaskWithRequest(request){ data, response, error in
+            if error == nil {
+                let nsError = error;
+                var lastPlaces = [MolePlace]()
+                do {
+                    let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String: AnyObject]
+                     if result.indexForKey("results") != nil{
+                    let places = result["results"] as! NSArray
+                    
+                    for item in places {
+                        var place = MolePlace()
+                        place.id = item["place_id"] as! String
+                        place.name = item["name"] as! String
+                        lastPlaces.append(place)
+                        
+                    }
+                    }
+                    completionHandler(data: lastPlaces, response: response , error: nsError  )
+                } catch{
+                    completionHandler(data: [MolePlace]() , response: nil , error: nsError  )
+                    if debug {print("JsonError:: in MolocatePlace.getPlace()")}
+                }
+                
+            }else{
+                completionHandler(data: [MolePlace]() , response: nil , error: error  )
+                if debug {print("RequestError:: in MolocatePlace.getPlace()")}
+            }
+        }
+        
+        task.resume()
+    }
+
+    
+    
     class func getFollowers(nextUrl: String = "", placeId: String, completionHandler: (data: MoleUserRelations, response: NSURLResponse!, error: NSError!, count: Int, next: String?, previous: String? ) -> ()) {
         var url  = NSURL()
         if(nextUrl == ""){

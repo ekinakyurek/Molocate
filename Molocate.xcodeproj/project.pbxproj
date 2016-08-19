@@ -98,6 +98,8 @@
 		C6D2BB3D1D4A78A8000AE25E /* profileVenue2ndCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D2BB3C1D4A78A8000AE25E /* profileVenue2ndCell.swift */; };
 		C6D2BB3F1D4A8218000AE25E /* profileVenue1stCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D2BB3E1D4A8218000AE25E /* profileVenue1stCell.swift */; };
 		C6D4C18E1D55F0F3005FBC9D /* searchCameraCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D4C18D1D55F0F3005FBC9D /* searchCameraCell.swift */; };
+		C6D4C1931D61EB14005FBC9D /* findVenueController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D4C1921D61EB14005FBC9D /* findVenueController.swift */; };
+		C6D4C1951D63CB88005FBC9D /* oneMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D4C1941D63CB87005FBC9D /* oneMap.swift */; };
 		C6D6D4631CD6501000E37138 /* OnePhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D6D4621CD6501000E37138 /* OnePhoto.swift */; };
 		C6D720C01D21ECFC00FF1998 /* Pluskesfet.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C6D720B01D21ECFC00FF1998 /* Pluskesfet.jpg */; };
 		C6D720C11D21ECFC00FF1998 /* Plushosgeldin.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C6D720B11D21ECFC00FF1998 /* Plushosgeldin.jpg */; };
@@ -266,6 +268,8 @@
 		C6D2BB3C1D4A78A8000AE25E /* profileVenue2ndCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = profileVenue2ndCell.swift; sourceTree = "<group>"; };
 		C6D2BB3E1D4A8218000AE25E /* profileVenue1stCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = profileVenue1stCell.swift; sourceTree = "<group>"; };
 		C6D4C18D1D55F0F3005FBC9D /* searchCameraCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = searchCameraCell.swift; sourceTree = "<group>"; };
+		C6D4C1921D61EB14005FBC9D /* findVenueController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = findVenueController.swift; sourceTree = "<group>"; };
+		C6D4C1941D63CB87005FBC9D /* oneMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = oneMap.swift; sourceTree = "<group>"; };
 		C6D6D4621CD6501000E37138 /* OnePhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnePhoto.swift; sourceTree = "<group>"; };
 		C6D720B01D21ECFC00FF1998 /* Pluskesfet.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Pluskesfet.jpg; sourceTree = "<group>"; };
 		C6D720B11D21ECFC00FF1998 /* Plushosgeldin.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Plushosgeldin.jpg; sourceTree = "<group>"; };
@@ -419,6 +423,7 @@
 				C6F9B5C91C80DDF400C7E9FC /* NotificationsViewController.swift */,
 				E3BF835B1CFC613A00EC508A /* TimelineController.swift */,
 				388173F41C97AACB0064EBB5 /* CommentController.swift */,
+				C6D4C1921D61EB14005FBC9D /* findVenueController.swift */,
 				C6BA05171D19368200AB89FF /* findFriendController.swift */,
 			);
 			name = Navigation;
@@ -462,6 +467,7 @@
 				C6D785461D0604C900DA59B3 /* profile3thCell.swift */,
 				C617E2E61D3E5F8F001C7EC7 /* profile4thCell.swift */,
 				C6D2BB3A1D4A6FE9000AE25E /* profileVenue.swift */,
+				C6D4C1941D63CB87005FBC9D /* oneMap.swift */,
 				C6D2BB3E1D4A8218000AE25E /* profileVenue1stCell.swift */,
 				C6D2BB3C1D4A78A8000AE25E /* profileVenue2ndCell.swift */,
 				C67787411D50279B00DF8AED /* profileVenue3rdCell.swift */,
@@ -917,6 +923,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C6D4C1931D61EB14005FBC9D /* findVenueController.swift in Sources */,
 				C6D06F151D52263D00B8DEC4 /* camera3thScreen.swift in Sources */,
 				C68872861C8CED2800BDBE00 /* OptionCell.swift in Sources */,
 				E33DCC691CB3F5250081C0DF /* MolocateVideo.swift in Sources */,
@@ -937,6 +944,7 @@
 				C6D4C18E1D55F0F3005FBC9D /* searchCameraCell.swift in Sources */,
 				C6D6D4631CD6501000E37138 /* OnePhoto.swift in Sources */,
 				C63D1F1C1C1FA20D003B2CC1 /* SignUpAdvance.swift in Sources */,
+				C6D4C1951D63CB88005FBC9D /* oneMap.swift in Sources */,
 				C620B5611D2054450083953E /* tutorialPageContentViewController.swift in Sources */,
 				C6D785431D05FB3000DA59B3 /* profileUser.swift in Sources */,
 				38E6210C1C90E49D00FB1AD5 /* ChangePassword.swift in Sources */,

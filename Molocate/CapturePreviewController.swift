@@ -105,85 +105,85 @@ class capturePreviewController: UIViewController, PlayerDelegate {
     }
     
     
-
-    @IBOutlet var share4s: UIButton!
-   
-    @IBAction func share44s(sender: AnyObject) {
-        if is4s {
-            if (!isLocationSelected || !isCategorySelected){
-                self.postO.enabled = false
-                displayAlert("Dikkat", message: "Lütfen Kategori ve Konum seçiniz.")
-            }
-            else {
-                
-                
-                //                        let videoId2 = videoId
-                //                        let videoUrl2 = videoUrl
-                ////print(self.videoLocation)
-                
-                let random = randomStringWithLength(64)
-                let fileName = random.stringByAppendingFormat(".mp4", random)
-                let fileURL = NSURL(fileURLWithPath: videoPath!)
-                let uploadRequest = AWSS3TransferManagerUploadRequest()
-                uploadRequest.body = fileURL
-                uploadRequest.key = "videos/" + (fileName as String)
-                uploadRequest.bucket = S3BucketName
-                let json = [
-                    "video_id": fileName as String,
-                    "video_url": "https://d1jkin67a303u2.cloudfront.net/videos/"+(fileName as String),
-                    "caption": CaptionText,
-                    "category": self.categ,
-                    "tagged_users": self.taggedUsers,
-                    "location": [
-                        [
-                            "id": self.videoLocation.id,
-                            "latitude": self.videoLocation.lat,
-                            "longitude": self.videoLocation.lon,
-                            "name": self.videoLocation.name,
-                            "address": self.videoLocation.adress
-                        ]
-                    ]
-                ]
-                
-                
-                S3Upload.upload(uploadRequest: uploadRequest, fileURL: "https://d1jkin67a303u2.cloudfront.net/videos/"+(fileName as String), fileID: fileName as String ,json: json as! [String : AnyObject])
-
-                
-                self.performSegueWithIdentifier("finishUpdate", sender: self)
-            }
-            
-            
-        } else {
-            self.player.stop()
-            self.player = Player()
-            activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 0.0, y: 0.0, width: 50.0, height: 50.0))
-            activityIndicator.center = self.view.center
-            activityIndicator.hidesWhenStopped = true
-            activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.White
-            view.addSubview(activityIndicator)
-            activityIndicator.startAnimating()
-            PHPhotoLibrary.sharedPhotoLibrary().performChanges({
-                // In iOS 9 and later, it's possible to move the file into the photo library without duplicating the file data.
-                // This avoids using double the disk space during save, which can make a difference on devices with limited free disk space.
-                let newURL = NSURL(fileURLWithPath: videoPath!)
-                print(videoPath)
-                PHAssetChangeRequest.creationRequestForAssetFromVideoAtFileURL(newURL)
-                }, completionHandler: {success, error in
-                    if !success {
-                        NSLog("Could not save movie to photo library: %@", error!)
-                    } else {
-                        
-                    }
-              
-            })
-            self.activityIndicator.stopAnimating()
-            self.displayAlert("Kaydet", message: "Videonuz kaydedilmiştir.")
-            self.putVideo()
-          
-        }
-        
-        
-    }
+//
+//    @IBOutlet var share4s: UIButton!
+//   
+//    @IBAction func share44s(sender: AnyObject) {
+//        if is4s {
+//            if (!isLocationSelected || !isCategorySelected){
+//                self.postO.enabled = false
+//                displayAlert("Dikkat", message: "Lütfen Kategori ve Konum seçiniz.")
+//            }
+//            else {
+//                
+//                
+//                //                        let videoId2 = videoId
+//                //                        let videoUrl2 = videoUrl
+//                ////print(self.videoLocation)
+//                
+//                let random = randomStringWithLength(64)
+//                let fileName = random.stringByAppendingFormat(".mp4", random)
+//                let fileURL = NSURL(fileURLWithPath: videoPath!)
+//                let uploadRequest = AWSS3TransferManagerUploadRequest()
+//                uploadRequest.body = fileURL
+//                uploadRequest.key = "videos/" + (fileName as String)
+//                uploadRequest.bucket = S3BucketName
+//                let json = [
+//                    "video_id": fileName as String,
+//                    "video_url": "https://d1jkin67a303u2.cloudfront.net/videos/"+(fileName as String),
+//                    "caption": CaptionText,
+//                    "category": self.categ,
+//                    "tagged_users": self.taggedUsers,
+//                    "location": [
+//                        [
+//                            "id": self.videoLocation.id,
+//                            "latitude": self.videoLocation.lat,
+//                            "longitude": self.videoLocation.lon,
+//                            "name": self.videoLocation.name,
+//                            "address": self.videoLocation.adress
+//                        ]
+//                    ]
+//                ]
+//                
+//                
+//                S3Upload.upload(uploadRequest: uploadRequest, fileURL: "https://d1jkin67a303u2.cloudfront.net/videos/"+(fileName as String), fileID: fileName as String ,json: json as! [String : AnyObject])
+//
+//                
+//                self.performSegueWithIdentifier("finishUpdate", sender: self)
+//            }
+//            
+//            
+//        } else {
+//            self.player.stop()
+//            self.player = Player()
+//            activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 0.0, y: 0.0, width: 50.0, height: 50.0))
+//            activityIndicator.center = self.view.center
+//            activityIndicator.hidesWhenStopped = true
+//            activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.White
+//            view.addSubview(activityIndicator)
+//            activityIndicator.startAnimating()
+//            PHPhotoLibrary.sharedPhotoLibrary().performChanges({
+//                // In iOS 9 and later, it's possible to move the file into the photo library without duplicating the file data.
+//                // This avoids using double the disk space during save, which can make a difference on devices with limited free disk space.
+//                let newURL = NSURL(fileURLWithPath: videoPath!)
+//                print(videoPath)
+//                PHAssetChangeRequest.creationRequestForAssetFromVideoAtFileURL(newURL)
+//                }, completionHandler: {success, error in
+//                    if !success {
+//                        NSLog("Could not save movie to photo library: %@", error!)
+//                    } else {
+//                        
+//                    }
+//              
+//            })
+//            self.activityIndicator.stopAnimating()
+//            self.displayAlert("Kaydet", message: "Videonuz kaydedilmiştir.")
+//            self.putVideo()
+//          
+//        }
+//        
+//        
+//    }
     
     func randomStringWithLength (len : Int) -> NSString {
         
@@ -203,7 +203,7 @@ class capturePreviewController: UIViewController, PlayerDelegate {
         super.viewDidLoad()
         try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
         UIApplication.sharedApplication().endIgnoringInteractionEvents()
-        toolBar.barTintColor = UIColor.whiteColor()
+        toolBar.barTintColor = swiftColor
         toolBar.translucent = false
         toolBar.clipsToBounds = true
         self.player = Player()

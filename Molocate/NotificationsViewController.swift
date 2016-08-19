@@ -170,7 +170,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
         mine = false
         
-        let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
+        let controller:profileUser = self.storyboard!.instantiateViewControllerWithIdentifier("profileUser") as! profileUser
         
         self.navigationController?.pushViewController(controller, animated: true)
         MolocateAccount.getUser(notificationArray[buttonRow].actor) { (data, response, error) -> () in
@@ -197,7 +197,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate , UITabl
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
       
         
-        let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
+        let controller:profileUser = self.storyboard!.instantiateViewControllerWithIdentifier("profileUser") as! profileUser
         
         self.navigationController?.pushViewController(controller, animated: true)
         

@@ -181,7 +181,7 @@ class findFriendController: UIViewController,UITableViewDelegate , UITableViewDa
         activityIndicator.startAnimating()
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
         
-        let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
+        let controller:profileUser = self.storyboard!.instantiateViewControllerWithIdentifier("profileUser") as! profileUser
         if username != MoleCurrentUser.username{
             controller.isItMyProfile = false
         }else{

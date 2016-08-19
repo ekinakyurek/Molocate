@@ -22,6 +22,8 @@ class profileVenue: UIViewController, UICollectionViewDelegateFlowLayout,NSURLCo
     var page = 1
     
     @IBOutlet var tableView: UITableView!
+    @IBOutlet var followButton: UIBarButtonItem!
+    @IBOutlet var titleToolbar: UINavigationItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,9 +35,9 @@ class profileVenue: UIViewController, UICollectionViewDelegateFlowLayout,NSURLCo
         //tableView.tableFooterView = UIView()
         tableView.separatorColor = UIColor.clearColor()
         tableView.pagingEnabled = true
-        
+        titleToolbar.title = thePlace.name
         tableController = self.storyboard?.instantiateViewControllerWithIdentifier("timelineController") as! TimelineController
-        tableController.type = "ProfileLocation"
+        tableController.type = "profileVenue"
         tableController.placeId = thePlace.id
         tableController.videoArray = thePlace.videoArray
         tableController.delegate = self
@@ -91,6 +93,58 @@ class profileVenue: UIViewController, UICollectionViewDelegateFlowLayout,NSURLCo
         // Dispose of any resources that can be recreated.
     }
     
+    
+    
+    @IBAction func followButton(sender: AnyObject) {
+        let indexPath = NSIndexPath(forRow: 1, inSection: 0)
+        let cell = tableView.cellForRowAtIndexPath(indexPath) as! profileVenue2ndCell
+        if(thePlace.is_following == 0){
+            thePlace.is_following = 1
+            followButton.image = UIImage(named: "unfollow");
+            MolocatePlace.followAPlace(thePlace.id) { (data, response, error) in
+                MoleCurrentUser.following_count += 1
+                dispatch_async(dispatch_get_main_queue()) {
+                    thePlace.follower_count += 1
+                    cell.numberFollower.text = "\(thePlace.follower_count)"
+                    
+                }
+            }
+            
+        }else{ let actionSheetController: UIAlertController = UIAlertController(title: nil, message: "Takibi bırakmak istediğine emin misin?", preferredStyle: .ActionSheet)
+            
+            
+            let cancelAction: UIAlertAction = UIAlertAction(title: "Vazgeç", style: .Cancel) { action -> Void in
+                //Just dismiss the action sheet
+            }
+            actionSheetController.addAction(cancelAction)
+            //Create and add first option action
+            let takePictureAction: UIAlertAction = UIAlertAction(title: "Takibi Bırak", style: .Default)
+            { action -> Void in
+                self.followButton.image = UIImage(named: "follow");
+                thePlace.is_following = 0
+                MoleCurrentUser.following_count -= 1
+                MolocatePlace.unfollowAPlace(thePlace.id) { (data, response, error) in
+                    dispatch_async(dispatch_get_main_queue()) {
+                        thePlace.follower_count -= 1
+                        cell.numberFollower.text = "\(thePlace.follower_count)"
+                    }
+                    
+                }
+                
+            }
+            actionSheetController.addAction(takePictureAction)
+            //We need to provide a popover sourceView when using it on iPad
+            actionSheetController.popoverPresentationController?.sourceView = sender as? UIView
+            
+            //Present the AlertController
+            self.presentViewController(actionSheetController, animated: true, completion: nil)
+            
+        }
+        
+
+    }
+    
+    
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         
         if scrollView == self.tableView {
@@ -121,7 +175,8 @@ class profileVenue: UIViewController, UICollectionViewDelegateFlowLayout,NSURLCo
         }
         else {
             if indexPath.row == 1 {
-            return 80
+            return 76
+                
             } else {
                 return MolocateDevice.size.height-25
             }
@@ -181,53 +236,44 @@ class profileVenue: UIViewController, UICollectionViewDelegateFlowLayout,NSURLCo
     
     func launchMap(sender: UIButton) {
         
-        let actionSheetController: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        let controller:oneMap = self.storyboard!.instantiateViewControllerWithIdentifier("oneMap") as! oneMap
+        controller.classPlace = classPlace
+        navigationController?.pushViewController(controller, animated: true)
         
-        
-        let cancelAction: UIAlertAction = UIAlertAction(title: "Vazgeç", style: .Cancel) { action -> Void in
-            //Just dismiss the action sheet
-        }
-        actionSheetController.addAction(cancelAction)
-        //Create and add first option action
-        let takePictureAction: UIAlertAction = UIAlertAction(title: "Haritaya Yönlendir", style: .Default)
-        { action -> Void in
-            
-            self.openMapForPlace()
-            
-        }
-        actionSheetController.addAction(takePictureAction)
-        //We need to provide a popover sourceView when using it on iPad
-        actionSheetController.popoverPresentationController?.sourceView = sender as? UIView
-        
-        //Present the AlertController
-        self.presentViewController(actionSheetController, animated: true, completion: nil)
+//        let actionSheetController: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+//        
+//        
+//        let cancelAction: UIAlertAction = UIAlertAction(title: "Vazgeç", style: .Cancel) { action -> Void in
+//            //Just dismiss the action sheet
+//        }
+//        actionSheetController.addAction(cancelAction)
+//        //Create and add first option action
+//        let takePictureAction: UIAlertAction = UIAlertAction(title: "Haritaya Yönlendir", style: .Default)
+//        { action -> Void in
+//            
+//            self.openMapForPlace()
+//            
+//        }
+//        actionSheetController.addAction(takePictureAction)
+//        //We need to provide a popover sourceView when using it on iPad
+//        actionSheetController.popoverPresentationController?.sourceView = sender as? UIView
+//        
+//        //Present the AlertController
+//        self.presentViewController(actionSheetController, animated: true, completion: nil)
  
     }
 
-    func openMapForPlace() {
-        let regionDistance: CLLocationDistance = 10000
-        //mekanın koordinatları eklenecek
-        
-        let coordinates = CLLocationCoordinate2DMake(thePlace.lat , thePlace.lon)
-        let regionSpan = MKCoordinateRegionMakeWithDistance(coordinates, regionDistance, regionDistance)
-        let options = [
-            MKLaunchOptionsMapCenterKey: NSValue(MKCoordinate: regionSpan.center),
-            MKLaunchOptionsMapSpanKey: NSValue(MKCoordinateSpan: regionSpan.span)
-        ]
-        
-        let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
-        let mapItem = MKMapItem(placemark: placemark)
-        //mekanın adı eklenecek
-        mapItem.name = thePlace.name
-        
-        MKMapItem.openMapsWithItems([mapItem], launchOptions: options)
-    }
     
   
     
     
     func RefreshGuiWithData(){
         
+        if(thePlace.is_following==0 ){
+            
+        }else{
+            followButton.image = UIImage(named: "unfollow");
+        }
 //        followerCount.setTitle("\(thePlace.follower_count)", forState: UIControlState.Normal)
 //        locationName.text = thePlace.name
 //        self.navigationController!.topViewController!.title = thePlace.name
@@ -298,7 +344,7 @@ class profileVenue: UIViewController, UICollectionViewDelegateFlowLayout,NSURLCo
         activityIndicator.startAnimating()
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
         
-        let controller:profileOther = self.storyboard!.instantiateViewControllerWithIdentifier("profileOther") as! profileOther
+        let controller:profileUser = self.storyboard!.instantiateViewControllerWithIdentifier("profileUser") as! profileUser
         
         if username != MoleCurrentUser.username{
             controller.isItMyProfile = false

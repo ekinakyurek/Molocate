@@ -71,12 +71,14 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
 //        settings.layer.cornerRadius = 0
 //        settings.tintColor = UIColor.clearColor()
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-        self.navigationController?.hidesBarsOnSwipe = false
+        self.navigationController?.hidesBarsOnSwipe = true
         self.navigationController?.setNavigationBarHidden(false, animated: false)
   
 
      
     }
+    
+    
 
     
     func adjustTable() {
@@ -112,12 +114,7 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
     }
     
     func RefreshGuiWithData(){
-       
-        
-       username2 = classUser.first_name
-        
-        
-        
+        username2 = classUser.first_name
         AVc.classUser = classUser
         AVc.isItMyProfile = self.isItMyProfile
         BVc.isItMyProfile = self.isItMyProfile
@@ -161,7 +158,7 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
         else if indexPath.row == 0 {
             return UITableViewAutomaticDimension}
         else{
-        return MolocateDevice.size.height-75
+        return MolocateDevice.size.height-25
         }
     }
         
@@ -465,6 +462,7 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
                     }
                     tableView.pagingEnabled = false
                     page = 2
+                    
                 } else {
                     if vidortag {
                         BVc.tableView.scrollEnabled = false

@@ -92,8 +92,8 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
                 self.myRefreshControl.attributedTitle = NSAttributedString(string: "Keşfet güncelleniyor...")
                 getExploreData(requestUrl)
             
-            case "ProfileLocation":
-                print("profileLocation")
+            case "profileVenue":
+                print("profileVenue")
                 //videoArray initially given by parentViewCont4\roller
                 getPlaceData(placeId)
             default:
@@ -192,7 +192,7 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
                 getExploreData(requestUrl)
             case "MainController":
                 getExploreData(requestUrl)
-            case "ProfileLocation":
+            case "ProfileVenue":
                 getPlaceData(placeId)
             default:
                 print("default")
@@ -653,7 +653,7 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
 
 
                 }
-            }else if type == "ProfileLocation" {
+            }else if type == "profileVenue" {
 
                 if (scrollView.contentOffset.y<pointNow) {
                     direction = 0
