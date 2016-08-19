@@ -99,7 +99,12 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         previewLayer?.session = self.captureSession
-        
+//        let bounds = self.view.bounds
+//        previewLayer?.videoGravity = AVLayerVideoGravityResizeAspect
+//        previewLayer?.bounds = bounds
+//        previewLayer!.position=CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds))
+        //previewLayer?.contentsGravity = AVLayerVideoGravityResizeAspect
+        captureSession?.sessionPreset = AVCaptureSessionPreset640x480
         
        
 
@@ -302,7 +307,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         recordButton.center.x = self.view.center.x
         view.addSubview(recordButton)
         // This part is for the square shaped capture. Actually our capture is on all screen like normal camera but we are reducing that into square shaped with the two cover layer.
-        let newFrame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
+        let newFrame = CGRect(x: 0, y: 60, width: self.view.frame.width, height: self.view.frame.width*4/3)
         self.previewLayer!.frame = newFrame
         // let y = (self.view.frame.height+self.view.frame.width)/2
         //let bottomRect = CGRect(x: 0, y: 0, width: width , height: height)
@@ -440,7 +445,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
 
     
     override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        return UIInterfaceOrientationMask.All
+        return UIInterfaceOrientationMask.Portrait
     }
     
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
@@ -657,6 +662,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         for device in devices as! [AVCaptureDevice] {
             if device.position == position {
                 captureDevice = device
+               
                 break
             }
         }
@@ -675,7 +681,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         let instruction = AVMutableVideoCompositionInstruction()
         instruction.timeRange = CMTimeRangeMake(kCMTimeZero, CMTimeMakeWithSeconds(60, 30))
         let transformer = AVMutableVideoCompositionLayerInstruction(assetTrack: clipVideoTrack)
-        let t1 = CGAffineTransformMakeTranslation(clipVideoTrack.naturalSize.height, -(clipVideoTrack.naturalSize.width*(self.toolbar.frame.height+self.toolbarYancı.frame.height)/self.view.frame.height))
+        let t1 = CGAffineTransformMakeTranslation(clipVideoTrack.naturalSize.height, -(clipVideoTrack.naturalSize.width/self.view.frame.height))
         let t2 = CGAffineTransformRotate(t1, 3.141593/2)
         transformer.setTransform(t2, atTime: kCMTimeZero)
         instruction.layerInstructions = NSArray(object: transformer) as! [AVVideoCompositionLayerInstruction]
@@ -684,7 +690,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         let random = arc4random()
         let exportPath = documentsPath.stringByAppendingFormat("/CroppedVideo\(random).mp4", documentsPath)
         let exportURl = NSURL(fileURLWithPath: exportPath as String)
-        let exporter = AVAssetExportSession(asset: tempasset, presetName:AVAssetExportPresetMediumQuality )
+        let exporter = AVAssetExportSession(asset: tempasset, presetName:AVAssetExportPresetMediumQuality)
         exporter?.videoComposition = videoComposition
         exporter?.outputURL = exportURl
         exporter?.outputFileType = AVFileTypeMPEG4
