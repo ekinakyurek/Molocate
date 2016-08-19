@@ -21,6 +21,17 @@ class myProfile: UIViewController,UITableViewDelegate , UITableViewDataSource,UI
     
     
     @IBOutlet var tableView: UITableView!
+    
+    @IBAction func sideBar(sender: AnyObject) {
+        if(sideClicked == false){
+            sideClicked = true
+            NSNotificationCenter.defaultCenter().postNotificationName("openSideBar", object: nil)
+        } else {
+            sideClicked = false
+            NSNotificationCenter.defaultCenter().postNotificationName("closeSideBar", object: nil)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

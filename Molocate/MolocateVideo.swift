@@ -187,7 +187,87 @@ public class MolocateVideo {
         task.resume()
     }
     
-    
+    class func getNearbyVideos(placeLat: Float,placeLon: Float, completionHandler: (data: [MoleVideoInformation]?, response: NSURLResponse!, error: NSError!, next: NSURL?) -> ()){
+        
+        
+        var url = NSURL(string: "http://molocate-test.eu-central-1.elasticbeanstalk.com" + "/place/api/nearby_videos/?lat=\(placeLat)&lon=\(placeLon)")
+        let request = NSMutableURLRequest(URL: url!)
+        request.HTTPMethod = "GET"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue("Token " + MoleUserToken!, forHTTPHeaderField: "Authorization")
+        request.timeoutInterval = timeout + 2.0
+        
+        let task = NSURLSession.sharedSession().dataTaskWithRequest(request){ (data, response, error) -> Void in
+            //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+            if error == nil{
+                let nsError = error
+                
+                do {
+                    let result = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers ) as! [String: AnyObject]
+                    if result.indexForKey("results") != nil {
+                        
+                        let videos = result["results"] as! NSArray
+                        var nexturl: NSURL?
+                        
+                        if (result["next"] != nil){
+                            if result["next"] is NSNull {
+                                nexturl = nil
+                            }else {
+                                let nextStr = result["next"] as! String
+                                nexturl = NSURL(string: nextStr)!
+                            }
+                        }
+                        
+                        var videoArray = [MoleVideoInformation]()
+                        
+                        for i in 0..<videos.count{
+                            
+                            let item = videos[i] as! [String:AnyObject]
+                            let owner_user = item["owner_user"] as! [String:AnyObject]
+                            let place_taken = item["place_taken"] as! [String:String]
+                            var videoStr = MoleVideoInformation()
+                            
+                            videoStr.id = item["video_id"] as! String
+                            videoStr.urlSta = NSURL(string:  item["video_url"] as! String)!
+                            videoStr.username = owner_user["username"] as! String
+                            videoStr.location = place_taken["name"]!
+                            videoStr.locationID = place_taken["place_id"]!
+                            videoStr.caption = item["caption"] as! String
+                            videoStr.likeCount = item["like_count"] as! Int
+                            videoStr.commentCount = item["comment_count"] as! Int
+                            videoStr.category = item["category"] as! String
+                            videoStr.isLiked = item["is_liked"] as! Int
+                            videoStr.isFollowing = owner_user["is_following"] as! Int
+                            videoStr.userpic = owner_user["picture_url"] is NSNull ? NSURL():NSURL(string: owner_user["picture_url"] as! String)!
+                            videoStr.dateStr = item["date_str"] as! String
+                            videoStr.taggedUsers = item["tagged_users"] as! [String]
+                            videoStr.thumbnailURL = NSURL(string:item["thumbnail"] as! String)!
+                            videoStr.deletable = item["is_deletable"] as! Bool
+                            videoArray.append(videoStr)
+                            //                            print(videoStr.username)
+                            //                            print(videoStr.location)
+                            //                            print(videoStr.urlSta)
+                        }
+                        completionHandler(data: videoArray, response: response, error: nsError, next: nexturl)
+                    }else{
+                        completionHandler(data: [MoleVideoInformation](), response: response, error: nsError, next: nil)
+                        if debug {print("ServerDataError: in MolocateVideo.getExploreVideos()")}
+                        
+                    }
+                }catch{
+                    completionHandler(data: [MoleVideoInformation](), response: NSURLResponse(), error: nsError, next: nil)
+                    if debug { print("JsonError: in MolocateVideo.getExploreVideos")}
+                }
+            }else{
+                completionHandler(data: [MoleVideoInformation](), response: NSURLResponse(), error:error, next: nil)
+                if debug { print("Request: in MolocateVideo.getExploreVideos")}
+                
+            }
+        }
+        task.resume()
+    }
+
     class func getLikes(videoId: String, completionHandler: (data: Array<MoleUser>, response: NSURLResponse!, error: NSError!, count: Int!, next: String?, previous: String?) -> ()){
         
         let url = NSURL(string: MolocateBaseUrl + "video/api/video_likes/?video_id=" + (videoId as String));

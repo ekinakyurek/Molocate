@@ -179,6 +179,23 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
         })
 
     }
+    
+    func getNearbyData(lat:Float, lon:Float){
+        MolocateVideo.getNearbyVideos(lat, placeLon: lon) { (data, response, error, next) in
+            dispatch_async(dispatch_get_main_queue()){
+                self.nextUrl = next!
+                self.videoArray = data!
+                self.tableView.reloadData()
+                if self.myRefreshControl.refreshing {
+                    self.myRefreshControl.endRefreshing()
+                }
+                self.refreshing = false
+                if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
+                    UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                }
+            }
+        }
+    }
 
     func refresh(sender:AnyObject, refreshUrl: NSURL = NSURL(string: "")!){
 
@@ -202,6 +219,14 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
 
 
 
+    }
+    
+    func refreshForNearby(sender:AnyObject, lat:Float,lon:Float) {
+        refreshing = true
+        self.player1.stop()
+        self.player2.stop()
+        getNearbyData(lat, lon: lon)
+        
     }
 
 

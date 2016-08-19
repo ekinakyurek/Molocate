@@ -66,7 +66,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         //self.navigationController?.hidesBarsOnSwipe = true
         selectedCell = 0
 
-        
+
         tableController = self.storyboard?.instantiateViewControllerWithIdentifier("timelineController") as! TimelineController
         tableController.type = "MainController"
         tableController.delegate = self
@@ -480,6 +480,9 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
                 controller.venues = data
                 controller.tableView.reloadData()
             }
+        }
+        MolocateVideo.getNearbyVideos(lat, placeLon: lon) { (data, response, error, next) in
+            
         }
         self.activityIndicator.stopAnimating()
         UIApplication.sharedApplication().endIgnoringInteractionEvents()
