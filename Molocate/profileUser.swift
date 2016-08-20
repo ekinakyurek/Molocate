@@ -134,7 +134,7 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
         else if indexPath.row == 0 {
             return estRowH}
         else{
-            return MolocateDevice.size.height - 75
+            return MolocateDevice.size.height - 25
         }
     }
  
@@ -455,20 +455,15 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
             if scrollView == self.tableView {
                 
                 if (scrollView.contentSize.height-scrollView.contentOffset.y < MolocateDevice.size.height+70) {
-                    if vidortag {
-                        BVc.tableView.scrollEnabled = true
-                    } else {
+                
+                    BVc.tableView.scrollEnabled = true
                     AVc.tableView.scrollEnabled = true
-                    }
                     tableView.pagingEnabled = false
                     page = 2
                     
                 } else {
-                    if vidortag {
-                        BVc.tableView.scrollEnabled = false
-                    } else {
+                    BVc.tableView.scrollEnabled = false
                     AVc.tableView.scrollEnabled = false
-                    }
                     tableView.pagingEnabled = true
                     page = 1
         }
