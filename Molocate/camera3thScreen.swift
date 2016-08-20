@@ -200,19 +200,22 @@ class camera3thScreen: UIViewController,UICollectionViewDelegate, UICollectionVi
         
         
         
-        if placesArray.count == 0 {
-            venueName.text = "Konum ara"
-            } else {
-            selectedVenue = placesArray[0]
-            venueName.text = selectedVenue
-            let correctedRow = placeOrder.objectForKey(placesArray[0]) as! Int
-            videoLocation = locationDict[correctedRow][placesArray[correctedRow]]
-            isLocationSelected = true
-            }
+
         
         self.categ = ""
         if isLocationSelected {
             venueName.text =  selectedVenue
+        } else {
+            if placesArray.count == 0 {
+                venueName.text = "Konum ara"
+            } else {
+                selectedVenue = placesArray[0]
+                venueName.text = selectedVenue
+                let correctedRow = placeOrder.objectForKey(placesArray[0]) as! Int
+                videoLocation = locationDict[correctedRow][placesArray[correctedRow]]
+                isLocationSelected = true
+            }
+            
         }
         
         
