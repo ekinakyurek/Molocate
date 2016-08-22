@@ -132,17 +132,33 @@ class TestViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         let mentions = RegexParser.getMentions(fromText: new, range: textRange)
         
+        
         mentionAreas.removeAll()
         mentionedUsers.removeAll()
         
-        for mention in mentions where mention.range.length > 2{
-            var word = new[mention.range.location+1...mention.range.location + mention.range.length-1]
-            if word.hasPrefix("@") {
-                word.removeAtIndex(word.startIndex)
+        for mention in mentions where mention.range.length > 1{
+            print(mention.range.location)
+            if mention.range.length > 2 {
+                var word = new[mention.range.location+1...mention.range.location + mention.range.length-1]
+                
+                if word.hasPrefix("@") {
+                    word.removeAtIndex(word.startIndex)
+                }
+                
+                mentionedUsers.append(word)
+                mentionAreas.append(mention.range)
+            }else if mention.range.location == 0{
+                
+                print("mentionn range location")
+                var word = new[mention.range.location...mention.range.location + mention.range.length-1]
+                
+                if word.hasPrefix("@") {
+                    word.removeAtIndex(word.startIndex)
+                }
+                
+                mentionedUsers.append(word)
+                mentionAreas.append(mention.range)
             }
-         
-            mentionedUsers.append(word)
-            mentionAreas.append(mention.range)
             
         }
         
@@ -296,7 +312,13 @@ class TestViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             let username = searchResults[indexPath.row].username
             var captiontext = captionView.attributedText.string
-            captiontext = captiontext[0...mentionAreas[mentionModeIndex].location+1] + username + " "
+            if mentionAreas[mentionModeIndex].location == 0 {
+                captiontext = captiontext.substringToIndex(captiontext.startIndex.advancedBy(mentionAreas[mentionModeIndex].location+1)) + username + " "
+            }else{
+                captiontext = captiontext.substringToIndex(captiontext.startIndex.advancedBy(mentionAreas[mentionModeIndex].location+2)) + username + " "
+            }
+            
+            
             captionView.attributedText = NSAttributedString(string: captiontext)
             
             textViewDidChange(captionView)
