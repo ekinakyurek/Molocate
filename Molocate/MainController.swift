@@ -54,9 +54,9 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
     var refreshURL = NSURL(string: "http://molocate-py3.hm5xmcabvz.eu-central-1.elasticbeanstalk.com/video/api/explore/?category=all")
 
     
-    var categories = ["HEPSİ","EĞLENCE","YEMEK","GEZİ","MODA" , "GÜZELLİK", "SPOR","ETKİNLİK","KAMPÜS"]
-    var categoryImagesWhite : [String]  = [ "all" , "fun", "food", "travel", "fashion", "beauty", "sport", "event", "campus"]
-    var categoryImagesBlack : [String]  = [ "allb" , "funb", "foodb", "travelb", "fashionb", "beautyb", "sportb", "eventb", "campusb"]
+    var categories = ["HEPSİ","EĞLENCE","YEMEK","GEZİ","MODA" , "GÜZELLİK", "SPOR","ETKİNLİK","KAMPÜS","YAKINDA","TREND"]
+    var categoryImagesWhite : [String]  = [ "all" , "fun", "food", "travel", "fashion", "beauty", "sport", "event", "campus", "fashion", "beauty"]
+    var categoryImagesBlack : [String]  = [ "allb" , "funb", "foodb", "travelb", "fashionb", "beautyb", "sportb", "eventb", "campusb", "fashionb", "beautyb"]
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -481,9 +481,9 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
                 controller.tableView.reloadData()
             }
         }
-        MolocateVideo.getNearbyVideos(lat, placeLon: lon) { (data, response, error, next) in
-            
-        }
+//        MolocateVideo.getNearbyVideos(lat, placeLon: lon) { (data, response, error, next) in
+//            
+//        }
         self.activityIndicator.stopAnimating()
         UIApplication.sharedApplication().endIgnoringInteractionEvents()
         
@@ -759,7 +759,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 9
+        return 11
     }
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let myCell : myCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("myCell", forIndexPath: indexPath) as! myCollectionViewCell
@@ -821,12 +821,19 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
     
         self.tableController.tableView.setContentOffset(CGPoint(x: 0,y:0), animated: false)
         on = true
+        if indexPath.row != 9 {
         let url = NSURL(string: MolocateBaseUrl  + "video/api/explore/?category=" + MoleCategoriesDictionary [categories[indexPath.row]]!)
         tableController.requestUrl = url!
-        print(tableController.requestUrl.absoluteString)
+        //print(tableController.requestUrl.absoluteString)
+        
+        self.tableController.refresh(tableController.myRefreshControl, refreshUrl: refreshURL!)
+        } else {
+            let lat = Float(self.bestEffortAtLocation.coordinate.latitude)
+            let lon = Float(self.bestEffortAtLocation.coordinate.longitude)
+            tableController.refreshForNearby(tableController.myRefreshControl, lat: lat , lon: lon)
+        }
         selectedCell = indexPath.row
         self.collectionView.reloadData()
-        self.tableController.refresh(tableController.myRefreshControl, refreshUrl: refreshURL!)
         tableController.tableView.scrollEnabled = true
         tableController.tableView.userInteractionEnabled = true
         
