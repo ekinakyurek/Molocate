@@ -282,6 +282,8 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         // Dispose of any resources that can be recreated.
     }
     
+ 
+    
     func initGui(){
         videoDone.enabled = false
         toolbar.barTintColor = swiftColor

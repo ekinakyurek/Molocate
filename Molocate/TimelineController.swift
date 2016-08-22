@@ -49,7 +49,9 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
     var myRefreshControl = UIRefreshControl()
     var isOnView = false
     var requestUrl:NSURL = NSURL(string: "")!
-
+    var isNearby = false
+    var classLat = Float()
+    var classLon = Float()
     weak var delegate: TimelineControllerDelegate?
 
     var type = ""
@@ -208,7 +210,11 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
             case "HomePage":
                 getExploreData(requestUrl)
             case "MainController":
+                if !isNearby {
                 getExploreData(requestUrl)
+                } else {
+                getNearbyData(classLat, lon: classLon)
+            }
             case "ProfileVenue":
                 getPlaceData(placeId)
             default:

@@ -824,13 +824,17 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         if indexPath.row != 9 {
         let url = NSURL(string: MolocateBaseUrl  + "video/api/explore/?category=" + MoleCategoriesDictionary [categories[indexPath.row]]!)
         tableController.requestUrl = url!
+        tableController.isNearby = false
         //print(tableController.requestUrl.absoluteString)
         
         self.tableController.refresh(tableController.myRefreshControl, refreshUrl: refreshURL!)
         } else {
             let lat = Float(self.bestEffortAtLocation.coordinate.latitude)
             let lon = Float(self.bestEffortAtLocation.coordinate.longitude)
+            tableController.classLat = lat
+            tableController.classLon = lon
             tableController.refreshForNearby(tableController.myRefreshControl, lat: lat , lon: lon)
+            tableController.isNearby = true
         }
         selectedCell = indexPath.row
         self.collectionView.reloadData()
