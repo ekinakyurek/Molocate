@@ -1243,7 +1243,7 @@ public class MolocateAccount {
                         } else {
                             MoleCurrentUser.isFaceUser = true
                         }
-                        print(MoleCurrentUser.isFaceUser)
+                        print(MoleCurrentUser.token)
                         completionHandler(data: MoleCurrentUser, response: response , error: nsError  )
                     }else{
                         completionHandler(data: MoleCurrentUser , response: nil , error: nsError  )

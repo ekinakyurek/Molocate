@@ -290,8 +290,7 @@ class camera3thScreen: UIViewController,UICollectionViewDelegate, UICollectionVi
                 word.removeAtIndex(word.startIndex)
             }
             
-            print(range)
-            print(mention.range)
+           
             mentionedUsers.append(word)
             mentionAreas.append(mention.range)
             

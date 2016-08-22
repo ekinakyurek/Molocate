@@ -209,13 +209,7 @@ class videoCell: UITableViewCell {
             self.likeButton.setBackgroundImage(UIImage(named: "likefilled"), forState: UIControlState.Normal)
         }
         
-        var textstring = videoInfo.caption
-        
-        for user in videoInfo.taggedUsers{
-            textstring +=  " @" + user
-        }
-
-        
+        let textstring = videoInfo.caption
         
         videoComment.text = textstring        
         if(videoInfo.userpic.absoluteString != ""){
