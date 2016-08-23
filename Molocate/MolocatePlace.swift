@@ -22,6 +22,7 @@ struct MolePlace{
     var videoArray = [MoleVideoInformation]()
     var lat = 0.0
     var lon = 0.0
+    var distance = ""
 }
 
 
@@ -177,7 +178,7 @@ public class MolocatePlace {
     
     class func getNearbyPlace(placeLat: Float,placeLon: Float, completionHandler: (data: [MolePlace], response: NSURLResponse!, error: NSError!) -> ()) {
         
-        let url = NSURL(string: "http://molocate-test.eu-central-1.elasticbeanstalk.com/" +  "place/api/nearby_places/?lat=\(placeLat)&lon=\(placeLon)")
+        let url = NSURL(string: MolocateTestUrl +  "place/api/nearby_places/?lat=\(placeLat)&lon=\(placeLon)")
         let request = NSMutableURLRequest(URL: url!)
         request.HTTPMethod = "GET"
         request.addValue("Token " + MoleUserToken!, forHTTPHeaderField: "Authorization")
@@ -195,6 +196,7 @@ public class MolocatePlace {
                         var place = MolePlace()
                         place.id = item["place_id"] as! String
                         place.name = item["name"] as! String
+                        place.distance = item["distance"] as! String
                         lastPlaces.append(place)
                         
                     }

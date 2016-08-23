@@ -3,6 +3,7 @@ import UIKit
 import RNCryptor
 //Globals
 let MolocateBaseUrl = "http://molocate-py3.hm5xmcabvz.eu-central-1.elasticbeanstalk.com/"
+let MolocateTestUrl = "http://molocate-test.eu-central-1.elasticbeanstalk.com/"
 var IsExploreInProcess = false
 var MoleCurrentUser: MoleUser = MoleUser()
 var FaceUsername = ""
@@ -136,6 +137,8 @@ public class MolocateAccount {
         }
         task.resume()
     }
+    
+    
     
    class func getFacebookFriends(nextUrl: String = "",completionHandler: (data: MoleUserRelations, response: NSURLResponse!, error: NSError!, count: Int!, next: String?, previous: String?) -> ()){
     let url: NSURL
@@ -366,6 +369,55 @@ public class MolocateAccount {
         
         task.resume()
         
+    }
+    
+    class func getFollowingPlaces(username: String, completionHandler: (data: [MolePlace], response: NSURLResponse!, error: NSError! ) -> ()) {
+        
+        let url: NSURL
+        url = NSURL(string: MolocateTestUrl + "/account/api/following_places/?username=" + (username as String) )!
+
+        
+        let request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "GET"
+        request.addValue("Token " + MoleUserToken!, forHTTPHeaderField: "Authorization")
+        request.timeoutInterval = timeOut
+        let task = NSURLSession.sharedSession().dataTaskWithRequest(request){ data, response, error in
+            // print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+            
+            if(error == nil){
+                let nsError = error;
+                
+                do {
+                     print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+                    let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! NSArray
+                print(result.count)
+                    if(result.count != 0){
+                        var places = [MolePlace]()
+                        for item in result {
+                            var place = MolePlace()
+                            place.name = item["name"] as! String
+                            place.id = item["place_id"] as! String
+                            place.address = item["address"] as! String
+                            places.append(place)
+                            
+                        }
+                     
+                        completionHandler(data: places , response: response , error: nsError)
+                   }else{
+                        completionHandler(data:  [MolePlace]() , response: nil , error: nsError ) //next is not nil, next should be previous next***************check count mines -1
+                        if debug { print("ServerDataError:: in mole.getFollowers()") }
+                    }
+                } catch{
+                    completionHandler(data:  [MolePlace]() , response: nil , error: nsError )
+                    if debug { print("JSONCastError:: in mole.getFollowers()") }
+                }
+            }else{
+                completionHandler(data:  [MolePlace]() , response: nil , error: error)
+                if debug {print("RequestError:: in mole.getFollowers()")}
+            }
+            
+        }
+        task.resume()
     }
 
     
@@ -1217,7 +1269,7 @@ public class MolocateAccount {
             
                 do {
                     let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String: AnyObject]
-                    print(result)
+                    
                     if result.indexForKey("email") != nil{
                         MoleCurrentUser.email = result["email"] as! String
                         MoleCurrentUser.username = result["username"] as! String

@@ -15,6 +15,7 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
     var estRowH = 150.0 as! CGFloat
     var vidortag = false // videoysa false
     let names = ["AYARLAR","PROFİLİ DÜZENLE", "ÇIKIŞ YAP"]
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     @IBOutlet var tableView: UITableView!
   
  
@@ -385,6 +386,21 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
         navigationController?.pushViewController(controller, animated: true)
     }
     func followVenuePressed(sender: UIButton){
+            navigationController?.setNavigationBarHidden(false, animated: false)
+            activityIndicator.startAnimating()
+            UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+            let controller:findVenueController = self.storyboard!.instantiateViewControllerWithIdentifier("findVenueController") as! findVenueController
+            self.navigationController?.pushViewController(controller, animated: true)
+            MolocateAccount.getFollowingPlaces(classUser.username) { (data, response, error) in
+                dispatch_async(dispatch_get_main_queue()){
+                    print(data.count)
+                    controller.venues = data
+                    controller.tableView.reloadData()
+                }
+            }
+            self.activityIndicator.stopAnimating()
+            UIApplication.sharedApplication().endIgnoringInteractionEvents()
+
     
     }
     func followersPressed(sender: UIButton){

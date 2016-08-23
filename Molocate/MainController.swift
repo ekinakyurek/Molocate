@@ -481,9 +481,6 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
                 controller.tableView.reloadData()
             }
         }
-//        MolocateVideo.getNearbyVideos(lat, placeLon: lon) { (data, response, error, next) in
-//            
-//        }
         self.activityIndicator.stopAnimating()
         UIApplication.sharedApplication().endIgnoringInteractionEvents()
         
