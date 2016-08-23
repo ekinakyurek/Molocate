@@ -3626,7 +3626,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                                 <action selector="sideBar:" destination="pEW-a6-bHt" id="12U-Hr-cXc"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="Camera" id="b0X-BR-hMs">
+                        <barButtonItem key="rightBarButtonItem" image="cameraVideo" id="b0X-BR-hMs">
                             <connections>
                                 <action selector="openCamera:" destination="pEW-a6-bHt" id="I14-8u-QjI"/>
                             </connections>
@@ -4931,6 +4931,7 @@ These Services are operated and provided by Molocate. If you have any questions 
         <image name="Mole" width="1024" height="1024"/>
         <image name="Sent-96.png" width="96" height="96"/>
         <image name="backButton.png" width="40" height="40"/>
+        <image name="cameraVideo" width="50" height="30"/>
         <image name="closeFlash" width="35" height="35"/>
         <image name="comment" width="36" height="36"/>
         <image name="cross" width="30" height="30"/>

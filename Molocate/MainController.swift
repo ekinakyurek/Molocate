@@ -55,8 +55,8 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
 
     
     var categories = ["HEPSİ","EĞLENCE","YEMEK","GEZİ","MODA" , "GÜZELLİK", "SPOR","ETKİNLİK","KAMPÜS","YAKINDA","TREND"]
-    var categoryImagesWhite : [String]  = [ "all" , "fun", "food", "travel", "fashion", "beauty", "sport", "event", "campus", "fashion", "beauty"]
-    var categoryImagesBlack : [String]  = [ "allb" , "funb", "foodb", "travelb", "fashionb", "beautyb", "sportb", "eventb", "campusb", "fashionb", "beautyb"]
+    var categoryImagesWhite : [String]  = [ "all" , "fun", "food", "travel", "fashion", "beauty", "sport", "event", "campus", "nearby", "trend"]
+    var categoryImagesBlack : [String]  = [ "allb" , "funb", "foodb", "travelb", "fashionb", "beautyb", "sportb", "eventb", "campusb", "nearbyb", "trendb"]
     override func viewDidLoad() {
         super.viewDidLoad()
         
