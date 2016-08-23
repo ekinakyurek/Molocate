@@ -282,6 +282,7 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
             cell.numberFollower.text = "\(classUser.follower_count)"
             cell.numberFollowUser.text = "\(classUser.following_count)"
             cell.numberFollowVenue.text = "\(classUser.place_following_count)"
+            cell.numberPostedVenue.text = "\(classUser.different_checkins)"
             cell.followers.addTarget(self, action: #selector(profileUser.followersPressed), forControlEvents: UIControlEvents.TouchUpInside)
             cell.followUser.addTarget(self, action: #selector(profileUser.followUserPressed), forControlEvents: UIControlEvents.TouchUpInside)
             cell.followVenue.addTarget(self, action: #selector(profileUser.followVenuePressed), forControlEvents: UIControlEvents.TouchUpInside)

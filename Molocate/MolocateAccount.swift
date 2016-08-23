@@ -39,6 +39,7 @@ struct MoleUser{
     var follower_count = 0;
     var following_count = 0;
     var place_following_count = 0;
+    var different_checkins = 0;
     var isFollowing:Bool = false;
     var gender = "male"
     var birthday = "2016-10-12"
@@ -915,6 +916,7 @@ public class MolocateAccount {
                         user.follower_count = result["follower_count"] as! Int
                         user.following_count = result["following_count"] as! Int
                         user.place_following_count = result["place_count"] as! Int
+                        user.different_checkins = result["check_in_count"] as! Int
                         user.tag_count = result["tag_count"] as! Int
                         user.post_count = result["post_count"]as! Int
                         user.isFollowing = result["is_following"] as! Int == 1 ? true:false
@@ -1235,6 +1237,7 @@ public class MolocateAccount {
                         MoleCurrentUser.follower_count = result["follower_count"] as! Int
                         MoleCurrentUser.following_count = result["following_count"]as! Int
                         MoleCurrentUser.place_following_count = result["place_count"] as! Int
+                        MoleCurrentUser.different_checkins = result["check_in_count"] as! Int
                         MoleCurrentUser.gender =  result["gender"] is NSNull ? "": (result["gender"] as! String)
                         MoleCurrentUser.birthday = result["birthday"] is NSNull || (result["birthday"] as! String)   == "" ? "1970-01-01" : result["birthday"] as! String
                         
