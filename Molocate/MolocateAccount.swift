@@ -388,7 +388,7 @@ public class MolocateAccount {
                 let nsError = error;
                 
                 do {
-                     print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+                     //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
                     let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! NSArray
                 print(result.count)
                     if(result.count != 0){
@@ -419,6 +419,56 @@ public class MolocateAccount {
         }
         task.resume()
     }
+    
+    class func getCheckedInPlaces(username: String, completionHandler: (data: [MolePlace], response: NSURLResponse!, error: NSError! ) -> ()) {
+        
+        let url: NSURL
+        url = NSURL(string: MolocateTestUrl + "/account/api/checkedin_places/?username=" + (username as String) )!
+        
+        
+        let request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "GET"
+        request.addValue("Token " + MoleUserToken!, forHTTPHeaderField: "Authorization")
+        request.timeoutInterval = timeOut
+        let task = NSURLSession.sharedSession().dataTaskWithRequest(request){ data, response, error in
+            // print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+            
+            if(error == nil){
+                let nsError = error;
+                
+                do {
+                    //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+                    let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! NSArray
+                    print(result)
+                    if(result.count != 0){
+                        var places = [MolePlace]()
+                        for item in result {
+                            var place = MolePlace()
+                            place.name = item["name"] as! String
+                            place.id = item["place_id"] as! String
+                            place.address = item["address"] as! String
+                            places.append(place)
+                            
+                        }
+                        
+                        completionHandler(data: places , response: response , error: nsError)
+                    }else{
+                        completionHandler(data:  [MolePlace]() , response: nil , error: nsError ) //next is not nil, next should be previous next***************check count mines -1
+                        if debug { print("ServerDataError:: in mole.getFollowers()") }
+                    }
+                } catch{
+                    completionHandler(data:  [MolePlace]() , response: nil , error: nsError )
+                    if debug { print("JSONCastError:: in mole.getFollowers()") }
+                }
+            }else{
+                completionHandler(data:  [MolePlace]() , response: nil , error: error)
+                if debug {print("RequestError:: in mole.getFollowers()")}
+            }
+            
+        }
+        task.resume()
+    }
+
 
     
     class func Login(username: String, password: String, completionHandler: (data: String! , response: NSURLResponse!, error: NSError!) -> ()){

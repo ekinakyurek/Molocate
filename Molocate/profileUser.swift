@@ -393,7 +393,6 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
             self.navigationController?.pushViewController(controller, animated: true)
             MolocateAccount.getFollowingPlaces(classUser.username) { (data, response, error) in
                 dispatch_async(dispatch_get_main_queue()){
-                    print(data.count)
                     controller.venues = data
                     controller.tableView.reloadData()
                 }
@@ -414,7 +413,19 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
         navigationController?.pushViewController(controller, animated: true)
     }
     func postedVenuePressed(sender: UIButton){
-        
+        navigationController?.setNavigationBarHidden(false, animated: false)
+        activityIndicator.startAnimating()
+        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+        let controller:findVenueController = self.storyboard!.instantiateViewControllerWithIdentifier("findVenueController") as! findVenueController
+        self.navigationController?.pushViewController(controller, animated: true)
+        MolocateAccount.getCheckedInPlaces(classUser.username) { (data, response, error) in
+            dispatch_async(dispatch_get_main_queue()){
+            controller.venues = data
+            controller.tableView.reloadData()
+            }
+        }
+        self.activityIndicator.stopAnimating()
+        UIApplication.sharedApplication().endIgnoringInteractionEvents()
     }
     
     func showTable(){

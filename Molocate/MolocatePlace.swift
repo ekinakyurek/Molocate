@@ -197,6 +197,7 @@ public class MolocatePlace {
                         place.id = item["place_id"] as! String
                         place.name = item["name"] as! String
                         place.distance = item["distance"] as! String
+                        place.address = item["address"] as! String
                         lastPlaces.append(place)
                         
                     }
@@ -215,6 +216,9 @@ public class MolocatePlace {
         
         task.resume()
     }
+    
+    
+    
 
     
     

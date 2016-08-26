@@ -53,6 +53,7 @@ class findVenueController: UIViewController,UITableViewDelegate , UITableViewDat
         
         let cell = searchVenue(style: UITableViewCellStyle.Default, reuseIdentifier: "cellface")
         cell.nameLabel.text = venues[indexPath.row].name
+        cell.addressNameLabel.text = venues[indexPath.row].address
         cell.distanceLabel.text = venues[indexPath.row].distance
 //        cell.profilePhoto.tag = indexPath.row
 //        cell.nameLabel.tag = indexPath.row
