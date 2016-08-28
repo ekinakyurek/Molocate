@@ -941,7 +941,9 @@ import FBSDKShareKit
         activityIndicator.startAnimating()
         
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
-        self.navigationController?.navigationBarHidden = false
+        if navigationController?.navigationBarHidden == true {
+            self.navigationController?.setNavigationBarHidden(false, animated: false)
+        }
         
         
         let controller:profileVenue = self.parentViewController!.storyboard!.instantiateViewControllerWithIdentifier("profileVenue") as! profileVenue
@@ -965,7 +967,9 @@ import FBSDKShareKit
     
     
     func pressedLikeCount(sender: UIButton) {
-        navigationController?.navigationBarHidden = false
+        if navigationController?.navigationBarHidden == true {
+            navigationController?.setNavigationBarHidden(false, animated: falseprofil)
+        }
         player1.stop()
         player2.stop()
         video_id = videoArray[sender.tag].id
@@ -994,8 +998,10 @@ import FBSDKShareKit
     
     func pressedUsername(sender: UIButton) {
         
+        if navigationController?.navigationBar.hidden == true {
         
-        self.parentViewController!.navigationController?.setNavigationBarHidden(false, animated: false)
+            self.parentViewController!.navigationController?.setNavigationBarHidden(false, animated: false)
+        }
         let buttonRow = sender.tag
         //////////print("username e basıldı at index path: \(buttonRow)")
         player1.stop()
@@ -1033,7 +1039,9 @@ import FBSDKShareKit
     }
     
     func pressedComment(sender: UIButton) {
-        navigationController?.navigationBarHidden = false
+        if navigationController?.navigationBarHidden == true {
+            navigationController?.setNavigationBarHidden(false, animated: false)
+        }
         let buttonRow = sender.tag
         
         player1.stop()
