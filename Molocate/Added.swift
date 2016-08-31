@@ -942,7 +942,7 @@ import FBSDKShareKit
         
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
         if navigationController?.navigationBarHidden == true {
-            self.navigationController?.setNavigationBarHidden(false, animated: false)
+            //self.navigationcontroller?.setNavigationBarHidden(false, animated: false)
         }
         
         
@@ -968,7 +968,7 @@ import FBSDKShareKit
     
     func pressedLikeCount(sender: UIButton) {
         if navigationController?.navigationBarHidden == true {
-            navigationController?.setNavigationBarHidden(false, animated: falseprofil)
+            //navigationcontroller?.setNavigationBarHidden(false, animated: false)
         }
         player1.stop()
         player2.stop()
@@ -1000,7 +1000,7 @@ import FBSDKShareKit
         
         if navigationController?.navigationBar.hidden == true {
         
-            self.parentViewController!.navigationController?.setNavigationBarHidden(false, animated: false)
+            //self.parentViewController!.navigationcontroller?.setNavigationBarHidden(false, animated: false)
         }
         let buttonRow = sender.tag
         //////////print("username e basıldı at index path: \(buttonRow)")
@@ -1040,7 +1040,7 @@ import FBSDKShareKit
     
     func pressedComment(sender: UIButton) {
         if navigationController?.navigationBarHidden == true {
-            navigationController?.setNavigationBarHidden(false, animated: false)
+            //navigationcontroller?.setNavigationBarHidden(false, animated: false)
         }
         let buttonRow = sender.tag
         
