@@ -119,7 +119,7 @@ public class S3Upload {
             if ((task.result) != nil) {
                 let uploadTask = task.result
                 // Do something with uploadTask.
-                let seconds = 18.0
+                let seconds = 100.0
                 let delay = seconds * Double(NSEC_PER_SEC)  // nanoseconds per seconds
                 let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
                 dispatch_after(dispatchTime, dispatch_get_main_queue(), {
