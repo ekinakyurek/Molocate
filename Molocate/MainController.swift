@@ -57,13 +57,14 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
     var categories = ["HEPSİ","EĞLENCE","YEMEK","GEZİ","MODA" , "GÜZELLİK", "SPOR","ETKİNLİK","KAMPÜS","YAKINDA","TREND"]
     var categoryImagesWhite : [String]  = [ "all" , "fun", "food", "travel", "fashion", "beauty", "sport", "event", "campus", "nearby", "trend"]
     var categoryImagesBlack : [String]  = [ "allb" , "funb", "foodb", "travelb", "fashionb", "beautyb", "sportb", "eventb", "campusb", "nearbyb", "trendb"]
+    var isBarOnView = true
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.automaticallyAdjustsScrollViewInsets = true
         self.navigationController?.navigationBar.barTintColor = swiftColor
         self.navigationController?.navigationBar.translucent = false
-        //self.navigationController?.hidesBarsOnSwipe = true
+        self.navigationController?.hidesBarsOnSwipe = true
         selectedCell = 0
 
 
@@ -886,6 +887,11 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         }
         self.collectionView.reloadData()
         self.collectionView.setContentOffset(CGPoint(x: 0,y:0), animated: false)
+        if isBarOnView {
+            
+        } else {
+            self.navigationController?.setNavigationBarHidden(true, animated: false)
+        }
         
     }
     override func viewDidDisappear(animated: Bool) {

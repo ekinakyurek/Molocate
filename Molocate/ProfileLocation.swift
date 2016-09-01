@@ -139,7 +139,7 @@ class profileLocation: UIViewController, UICollectionViewDelegateFlowLayout,NSUR
     
     func pressedUsername(username: String, profilePic: NSURL, isFollowing: Bool) {
         
-        //self.navigationController?.setNavigationBarHidden(false, animated: false)
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
         activityIndicator.startAnimating()
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
         
@@ -182,7 +182,7 @@ class profileLocation: UIViewController, UICollectionViewDelegateFlowLayout,NSUR
     
     func pressedComment(videoId: String, Row: Int) {
         
-        //self.navigationController?.setNavigationBarHidden(false, animated: false)
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
         activityIndicator.startAnimating()
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
         video_id = videoId
@@ -207,7 +207,7 @@ class profileLocation: UIViewController, UICollectionViewDelegateFlowLayout,NSUR
     
     func pressedLikeCount(videoId: String, Row: Int) {
         
-        //self.navigationController?.setNavigationBarHidden(false, animated: false)
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
         activityIndicator.startAnimating()
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
         

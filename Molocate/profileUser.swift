@@ -73,7 +73,7 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
 //        settings.tintColor = UIColor.clearColor()
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         self.navigationController?.hidesBarsOnSwipe = true
-        //self.navigationController?.setNavigationBarHidden(false, animated: false)
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
   
 
      
@@ -386,7 +386,7 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
         navigationController?.pushViewController(controller, animated: true)
     }
     func followVenuePressed(sender: UIButton){
-            //self.navigationController?.setNavigationBarHidden(false, animated: false)
+            self.navigationController?.setNavigationBarHidden(false, animated: false)
             activityIndicator.startAnimating()
             UIApplication.sharedApplication().beginIgnoringInteractionEvents()
             let controller:findVenueController = self.storyboard!.instantiateViewControllerWithIdentifier("findVenueController") as! findVenueController
@@ -413,7 +413,7 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
         navigationController?.pushViewController(controller, animated: true)
     }
     func postedVenuePressed(sender: UIButton){
-        //self.navigationController?.setNavigationBarHidden(false, animated: false)
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
         activityIndicator.startAnimating()
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
         let controller:findVenueController = self.storyboard!.instantiateViewControllerWithIdentifier("findVenueController") as! findVenueController

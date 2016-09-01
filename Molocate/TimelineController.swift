@@ -93,7 +93,7 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
                 requestUrl = NSURL(string: MolocateBaseUrl + "video/api/explore/?category=all")!
                 self.myRefreshControl.attributedTitle = NSAttributedString(string: "Keşfet güncelleniyor...")
                 getExploreData(requestUrl)
-            
+                //navigationController?.hidesBarsOnSwipe = false
             case "profileVenue":
                 print("profileVenue")
                 //videoArray initially given by parentViewCont4\roller
@@ -805,7 +805,9 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
                                               if (scrollView.contentOffset.y<pointNow) {
 
                     direction = 0
+                                                
                     if self.parentViewController is MainController {
+                    (self.parentViewController as! MainController).isBarOnView = true
                     self.parentViewController?.navigationController?.setNavigationBarHidden(false, animated: true)
                     viewBool = false
                     NSNotificationCenter.defaultCenter().postNotificationName("changeView", object: nil)
@@ -815,6 +817,7 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
                     direction = 1
                     if self.parentViewController is MainController {
                     self.parentViewController?.navigationController?.setNavigationBarHidden(true, animated: true)
+                    (self.parentViewController as! MainController).isBarOnView = false
                     viewBool = true
                     NSNotificationCenter.defaultCenter().postNotificationName("changeView", object: nil)
                             }
