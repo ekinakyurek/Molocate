@@ -64,7 +64,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         self.automaticallyAdjustsScrollViewInsets = true
         self.navigationController?.navigationBar.barTintColor = swiftColor
         self.navigationController?.navigationBar.translucent = false
-        self.navigationController?.hidesBarsOnSwipe = true
+
         selectedCell = 0
 
 
@@ -207,6 +207,9 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MainController.showNavigationMain), name: "showNavigationMain", object: nil)
     }
    
+    func toggleNavigationBar(direction: Bool) {
+        navigationController?.setNavigationBarHidden(direction, animated: true)
+    }
 
     
     func pressedVenue(sender: UIButton) {
@@ -386,7 +389,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         
         let username = searchedUsers[sender.tag].username
         
-        navigationController?.setNavigationBarHidden(false, animated: false)
+       
         activityIndicator.startAnimating()
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
         
@@ -468,7 +471,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
     }
     
     func pressedFindVenue(sender: UIButton) {
-        navigationController?.setNavigationBarHidden(false, animated: false)
+     
         activityIndicator.startAnimating()
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
         let controller:findVenueController = self.storyboard!.instantiateViewControllerWithIdentifier("findVenueController") as! findVenueController
@@ -490,7 +493,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
     
     func pressedFindFriend(sender: UIButton) {
         
-        navigationController?.setNavigationBarHidden(false, animated: false)
+
         activityIndicator.startAnimating()
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
         let controller:findFriendController = self.storyboard!.instantiateViewControllerWithIdentifier("findFriendController") as! findFriendController
@@ -532,7 +535,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
     
     func pressedUsername(username: String, profilePic: NSURL, isFollowing: Bool) {
         
-        navigationController?.setNavigationBarHidden(false, animated: false)
+  
         activityIndicator.startAnimating()
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
         
@@ -571,7 +574,6 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
     
     func pressedPlace(placeId: String, Row: Int) {
     
-        navigationController?.setNavigationBarHidden(false, animated: false)
         activityIndicator.startAnimating()
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
         let controller:profileVenue = self.storyboard!.instantiateViewControllerWithIdentifier("profileVenue") as! profileVenue
@@ -595,7 +597,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
     
     func pressedComment(videoId: String, Row: Int) {
         
-        navigationController?.setNavigationBarHidden(false, animated: false)
+  
         activityIndicator.startAnimating()
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
         video_id = videoId

@@ -330,6 +330,7 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
     }
     
     override func viewWillAppear(animated: Bool) {
+        self.navigationController?.navigationBarHidden = false
         (self.parentViewController?.parentViewController?.parentViewController as! ContainerController).scrollView.scrollEnabled = false
     }
     

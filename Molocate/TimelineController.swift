@@ -14,7 +14,7 @@ import AVFoundation
 import Photos
 import FBSDKShareKit
 
-protocol TimelineControllerDelegate:class {
+@objc protocol TimelineControllerDelegate:class {
 
     func pressedUsername(username: String, profilePic: NSURL, isFollowing: Bool)
 
@@ -23,11 +23,14 @@ protocol TimelineControllerDelegate:class {
     func pressedLikeCount(videoId: String, Row: Int)
 
     func pressedComment(videoId: String, Row: Int)
+    
+    optional func toggleNavigationBar(direction: Bool)
+    
 
 }
 var watch_list = [String]()
 
-class TimelineController: UITableViewController,PlayerDelegate, UINavigationControllerDelegate, FBSDKSharingDelegate {
+class TimelineController: UITableViewController,PlayerDelegate, FBSDKSharingDelegate {
 
 
 
@@ -64,7 +67,7 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
         tableView.tableFooterView = UIView()
         tableView.allowsSelection = false
         tableView.backgroundColor = UIColor.whiteColor()
-        navigationController?.hidesBarsOnSwipe = true
+    
         
         self.player1 = Player()
         self.player1.delegate = self
@@ -222,11 +225,11 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
         }
 
 
-
-
-
     }
     
+    func toggle(direction:Bool){
+        delegate?.toggleNavigationBar!(direction)
+    }
     func refreshForNearby(sender:AnyObject, lat:Float,lon:Float) {
         refreshing = true
         self.player1.stop()
@@ -808,7 +811,7 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
                                                 
                     if self.parentViewController is MainController {
                     (self.parentViewController as! MainController).isBarOnView = true
-                    self.parentViewController?.navigationController?.setNavigationBarHidden(false, animated: true)
+                    toggle(false)
                     viewBool = false
                     NSNotificationCenter.defaultCenter().postNotificationName("changeView", object: nil)
                     }
@@ -816,7 +819,7 @@ class TimelineController: UITableViewController,PlayerDelegate, UINavigationCont
                 } else if (scrollView.contentOffset.y>pointNow) {
                     direction = 1
                     if self.parentViewController is MainController {
-                    self.parentViewController?.navigationController?.setNavigationBarHidden(true, animated: true)
+                    toggle(true)
                     (self.parentViewController as! MainController).isBarOnView = false
                     viewBool = true
                     NSNotificationCenter.defaultCenter().postNotificationName("changeView", object: nil)

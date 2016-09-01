@@ -619,7 +619,8 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
         }
     }
     
-        override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(animated: Bool) {
+        self.navigationController?.navigationBarHidden = false
         //(self.parentViewController?.parentViewController?.parentViewController as! ContainerController).scrollView.scrollEnabled = false
     }
     

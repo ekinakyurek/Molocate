@@ -394,6 +394,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
     }
   
     override func viewWillAppear(animated: Bool) {
+            navigationController?.navigationBarHidden = false
            (self.parentViewController?.parentViewController?.parentViewController as! ContainerController).scrollView.scrollEnabled = false
        
     }
