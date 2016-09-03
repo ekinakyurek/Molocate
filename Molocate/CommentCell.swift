@@ -5,11 +5,11 @@ import UIKit
 
 class commentCell: UITableViewCell {
 
-    @IBOutlet var comment: UILabel!
+
     @IBOutlet var username: UIButton!
     @IBOutlet var profilePhoto: UIButton!
     @IBOutlet var deleteSupport: UIButton!
-  
+    let videoComment : ActiveLabel = ActiveLabel()
    
    
     override func awakeFromNib() {

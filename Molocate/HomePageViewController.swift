@@ -26,7 +26,8 @@ class HomePageViewController: UIViewController, UITextFieldDelegate, TimelineCon
        
         super.viewDidLoad()
         
-        self.automaticallyAdjustsScrollViewInsets = false
+        self.automaticallyAdjustsScrollViewInsets = true
+        
         tableController = self.storyboard?.instantiateViewControllerWithIdentifier("timelineController") as! TimelineController
         tableController.type = "HomePage"
         tableController.view.frame = self.view.frame

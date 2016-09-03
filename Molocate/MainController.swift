@@ -25,6 +25,7 @@ var thePlace:MolePlace = MolePlace()
 var pressedFollow = false
 var selectedCell = 0
 var viewBool = false
+
 class MainController: UIViewController, UITableViewDelegate , UITableViewDataSource, UICollectionViewDelegate,CLLocationManagerDelegate, UICollectionViewDataSource, UISearchBarDelegate, TimelineControllerDelegate, UITextFieldDelegate{
  
 
@@ -58,6 +59,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
     var categoryImagesWhite : [String]  = [ "all" , "fun", "food", "travel", "fashion", "beauty", "sport", "event", "campus", "nearby", "trend"]
     var categoryImagesBlack : [String]  = [ "allb" , "funb", "foodb", "travelb", "fashionb", "beautyb", "sportb", "eventb", "campusb", "nearbyb", "trendb"]
     var isBarOnView = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
