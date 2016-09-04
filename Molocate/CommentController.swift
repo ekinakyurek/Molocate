@@ -443,10 +443,11 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
                 
                 newComment.attributedText = NSAttributedString(string: captiontext)
                 
-                textViewDidChange(newComment)
-                
-                mentionAreas[mentionModeIndex].length = username.characters.count
+                captionView.attributedText = NSAttributedString(string: captiontext)
+                mentionAreas[mentionModeIndex].length = username.characters.count + 2
                 mentionedUsers[mentionModeIndex] = username
+                
+                textViewDidChange(captionView)
                 isInTheMentionMode = false
                 tagView.hidden = true
                 searchResults.removeAll()

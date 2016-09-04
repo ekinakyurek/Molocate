@@ -468,11 +468,10 @@ class camera3thScreen: UIViewController,UICollectionViewDelegate, UICollectionVi
             
             
             captionView.attributedText = NSAttributedString(string: captiontext)
+            mentionAreas[mentionModeIndex].length = username.characters.count + 2
+            mentionedUsers[mentionModeIndex] = username
             
             textViewDidChange(captionView)
-            
-            mentionAreas[mentionModeIndex].length = username.characters.count
-            mentionedUsers[mentionModeIndex] = username
             isInTheMentionMode = false
             mentionTable.hidden = true
             searchResults.removeAll()
