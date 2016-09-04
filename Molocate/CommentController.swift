@@ -203,7 +203,7 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if tableView == tagView{
-             return 48
+             return 60
         }else{
             return 68
         }
