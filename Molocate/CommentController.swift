@@ -161,8 +161,9 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
             cell.username.contentHorizontalAlignment = .Left
             cell.username.tag = indexPath.row
             
-            cell.videoComment.frame = CGRectMake( 55 , 28 , 292 , 26)
-            cell.videoComment.customize { label in
+           // cell.videoComment.frame = CGRectMake( 55 , 28 , 292 , 26)
+            
+            cell.comment.customize { label in
                 label.textAlignment = .Left
                 label.numberOfLines = 0
                 label.textColor = arkarenk
@@ -172,9 +173,9 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
                 label.hashtagColor = UIColor(red: 90, green: 200, blue: 250)
                 
             }
-            cell.videoComment.text = comments[indexPath.row].text
+            cell.comment.text = comments[indexPath.row].text
            
-            cell.contentView.addSubview(cell.videoComment)
+    
             
             cell.deleteSupport.tag = indexPath.row
             cell.deleteSupport.addTarget(self, action: #selector(commentController.pressedReport(_:)), forControlEvents: UIControlEvents.TouchUpInside)
