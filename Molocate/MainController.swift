@@ -73,11 +73,11 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         tableController = self.storyboard?.instantiateViewControllerWithIdentifier("timelineController") as! TimelineController
         tableController.type = "MainController"
         tableController.delegate = self
-        tableController.view.frame = CGRectMake(0, 50, MolocateDevice.size.width, MolocateDevice.size.height - 50)
-        tableController.view.layer.zPosition = 0
-        self.view.addSubview(tableController.view)
-        self.addChildViewController(tableController);
-        tableController.didMoveToParentViewController(self)
+//        tableController.view.frame = CGRectMake(0, 50, MolocateDevice.size.width, MolocateDevice.size.height - 50)
+//        tableController.view.layer.zPosition = 0
+//        self.view.addSubview(tableController.view)
+//        self.addChildViewController(tableController);
+//        tableController.didMoveToParentViewController(self)
         
         
         searchText.returnKeyType = UIReturnKeyType.Done
@@ -194,12 +194,17 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         
         let index = NSIndexPath(forRow: 0, inSection: 0)
         
-        self.collectionView.selectItemAtIndexPath(index, animated: false, scrollPosition: UICollectionViewScrollPosition.None)
-        collectionView.contentSize.width = 60 * 9
-        collectionView.backgroundColor = UIColor.whiteColor()
-        collectionView.layer.zPosition = 5
-        collectionView.hidden = false
-
+//        self.collectionView.selectItemAtIndexPath(index, animated: false, scrollPosition: UICollectionViewScrollPosition.None)
+//        collectionView.contentSize.width = 60 * 9
+//        collectionView.backgroundColor = UIColor.whiteColor()
+//        collectionView.layer.zPosition = 5
+//        collectionView.hidden = false
+//        if let layout = collectionView?.collectionViewLayout as? exploreLayout {
+//            layout.delegate = self
+//        }
+        collectionView!.backgroundColor = UIColor.clearColor()
+        collectionView!.contentInset = UIEdgeInsets(top: 2, left: 2, bottom:2, right: 2)
+    
         
         if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
             UIApplication.sharedApplication().endIgnoringInteractionEvents()
@@ -752,9 +757,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         }
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return  CGSize.init(width: 50 , height: 50)
-    }
+
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
@@ -768,80 +771,81 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         
         let backgroundView = UIView()
         backgroundView.backgroundColor = swiftColor
-        
-        myCell.selectedBackgroundView = backgroundView
-        //myCell.layer.borderWidth = 0
-        myCell.backgroundColor = UIColor.whiteColor()
-        
-        if selectedCell == indexPath.row{
-             myCell.categoryImage?.image = UIImage(named: categoryImagesWhite[indexPath.row])
-            UIView.animateWithDuration(0.5, animations: {
-               // myCell.bottomCon.constant = 2
-                //myCell.topCon.constant = 0
-                //self.view.layoutIfNeeded()
-            })
-            //myCell.myLabel.hidden = false
-        myCell.myLabel.textColor = UIColor.whiteColor()
-        myCell.backgroundColor = swiftColor2
-              let screenSize = UIScreen.mainScreen().bounds
-            var b = CGPoint(x: 60 * selectedCell, y: 0)
-            
-            if selectedCell < 2 {
-                b.x = 0
-            }
-            else if selectedCell > 4 {
-                let contentSize =  collectionView.contentSize.width
-                b = CGPoint(x: contentSize - screenSize.width  , y: 0)
-            }
-            
-            else{
-                b = CGPoint(x: 60 * ( selectedCell - 2 ), y: 0)
-            }
-        self.collectionView.setContentOffset(b , animated: true)
-        }
-        else{
-         myCell.categoryImage?.image = UIImage(named: categoryImagesBlack[indexPath.row])
-       // myCell.myLabel.hidden = true
-        UIView.animateWithDuration(0.5, animations: {
-              //  myCell.bottomCon.constant = -5
-               // myCell.topCon.constant = 5
-                //self.view.layoutIfNeeded()
-            })
-        myCell.myLabel.textColor = UIColor.blackColor()
-        myCell.backgroundColor = UIColor.whiteColor()
-        }
-        myCell.myLabel?.text = categories[indexPath.row]
-        //myCell.frame.size.width = 75
-        //myCell.myLabel.textAlignment = .Center
-        //myCell.myLabel.font = UIFont(name: "AvenirNext-Regular", size: 12)
         return myCell
+        
+//        myCell.selectedBackgroundView = backgroundView
+//        //myCell.layer.borderWidth = 0
+//        myCell.backgroundColor = UIColor.whiteColor()
+//        
+//        if selectedCell == indexPath.row{
+//             myCell.categoryImage?.image = UIImage(named: categoryImagesWhite[indexPath.row])
+//            UIView.animateWithDuration(0.5, animations: {
+//               // myCell.bottomCon.constant = 2
+//                //myCell.topCon.constant = 0
+//                //self.view.layoutIfNeeded()
+//            })
+//            //myCell.myLabel.hidden = false
+//        myCell.myLabel.textColor = UIColor.whiteColor()
+//        myCell.backgroundColor = swiftColor2
+//              let screenSize = UIScreen.mainScreen().bounds
+//            var b = CGPoint(x: 60 * selectedCell, y: 0)
+//            
+//            if selectedCell < 2 {
+//                b.x = 0
+//            }
+//            else if selectedCell > 4 {
+//                let contentSize =  collectionView.contentSize.width
+//                b = CGPoint(x: contentSize - screenSize.width  , y: 0)
+//            }
+//            
+//            else{
+//                b = CGPoint(x: 60 * ( selectedCell - 2 ), y: 0)
+//            }
+//        self.collectionView.setContentOffset(b , animated: true)
+//        }
+//        else{
+//         myCell.categoryImage?.image = UIImage(named: categoryImagesBlack[indexPath.row])
+//       // myCell.myLabel.hidden = true
+//        UIView.animateWithDuration(0.5, animations: {
+//              //  myCell.bottomCon.constant = -5
+//               // myCell.topCon.constant = 5
+//                //self.view.layoutIfNeeded()
+//            })
+//        myCell.myLabel.textColor = UIColor.blackColor()
+//        myCell.backgroundColor = UIColor.whiteColor()
+//        }
+//        myCell.myLabel?.text = categories[indexPath.row]
+//        //myCell.frame.size.width = 75
+//        //myCell.myLabel.textAlignment = .Center
+//        //myCell.myLabel.font = UIFont(name: "AvenirNext-Regular", size: 12)
+//        return myCell
         
     }
     
    
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath){
     
-        self.tableController.tableView.setContentOffset(CGPoint(x: 0,y:0), animated: false)
-        on = true
-        if indexPath.row != 9 {
-        let url = NSURL(string: MolocateBaseUrl  + "video/api/explore/?category=" + MoleCategoriesDictionary [categories[indexPath.row]]!)
-        tableController.requestUrl = url!
-        tableController.isNearby = false
-        //print(tableController.requestUrl.absoluteString)
-        
-        self.tableController.refresh(tableController.myRefreshControl, refreshUrl: refreshURL!)
-        } else {
-            let lat = Float(self.bestEffortAtLocation.coordinate.latitude)
-            let lon = Float(self.bestEffortAtLocation.coordinate.longitude)
-            tableController.classLat = lat
-            tableController.classLon = lon
-            tableController.refreshForNearby(tableController.myRefreshControl, lat: lat , lon: lon)
-            tableController.isNearby = true
-        }
-        selectedCell = indexPath.row
-        self.collectionView.reloadData()
-        tableController.tableView.scrollEnabled = true
-        tableController.tableView.userInteractionEnabled = true
+//        self.tableController.tableView.setContentOffset(CGPoint(x: 0,y:0), animated: false)
+//        on = true
+//        if indexPath.row != 9 {
+//        let url = NSURL(string: MolocateBaseUrl  + "video/api/explore/?category=" + MoleCategoriesDictionary [categories[indexPath.row]]!)
+//        tableController.requestUrl = url!
+//        tableController.isNearby = false
+//        //print(tableController.requestUrl.absoluteString)
+//        
+//        self.tableController.refresh(tableController.myRefreshControl, refreshUrl: refreshURL!)
+//        } else {
+//            let lat = Float(self.bestEffortAtLocation.coordinate.latitude)
+//            let lon = Float(self.bestEffortAtLocation.coordinate.longitude)
+//            tableController.classLat = lat
+//            tableController.classLon = lon
+//            tableController.refreshForNearby(tableController.myRefreshControl, lat: lat , lon: lon)
+//            tableController.isNearby = true
+//        }
+//        selectedCell = indexPath.row
+//        self.collectionView.reloadData()
+//        tableController.tableView.scrollEnabled = true
+//        tableController.tableView.userInteractionEnabled = true
         
     }
     
