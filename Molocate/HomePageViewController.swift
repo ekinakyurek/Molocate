@@ -42,7 +42,7 @@ class HomePageViewController: UIViewController, UITextFieldDelegate, TimelineCon
         self.navigationItem.titleView?.tintColor = UIColor.whiteColor()
         
         
-        tabBarController?.tabBar.hidden = true
+        //tabBarController?.tabBar.hidden = true
         
         try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
         self.view.addSubview(nofollowings)
