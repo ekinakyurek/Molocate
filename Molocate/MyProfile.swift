@@ -37,6 +37,7 @@ class myProfile: UIViewController,UITableViewDelegate , UITableViewDataSource,UI
         
         
         classUser = MoleCurrentUser
+        self.isItMyProfile = true
         //tableView.estimatedRowHeight = 20
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.allowsSelection = false

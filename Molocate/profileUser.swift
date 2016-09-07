@@ -115,7 +115,18 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
     }
     
     func RefreshGuiWithData(){
+       
+        if(classUser.isFollowing){
+            followButton.image = UIImage(named: "unfollow")
+        }else if classUser.username == MoleCurrentUser.username{
+            self.isItMyProfile = true
+            followButton.image = UIImage(named: "settings")
+        }else{
+            followButton.image = UIImage(named: "follow")
+        }
+        
         username2 = classUser.first_name
+               
         AVc.classUser = classUser
         AVc.isItMyProfile = self.isItMyProfile
         BVc.isItMyProfile = self.isItMyProfile
@@ -123,6 +134,7 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
         AVc.getData()
         BVc.getData()
         tableView.reloadData()
+       
         
     }
     func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
