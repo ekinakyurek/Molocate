@@ -73,7 +73,7 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
 //        settings.tintColor = UIColor.clearColor()
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         self.navigationController?.hidesBarsOnSwipe = true
-        self.navigationController?.setNavigationBarHidden(false, animated: false)
+
   
 
      
@@ -126,7 +126,6 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
         }
         
         username2 = classUser.first_name
-               
         AVc.classUser = classUser
         AVc.isItMyProfile = self.isItMyProfile
         BVc.isItMyProfile = self.isItMyProfile

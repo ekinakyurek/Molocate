@@ -2245,7 +2245,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Title" id="VPn-V6-JnE">
-                        <barButtonItem key="rightBarButtonItem" title="Item" id="VpU-D9-Pfd">
+                        <barButtonItem key="rightBarButtonItem" image="settings" id="VpU-D9-Pfd">
                             <connections>
                                 <action selector="followButton:" destination="gtr-N2-rOL" id="bwL-9R-DZy"/>
                             </connections>

@@ -88,7 +88,7 @@ class myProfile: UIViewController,UITableViewDelegate , UITableViewDataSource,UI
         //        settings.tintColor = UIColor.clearColor()
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         self.navigationController?.hidesBarsOnSwipe = true
-        self.navigationController?.setNavigationBarHidden(false, animated: false)
+       
         
         
         
@@ -615,8 +615,8 @@ class myProfile: UIViewController,UITableViewDelegate , UITableViewDataSource,UI
     
     override func viewWillAppear(animated: Bool) {
 
-
-        self.tabBarController?.tabBar.hidden = true
+    self.navigationController?.navigationBarHidden = false
+      
         
     }
     

@@ -173,6 +173,9 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
                 label.hashtagColor = UIColor(red: 90, green: 200, blue: 250)
                 
             }
+            
+            cell.comment.handleMentionTap { userHandle in  self.pressedMention(userHandle, profilePic: NSURL(), isFollowing: false)}
+
             cell.comment.text = comments[indexPath.row].text
            
     
@@ -189,6 +192,8 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
             cell.profilePhoto.tag = indexPath.row
             cell.profilePhoto.addTarget(self, action: #selector(commentController.pressedUsername(_:)), forControlEvents: UIControlEvents.TouchUpInside )
             
+            cell.username.addTarget(self, action: #selector(commentController.pressedUsername(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+            
    
             
             if(comments[indexPath.row].photo.absoluteString != ""){
@@ -202,6 +207,43 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
         }
     }
     
+    func pressedMention(username: String, profilePic: NSURL, isFollowing:Bool){
+        activityIndicator.startAnimating()
+        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+        
+        let controller:profileUser = self.storyboard!.instantiateViewControllerWithIdentifier("profileUser") as! profileUser
+        
+        if username != MoleCurrentUser.username{
+            controller.isItMyProfile = false
+        }else{
+            controller.isItMyProfile = true
+        }
+        
+        controller.classUser.username = username
+        controller.classUser.profilePic = profilePic
+        controller.classUser.isFollowing = isFollowing
+        
+        
+        self.navigationController?.pushViewController(controller, animated: true)
+        MolocateAccount.getUser(username) { (data, response, error) -> () in
+            dispatch_async(dispatch_get_main_queue()){
+                //DBG: If it is mine profile?
+                
+                if data.username != "" {
+                    user = data
+                    controller.classUser = data
+                    controller.RefreshGuiWithData()
+                }
+                
+                //choosedIndex = 0
+                self.activityIndicator.stopAnimating()
+                UIApplication.sharedApplication().endIgnoringInteractionEvents()
+            }
+        }
+        
+
+    }
+
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if tableView == tagView{
              return 60
@@ -219,6 +261,9 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
     }
     
     @IBAction func sendButton(sender: AnyObject) {
+        if !tagView.hidden{
+            updateSearch("")
+        }
         
         if(newComment.text.characters.count >= 1 && newComment.text != "Yorumunu buradan yazabilirsin"){
             
