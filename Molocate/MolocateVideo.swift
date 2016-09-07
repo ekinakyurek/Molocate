@@ -627,11 +627,11 @@ public class MolocateVideo {
     
     
     
-    class func commentAVideo(videoId: String,comment: String, completionHandler: (data: String! , response: NSURLResponse!, error: NSError!) -> ()){
+    class func commentAVideo(videoId: String,comment: String, mentioned_users: [String], completionHandler: (data: String! , response: NSURLResponse!, error: NSError!) -> ()){
         
         do{
             
-            let Body = ["video_id": videoId,"comment": comment]
+            let Body = ["video_id": videoId,"comment": comment, "mentioned_users": mentioned_users]
             let jsonData = try NSJSONSerialization.dataWithJSONObject(Body, options: NSJSONWritingOptions())
             
             let url = NSURL(string: MolocateBaseUrl + "video/comment/")!

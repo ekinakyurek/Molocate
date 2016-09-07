@@ -281,7 +281,7 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
             
             sendButton.enabled = true
 
-            MolocateVideo.commentAVideo(video_id, comment: mycomment.text) { (data, response, error) -> () in
+            MolocateVideo.commentAVideo(video_id, comment: mycomment.text, mentioned_users:  mentionedUsers) { (data, response, error) -> () in
                 dispatch_async(dispatch_get_main_queue()){
                     //self.updateParentController(true)
                     
