@@ -336,7 +336,7 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
         user.birthday = dateFormatter.stringFromDate(datepicker.date)
         MoleCurrentUser = user
         
-        let imageData = UIImageJPEGRepresentation(photo.image!, 0.5)
+     //   let imageData = UIImageJPEGRepresentation(photo.image!, 0.5)
         activityIndicator.frame = sender.frame
         activityIndicator.center = sender.center
         self.view.addSubview(activityIndicator)

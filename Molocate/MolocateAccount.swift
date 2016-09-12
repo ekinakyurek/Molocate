@@ -687,7 +687,7 @@ public class MolocateAccount {
         
         let pureString = username+"+/"+password+"+/"+email
         //print(pureString)
-        do {
+    
             let pureData = pureString.dataUsingEncoding(NSUTF8StringEncoding)
             let passwordEnc = "3+bHv9S_7Q+HZdW"
             let encriptedString = RNCryptor.encryptData(pureData!, password: passwordEnc)
@@ -756,10 +756,7 @@ public class MolocateAccount {
             
             task.resume()
             
-        } catch {
-            completionHandler(data: "JsonError" , response: NSURLResponse() , error: NSError(coder: NSCoder()) )
-            if debug {print("JsonError: in MolocateAccount.signup() in start")}
-        }
+    
     }
     
     

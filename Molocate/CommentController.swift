@@ -474,7 +474,7 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
         
         if tableView == tagView {
             
-            let cell = tableView.cellForRowAtIndexPath(indexPath) as! searchUsername
+         //   let cell = tableView.cellForRowAtIndexPath(indexPath) as! searchUsername
             
             if indexPath.row<searchResults.count {
                 

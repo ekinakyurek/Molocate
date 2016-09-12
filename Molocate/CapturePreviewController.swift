@@ -210,7 +210,7 @@ class capturePreviewController: UIViewController, PlayerDelegate {
         player.delegate = self
         self.player.playbackLoops = true
         videoLocation = locationss()
-        let index = NSIndexPath(forRow: 0, inSection: 0)
+  //      let index = NSIndexPath(forRow: 0, inSection: 0)
         putVideo()
   
     }

@@ -79,7 +79,7 @@ public class S3Upload {
                         image = UIImageJPEGRepresentation(nimage!, 0.5)
                     }
                     self.sendThumbnailandData(image!, info: json, completionHandler: { (data, thumbnailUrl, response, error) in
-                        if data as! String == "success" {
+                        if data == "success" {
                             isUp = true
                          dispatch_async(dispatch_get_main_queue(), {
                             progressBar?.progress = 0.0

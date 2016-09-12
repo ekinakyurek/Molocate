@@ -576,7 +576,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
             self.bottomToolbar.layer.opacity = 1
         }
         
-        var success = true
+        var success: Bool = true
     
         if error != nil {
             //NSLog("Movie file finishing error: %@", error!) "The recording reached the maximum allowable length."

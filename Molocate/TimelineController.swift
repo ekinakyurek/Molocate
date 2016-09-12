@@ -830,7 +830,7 @@ class TimelineController: UITableViewController,PlayerDelegate, FBSDKSharingDele
                 if scrollView.contentOffset.y > 0 {
                     if self.parentViewController is MainController {
                         let cv = (self.parentViewController as! MainController).collectionView
-                        let tb = (self.parentViewController as! MainController).tableController.tableView
+                    //    let tb = (self.parentViewController as! MainController).tableController.tableView
                         var imp = scrollView.contentOffset.y
                         if imp < 0 {
                             imp = -imp

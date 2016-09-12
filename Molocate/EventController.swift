@@ -41,7 +41,7 @@ class eventController: UIViewController, UITableViewDelegate, UITableViewDataSou
         
             let cellIdentifier = "cell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) as! eventCell
-            let index = indexPath.row
+            //let index = indexPath.row
 //            cell.eventButton1.layer.borderWidth = 0.1
 //            cell.eventButton1.layer.masksToBounds = false
 //            cell.eventButton1.layer.cornerRadius = cell.eventButton1.frame.height / 2

@@ -190,7 +190,7 @@ public class MolocateVideo {
     class func getNearbyVideos(placeLat: Float,placeLon: Float, completionHandler: (data: [MoleVideoInformation]?, response: NSURLResponse!, error: NSError!, next: NSURL?) -> ()){
         
         
-        var url = NSURL(string: MolocateTestUrl + "/place/api/nearby_videos/?lat=\(placeLat)&lon=\(placeLon)")
+        let url = NSURL(string: MolocateTestUrl + "/place/api/nearby_videos/?lat=\(placeLat)&lon=\(placeLon)")
         let request = NSMutableURLRequest(URL: url!)
         request.HTTPMethod = "GET"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")

@@ -459,7 +459,7 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
         let sv = (tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 3, inSection: 0)) as! profile4thCell).scrollView
         if scrollView == sv {
                     let indexPath = NSIndexPath(forRow: 2, inSection: 0)
-                    let cell = tableView.cellForRowAtIndexPath(indexPath) as! profile3thCell
+                   // let cell = tableView.cellForRowAtIndexPath(indexPath) as! profile3thCell
             
                     redLabelOrigin  = scrollView.contentOffset.x / 2
                     if scrollView.contentOffset.x < MolocateDevice.size.width / 2{
@@ -522,7 +522,7 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
       
             self.redLabelOrigin = 0
         
-        let cell = tableView.cellForRowAtIndexPath(indexPath) as! profile3thCell
+        //let cell = tableView.cellForRowAtIndexPath(indexPath) as! profile3thCell
         
 //        cell.redLabel.frame.origin.x = 0
 //        cell.videosButton.titleLabel!.font = UIFont(name: "AvenirNext-DemiBold", size: 14)
@@ -606,7 +606,7 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
         AVc.player2.stop()
         AVc.player1.stop()
         let indexPath = NSIndexPath(forRow: 2, inSection: 0)
-        let cell = tableView.cellForRowAtIndexPath(indexPath) as! profile3thCell
+        //let cell = tableView.cellForRowAtIndexPath(indexPath) as! profile3thCell
         
             self.redLabelOrigin = MolocateDevice.size.width/2
         let indexPath2 = NSIndexPath(forRow: 3, inSection: 0)

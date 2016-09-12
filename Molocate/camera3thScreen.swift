@@ -455,8 +455,7 @@ class camera3thScreen: UIViewController,UICollectionViewDelegate, UICollectionVi
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let cell = tableView.cellForRowAtIndexPath(indexPath) as! searchUsername
-        if indexPath.row<searchResults.count {
+              if indexPath.row<searchResults.count {
             
             let username = searchResults[indexPath.row].username
             var captiontext = captionView.attributedText.string
@@ -517,7 +516,7 @@ class camera3thScreen: UIViewController,UICollectionViewDelegate, UICollectionVi
         
     }
     func keyboardWillHide(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
+        if ((notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue()) != nil {
             self.view.frame.origin.y = 0
             self.toolBar.hidden = false
             self.CaptionText = captionView.text

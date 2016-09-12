@@ -307,7 +307,7 @@ class TestViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let cell = tableView.cellForRowAtIndexPath(indexPath) as! searchUsername
+        
         if indexPath.row<searchResults.count {
             
             let username = searchResults[indexPath.row].username

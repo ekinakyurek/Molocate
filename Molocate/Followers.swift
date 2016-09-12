@@ -130,7 +130,7 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
             cell.profilePhoto.setImage(UIImage(named: "profile"), forState: .Normal)
         }
         
-       cell.profilePhoto.addTarget(self, action: "pressedProfile:", forControlEvents: .TouchUpInside)
+       cell.profilePhoto.addTarget(self, action: #selector(Followers.pressedProfile(_:)), forControlEvents: .TouchUpInside)
 
         if(!userRelations.relations[indexPath.row].is_following){
             cell.followButton.setBackgroundImage(UIImage(named: "follow"), forState: UIControlState.Normal)
