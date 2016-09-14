@@ -764,11 +764,11 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 11
+        return 10
     }
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let myCell : myCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("myCell", forIndexPath: indexPath) as! myCollectionViewCell
-        
+        myCell.categoryImage.image = UIImage(named: "facebookLogo")
         let backgroundView = UIView()
         backgroundView.backgroundColor = swiftColor
         return myCell

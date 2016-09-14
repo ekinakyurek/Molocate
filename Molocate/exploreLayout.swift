@@ -41,6 +41,7 @@ class exploreLayout: UICollectionViewLayout {
   var numberOfColumns = 2
   var cellPadding: CGFloat = 1.0
   var widths = [CGFloat]()
+  var heights = [CGFloat]()
   //3. Array to keep a cache of attributes.
   private var cache = [exploreLayoutAttributes]()
   
@@ -74,37 +75,64 @@ class exploreLayout: UICollectionViewLayout {
 //        let annotationHeight = delegate.collectionView(collectionView!, heightForAnnotationAtIndexPath: indexPath, withWidth: width)
         var height = cellPadding + width + cellPadding
         let rest = indexPath.row % 10
+        let part = CGFloat(indexPath.row/10)
+        let contentLong = 2*(16*scalew3+3*scalew2+2*cellPadding)
         var xoffset = CGFloat(0.0)
+        var yoffset = CGFloat(0.0) + (contentLong+cellPadding)*part
         switch rest {
         case 0:
             height = 16*scalew3
             width = 9*scalew3
-        case 1,3:
+        case 1:
             height = 8*scalew3-1
             width = 16*height/9
             xoffset = widths[0] + cellPadding
-        case 2,8:
-            height = 3*scalew2
-            width = 4*scalew2
-        case 5,9:
-            height = 3*scalew2
-            width = 4*scalew2
-            xoffset = widths[2]+cellPadding
-        case 4,6:
+        case 2:
             height = 8*scalew3-1
             width = 16*height/9
+            xoffset = widths[0] + cellPadding
+            yoffset = heights[1] + cellPadding + (contentLong+cellPadding)*part
+        case 3:
+            height = 3*scalew2
+            width = 4*scalew2
+            yoffset = heights[0] + cellPadding + (contentLong+cellPadding)*part
+        case 4:
+            height = 3*scalew2
+            width = 4*scalew2
+            yoffset = heights[0] + cellPadding + (contentLong+cellPadding)*part
+            xoffset = widths[3]+cellPadding
+        case 5:
+            height = 8*scalew3-1
+            width = 16*height/9
+            yoffset = heights[0] + heights[3] + 2*cellPadding + (contentLong+cellPadding)*part
+        case 6:
+            height = 8*scalew3-1
+            width = 16*height/9
+            yoffset = heights[0] + heights[3] + heights[5] + 3*cellPadding + (contentLong+cellPadding)*part
         case 7:
             height = 16*scalew3
             width = 9*scalew3
             xoffset = widths[1]+cellPadding
+            yoffset = heights[0] + heights[3] + 2*cellPadding + (contentLong+cellPadding)*part
+        case 8:
+            height = 3*scalew2
+            width = 4*scalew2
+            yoffset = heights[0] + heights[3] + 4*cellPadding + heights[7] + (contentLong+cellPadding)*part
+        case 9:
+            height = 3*scalew2
+            width = 4*scalew2
+            xoffset = widths[3]+cellPadding
+            yoffset = heights[0] + heights[3] + 4*cellPadding + heights[7] + (contentLong+cellPadding)*part
             
         default:
           height = cellPadding + width + cellPadding
             width = columnWidth - cellPadding*2
+            
         }
         widths.append(width)
+        heights.append(height)
         
-        var frame = CGRect(x: xoffset, y: yOffset[column], width: width, height: height)
+        var frame = CGRect(x: xoffset, y: yoffset, width: width, height: height)
 
         let insetFrame = CGRectInset(frame, cellPadding, cellPadding)
         
