@@ -44,6 +44,8 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
         
         user = MoleCurrentUser
         initGui()
+        print("fdgdsgdsgfdsgdfsgfds")
+        print(user.bio)
     }
     
     func initGui(){
@@ -201,9 +203,8 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
         //ca = .RoundedRect
         caption.textColor = UIColor.blackColor()
         caption.keyboardType = .Default
-        //user.printUser()
         caption.font = UIFont(name: "AvenirNext-Regular", size: 14)
-        caption.text = ""
+        caption.text = user.bio
         self.view.addSubview(caption)
         
       

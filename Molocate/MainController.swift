@@ -486,7 +486,6 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
     }
     
     func pressedFindVenue(sender: UIButton) {
-     
         activityIndicator.startAnimating()
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
         let controller:findVenueController = self.storyboard!.instantiateViewControllerWithIdentifier("findVenueController") as! findVenueController
@@ -777,7 +776,6 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let myCell : myCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("myCell", forIndexPath: indexPath) as! myCollectionViewCell
         myCell.categoryImage.setImageWithURL(filters[indexPath.row].thumbnail_url)
-        myCell.backgroundColor = UIColor.blueColor()
         let backgroundView = UIView()
         backgroundView.backgroundColor = swiftColor
         return myCell

@@ -184,6 +184,7 @@ public class MolocatePlace {
         request.addValue("Token " + MoleUserToken!, forHTTPHeaderField: "Authorization")
         request.timeoutInterval = timeout
         let task = NSURLSession.sharedSession().dataTaskWithRequest(request){ data, response, error in
+            print(NSString(data: data!, encoding: NSUTF8StringEncoding))
             if error == nil {
                 let nsError = error;
                 var lastPlaces = [MolePlace]()

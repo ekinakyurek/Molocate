@@ -88,7 +88,7 @@ class myProfile: UIViewController,UITableViewDelegate , UITableViewDataSource,UI
         //        settings.tintColor = UIColor.clearColor()
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         self.navigationController?.hidesBarsOnSwipe = true
-       
+        
         
         
         
