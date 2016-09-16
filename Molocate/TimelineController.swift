@@ -55,6 +55,7 @@ class TimelineController: UITableViewController,PlayerDelegate, FBSDKSharingDele
     var isNearby = false
     var classLat = Float()
     var classLon = Float()
+    var filter_raw = ""
     weak var delegate: TimelineControllerDelegate?
 
     var type = ""
@@ -102,6 +103,10 @@ class TimelineController: UITableViewController,PlayerDelegate, FBSDKSharingDele
                // print("profileVenue")
                 //videoArray initially given by parentViewCont4\roller
                 getPlaceData(placeId)
+            case "filter":
+                requestUrl = NSURL(string: MolocateTestUrl+"video/api/filtered_videos/?name="+filter_raw)!
+                getExploreData(requestUrl)
+            
             default:
                 requestUrl = NSURL(string: MolocateBaseUrl + "video/api/news_feed/?category=all")!
         }
