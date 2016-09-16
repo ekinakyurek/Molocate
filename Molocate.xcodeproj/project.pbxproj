@@ -53,6 +53,7 @@
 		C65A45101C694AFC00E9DA6F /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C65A450D1C694AFC00E9DA6F /* FBSDKShareKit.framework */; };
 		C65A45141C694E8D00E9DA6F /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C65A45131C694E8D00E9DA6F /* Bolts.framework */; };
 		C65C4F751C8E20B300DB5068 /* CaptureCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65C4F741C8E20B300DB5068 /* CaptureCollectionCell.swift */; };
+		C65CD04F1D8C3A8A008E264E /* FilterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65CD04E1D8C3A8A008E264E /* FilterController.swift */; };
 		C66743831CEB84410020D514 /* SideProfilePic.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66743821CEB84410020D514 /* SideProfilePic.swift */; };
 		C66E37DF1D52306F0015F602 /* collection3thCameraCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66E37DE1D52306F0015F602 /* collection3thCameraCell.swift */; };
 		C66E37E21D5238D40015F602 /* filledCircleSwift.png in Resources */ = {isa = PBXBuildFile; fileRef = C66E37E01D5238D40015F602 /* filledCircleSwift.png */; };
@@ -224,6 +225,7 @@
 		C65A450D1C694AFC00E9DA6F /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = "../../../Downloads/FacebookSDKs-iOS-20160115/FBSDKShareKit.framework"; sourceTree = "<group>"; };
 		C65A45131C694E8D00E9DA6F /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		C65C4F741C8E20B300DB5068 /* CaptureCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptureCollectionCell.swift; sourceTree = "<group>"; };
+		C65CD04E1D8C3A8A008E264E /* FilterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterController.swift; sourceTree = "<group>"; };
 		C66743821CEB84410020D514 /* SideProfilePic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideProfilePic.swift; sourceTree = "<group>"; };
 		C66E37DE1D52306F0015F602 /* collection3thCameraCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = collection3thCameraCell.swift; sourceTree = "<group>"; };
 		C66E37E01D5238D40015F602 /* filledCircleSwift.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = filledCircleSwift.png; sourceTree = "<group>"; };
@@ -415,6 +417,7 @@
 		C60905381C48140A00614C7F /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				C65CD04E1D8C3A8A008E264E /* FilterController.swift */,
 				C60905351C4812A100614C7F /* ContainerController.swift */,
 				C609053B1C48145700614C7F /* SideBarController.swift */,
 				C6411C3F1D1AFCEA00E29DA6 /* termsPrivacy.swift */,
@@ -1001,6 +1004,7 @@
 				C69DB1BF1C99079D0042DA03 /* TagComment.swift in Sources */,
 				C638AFF71C9C80B3003085E8 /* LikeVideoCell.swift in Sources */,
 				C6D0CDF31C44200F006AAFF0 /* TableViewCellFollowerFollowing.swift in Sources */,
+				C65CD04F1D8C3A8A008E264E /* FilterController.swift in Sources */,
 				3871AAA31C9488BA00DDD83E /* SideCell.swift in Sources */,
 				38EAEA601CF10A5C0053249F /* EventCell.swift in Sources */,
 				38F771041C9505670079FACD /* Player.swift in Sources */,

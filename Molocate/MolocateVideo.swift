@@ -128,10 +128,10 @@ public class MolocateVideo {
                         filt.isevent = (item["is_event"] as! Int) == 0 ? false:true
                         filt.name = item["name"] as! String
                         filt.raw_name = item["name_raw"] as! String
-                        filt.thumbnail_url = NSURL(string: item["thumbnail_url"] as! String)!
+                        filt.thumbnail_url = NSURL(string: item["thumbnail_url"] as! String) == nil ? NSURL():NSURL(string: item["thumbnail_url"] as! String)!
                         filters.append(filt)
                     }
-                    completionHandler(data: [filter](), response: response, error: nsError)
+                    completionHandler(data: filters, response: response, error: nsError)
                 } catch {
                     completionHandler(data: [filter](), response: response, error: nsError)
                 }
@@ -153,12 +153,14 @@ public class MolocateVideo {
         request.timeoutInterval = timeout + 2.0
         
         let task = NSURLSession.sharedSession().dataTaskWithRequest(request){ (data, response, error) -> Void in
+            print(NSString(data: data!, encoding: NSUTF8StringEncoding))
             
             if error == nil{
                 let nsError = error
                 
                 do {
                     let result = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers ) as! [String: AnyObject]
+                    
                     if result.indexForKey("results") != nil {
                         
                         let videos = result["results"] as! NSArray

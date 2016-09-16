@@ -47,6 +47,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
     var on = true
     var tableController: TimelineController!
     var findfriendsVenue: UIButton!
+    var filters = [filter]()
     let lineColor = UIColor(netHex: 0xCCCCCC)
     @IBOutlet var venueTable: UITableView!
     @IBOutlet var collectionView: UICollectionView!
@@ -206,6 +207,10 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         collectionView!.contentInset = UIEdgeInsets(top: 2, left: 2, bottom:2, right: 2)
         print("anan")
         MolocateVideo.getFilters { (data, response, error) in
+            dispatch_async(dispatch_get_main_queue()){
+                self.filters = data!
+                self.collectionView.reloadData()
+            }
             
         }
         
@@ -767,11 +772,12 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return filters.count
     }
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let myCell : myCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("myCell", forIndexPath: indexPath) as! myCollectionViewCell
-        myCell.categoryImage.image = UIImage(named: "facebookLogo")
+        myCell.categoryImage.setImageWithURL(filters[indexPath.row].thumbnail_url)
+        myCell.backgroundColor = UIColor.blueColor()
         let backgroundView = UIView()
         backgroundView.backgroundColor = swiftColor
         return myCell
@@ -827,6 +833,16 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
     
    
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath){
+        navigationController?.setNavigationBarHidden(false, animated: false)
+        activityIndicator.startAnimating()
+        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+        
+        let controller:FilterController = self.storyboard!.instantiateViewControllerWithIdentifier("FilterController") as! FilterController
+        controller.filter_raw = self.filters[indexPath.row].raw_name
+        controller.filter_name = self.filters[indexPath.row].name
+        self.navigationController?.pushViewController(controller, animated: true)
+        self.activityIndicator.stopAnimating()
+        UIApplication.sharedApplication().endIgnoringInteractionEvents()
     
 //        self.tableController.tableView.setContentOffset(CGPoint(x: 0,y:0), animated: false)
 //        on = true
