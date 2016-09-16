@@ -37,6 +37,33 @@ class capturePreviewController: UIViewController, PlayerDelegate {
     
     let screenSize: CGRect = UIScreen.mainScreen().bounds
 
+    @IBAction func save(sender: AnyObject) {
+                    self.player.stop()
+                    self.player = Player()
+                    activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 0.0, y: 0.0, width: 50.0, height: 50.0))
+                    activityIndicator.center = self.view.center
+                    activityIndicator.hidesWhenStopped = true
+                    activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.White
+                    view.addSubview(activityIndicator)
+                    activityIndicator.startAnimating()
+                    PHPhotoLibrary.sharedPhotoLibrary().performChanges({
+                        // In iOS 9 and later, it's possible to move the file into the photo library without duplicating the file data.
+                        // This avoids using double the disk space during save, which can make a difference on devices with limited free disk space.
+                        let newURL = NSURL(fileURLWithPath: videoPath!)
+                        print(videoPath)
+                        PHAssetChangeRequest.creationRequestForAssetFromVideoAtFileURL(newURL)
+                        }, completionHandler: {success, error in
+                            if !success {
+                                NSLog("Could not save movie to photo library: %@", error!)
+                            } else {
+        
+                            }
+        
+                    })
+                    self.activityIndicator.stopAnimating()
+                    self.displayAlert("Kaydet", message: "Videonuz kaydedilmiştir.")
+                    self.putVideo()
+    }
     
     var autocompleteUrls = [String]()
     var videoURL: NSURL?
