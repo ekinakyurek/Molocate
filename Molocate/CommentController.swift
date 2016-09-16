@@ -448,10 +448,7 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
     }
 
 
-    func textViewShouldReturn(textField: UITextField) -> Bool {
-        self.view.endEditing(true)
-        return false
-    }
+ 
     
 //    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
 //        
@@ -607,6 +604,12 @@ class commentController: UIViewController,UITableViewDelegate , UITableViewDataS
         //        }
         
         //character limit
+        
+        if(text == "\n") {
+            textView.resignFirstResponder()
+            return false;
+        }
+    
         return text.characters.count+(text.characters.count-range.length) <= 140
     }
     

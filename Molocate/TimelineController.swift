@@ -162,7 +162,7 @@ class TimelineController: UITableViewController,PlayerDelegate, FBSDKSharingDele
                     self.videoArray.removeAll()
                     
                     for i in 0..<VideoUploadRequests.count{
-                        print("requested \(i)")
+              
                         var queu = MoleVideoInformation()
                         let json = (VideoUploadRequests[i].JsonData)
                         let loc = json["location"] as! [[String:AnyObject]]
@@ -172,6 +172,7 @@ class TimelineController: UITableViewController,PlayerDelegate, FBSDKSharingDele
                         queu.username = MoleCurrentUser.username
                         queu.userpic = MoleCurrentUser.profilePic
                         queu.caption = json["caption"] as! String
+                                  print(queu.caption                                 )
                         queu.location = loc[0]["name"] as! String
                         queu.locationID = loc[0]["id"] as! String
                         queu.isFollowing = 1
