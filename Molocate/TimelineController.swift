@@ -103,9 +103,8 @@ class TimelineController: UITableViewController,PlayerDelegate, FBSDKSharingDele
                 //videoArray initially given by parentViewCont4\roller
                 getPlaceData(placeId)
             case "filter":
-                requestUrl = NSURL(string: MolocateTestUrl+"video/api/filtered_videos/?name="+filter_raw+"/")!
+                requestUrl = NSURL(string: MolocateTestUrl+"video/api/filtered_videos/?name="+filter_raw)!
                 getExploreData(requestUrl)
-                print(requestUrl)
             
             default:
                 requestUrl = NSURL(string: MolocateBaseUrl + "video/api/news_feed/?category=all")!
