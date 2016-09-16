@@ -390,7 +390,7 @@ public class MolocateAccount {
                 do {
                      //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
                     let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! NSArray
-                print(result.count)
+                //print(result.count)
                     if(result.count != 0){
                         var places = [MolePlace]()
                         for item in result {
@@ -901,15 +901,15 @@ public class MolocateAccount {
                         isRegistered = false
                     }else{
                         completionHandler(data: "ServerDataError" , response: nil , error: nsError  )
-                        print("ServerDataError:: in MolocateAccount.unregisterDevice()")
+                       // print("ServerDataError:: in MolocateAccount.unregisterDevice()")
                     }
                 } catch{
                     completionHandler(data: "JsonError" , response: nil , error: nsError  )
-                    print("JsonError:: in MolocateAccount.unregisterDevice()")
+                   // print("JsonError:: in MolocateAccount.unregisterDevice()")
                 }
             }else{
                 completionHandler(data: "JsonError" , response: nil , error: error  )
-                print("RequestError:: in MolocateAccount.unregisterDevice()")
+                //print("RequestError:: in MolocateAccount.unregisterDevice()")
             }
             
         }
@@ -1240,7 +1240,7 @@ public class MolocateAccount {
         request.timeoutInterval = timeOut
         
         let task = NSURLSession.sharedSession().dataTaskWithRequest(request){data, response, error  in
-            print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+            //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
             if error == nil {
                 let nsError = error;
                 do {
@@ -1345,7 +1345,7 @@ public class MolocateAccount {
                         } else {
                             MoleCurrentUser.isFaceUser = true
                         }
-                        print(MoleCurrentUser.token)
+                       // print(MoleCurrentUser.token)
                         completionHandler(data: MoleCurrentUser, response: response , error: nsError  )
                     }else{
                         completionHandler(data: MoleCurrentUser , response: nil , error: nsError  )

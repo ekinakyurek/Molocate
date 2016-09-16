@@ -222,7 +222,7 @@ class myProfile: UIViewController,UITableViewDelegate , UITableViewDataSource,UI
                 MoleUserToken = nil
                 isRegistered = false
                 MoleGlobalVideo = nil
-                GlobalVideoUploadRequest = nil
+                VideoUploadRequests.removeAll()
                 
                 //navigationın düzelmesi sonrası bu böyle olucak
                 //self.parentViewController!.parentViewController!.performSegueWithIdentifier("logOut", sender: self)
@@ -498,7 +498,7 @@ class myProfile: UIViewController,UITableViewDelegate , UITableViewDataSource,UI
     func videosButtonTapped(sender: UIButton) {
         vidortag = false
         owntagged = true
-        print("bastı lan")
+        //print("bastı lan")
         BVc.player2.stop()
         BVc.player1.stop()
         let indexPath = NSIndexPath(forRow: 2, inSection: 0)
@@ -585,7 +585,7 @@ class myProfile: UIViewController,UITableViewDelegate , UITableViewDataSource,UI
     func taggedButtonTapped(sender: UIButton) {
         vidortag = true
         owntagged = false
-        print("bastı lan2")
+       // print("bastı lan2")
         AVc.player2.stop()
         AVc.player1.stop()
         let indexPath = NSIndexPath(forRow: 2, inSection: 0)
@@ -616,7 +616,7 @@ class myProfile: UIViewController,UITableViewDelegate , UITableViewDataSource,UI
     override func viewWillAppear(animated: Bool) {
 
     self.navigationController?.navigationBarHidden = false
-      
+    self.tabBarController?.tabBar.hidden = true
         
     }
     

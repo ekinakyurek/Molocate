@@ -268,6 +268,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Yorumlar" id="gSq-QR-hfx"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="bottomConstraint" destination="VaB-cp-2bb" id="N1L-jS-1ph"/>
@@ -367,6 +368,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Beğeniler" id="FEN-3g-HZr"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="tableView" destination="lDK-ip-h0n" id="pVI-b1-uNc"/>
@@ -390,11 +392,12 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y08-1u-dE1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4499.5" y="1315.5"/>
+            <point key="canvasLocation" x="4490.5" y="1315.5"/>
         </scene>
         <!--Find Venue Controller-->
         <scene sceneID="R7g-Te-gqC">
@@ -410,6 +413,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S7P-Kb-2u4" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -456,6 +460,7 @@
                         </constraints>
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="tableView" destination="wiW-Fa-1ee" id="1VE-jh-JHa"/>
@@ -589,6 +594,7 @@
                             </mask>
                         </variation>
                     </view>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="tableView" destination="ffv-GM-Hgr" id="xeY-ps-uMO"/>
@@ -632,7 +638,7 @@
                                     <segue destination="Lat-Ou-M0z" kind="show" identifier="signUpSegue" id="r8V-JF-m1L"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eYH-9d-GKC">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eYH-9d-GKC">
                                 <rect key="frame" x="26" y="514" width="323" height="44"/>
                                 <color key="backgroundColor" red="0.78823529411764703" green="0.14117647058823529" blue="0.31764705882352939" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -646,7 +652,7 @@
                                     <segue destination="XtY-e9-cyT" kind="show" identifier="logInSegue" id="F9H-sc-cMe"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Zaten hesabın var mı?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xu1-2q-1sX">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Zaten hesabın var mı?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xu1-2q-1sX">
                                 <rect key="frame" x="122" y="486" width="131" height="18"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="13"/>
                                 <color key="textColor" red="0.89411764709999997" green="0.94509803920000002" blue="0.99607843139999996" alpha="1" colorSpace="calibratedRGB"/>
@@ -716,6 +722,7 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" id="Abs-CI-Pc7"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="facebookButton" destination="FHq-h4-9PL" id="sjf-EG-BFn"/>
@@ -849,6 +856,7 @@
                             </mask>
                         </variation>
                     </view>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="loginButton" destination="vfd-gh-mJd" id="AVT-50-s1n"/>
@@ -1190,6 +1198,7 @@ These Services are operated and provided by Molocate. If you have any questions 
         <scene sceneID="wrn-Jv-m9Y">
             <objects>
                 <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="BtI-HJ-crP" customClass="tutorialViewController" customModule="Molocate" customModuleProvider="target" sceneMemberID="viewController">
+                    <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </pageViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PXf-nQ-VkW" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1236,6 +1245,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                             <constraint firstItem="67L-Bv-KeI" firstAttribute="centerX" secondItem="Hwb-c2-fz8" secondAttribute="centerX" id="xtA-Y8-k30"/>
                         </constraints>
                     </view>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="imageView" destination="bLC-CA-mP7" id="iet-0n-i0O"/>
@@ -1398,6 +1408,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                             </mask>
                         </variation>
                     </view>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="termsButton" destination="nOq-aT-lpy" id="eqB-Cm-opQ"/>
@@ -1449,6 +1460,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                         </constraints>
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="tableView" destination="kIo-TK-nWq" id="rmt-3G-C71"/>
@@ -1512,6 +1524,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                             <constraint firstItem="WYU-AR-Mls" firstAttribute="top" secondItem="TTU-CU-FCk" secondAttribute="bottom" id="x0E-H5-9hr"/>
                         </constraints>
                     </view>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="600" height="600"/>
                     <connections>
@@ -1577,7 +1590,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Deu-ax-knV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="941.5" y="1395.5"/>
+            <point key="canvasLocation" x="923.5" y="1511.5"/>
         </scene>
         <!--Camera View Controller-->
         <scene sceneID="Owd-wi-Hjn">
@@ -2252,7 +2265,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                         </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="followButton" destination="VpU-D9-Pfd" id="JWh-nk-DQl"/>
@@ -2465,7 +2478,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                         </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="followButton" destination="zqj-05-v46" id="k3b-fL-v4p"/>
@@ -2519,6 +2532,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="BpY-UN-JO9"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="getDirection" destination="hvy-BG-cYw" id="WZ4-i3-iYM"/>
@@ -2725,13 +2739,14 @@ These Services are operated and provided by Molocate. If you have any questions 
                         <viewControllerLayoutGuide type="bottom" id="2eY-wg-2li"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Ws2-r3-6sW">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <navigationItem key="navigationItem" title="Profili Düzenle" id="jiv-bS-gg1"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AYE-Lu-5qE" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2851,6 +2866,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                         </constraints>
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="eski" destination="7Tc-aX-rr8" id="9MA-uJ-Gh3"/>
@@ -2877,6 +2893,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                     </view>
                     <navigationItem key="navigationItem" title="Followers" id="kMp-n5-qQ1"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jEV-S1-ZG3" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2923,7 +2940,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <nil key="simulatedTopBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="profilePhoto" destination="TLE-gT-Imq" id="gYQ-Ym-zKc"/>
@@ -3029,7 +3046,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                         <viewControllerLayoutGuide type="bottom" id="4xK-IH-O67"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="4Bb-WR-3Oa">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OZ5-mm-La3">
@@ -3075,7 +3092,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="KATEGORİ SEÇ" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Kq-yu-MdX">
-                                <rect key="frame" x="26" y="177" width="120" height="21"/>
+                                <rect key="frame" x="26" y="190" width="120" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="120" id="Fzy-23-925"/>
                                     <constraint firstAttribute="height" constant="21" id="yDh-BW-mOV"/>
@@ -3085,7 +3102,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" keyboardDismissMode="interactive" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="lZt-uB-ikW">
-                                <rect key="frame" x="0.0" y="213" width="375" height="101"/>
+                                <rect key="frame" x="0.0" y="226" width="375" height="101"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="101" id="cg1-PV-ezB"/>
                                 </constraints>
@@ -3149,7 +3166,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                                 </connections>
                             </collectionView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" text="Güzel yorum" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="G5R-7N-4H1">
-                                <rect key="frame" x="0.0" y="362" width="375" height="80"/>
+                                <rect key="frame" x="0.0" y="375" width="375" height="80"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="GNN-2Q-oIe"/>
@@ -3161,7 +3178,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                                 </connections>
                             </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="YORUM VE VİDEODAKİLERİ EKLE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8tu-lT-q0v">
-                                <rect key="frame" x="26" y="327" width="200" height="20"/>
+                                <rect key="frame" x="26" y="340" width="200" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="6sh-Ue-NVV"/>
                                     <constraint firstAttribute="width" constant="200" id="EVb-hZ-ljn"/>
@@ -3171,7 +3188,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                                 <nil key="highlightedColor"/>
                             </label>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2jw-0r-CNC">
-                                <rect key="frame" x="0.0" y="579" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                                 <color key="backgroundColor" red="0.92156862745098034" green="0.16862745098039217" blue="0.36470588235294116" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="gpC-IG-Wg8"/>
@@ -3209,7 +3226,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                                 <color key="barTintColor" red="0.92156862745098034" green="0.16862745098039217" blue="0.36470588235294116" alpha="1" colorSpace="calibratedRGB"/>
                             </toolbar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="W2u-eW-Zth">
-                                <rect key="frame" x="-4" y="64" width="383" height="298"/>
+                                <rect key="frame" x="-4" y="64" width="383" height="311"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="dataSource" destination="KJV-8O-3Zu" id="Hz1-Ir-TAl"/>
@@ -3254,7 +3271,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                         </constraints>
                     </view>
                     <toolbarItems/>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="bottomToolbar" destination="2jw-0r-CNC" id="G9u-NB-B5n"/>
@@ -3282,7 +3299,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                         <viewControllerLayoutGuide type="bottom" id="5Pd-jP-cKF"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="xYN-mZ-W3W">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Mekan ara..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="saX-Ez-NiN">
@@ -3317,7 +3334,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                                 <color key="barTintColor" red="0.92156862745098034" green="0.16862745098039217" blue="0.36470588235294116" alpha="1" colorSpace="calibratedRGB"/>
                             </toolbar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="lFn-C3-2rm">
-                                <rect key="frame" x="0.0" y="147" width="375" height="476"/>
+                                <rect key="frame" x="0.0" y="147" width="375" height="520"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" id="Q2E-sv-8EP">
@@ -3351,6 +3368,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                             <constraint firstItem="sKo-6x-8aw" firstAttribute="centerX" secondItem="xYN-mZ-W3W" secondAttribute="centerX" id="vTk-f9-8fK"/>
                         </constraints>
                     </view>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="placeTable" destination="lFn-C3-2rm" id="bte-bW-plj"/>
@@ -3682,6 +3700,7 @@ These Services are operated and provided by Molocate. If you have any questions 
             <objects>
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="E61-BU-32T" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="TCi-GS-Jj4">
                         <autoresizingMask key="autoresizingMask"/>
@@ -3706,6 +3725,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                 <navigationController title="HomeNavigation" automaticallyAdjustsScrollViewInsets="NO" id="TaJ-Sh-2OM" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="CYg-JK-2Cy"/>
                     <toolbarItems/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="kTh-pg-GpR">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -3749,6 +3769,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                             <outlet property="delegate" destination="f1c-jk-IkW" id="J0l-dR-Yvi"/>
                         </connections>
                     </tableView>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YWS-Gt-q6E" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3761,6 +3782,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                 <navigationController title="MainNavi" automaticallyAdjustsScrollViewInsets="NO" id="NJ6-v5-a2W" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="qVk-wt-kqt"/>
                     <toolbarItems/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="qpS-GZ-DeL">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -3787,6 +3809,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                 <navigationController title="NotificationsNavi" automaticallyAdjustsScrollViewInsets="NO" id="ZzN-fS-FBy" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="hn7-IS-Fa2"/>
                     <toolbarItems/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="A7f-On-cff">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -3813,6 +3836,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                 <navigationController title="profileNavi" automaticallyAdjustsScrollViewInsets="NO" id="Dn3-N1-dKx" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="g9O-hf-NoQ"/>
                     <toolbarItems/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="8yl-kd-Sh0">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -4279,6 +4303,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                         </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="FollowButton" destination="IQH-0L-FAi" id="jJm-ZO-PrY"/>
@@ -4491,6 +4516,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                             </mask>
                         </variation>
                     </view>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="textView1" destination="o0Q-Mu-IGL" id="ohH-fb-jOG"/>
@@ -4525,7 +4551,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                                     <outlet property="delegate" destination="mQ9-5f-RMM" id="0WR-By-6VR"/>
                                 </connections>
                             </tableView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="220" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="r7Y-IO-saQ">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="220" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="r7Y-IO-saQ">
                                 <rect key="frame" x="0.0" y="44" width="375" height="673"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -4934,7 +4960,7 @@ These Services are operated and provided by Molocate. If you have any questions 
                         </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="back" destination="xhq-FX-DCS" id="U5U-Ay-dwB"/>
@@ -4972,13 +4998,13 @@ These Services are operated and provided by Molocate. If you have any questions 
         <image name="switch" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="i6B-xP-GmW"/>
-        <segue reference="ON5-bH-Lzp"/>
-        <segue reference="QdI-VY-wKQ"/>
-        <segue reference="r8V-JF-m1L"/>
-        <segue reference="hbw-G4-OLI"/>
-        <segue reference="cGX-Xw-vdc"/>
-        <segue reference="Czt-sH-vGP"/>
+        <segue reference="SZn-yz-fad"/>
+        <segue reference="zTj-B7-GEc"/>
         <segue reference="Dku-Wb-Giu"/>
+        <segue reference="iX5-7U-zGl"/>
+        <segue reference="r8V-JF-m1L"/>
+        <segue reference="YGr-Oe-h7Z"/>
+        <segue reference="lO0-Mw-L1m"/>
+        <segue reference="hbw-G4-OLI"/>
     </inferredMetricsTieBreakers>
 </document>

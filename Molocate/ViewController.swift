@@ -113,15 +113,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDe
     
     
     func stuckedVideoConfiguration(){
-        if NSUserDefaults.standardUserDefaults().boolForKey("isStuck"){
-            let nurl = NSURL(string:NSUserDefaults.standardUserDefaults().objectForKey("thumbnail") as! String )
-            let data = NSData(contentsOfURL: nurl!)
-            
-            if data != nil {
-                S3Upload.decodeGlobalVideo()
-                S3Upload.upload(false, uploadRequest: (GlobalVideoUploadRequest?.uploadRequest)!, fileURL: (GlobalVideoUploadRequest?.filePath)!, fileID: (GlobalVideoUploadRequest?.fileId)!, json: (GlobalVideoUploadRequest?.JsonData)!)
-            }
-        }
+//        if NSUserDefaults.standardUserDefaults().boolForKey("isStuck"){
+//            let nurl = NSURL(string:NSUserDefaults.standardUserDefaults().objectForKey("thumbnail") as! String )
+//            let data = NSData(contentsOfURL: nurl!)
+//            
+//            if data != nil {
+//                S3Upload.decodeGlobalVideo()
+//               // S3Upload.upload(false, uploadRequest: (GlobalVideoUploadRequest?.uploadRequest)!, fileURL: (GlobalVideoUploadRequest?.filePath)!, fileID: (GlobalVideoUploadRequest?.fileId)!, json: (GlobalVideoUploadRequest?.JsonData)!)
+//            }
+//        }
     }
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
         adjustViewLayout(size)
@@ -260,7 +260,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDe
     }
     
     @IBAction func forgotButton(sender: AnyObject) {
-        print("user forgot password")
+      //  print("user forgot password")
     }
   
     
@@ -270,14 +270,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDe
             if (error != nil) {
                 self.removeFbData()
             } else if Result.isCancelled {
-                print("Error in fbLoginInitiate")
+               // print("Error in fbLoginInitiate")
                 self.removeFbData()
             } else {
-                print("success")
+               // print("success")
                 FbToken = FBSDKAccessToken.currentAccessToken().tokenString
                 let json = ["access_token":FbToken]
                 
-                print(FbToken)
+               // print(FbToken)
                 
                 MolocateAccount.FacebookLogin(json, completionHandler: { (data, response, error) in
                     if (data == "success") {
@@ -319,9 +319,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDe
     
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
         if error == nil{
-            print("login completed...")
+           // print("login completed...")
         }else{
-            print(error.localizedDescription)
+           // print(error.localizedDescription)
         }
     }
     

@@ -55,15 +55,15 @@ class firstController: UIViewController , CLLocationManagerDelegate {
     
     
     func stuckedVideoConfiguration(){
-        if NSUserDefaults.standardUserDefaults().boolForKey("isStuck"){
-            let nurl = NSURL(string:NSUserDefaults.standardUserDefaults().objectForKey("thumbnail") as! String )
-            let data = NSData(contentsOfURL: nurl!)
-            
-            if data != nil {
-                S3Upload.decodeGlobalVideo()
-                S3Upload.upload(false, uploadRequest: (GlobalVideoUploadRequest?.uploadRequest)!, fileURL: (GlobalVideoUploadRequest?.filePath)!, fileID: (GlobalVideoUploadRequest?.fileId)!, json: (GlobalVideoUploadRequest?.JsonData)!)
-            }
-        }
+//        if NSUserDefaults.standardUserDefaults().boolForKey("isStuck"){
+//            //let nurl = NSURL(string:NSUserDefaults.standardUserDefaults().objectForKey("thumbnail") as! String )
+//            //let data = NSData(contentsOfURL: nurl!)
+//            
+//            if data != nil {
+//                S3Upload.decodeGlobalVideo()
+////                S3Upload.upload(false, uploadRequest: (GlobalVideoUploadRequest?.uploadRequest)!, fileURL: (GlobalVideoUploadRequest?.filePath)!, fileID: (GlobalVideoUploadRequest?.fileId)!, json: (GlobalVideoUploadRequest?.JsonData)!)
+//            }
+//        }
     }
     
     
@@ -89,14 +89,14 @@ class firstController: UIViewController , CLLocationManagerDelegate {
             if (error != nil) {
                 self.removeFbData()
             } else if Result.isCancelled {
-                print("Error in fbLoginInitiate")
+                //print("Error in fbLoginInitiate")
                 self.removeFbData()
             } else {
-                print("success")
+                //print("success")
                 FbToken = FBSDKAccessToken.currentAccessToken().tokenString
                 let json = ["access_token":FbToken]
                 
-                print(FbToken)
+              //  print(FbToken)
                 
                 MolocateAccount.FacebookLogin(json, completionHandler: { (data, response, error) in
                     if (data == "success") {
@@ -110,7 +110,7 @@ class firstController: UIViewController , CLLocationManagerDelegate {
                     } else if (data == "signup") {
                         dispatch_async(dispatch_get_main_queue()) {
                              self.performSegueWithIdentifier("facebookSignUp", sender: self)
-                            print("face de oldu")
+                         //   print("face de oldu")
                         }
                     }
                     
@@ -170,7 +170,7 @@ class firstController: UIViewController , CLLocationManagerDelegate {
                         MolocateAccount.getCurrentUser({ (data, response, error) in
                             dispatch_async(dispatch_get_main_queue()){
                                 self.performSegueWithIdentifier("autoLogin", sender: self)
-                                print("üye var lan girdi")
+                               // print("üye var lan girdi")
                                 user = MoleCurrentUser
                             }
                         })

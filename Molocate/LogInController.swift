@@ -24,7 +24,7 @@ class logInController: UIViewController, UITextFieldDelegate {
     
     @IBAction func passwordForgotButton(sender: AnyObject) {
         
-        print("user şifreyi unutmuş")
+        //print("user şifreyi unutmuş")
     }
     
     func displayAlert(title: String, message: String) {

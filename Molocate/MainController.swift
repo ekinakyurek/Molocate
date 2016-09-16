@@ -478,7 +478,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
         let controller:findVenueController = self.storyboard!.instantiateViewControllerWithIdentifier("findVenueController") as! findVenueController
         self.navigationController?.pushViewController(controller, animated: true)
-        print(self.bestEffortAtLocation.coordinate.latitude)
+       // /rint(self.bestEffortAtLocation.coordinate.latitude)
         let lat = Float(self.bestEffortAtLocation.coordinate.latitude)
         let lon = Float(self.bestEffortAtLocation.coordinate.longitude)
         MolocatePlace.getNearbyPlace(lat, placeLon: lon) { (data, response, error) in

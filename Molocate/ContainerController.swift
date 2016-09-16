@@ -15,7 +15,7 @@ class ContainerController: UIViewController,UIScrollViewDelegate {
         
        
         if let tabbar = self.childViewControllers[1] as? UITabBarController {
-            print("tabbar reloaded \(choosedIndex)")
+           // print("tabbar reloaded \(choosedIndex)")
             tabbar.selectedIndex = choosedIndex
             tabbar.viewDidLoad()
         }

@@ -218,7 +218,7 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
                 MoleUserToken = nil
                 isRegistered = false
                 MoleGlobalVideo = nil
-                GlobalVideoUploadRequest = nil
+                //GlobalVideoUploadRequest = nil
                 
                 //navigationın düzelmesi sonrası bu böyle olucak
                 //self.parentViewController!.parentViewController!.performSegueWithIdentifier("logOut", sender: self)
@@ -515,7 +515,7 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
     func videosButtonTapped(sender: UIButton) {
         vidortag = false
         owntagged = true
-        print("bastı lan")
+        //print("bastı lan")
         BVc.player2.stop()
         BVc.player1.stop()
         let indexPath = NSIndexPath(forRow: 2, inSection: 0)
@@ -602,13 +602,13 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
     func taggedButtonTapped(sender: UIButton) {
         vidortag = true
         owntagged = false
-        print("bastı lan2")
+       // print("bastı lan2")
         AVc.player2.stop()
         AVc.player1.stop()
         let indexPath = NSIndexPath(forRow: 2, inSection: 0)
         //let cell = tableView.cellForRowAtIndexPath(indexPath) as! profile3thCell
         
-            self.redLabelOrigin = MolocateDevice.size.width/2
+        self.redLabelOrigin = MolocateDevice.size.width
         let indexPath2 = NSIndexPath(forRow: 3, inSection: 0)
 //        cell.redLabel.frame.origin.x = MolocateDevice.size.width / 2
 //        cell.videosButton.titleLabel!.font = UIFont(name: "AvenirNext-Regular", size: 14)
@@ -632,6 +632,7 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
     
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBarHidden = false
+        self.tabBarController!.tabBar.hidden = true
         //(self.parentViewController?.parentViewController?.parentViewController as! ContainerController).scrollView.scrollEnabled = false
     }
     

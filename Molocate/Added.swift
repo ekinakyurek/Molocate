@@ -67,37 +67,61 @@ import FBSDKShareKit
         tableView.tableFooterView = UIView()
         self.view.addSubview(tableView)
         lastOffset = CGPoint(x: 0, y: 0)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(Added.scrollToTop), name: "scrollToTop", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(TimelineController.prepareForRetry), name: "prepareForRetry", object: nil)
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(Added.scrollToTop), name: "scrollToTop", object: nil)
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(TimelineController.prepareForRetry), name: "prepareForRetry", object: nil)
 
     }
     
     func getData(){
         MolocateVideo.getUserVideos(classUser.username, type: "user", completionHandler: { (data, response, error) in
             dispatch_async(dispatch_get_main_queue()) {
-               
-                if GlobalVideoUploadRequest == nil{
+                if VideoUploadRequests.count == 0{
                     self.videoArray = data!
                 }else if self.isItMyProfile{
-                    var queu = MoleVideoInformation()
-                    let json = (GlobalVideoUploadRequest?.JsonData)!
-                    let loc = json["location"] as! [[String:AnyObject]]
-                    queu.dateStr = "0s"
-                    queu.urlSta = (GlobalVideoUploadRequest?.uploadRequest.body)!
-                    queu.username = MoleCurrentUser.username
-                    queu.userpic = MoleCurrentUser.profilePic
-                    queu.caption = json["caption"] as! String
-                    queu.location = loc[0]["name"] as! String
-                    queu.locationID = loc[0]["id"] as! String
-                    queu.isFollowing = 1
-                    queu.thumbnailURL = (GlobalVideoUploadRequest?.thumbUrl)!
-                    queu.isUploading = true
-                    self.videoArray.append(queu)
-                    self.videoArray += data!
+                    for i in 0..<VideoUploadRequests.count{
+                        var queu = MoleVideoInformation()
+                        let json = (VideoUploadRequests[i].JsonData)
+                        let loc = json["location"] as! [[String:AnyObject]]
+                        queu.dateStr = "0s"
+                        queu.urlSta = (VideoUploadRequests[i].uploadRequest.body)!
+                        queu.username = MoleCurrentUser.username
+                        queu.userpic = MoleCurrentUser.profilePic
+                        queu.caption = json["caption"] as! String
+                        queu.location = loc[0]["name"] as! String
+                        queu.locationID = loc[0]["id"] as! String
+                        queu.isFollowing = 1
+                        queu.thumbnailURL = (VideoUploadRequests[i].thumbUrl)
+                        queu.isUploading = true
+                        self.videoArray.append(queu)
+                        self.videoArray += data!
+                    }
                     
                 }else{
                     self.videoArray = data!
                 }
+
+//                if GlobalVideoUploadRequest == nil{
+//                    self.videoArray = data!
+//                }else if self.isItMyProfile{
+//                    var queu = MoleVideoInformation()
+//                    let json = (GlobalVideoUploadRequest?.JsonData)!
+//                    let loc = json["location"] as! [[String:AnyObject]]
+//                    queu.dateStr = "0s"
+//                    queu.urlSta = (GlobalVideoUploadRequest?.uploadRequest.body)!
+//                    queu.username = MoleCurrentUser.username
+//                    queu.userpic = MoleCurrentUser.profilePic
+//                    queu.caption = json["caption"] as! String
+//                    queu.location = loc[0]["name"] as! String
+//                    queu.locationID = loc[0]["id"] as! String
+//                    queu.isFollowing = 1
+//                    queu.thumbnailURL = (GlobalVideoUploadRequest?.thumbUrl)!
+//                    queu.isUploading = true
+//                    self.videoArray.append(queu)
+//                    self.videoArray += data!
+//                    
+//                }else{
+//                    self.videoArray = data!
+//                }
                 self.tableView.reloadData()
             }
         })
@@ -135,7 +159,7 @@ import FBSDKShareKit
                     MolocateVideo.increment_watch(watch_list, completionHandler: { (data, response, error) in
                         dispatch_async(dispatch_get_main_queue()){
                             watch_list.removeAll()
-                            print("watch incremented")
+                            //print("watch incremented")
                         }
                     })
                 }
@@ -308,7 +332,7 @@ import FBSDKShareKit
                                 }
                                 
                             } else {
-                                print(error)
+                               // print(error)
                             }
                     })
                 })
@@ -420,25 +444,25 @@ import FBSDKShareKit
     func retryRequest(){
         resendButton.enabled = false
         deleteButton.enabled = false
-        if GlobalVideoUploadRequest != nil {
-            S3Upload.upload(false, uploadRequest: (GlobalVideoUploadRequest?.uploadRequest)!, fileURL:(GlobalVideoUploadRequest?.filePath)!, fileID: (GlobalVideoUploadRequest?.fileId)!, json: (GlobalVideoUploadRequest?.JsonData)!)
-            
-            if let _ = tabBarController?.viewControllers![1] as? MainController {
-                let main = tabBarController?.viewControllers![1] as? MainController
-                
-                if  main?.tableController.videoArray.count != 0 {
-                    
-                    if main?.tableController.videoArray[0].urlSta.absoluteString[0] != "h"{
-                        print("main siliniyor")
-                        main?.tableController.resendButton.removeFromSuperview()
-                        main?.tableController.blackView.removeFromSuperview()
-                        main?.tableController.deleteButton.removeFromSuperview()
-                        main?.tableController.errorLabel.removeFromSuperview()
-                        main?.tableController.tableView.reloadData()
-                        
-                    }
-                }
-            }
+//        if GlobalVideoUploadRequest != nil {
+//            S3Upload.upload(false, uploadRequest: (GlobalVideoUploadRequest?.uploadRequest)!, fileURL:(GlobalVideoUploadRequest?.filePath)!, fileID: (GlobalVideoUploadRequest?.fileId)!, json: (GlobalVideoUploadRequest?.JsonData)!)
+        
+//            if let _ = tabBarController?.viewControllers![1] as? MainController {
+//                let main = tabBarController?.viewControllers![1] as? MainController
+//                
+//                if  main?.tableController.videoArray.count != 0 {
+//                    
+//                    if main?.tableController.videoArray[0].urlSta.absoluteString[0] != "h"{
+//                        print("main siliniyor")
+//                        main?.tableController.resendButton.removeFromSuperview()
+//                        main?.tableController.blackView.removeFromSuperview()
+//                        main?.tableController.deleteButton.removeFromSuperview()
+//                        main?.tableController.errorLabel.removeFromSuperview()
+//                        main?.tableController.tableView.reloadData()
+//                        
+//                    }
+//                }
+//            }
             progressBar?.progress =  0
             progressBar?.hidden = false
             self.resendButton.removeFromSuperview()
@@ -446,16 +470,16 @@ import FBSDKShareKit
             self.deleteButton.removeFromSuperview()
             self.errorLabel.removeFromSuperview()
             self.tableView.reloadData()
-        }else{
-            progressBar?.progress =  0
-            progressBar?.hidden = true
-            self.resendButton.removeFromSuperview()
-            self.blackView.removeFromSuperview()
-            self.deleteButton.removeFromSuperview()
-            self.errorLabel.removeFromSuperview()
-            self.tableView.reloadData()
-        }
-        
+//        }else{
+//            progressBar?.progress =  0
+//            progressBar?.hidden = true
+//            self.resendButton.removeFromSuperview()
+//            self.blackView.removeFromSuperview()
+//            self.deleteButton.removeFromSuperview()
+//            self.errorLabel.removeFromSuperview()
+//            self.tableView.reloadData()
+//        }
+//        
     }
 
     
@@ -464,7 +488,7 @@ import FBSDKShareKit
         deleteButton.enabled = false
         do {
             self.videoArray.removeAtIndex(0)
-            GlobalVideoUploadRequest = nil
+            //GlobalVideoUploadRequest = nil
             CaptionText = ""
             self.resendButton.removeFromSuperview()
             self.blackView.removeFromSuperview()
@@ -475,7 +499,7 @@ import FBSDKShareKit
             NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isStuck")
             try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
         } catch _ {
-            print("error")
+            //print("error")
         }
         
         

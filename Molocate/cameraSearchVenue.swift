@@ -57,7 +57,7 @@ class cameraSearchVenue: UIViewController, UITextFieldDelegate, UITableViewDeleg
         UIApplication.sharedApplication().endIgnoringInteractionEvents()
         
         videoLocation = locationss()
-        print(videoLocation)
+        //print(videoLocation)
         self.textField.textColor = UIColor.blackColor()
         self.textField.autocapitalizationType = .Words
         placeTable.delegate = self
@@ -120,7 +120,7 @@ class cameraSearchVenue: UIViewController, UITextFieldDelegate, UITableViewDeleg
             textField.text = "📌"+placesArray[0]
             let correctedRow = placeOrder.objectForKey(placesArray[0]) as! Int
             videoLocation = locationDict[correctedRow][placesArray[correctedRow]]
-            print(videoLocation.name)
+            //print(videoLocation.name)
             isLocationSelected = true
         }
     }
@@ -182,7 +182,7 @@ class cameraSearchVenue: UIViewController, UITextFieldDelegate, UITableViewDeleg
         autocompleteUrls = placesArray
         
         //self.view.endEditing(true)
-        print(selectedCell.nameLabel.text!)
+        //print(selectedCell.nameLabel.text!)
         if isSearch {
             let correctedRow = placeOrder.objectForKey(selectedCell.nameLabel.text!) as! Int
             videoLocation = locationDict[correctedRow][placesArray[correctedRow]]

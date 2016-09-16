@@ -36,6 +36,12 @@ class videoCell: UITableViewCell {
     let labelWidth: CGFloat = 140
     var newRect:CGRect!
     let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+   
+    var progressBar: UIProgressView = UIProgressView()
+    var resendButton = UIButton()
+    var deleteButton = UIButton()
+    var blackView = UIView()
+    var errorLabel = UILabel()
     
     var tableVideoURL: NSURL!
     var y:CGFloat!
@@ -53,6 +59,18 @@ class videoCell: UITableViewCell {
     func initUI(){
         let  screenSize = MolocateDevice.size
      
+        self.blackView.backgroundColor = UIColor.blackColor()
+        self.blackView.layer.opacity = 0.8
+        self.resendButton = UIButton(frame: CGRect(x: 0.0, y: 0.0, width: 80.0, height: 80.0))
+        self.resendButton.setImage(UIImage(named: "retry"), forState: .Normal)
+        self.resendButton.tintColor = UIColor.whiteColor()
+        self.deleteButton = UIButton(frame: CGRect(x: 0.0, y: 0.0, width: 80.0, height: 80.0))
+        self.deleteButton.setImage(UIImage(named: "cross"), forState: .Normal)
+        self.deleteButton.tintColor = UIColor.whiteColor()
+        self.errorLabel.textAlignment = NSTextAlignment.Center
+        self.errorLabel.textColor = UIColor.whiteColor()
+        self.errorLabel.font = UIFont(name: "AvenirNext-Regular", size:17)
+        self.errorLabel.text = "Videonuz yüklenemedi."
         profilePhoto.frame = CGRectMake(5, 5, 44, 44)
         let image = UIImage(named: "profile")! as UIImage
         profilePhoto.layer.borderWidth = 0.1

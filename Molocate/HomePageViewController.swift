@@ -42,7 +42,7 @@ class HomePageViewController: UIViewController, UITextFieldDelegate, TimelineCon
         self.navigationItem.titleView?.tintColor = UIColor.whiteColor()
         
         
-        //tabBarController?.tabBar.hidden = true
+
         
         try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
         self.view.addSubview(nofollowings)
@@ -249,6 +249,7 @@ class HomePageViewController: UIViewController, UITextFieldDelegate, TimelineCon
     override func viewWillAppear(animated: Bool) {
         (self.parentViewController?.parentViewController!.parentViewController as! ContainerController).scrollView.scrollEnabled = true
          navigationController?.hidesBarsOnSwipe = true
+         tabBarController?.tabBar.hidden = true
     }
     override func viewDidDisappear(animated: Bool) {
         

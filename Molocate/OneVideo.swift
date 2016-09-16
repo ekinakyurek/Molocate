@@ -316,7 +316,7 @@ class oneVideo: UIViewController,PlayerDelegate {
             
             MolocateVideo.likeAVideo(MoleGlobalVideo.id) { (data, response, error) -> () in
                 dispatch_async(dispatch_get_main_queue()){
-                    print(data)
+                   // print(data)
                 }
             }
         }else{
@@ -329,7 +329,7 @@ class oneVideo: UIViewController,PlayerDelegate {
             
             MolocateVideo.unLikeAVideo(MoleGlobalVideo.id){ (data, response, error) -> () in
                 dispatch_async(dispatch_get_main_queue()){
-                    print(data)
+                    //print(data)
                 }
             }
         }
@@ -352,7 +352,7 @@ class oneVideo: UIViewController,PlayerDelegate {
             
             MolocateVideo.likeAVideo(MoleGlobalVideo.id) { (data, response, error) -> () in
                 dispatch_async(dispatch_get_main_queue()){
-                    print(data)
+                 //   print(data)
                 }
             }
         }else{
@@ -365,7 +365,7 @@ class oneVideo: UIViewController,PlayerDelegate {
             
             MolocateVideo.unLikeAVideo(MoleGlobalVideo.id){ (data, response, error) -> () in
                 dispatch_async(dispatch_get_main_queue()){
-                    print(data)
+                  //  print(data)
                 }
             }
         }
@@ -377,9 +377,9 @@ class oneVideo: UIViewController,PlayerDelegate {
         player.stop()
         
         MolocateVideo.reportAVideo(MoleGlobalVideo.id) { (data, response, error) -> () in
-            print(data)
+           // print(data)
         }
-        print("pressedReport at index path: \(buttonRow)")
+        //print("pressedReport at index path: \(buttonRow)")
         let actionSheetController: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         
         let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .Cancel) { action -> Void in

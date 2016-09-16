@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //setStatusBarBackgroundColor()
         
         Fabric.with([Crashlytics.self])
-        Fabric.sharedSDK().debug = true
+        Fabric.sharedSDK().debug = false
         if(NSUserDefaults.standardUserDefaults().boolForKey("isRegistered")) {
             isRegistered = true
             DeviceToken = NSUserDefaults.standardUserDefaults().objectForKey("DeviceToken") as? String
@@ -67,7 +67,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             redirectURL:    "molocate://foursquare")
         var configuration = Configuration(client:client)
         configuration.mode = "foursquare" // or "swarm"
-      
+        configuration.debugEnabled = false
         configuration.shouldControllNetworkActivityIndicator = true
         Session.setupSharedSessionWithConfiguration(configuration)
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
@@ -101,7 +101,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             tokenString += String(format: "%02.2hhx", arguments: [tokenChars[i]])
         }
         
-        print("Device Token:", tokenString)
+        //print("Device Token:", tokenString)
         
         DeviceToken = tokenString
         
@@ -124,7 +124,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
-        print("Failed to register:", error)
+       // print("Failed to register:", error)
     }
     
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
@@ -172,7 +172,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             registerForPushNotifications(application)
             if MoleUserToken != nil && DeviceToken != nil && !isRegistered {
                     MolocateAccount.registerDevice({ (data, response, error) in
-                        print("Success")
+                     //   print("Success")
                     })
             }
             
@@ -180,7 +180,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }else if !isRegistered && MoleUserToken != nil {
         
             MolocateAccount.registerDevice({ (data, response, error) in
-                print("Success")
+                //print("Success")
             })
         
         }

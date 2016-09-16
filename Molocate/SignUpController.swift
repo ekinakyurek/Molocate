@@ -18,7 +18,7 @@ class signUpController: UIViewController,UITextFieldDelegate {
     
     
     @IBAction func termsButton(sender: AnyObject) {
-        print("arkadaş termleri merak etti")
+       // print("arkadaş termleri merak etti")
         //termleri okuma tuşuna bastı
     }
     

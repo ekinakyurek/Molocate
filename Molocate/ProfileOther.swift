@@ -327,7 +327,7 @@ class profileOther: UIViewController , UIScrollViewDelegate, UITableViewDelegate
             MoleUserToken = nil
             isRegistered = false
             MoleGlobalVideo = nil
-            GlobalVideoUploadRequest = nil
+          //  GlobalVideoUploadRequest = nil
            
             //navigationın düzelmesi sonrası bu böyle olucak
             //self.parentViewController!.parentViewController!.performSegueWithIdentifier("logOut", sender: self)

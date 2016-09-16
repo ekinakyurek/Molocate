@@ -5,9 +5,10 @@ let MoleCategoriesDictionary = ["EĞLENCE":"fun","YEMEK":"food","GEZİ":"travel"
 var MoleGlobalVideo:MoleVideoInformation!
 var AddedNextUserVideos: NSURL?
 var TaggedNextUserVideos: NSURL?
-var GlobalVideoUploadRequest: VideoUploadRequest?
 
 
+var VideoUploadRequests: [VideoUploadRequest] = [VideoUploadRequest]()
+var MyS3Uploads: [S3Upload] = [S3Upload]()
 
 struct MoleVideoInformation{
     var id: String = ""
@@ -27,6 +28,7 @@ struct MoleVideoInformation{
     var taggedUsers = [String]()
     var thumbnailURL:NSURL = NSURL()
     var isUploading = false
+    var isFailed = false
     var deletable = false
 }
 
@@ -37,6 +39,22 @@ struct VideoUploadRequest{
     var JsonData: [String:AnyObject]
     var fileId = ""
     var uploadRequest: AWSS3TransferManagerUploadRequest
+    var id = 0
+    var isFailed = false
+    func encode() -> Dictionary<String, AnyObject> {
+        var dictionary : Dictionary = Dictionary<String, AnyObject>()
+        dictionary["filePath"] = filePath
+        dictionary["thumbUrl"] = thumbUrl.absoluteString
+        dictionary["JsonData"] = JsonData
+        dictionary["thumbnail"] = thumbnail
+        dictionary["uploadRequestBody"] = uploadRequest.body.absoluteString
+        dictionary["uploadRequestBucket"] = uploadRequest.bucket
+        dictionary["uploadRequestKey"] = uploadRequest.key
+        dictionary["fileId"] = fileId
+        dictionary["id"] = id
+        dictionary["isFailed"] = isFailed
+        return dictionary
+    }
 }
 
 struct MoleVideoComment{
@@ -50,6 +68,50 @@ struct MoleVideoComment{
 public class MolocateVideo {
     
     static let timeout = 8.0
+    
+    class func encodeGlobalVideo(){
+        let ud = NSUserDefaults.standardUserDefaults()
+        
+        ud.setBool(true, forKey: "isStuck")
+        let dataUploadRequests = VideoUploadRequests.map({
+            (value: VideoUploadRequest) -> Dictionary<String, AnyObject> in
+            return value.encode()
+        })
+        ud.setObject(dataUploadRequests, forKey: "videoRequests")
+        // print(fileURL)
+        
+        
+    }
+    class func decodeGlobalVideo(){
+        let ud = NSUserDefaults.standardUserDefaults()
+        if ud.objectForKey("videoRequests") != nil {
+            let dataUploadRequests  = ud.objectForKey("videoRequests") as! [Dictionary<String, AnyObject>]
+            VideoUploadRequests = dataUploadRequests.map({
+                (value:Dictionary<String, AnyObject> ) -> VideoUploadRequest in
+                return self.decodeVideoUploadRequest(value)
+            })
+        }
+        
+        
+    }
+    
+    class func decodeVideoUploadRequest(dictionary: Dictionary<String, AnyObject>) -> VideoUploadRequest{
+       
+        let filePath = dictionary["filePath"] as! String
+        let thumbUrl = NSURL(string: dictionary["thumbUrl"] as! String)
+        let JsonData = dictionary["JsonData"] as! [String:AnyObject]
+        let thumbnail = dictionary["thumbnail"] as! NSData
+        let uploadRequest = AWSS3TransferManagerUploadRequest()
+        uploadRequest.body = NSURL(string:  dictionary["uploadRequestBody"] as! String)
+        uploadRequest.bucket = dictionary["uploadRequestBucket"] as? String
+        uploadRequest.key = dictionary["uploadRequestKey"] as? String
+        let fileId = dictionary["fileId"] as! String
+        let id = dictionary["id"] as! Int
+        let isFailed = dictionary["isFailed"] as! Bool
+        
+        return VideoUploadRequest(filePath: filePath, thumbUrl: thumbUrl!, thumbnail: thumbnail, JsonData: JsonData, fileId: fileId, uploadRequest: uploadRequest, id: id, isFailed: isFailed )
+        
+    }
     class func getComments(videoId: String, completionHandler: (data: Array<MoleVideoComment>, response: NSURLResponse!, error: NSError!, count: Int!, next: String?, previous: String?) -> ()) {
         
         let url = NSURL(string: MolocateBaseUrl + "video/api/get_comments/?video_id=" + (videoId as String))!
@@ -305,15 +367,15 @@ public class MolocateVideo {
                         completionHandler(data: users , response: response , error: nsError, count: count, next: next, previous: previous  )
                     }else{
                         completionHandler(data:  Array<MoleUser>() , response: nil , error: nsError, count: 0, next: nil, previous: nil  )
-                        print("ServerDataError:: in MolocateVideo.geLikes()")
+                       /// print("ServerDataError:: in MolocateVideo.geLikes()")
                     }
                 } catch{
                     completionHandler(data:  Array<MoleUser>() , response: nil , error: nsError, count: 0, next: nil, previous: nil  )
-                    print("JsonError:: in MolocateVideo.getLikes(()")
+                  //  print("JsonError:: in MolocateVideo.getLikes(()")
                 }
             }else{
                 completionHandler(data:  Array<MoleUser>() , response: nil , error: error, count: 0, next: nil, previous: nil  )
-                print("RequestError:: in MolocateVideo.getLikes(()")
+               // print("RequestError:: in MolocateVideo.getLikes(()")
             }
             
         }
@@ -696,7 +758,7 @@ public class MolocateVideo {
             }
                   task.resume()
         }catch{
-              print("error")
+            //  print("error")
         }
             
        

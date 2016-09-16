@@ -576,12 +576,12 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
             self.bottomToolbar.layer.opacity = 1
         }
         
-        var success: Bool = true
+     //  var success: Bool = true
     
         if error != nil {
             //NSLog("Movie file finishing error: %@", error!) "The recording reached the maximum allowable length."
             if error.localizedRecoverySuggestion == "There is not enough available space to continue the file writing. Make room by deleting existing videos or photos." {
-            success = error!.userInfo[AVErrorRecordingSuccessfullyFinishedKey] as! Bool? ?? false
+          //  success = error!.userInfo[AVErrorRecordingSuccessfullyFinishedKey] as! Bool? ?? false
             self.holdRelease()
             self.displayRecordAlert("Hata", message: "Telefonunuzda yeterli yer yok.")
             }
@@ -762,7 +762,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                 try audioTrack.insertTimeRange(CMTimeRangeMake(kCMTimeZero, asset.duration) , ofTrack: audioAssetTrack, atTime: atTime)
                 
             }catch{
-                print("something bad happend I don't want to talk about it")
+                //print("something bad happend I don't want to talk about it")
             }
             
             time +=  asset.duration.seconds
@@ -775,7 +775,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         let directory = (NSTemporaryDirectory() as NSString)
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateStyle = .LongStyle
-        dateFormatter.timeStyle = .ShortStyle
+        dateFormatter.timeStyle = .LongStyle
         let date = dateFormatter.stringFromDate(NSDate())
         let savePath = "\(directory)/mergedVideo-\(date).mp4"
         let url = NSURL(fileURLWithPath: savePath)
@@ -806,7 +806,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                     do {
                         
                         try NSFileManager.defaultManager().removeItemAtURL(removalURL)
-                        print("siliniyor at finalexport")
+                        //print("siliniyor at finalexport")
                         //try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
                         
                     } catch _ {
@@ -851,7 +851,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
                 do {
                     
                     try NSFileManager.defaultManager().removeItemAtURL(removalURL)
-                    print("siliniyor at back")
+                    //print("siliniyor at back")
                     //try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
                     
                 } catch _ {
@@ -868,7 +868,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         let cleanuppath: dispatch_block_t = {
             do {
 
-                try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
+               try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
                 
             } catch _ {}
             
@@ -1020,7 +1020,7 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
 
 
     func holdRelease(){
-        print("hop")
+        //print("hop")
         self.progressTimer.invalidate()
 
         if self.isFlashMode {

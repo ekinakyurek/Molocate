@@ -54,7 +54,7 @@ class Authorizer: AuthorizationDelegate {
     }
     
     func didReachRedirectURL(redirectURL: NSURL) {
-        print("redirectURL" + redirectURL.absoluteString)
+        //print("redirectURL" + redirectURL.absoluteString)
         let parameters = self.extractParametersFromURL(redirectURL)
         self.finilizeAuthorizationWithParameters(parameters)
     }

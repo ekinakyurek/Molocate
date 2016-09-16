@@ -16,20 +16,25 @@ let S3BucketName: String = "molocatebucket"
 var n = 0
 
 public class S3Upload {
-    static var isUp = false
-    static var uploadTask:AWSS3TransferUtilityTask?
-    static var completionHandler:AWSS3TransferUtilityUploadCompletionHandlerBlock?
+    var isUp = false
+    var uploadTask:AWSS3TransferUtilityTask?
+    var completionHandler:AWSS3TransferUtilityUploadCompletionHandlerBlock?
+    var key_id = 0
     
     
-    
-    class func upload(retry:Bool = false,uploadRequest: AWSS3TransferManagerUploadRequest, fileURL: String, fileID: String, json:  [String:AnyObject]) {
+    func upload(retry:Bool = false, id:Int,uploadRequest: AWSS3TransferManagerUploadRequest, fileURL: String, fileID: String, json:  [String:AnyObject]) {
+        
+        print("upload started with id:\(id)")
         isUp = false
+        key_id = id
+       
         if !retry {
             do{
                 
                 var image = UIImageJPEGRepresentation(thumbnail, 0.5)
+                
                 if image == nil {
-                    let data = NSData(contentsOfURL: (GlobalVideoUploadRequest?.thumbUrl)!)
+                    let data = NSData(contentsOfURL: (VideoUploadRequests[id].thumbUrl))
                     let nimage = UIImage(data: data!)
                     image = UIImageJPEGRepresentation(nimage!, 0.5)
                 }
@@ -41,24 +46,36 @@ public class S3Upload {
                 
                 let thumb = NSURL(fileURLWithPath: outputFilePath)
                 
+              
                 
-                GlobalVideoUploadRequest = VideoUploadRequest(filePath: fileURL,thumbUrl: thumb, thumbnail: image!,JsonData: json, fileId: fileID, uploadRequest: uploadRequest)
-                self.encodeGlobalVideo(fileID, fileURL: fileURL, uploadRequest: uploadRequest, thumb: thumb, json: json)
+
+                print("VideoUploadRequest created with id:\(id)")
+                
+                VideoUploadRequests.append(VideoUploadRequest(filePath: fileURL,thumbUrl: thumb, thumbnail: image!,JsonData: json, fileId: fileID, uploadRequest: uploadRequest, id:id, isFailed: false))
+                
+                
+                MolocateVideo.encodeGlobalVideo()
                 
             }catch{
-                print("uploadRequest cannot created")
+               // print("uploadRequest cannot created")
             }
         }
         
         let expression = AWSS3TransferUtilityUploadExpression()
         expression.uploadProgress = {(task: AWSS3TransferUtilityTask, bytesSent: Int64, totalBytesSent: Int64, totalBytesExpectedToSend: Int64) in
             dispatch_async(dispatch_get_main_queue(), {
-                if uploadTask == nil {
-                    uploadTask = task
+                if self.uploadTask == nil {
+                    self.uploadTask = task
                 }
                 //print(bytesSent)
                 if totalBytesSent <= totalBytesExpectedToSend {
                     progressBar?.progress = Float(totalBytesSent)/Float(totalBytesExpectedToSend)
+                    var progressInfo = Dictionary<String, AnyObject>()
+                    progressInfo["progress"] =  Float(totalBytesSent)/Float(totalBytesExpectedToSend)
+                    progressInfo["id"] = id
+               
+                    print("progress updated with id:\(id)")
+                    NSNotificationCenter.defaultCenter().postNotificationName("updateProgress", object:nil, userInfo: progressInfo)
                 }else{
                     
                 }
@@ -69,29 +86,49 @@ public class S3Upload {
         self.completionHandler = {(task, error) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
                 if ((error) != nil){
-                    print("Failed with error")
-                    print("Error: %@",error!);
+                    //print("Failed with error")
+                   // print("Error: %@",error!);
                 }else{
                     var image = UIImageJPEGRepresentation(thumbnail, 0.5)
                     if image == nil {
-                        let data = NSData(contentsOfURL: (GlobalVideoUploadRequest?.thumbUrl)!)
+                        let data = NSData(contentsOfURL: (VideoUploadRequests[id].thumbUrl))
                         let nimage = UIImage(data: data!)
                         image = UIImageJPEGRepresentation(nimage!, 0.5)
                     }
-                    self.sendThumbnailandData(image!, info: json, completionHandler: { (data, thumbnailUrl, response, error) in
+                    self.sendThumbnailandData(image!, info: json, videoid:id, completionHandler: { (data, thumbnailUrl, videoid, response, error) in
                         if data == "success" {
-                            isUp = true
+                            self.isUp = true
                          dispatch_async(dispatch_get_main_queue(), {
-                            progressBar?.progress = 0.0
-                            progressBar?.hidden = true
-                            progressBar = nil
                             do {
-                                GlobalVideoUploadRequest = nil
+                              
                                 CaptionText = ""
-                                NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isStuck")
-                                try NSFileManager.defaultManager().removeItemAtPath(videoPath!)
-                      
+                 
+                                if let i = VideoUploadRequests.indexOf({$0.id == videoid}) {
+                                    print("video deleted with id:\(id)")
+                                    try NSFileManager.defaultManager().removeItemAtURL(VideoUploadRequests[i].uploadRequest.body)
+                                  
+                                    NSNotificationCenter.defaultCenter().postNotificationName("uploadFinished", object: nil, userInfo: ["id":i])
+                                    
+                                    VideoUploadRequests.removeAtIndex(i)
+                                    
+                                    MolocateVideo.encodeGlobalVideo()
+                                    
+                                    if VideoUploadRequests.count == 0 {
+                                        NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isStuck")
+                                    }
+                                    
+                                    
+                                    MyS3Uploads.removeAtIndex(i)
+                                   
+                                    
+                                }
+                                
+                                
+                                
                                 n = 0
+               
+                            
+                               
                             } catch _ {
                         
                             }
@@ -105,30 +142,31 @@ public class S3Upload {
             })
         }
 
-        
+      
         let transferUtility = AWSS3TransferUtility.defaultS3TransferUtility()
         transferUtility.uploadFile(uploadRequest.body, bucket: uploadRequest.bucket!, key: uploadRequest.key!, contentType: "text/plain", expression: expression, completionHander: completionHandler).continueWithBlock { (task) -> AnyObject? in
 
             if ((task.error) != nil) {
-                print("Error: %@", task.error)
+                //print("Error: %@", task.error)
         
             }
             if ((task.exception) != nil) {
-                print("Exception: %@", task.exception)
+               // print("Exception: %@", task.exception)
             }
             if ((task.result) != nil) {
                 let uploadTask = task.result
                 // Do something with uploadTask.
-                let seconds = 100.0
+                let seconds = 10.0
                 let delay = seconds * Double(NSEC_PER_SEC)  // nanoseconds per seconds
                 let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
                 dispatch_after(dispatchTime, dispatch_get_main_queue(), {
-                    print("18s passed")
-                    if !isUp{
-                        print("cancel")
+                    //print("18s passed")
+                    if !self.isUp{
+                        //print("cancel")
                         uploadTask?.cancel()
-                        NSNotificationCenter.defaultCenter().postNotificationName("prepareForRetry", object: nil)
-                    
+                        let userinf = ["id":id]
+                        NSNotificationCenter.defaultCenter().postNotificationName("prepareForRetry", object: nil, userInfo:userinf )
+                      
                         
                     }
                     
@@ -141,51 +179,24 @@ public class S3Upload {
  
     }
     
-    class func encodeGlobalVideo(fileID: String,fileURL:String,uploadRequest:AWSS3TransferManagerUploadRequest,thumb:NSURL,json:AnyObject){
-        let ud = NSUserDefaults.standardUserDefaults()
-        
-        ud.setBool(true, forKey: "isStuck")
-        ud.setObject(fileID, forKey: "fileID")
-        ud.setObject(fileURL, forKey: "fileURL")
-        ud.setObject(uploadRequest.body.absoluteString, forKey: "uploadRequestBody")
-        ud.setObject(uploadRequest.bucket, forKey: "uploadRequestBucket")
-        ud.setObject(uploadRequest.key, forKey: "uploadRequestKey")
-        ud.setObject(thumb.absoluteString, forKey: "thumbnail")
-        ud.setObject(json, forKey: "json")
-        print(fileURL)
-        
-        
-    }
-    class func decodeGlobalVideo(){
-        let ud = NSUserDefaults.standardUserDefaults()
-        if GlobalVideoUploadRequest == nil {
-            let uploadRequest = AWSS3TransferManagerUploadRequest()
-            uploadRequest.body = NSURL(string: ud.objectForKey("uploadRequestBody") as! String)
-            uploadRequest.bucket = ud.objectForKey("uploadRequestBucket") as? String
-            uploadRequest.key = ud.objectForKey("uploadRequestKey") as? String
-            let thumburl = NSURL(string:ud.objectForKey("thumbnail") as! String )
-            GlobalVideoUploadRequest = VideoUploadRequest(filePath: ud.objectForKey("fileURL") as! String, thumbUrl: thumburl!, thumbnail: NSData(), JsonData:  ud.objectForKey("json") as! [String:AnyObject], fileId: ud.objectForKey("fileID") as! String, uploadRequest: uploadRequest)
-            videoPath = NSUserDefaults.standardUserDefaults().objectForKey("videoPath") as? String
-            
-        }
-    }
+
     
     
-    class func cancelUploadRequest(uploadRequest: AWSS3TransferManagerUploadRequest) {
+    func cancelUploadRequest(uploadRequest: AWSS3TransferManagerUploadRequest) {
     
         uploadRequest.cancel().continueWithBlock({ (task) -> AnyObject! in
             if let error = task.error {
-                print("cancel() failed: [\(error)]")
+               // print("cancel() failed: [\(error)]")
             }
             if let exception = task.exception {
-                print("cancel() failed: [\(exception)]")
+              //  print("cancel() failed: [\(exception)]")
             }
             return nil
         })
         
     }
     
-    class func sendThumbnailandData(thumbnail: NSData, info: [String:AnyObject],completionHandler: (data: String!, thumbnailUrl: String, response: NSURLResponse!, error: NSError!) -> ()){
+    func sendThumbnailandData(thumbnail: NSData, info: [String:AnyObject], videoid: Int, completionHandler: (data: String!, thumbnailUrl: String, videoid: Int, response: NSURLResponse!, error: NSError!) -> ()){
         
         
         var string_info:NSData = NSData()
@@ -194,7 +205,7 @@ public class S3Upload {
              string_info = try NSJSONSerialization.dataWithJSONObject(info, options:  NSJSONWritingOptions.PrettyPrinted)
         }catch{
             
-            print("Errrorororororo")
+           // print("Errrorororororo")
         }
         
     
@@ -264,24 +275,24 @@ public class S3Upload {
             do{
                 progressBar?.hidden = true
                 let data_string  = String(data: data!, encoding: NSUTF8StringEncoding)!
-                print("data_string:" + data_string)
+               // print("data_string:" + data_string)
                 if data_string[0] == "{" {
                     let result = try NSJSONSerialization.JSONObjectWithData( data!, options: NSJSONReadingOptions.AllowFragments) as! [String: AnyObject]
                     
                     if (error != nil) {
-                        completionHandler(data:"error" , thumbnailUrl: "",response: response , error: error  )
+                        completionHandler(data:"error" , thumbnailUrl: "",videoid: 0,response: response , error: error  )
                     } else {
                         if result.indexForKey("thumbnail") != nil {
-                        completionHandler(data: "success", thumbnailUrl: result["thumbnail"]! as! String,response: response , error: error  )
+                        completionHandler(data: "success", thumbnailUrl: result["thumbnail"]! as! String,videoid: videoid,response: response , error: error  )
                         }else{
-                        completionHandler(data:"error" , thumbnailUrl: "",response: response , error: nil  )  
+                        completionHandler(data:"error" , thumbnailUrl: "",videoid: 0,response: response , error: nil  )
                         }
                     }
                 }else{
-                       completionHandler(data:"error" , thumbnailUrl: "",response: response , error: nil  ) 
+                       completionHandler(data:"error" , thumbnailUrl: "",videoid: 0,response: response , error: nil  )
                 }
             }catch{
-                completionHandler(data:"error" , thumbnailUrl: "",response: response , error: nil  )
+                completionHandler(data:"error" , thumbnailUrl: "",videoid: 0,response: response , error: nil  )
             }
         })
         

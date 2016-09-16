@@ -68,10 +68,10 @@ class likeVideo: UIViewController, UITableViewDelegate, UITableViewDataSource  {
             cell.username.tintColor = swiftColor
             cell.username.addTarget(self, action: #selector(likeVideo.pressedProfile(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             
-            print("foloow:" + cell.followLike.hidden.description)
-            print("users" + users[indexPath.row].isFollowing.description)
+            //print("foloow:" + cell.followLike.hidden.description)
+            //print("users" + users[indexPath.row].isFollowing.description)
         
-        print(pressedFollow.description)
+      //  print(pressedFollow.description)
         if !pressedFollow {
                 if(!users[indexPath.row].isFollowing && users[indexPath.row].username != MoleCurrentUser.username){
                     cell.followLike.hidden = false

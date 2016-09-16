@@ -212,7 +212,7 @@ class findFriendController: UIViewController,UITableViewDelegate , UITableViewDa
     
     func pressedFollow(sender: UIButton){
         let Row = sender.tag
-        print(userRelations.relations[Row].is_following)
+        //print(userRelations.relations[Row].is_following)
         if !userRelations.relations[Row].is_following {
         MolocateAccount.follow(userRelations.relations[Row].username) { (data, response, error) in
             

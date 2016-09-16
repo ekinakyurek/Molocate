@@ -81,7 +81,14 @@ class camera3thScreen: UIViewController,UICollectionViewDelegate, UICollectionVi
                     ]
                 ]
             ]
-            S3Upload.upload(uploadRequest:uploadRequest, fileURL: "https://d1jkin67a303u2.cloudfront.net/videos/"+(fileName as String), fileID: fileName as String ,json: json as! [String : AnyObject])
+            
+            let video_id = Int(arc4random_uniform(UInt32.max))
+            
+             let new_upload = S3Upload()
+            
+             new_upload.upload(false, id: video_id, uploadRequest:uploadRequest,fileURL: "https://d1jkin67a303u2.cloudfront.net/videos/"+(fileName as String), fileID: fileName as String ,json: json as! [String : AnyObject])
+           
+             MyS3Uploads.append(new_upload)
             
             
             self.performSegueWithIdentifier("finishUpdate", sender: self)
@@ -285,7 +292,7 @@ class camera3thScreen: UIViewController,UICollectionViewDelegate, UICollectionVi
         mentionedUsers.removeAll()
         
         for mention in mentions where mention.range.length > 1{
-            print(mention.range.location)
+           // print(mention.range.location)
             if mention.range.length > 2 {
                 var word = new[mention.range.location+1...mention.range.location + mention.range.length-1]
                 
@@ -297,7 +304,7 @@ class camera3thScreen: UIViewController,UICollectionViewDelegate, UICollectionVi
                 mentionAreas.append(mention.range)
             }else if mention.range.location == 0{
                 
-                print("mentionn range location")
+               // print("mentionn range location")
                 var word = new[mention.range.location...mention.range.location + mention.range.length-1]
                 
                 if word.hasPrefix("@") {
@@ -392,7 +399,7 @@ class camera3thScreen: UIViewController,UICollectionViewDelegate, UICollectionVi
     }
     
     func updateSearch(word: String){
-        print("word::",word)
+        //print("word::",word)
         if word == ""{
             mentionTable.hidden = true
             searchResults.removeAll()
@@ -623,7 +630,7 @@ class camera3thScreen: UIViewController,UICollectionViewDelegate, UICollectionVi
         selectedCell = indexPath.row
         self.collectionView.reloadData()
         self.categ = MoleCategoriesDictionary[self.categories[indexPath.row]]
-        print(self.categ)
+        //print(self.categ)
         isCategorySelected = true
         
     }
