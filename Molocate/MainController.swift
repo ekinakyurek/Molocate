@@ -204,7 +204,10 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
 //        }
         collectionView!.backgroundColor = UIColor.clearColor()
         collectionView!.contentInset = UIEdgeInsets(top: 2, left: 2, bottom:2, right: 2)
-    
+        print("anan")
+        MolocateVideo.getFilters { (data, response, error) in
+            
+        }
         
         if UIApplication.sharedApplication().isIgnoringInteractionEvents() {
             UIApplication.sharedApplication().endIgnoringInteractionEvents()

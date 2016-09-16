@@ -12,6 +12,13 @@ var FbToken = ""
 let profileBackgroundColor = UIColor(netHex: 0xDCDDDF)
 
 //Structs
+ struct filter{
+    var name = ""
+    var raw_name = ""
+    var isevent = false
+    var thumbnail_url = NSURL()
+    
+ }
 struct MoleUserFriend {
     var is_following = false
     var picture_url = NSURL()
