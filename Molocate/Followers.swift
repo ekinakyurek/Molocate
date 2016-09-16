@@ -27,7 +27,7 @@ class Followers: UIViewController ,  UITableViewDataSource, UITableViewDelegate{
         self.navigationController?.navigationBar.hidden = false
         
         myTable =   UITableView()
-        myTable.frame =  CGRectMake(0, 0, MolocateDevice.size.width, MolocateDevice.size.height-60);
+        myTable.frame =  CGRectMake(0, 0, MolocateDevice.size.width, MolocateDevice.size.height);
         myTable.tableFooterView = UIView()
         myTable.allowsSelection = true
         myTable.delegate      =   self
