@@ -129,8 +129,7 @@ class FacebookFriends: UIViewController {
         MolocateAccount.follow(userRelations.relations[Row].username) { (data, response, error) in
             
         }
-        
-        userRelations.relations[Row].is_place = true
+
         userRelations.relations[Row].is_following = true
   
         tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: Row, inSection: 0)], withRowAnimation: .None)

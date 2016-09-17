@@ -23,9 +23,7 @@ struct MoleUserFriend {
     var is_following = false
     var picture_url = NSURL()
     var thumbnail_url = NSURL()
-    var is_place:Bool = false
     var username:String = ""
-    var place_id:String = ""
     var name: String = "Deneme Deneme"
 }
 
@@ -190,12 +188,7 @@ public class MolocateAccount {
                         friend.is_following = isfollowing == 0 ? false:true
                         
                         
-                        let type = thing["type"] as! String
-                        friend.is_place = type == "userprofile" ? false: true
-                        
-                        if(friend.is_place){
-                            friend.place_id = thing["place_id"] as! String
-                        }
+                   
                         
                         friends.relations.append(friend)
                     
@@ -267,12 +260,6 @@ public class MolocateAccount {
                             friend.is_following = isfollowing == 0 ? false:true
                             
                             
-                            let type = thing["type"] as! String
-                            friend.is_place = type == "userprofile" ? false: true
-                            
-                            if(friend.is_place){
-                                friend.place_id = thing["place_id"] as! String
-                            }
                             
                             followings.relations.append(friend)
                         }
@@ -346,13 +333,7 @@ public class MolocateAccount {
                             friend.is_following = isfollowing == 0 ? false:true
                             
                             
-                            let type = thing["type"] as! String
-                            friend.is_place = type == "userprofile" ? false: true
-                            
-                            if(friend.is_place){
-                                friend.place_id = thing["place_id"] as! String
-                            }
-                            
+                     
                             friends.append(friend)
                         }
                         
