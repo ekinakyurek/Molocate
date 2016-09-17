@@ -736,7 +736,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
                 self.tableController.tableView.scrollEnabled = true
                 self.tableController.tableView.userInteractionEnabled = true
                 self.tableController.isOnView = true
-                self.cameraButton.image = UIImage(named: "Camera")
+                self.cameraButton.image = UIImage(named: "newcamera")
                 self.cameraButton.title = nil
                 self.searchText.text = ""
                 self.searchText.placeholder = "Ara"
@@ -924,7 +924,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         //SDImageCache.sharedImageCache().cleanDisk()
         //self.tableController.isOnView = false
         if isSearching == true {
-            self.cameraButton.image = UIImage(named: "Camera")
+            self.cameraButton.image = UIImage(named: "newcamera")
             self.cameraButton.title = nil
             self.isSearching = false
             self.venueTable.hidden = true
