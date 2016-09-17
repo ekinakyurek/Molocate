@@ -32,7 +32,7 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
     var isItMyProfile = true
 
     override func viewDidLoad() {
-        try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
+        
 
             // Do any additional setup after loading the view.
         initGui()

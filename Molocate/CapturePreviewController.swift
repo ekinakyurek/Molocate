@@ -228,7 +228,7 @@ class capturePreviewController: UIViewController, PlayerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
+   
         UIApplication.sharedApplication().endIgnoringInteractionEvents()
         toolBar.barTintColor = swiftColor
         toolBar.translucent = false
@@ -376,6 +376,7 @@ class capturePreviewController: UIViewController, PlayerDelegate {
         adjustViewLayout(size)
     }
     override func viewWillAppear(animated: Bool) {
+        try! AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
         adjustViewLayout(UIScreen.mainScreen().bounds.size)
             }
     func adjustViewLayout(size: CGSize) {

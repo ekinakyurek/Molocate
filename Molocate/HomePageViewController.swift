@@ -44,7 +44,7 @@ class HomePageViewController: UIViewController, UITextFieldDelegate, TimelineCon
         
 
         
-        try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
+     
         self.view.addSubview(nofollowings)
         self.nofollowings.hidden = true
         
@@ -134,7 +134,7 @@ class HomePageViewController: UIViewController, UITextFieldDelegate, TimelineCon
     }
     
     func pressedComment(videoId: String, Row: Int) {
-  
+        
         navigationController?.setNavigationBarHidden(false, animated: false)
         activityIndicator.startAnimating()
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
@@ -214,6 +214,8 @@ class HomePageViewController: UIViewController, UITextFieldDelegate, TimelineCon
     
     @IBAction func openCamera(sender: AnyObject) {
         
+        self.tableController.player1.stop()
+        self.tableController.player2.stop()
         if CLLocationManager.locationServicesEnabled() {
             switch(CLLocationManager.authorizationStatus()) {
             case .NotDetermined, .Restricted, .Denied:

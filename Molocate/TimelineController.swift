@@ -1122,11 +1122,11 @@ class TimelineController: UITableViewController,PlayerDelegate, FBSDKSharingDele
                             
                         let rect = cell.newRect
                         cell.blackView.frame = rect
-                        cell.superview!.addSubview(cell.blackView)
                         let videoView = UIView(frame: cell.newRect)
                         cell.resendButton.center = CGPoint(x: videoView.center.x-50, y: videoView.center.y)
                         cell.deleteButton.center = CGPoint(x: videoView.center.x+50, y: videoView.center.y)
                         cell.errorLabel.frame = CGRect(x: 0, y: cell.resendButton.frame.maxY+10, width: cell.blackView.frame.width, height: 40)
+                        cell.superview!.addSubview(cell.blackView)
                         cell.superview!.addSubview(cell.resendButton)
                         cell.superview!.addSubview(cell.deleteButton)
                         cell.superview!.addSubview(cell.errorLabel)

@@ -56,7 +56,6 @@ class profileVenue: UIViewController, UICollectionViewDelegateFlowLayout,NSURLCo
         initGui()
         
         
-        try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
         UIApplication.sharedApplication().endIgnoringInteractionEvents()
      
         // Do any additional setup after loading the view.

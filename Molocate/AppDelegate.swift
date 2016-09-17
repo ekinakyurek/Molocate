@@ -11,7 +11,7 @@ import SDWebImage
 import AWSS3
 import Fabric
 import Crashlytics
-
+import AVFoundation
 var DeviceToken:String?
 var isRegistered = false
 var MoleUserToken: String?
@@ -80,6 +80,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             
         }
+        
+        try! AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
        
     }

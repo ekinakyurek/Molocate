@@ -41,8 +41,7 @@ class profileLocation: UIViewController, UICollectionViewDelegateFlowLayout,NSUR
         self.addChildViewController(tableController);
         
         initGui()
-        
-        try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
+      
         UIApplication.sharedApplication().endIgnoringInteractionEvents()
 
     }

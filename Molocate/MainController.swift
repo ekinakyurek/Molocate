@@ -90,7 +90,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
         self.navigationItem.titleView = searchText
         venueTable.separatorColor = UIColor.lightGrayColor()
         venueTable.tableFooterView = UIView()
-        try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
+
         session = Session.sharedSession()
         session.logger = ConsoleLogger()
         

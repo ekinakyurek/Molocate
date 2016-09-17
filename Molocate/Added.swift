@@ -35,7 +35,7 @@ import FBSDKShareKit
 
     override func viewDidLoad() {
         super.viewDidLoad()
-          try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
+          
                 // Do any additional setup after loading the view.
         initGui()
         getData()

@@ -94,9 +94,10 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
         locationDict = [[String:locationss]]()
 
         self.captureSession = AVCaptureSession()
+        captureSession?.automaticallyConfiguresApplicationAudioSession = false
         
         self.sessionQueue = dispatch_queue_create("session queue", DISPATCH_QUEUE_SERIAL)
-        try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
+  
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         previewLayer?.session = self.captureSession
 //        let bounds = self.view.bounds
@@ -222,6 +223,14 @@ class CameraViewController: UIViewController,CLLocationManagerDelegate, AVCaptur
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
+        if (AVAudioSession.sharedInstance().category != AVAudioSessionCategoryPlayAndRecord) {
+            //try! AVAudioSession.sharedInstance().setActive(false, withOptions: .NotifyOthersOnDeactivation )
+            try! AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord, withOptions: [.AllowBluetooth, .DefaultToSpeaker, .MixWithOthers])
+            try! AVAudioSession.sharedInstance().setActive(true)
+            //try! AVAudioSession.sharedInstance().setActive(true)
+        }
+        
         dispatch_async(self.sessionQueue!) {
             switch self.setupResult {
             case .Success:

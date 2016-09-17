@@ -53,7 +53,7 @@ class cameraSearchVenue: UIViewController, UITextFieldDelegate, UITableViewDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        try!  AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
+     
         UIApplication.sharedApplication().endIgnoringInteractionEvents()
         
         videoLocation = locationss()
