@@ -168,11 +168,11 @@ class TimelineController: UITableViewController,PlayerDelegate, FBSDKSharingDele
                         let loc = json["location"] as! [[String:AnyObject]]
                         queu.dateStr = "0s"
                         queu.urlSta = (VideoUploadRequests[i].uploadRequest.body)!
-                        print("url:" + queu.urlSta.absoluteString)
+                        //print("url:" + queu.urlSta.absoluteString)
                         queu.username = MoleCurrentUser.username
                         queu.userpic = MoleCurrentUser.profilePic
                         queu.caption = json["caption"] as! String
-                                  print(queu.caption                                 )
+                                 // print(queu.caption                                 )
                         queu.location = loc[0]["name"] as! String
                         queu.locationID = loc[0]["id"] as! String
                         queu.isFollowing = 1

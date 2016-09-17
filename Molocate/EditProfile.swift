@@ -44,8 +44,8 @@ class editProfile: UIViewController , UIImagePickerControllerDelegate ,UINavigat
         
         user = MoleCurrentUser
         initGui()
-        print("fdgdsgdsgfdsgdfsgfds")
-        print(user.bio)
+        //print("fdgdsgdsgfdsgdfsgfds")
+       // print(user.bio)
     }
     
     func initGui(){

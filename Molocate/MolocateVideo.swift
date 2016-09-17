@@ -183,7 +183,7 @@ public class MolocateVideo {
                 
                 do {
                     let result = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers ) as! [[String:AnyObject]]
-                    print(result)
+                   // print(result)
                     var filters = [filter]()
                     for item in result {
                         var filt = filter()
@@ -215,7 +215,7 @@ public class MolocateVideo {
         request.timeoutInterval = timeout + 2.0
         
         let task = NSURLSession.sharedSession().dataTaskWithRequest(request){ (data, response, error) -> Void in
-            print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+            //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
             
             if error == nil{
                 let nsError = error

@@ -205,7 +205,7 @@ class MainController: UIViewController, UITableViewDelegate , UITableViewDataSou
 //        }
         collectionView!.backgroundColor = UIColor.clearColor()
         collectionView!.contentInset = UIEdgeInsets(top: 2, left: 2, bottom:2, right: 2)
-        print("anan")
+       // print("anan")
         MolocateVideo.getFilters { (data, response, error) in
             dispatch_async(dispatch_get_main_queue()){
                 self.filters = data!

@@ -30,6 +30,7 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
     var player1Turn = false
     var classUser = MoleUser()
     var isItMyProfile = true
+ 
 
     override func viewDidLoad() {
         
@@ -37,6 +38,7 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
             // Do any additional setup after loading the view.
         initGui()
         getData()
+       
         //print(self.username)
 
 
@@ -44,6 +46,7 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
 
     }
 
+    
     func initGui(){
         view.frame = CGRectMake(0, 0, screenSize.width, screenSize.height-190)
         likeHeart.image = UIImage(named: "favorite")
@@ -989,7 +992,7 @@ class Tagged: UIViewController, UITableViewDelegate, UITableViewDataSource,Playe
     }
 
     func sharer(sharer: FBSDKSharing!, didCompleteWithResults results: [NSObject : AnyObject]!) {
-        print(results)
+       // print(results)
     }
     func sharerDidCancel(sharer: FBSDKSharing!) {
         

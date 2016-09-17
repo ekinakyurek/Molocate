@@ -16,6 +16,7 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
     var vidortag = false // videoysa false
     let names = ["AYARLAR","PROFİLİ DÜZENLE", "ÇIKIŞ YAP"]
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    var myRefreshControl = UIRefreshControl()
     @IBOutlet var tableView: UITableView!
   
  
@@ -64,8 +65,10 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
         self.navigationItem.title = classUser.username
         
         
-        
-//        
+        self.myRefreshControl = UIRefreshControl()
+        self.myRefreshControl.addTarget(self, action: #selector(profileUser.refreshVideos), forControlEvents: UIControlEvents.ValueChanged)
+        self.tableView.addSubview(myRefreshControl)
+//
 //        settings.layer.zPosition = 1
 //        settings.hidden = true
 //        settings.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.width, self.view.frame.width)
@@ -79,9 +82,29 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
      
     }
     
+    func refreshVideos(){
+        if !vidortag{
+            MolocateVideo.getUserVideos(classUser.username, type: "user", completionHandler: { (data, response, error) in
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.AVc.videoArray = data!
+                    self.AVc.tableView.reloadData()
+                    self.myRefreshControl.endRefreshing()
+                }
+            })
+
+        }else{
+            MolocateVideo.getUserVideos(classUser.username, type: "tagged", completionHandler: { (data, response, error) in
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.BVc.videoArray = data!
+                    self.BVc.tableView.reloadData()
+                    self.myRefreshControl.endRefreshing()
+                }
+            })
+        }
+    }
+    
     
 
-    
     func adjustTable() {
         if page == 2 {
             if vidortag {
@@ -380,7 +403,7 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
     }
     
     func photoPressed(sender: UIButton){
-     print ("x<<")
+     //print ("x<<")
         let controller:onePhoto = self.storyboard!.instantiateViewControllerWithIdentifier("onePhoto") as! onePhoto
         controller.classUser = classUser
         navigationController?.pushViewController(controller, animated: true)
@@ -473,6 +496,7 @@ class profileUser: UIViewController,UITableViewDelegate , UITableViewDataSource,
                         AVc.player2.stop()
                         AVc.player1.stop()
                     }
+            print(vidortag)
                     //tableView.reloadData()
                     //tableView.cellForRowAtIndexPath(indexPath)
                     //tableView.scrollEnabled  = false

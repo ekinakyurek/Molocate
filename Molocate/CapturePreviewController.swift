@@ -50,7 +50,7 @@ class capturePreviewController: UIViewController, PlayerDelegate {
                         // In iOS 9 and later, it's possible to move the file into the photo library without duplicating the file data.
                         // This avoids using double the disk space during save, which can make a difference on devices with limited free disk space.
                         let newURL = NSURL(fileURLWithPath: videoPath!)
-                        print(videoPath)
+                       // print(videoPath)
                         PHAssetChangeRequest.creationRequestForAssetFromVideoAtFileURL(newURL)
                         }, completionHandler: {success, error in
                             if !success {

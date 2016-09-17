@@ -31,7 +31,7 @@ import FBSDKShareKit
     var player1Turn = false
     var classUser = MoleUser()
     var isItMyProfile = true
-    
+   
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,10 +67,16 @@ import FBSDKShareKit
         tableView.tableFooterView = UIView()
         self.view.addSubview(tableView)
         lastOffset = CGPoint(x: 0, y: 0)
+        
+   
 //        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(Added.scrollToTop), name: "scrollToTop", object: nil)
 //        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(TimelineController.prepareForRetry), name: "prepareForRetry", object: nil)
 
     }
+    
+    
+    
+    
     
     func getData(){
         MolocateVideo.getUserVideos(classUser.username, type: "user", completionHandler: { (data, response, error) in
@@ -78,6 +84,7 @@ import FBSDKShareKit
                 if VideoUploadRequests.count == 0{
                     self.videoArray = data!
                 }else if self.isItMyProfile{
+                    self.videoArray.removeAll()
                     for i in 0..<VideoUploadRequests.count{
                         var queu = MoleVideoInformation()
                         let json = (VideoUploadRequests[i].JsonData)
@@ -93,8 +100,9 @@ import FBSDKShareKit
                         queu.thumbnailURL = (VideoUploadRequests[i].thumbUrl)
                         queu.isUploading = true
                         self.videoArray.append(queu)
-                        self.videoArray += data!
+                       
                     }
+                     self.videoArray += data!
                     
                 }else{
                     self.videoArray = data!
@@ -1156,7 +1164,7 @@ import FBSDKShareKit
     }
     
     func sharer(sharer: FBSDKSharing!, didCompleteWithResults results: [NSObject : AnyObject]!) {
-        print(results)
+       // print(results)
     }
     func sharerDidCancel(sharer: FBSDKSharing!) {
         

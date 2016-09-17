@@ -16,7 +16,7 @@ class myProfile: UIViewController,UITableViewDelegate , UITableViewDataSource,UI
     var estRowH = 150.0 as! CGFloat
     var vidortag = false // videoysa false
     let names = ["AYARLAR","PROFİLİ DÜZENLE", "ÇIKIŞ YAP"]
-    
+    var myRefreshControl = UIRefreshControl()
     @IBOutlet var back: UIBarButtonItem!
     
     
@@ -89,11 +89,59 @@ class myProfile: UIViewController,UITableViewDelegate , UITableViewDataSource,UI
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         self.navigationController?.hidesBarsOnSwipe = true
         
-        
+        self.myRefreshControl = UIRefreshControl()
+        self.myRefreshControl.addTarget(self, action: #selector(myProfile.refreshVideos), forControlEvents: UIControlEvents.ValueChanged)
+        self.tableView.addSubview(myRefreshControl)
         
         
     }
     
+    func refreshVideos(){
+        if !vidortag{
+            MolocateVideo.getUserVideos(classUser.username, type: "user", completionHandler: { (data, response, error) in
+                dispatch_async(dispatch_get_main_queue()) {
+                    if VideoUploadRequests.count == 0{
+                        self.AVc.videoArray = data!
+                    }else if self.isItMyProfile{
+                        self.AVc.videoArray.removeAll()
+                        for i in 0..<VideoUploadRequests.count{
+                            var queu = MoleVideoInformation()
+                            let json = (VideoUploadRequests[i].JsonData)
+                            let loc = json["location"] as! [[String:AnyObject]]
+                            queu.dateStr = "0s"
+                            queu.urlSta = (VideoUploadRequests[i].uploadRequest.body)!
+                            queu.username = MoleCurrentUser.username
+                            queu.userpic = MoleCurrentUser.profilePic
+                            queu.caption = json["caption"] as! String
+                            queu.location = loc[0]["name"] as! String
+                            queu.locationID = loc[0]["id"] as! String
+                            queu.isFollowing = 1
+                            queu.thumbnailURL = (VideoUploadRequests[i].thumbUrl)
+                            queu.isUploading = true
+                            self.AVc.videoArray.append(queu)
+                            
+                        }
+                        self.AVc.videoArray += data!
+                        
+                    }else{
+                        self.AVc.videoArray = data!
+                    }
+                    
+                    self.AVc.tableView.reloadData()
+                    self.myRefreshControl.endRefreshing()
+                }
+            })
+            
+        }else{
+            MolocateVideo.getUserVideos(classUser.username, type: "tagged", completionHandler: { (data, response, error) in
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.BVc.videoArray = data!
+                    self.BVc.tableView.reloadData()
+                    self.myRefreshControl.endRefreshing()
+                }
+            })
+        }
+    }
     
     
     
@@ -384,7 +432,7 @@ class myProfile: UIViewController,UITableViewDelegate , UITableViewDataSource,UI
     }
     
     func photoPressed(sender: UIButton){
-        print ("x<<")
+        //print ("x<<")
         let controller:onePhoto = self.storyboard!.instantiateViewControllerWithIdentifier("onePhoto") as! onePhoto
         controller.classUser = classUser
         navigationController?.pushViewController(controller, animated: true)
