@@ -357,6 +357,7 @@ class TimelineController: UITableViewController,PlayerDelegate, FBSDKSharingDele
                         self.player1.setUrl(trueURL)
                         self.player1.id = self.videoArray[indexPath.row].id
                         self.player1.view.frame = cell.newRect
+                        self.player1.view.layer.zPosition = 1111
                         cell.contentView.addSubview(self.player1.view)
                         cell.hasPlayer = true
 
@@ -365,6 +366,7 @@ class TimelineController: UITableViewController,PlayerDelegate, FBSDKSharingDele
                         self.player2.setUrl(trueURL)
                         self.player2.id = self.videoArray[indexPath.row].id
                         self.player2.view.frame = cell.newRect
+                        self.player2.view.layer.zPosition = 1111
                         cell.contentView.addSubview(self.player2.view)
                         cell.hasPlayer = true
                     }
@@ -391,27 +393,15 @@ class TimelineController: UITableViewController,PlayerDelegate, FBSDKSharingDele
                 cell.deleteButton.center = CGPoint(x: videoView.center.x+50, y: videoView.center.y)
                 cell.errorLabel.frame = CGRect(x: 0, y: cell.resendButton.frame.maxY+10, width: cell.blackView.frame.width, height: 40)
                 
-                if cell.superview != nil{
-                    cell.superview!.addSubview(cell.blackView)
-                    cell.superview!.addSubview(cell.resendButton)
-                    cell.superview!.addSubview(cell.deleteButton)
-                    cell.superview!.addSubview(cell.errorLabel)
+                cell.blackView.layer.zPosition = 9000
+                cell.resendButton.layer.zPosition = 9999
+                cell.deleteButton.layer.zPosition = 9999
+                cell.errorLabel.layer.zPosition = 9999
+                    cell.contentView.addSubview(cell.blackView)
+                    cell.contentView.addSubview(cell.resendButton)
+                    cell.contentView.addSubview(cell.deleteButton)
+                    cell.contentView.addSubview(cell.errorLabel)
              
-                }else{
-                    let seconds = 1.0
-                    let delay = seconds * Double(NSEC_PER_SEC)  // nanoseconds per seconds
-                    let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
-                    dispatch_after(dispatchTime, dispatch_get_main_queue(), {
-                        if cell.superview != nil{
-                            cell.superview!.addSubview(cell.blackView)
-                            cell.superview!.addSubview(cell.resendButton)
-                            cell.superview!.addSubview(cell.deleteButton)
-                            cell.superview!.addSubview(cell.errorLabel)
-                          
-                        }
-                      
-                    })
-                }
 
             
                 
@@ -1126,10 +1116,16 @@ class TimelineController: UITableViewController,PlayerDelegate, FBSDKSharingDele
                         cell.resendButton.center = CGPoint(x: videoView.center.x-50, y: videoView.center.y)
                         cell.deleteButton.center = CGPoint(x: videoView.center.x+50, y: videoView.center.y)
                         cell.errorLabel.frame = CGRect(x: 0, y: cell.resendButton.frame.maxY+10, width: cell.blackView.frame.width, height: 40)
-                        cell.superview!.addSubview(cell.blackView)
-                        cell.superview!.addSubview(cell.resendButton)
-                        cell.superview!.addSubview(cell.deleteButton)
-                        cell.superview!.addSubview(cell.errorLabel)
+                        
+                        cell.blackView.layer.zPosition = 9000
+                        cell.resendButton.layer.zPosition = 9999
+                        cell.deleteButton.layer.zPosition = 9999
+                        cell.errorLabel.layer.zPosition = 9999
+                        
+                        cell.contentView.addSubview(cell.blackView)
+                        cell.contentView.addSubview(cell.resendButton)
+                        cell.contentView.addSubview(cell.deleteButton)
+                        cell.contentView.addSubview(cell.errorLabel)
                         cell.resendButton.tag = i
                         cell.deleteButton.tag = i
                         cell.resendButton.enabled = true
@@ -1174,7 +1170,12 @@ class TimelineController: UITableViewController,PlayerDelegate, FBSDKSharingDele
                 if let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: id,inSection: 0)) as? videoCell{
                     dispatch_async(dispatch_get_main_queue(), {
                         cell.progressBar.hidden = true
-                    
+                        cell.resendButton.enabled = false
+                        cell.deleteButton.enabled = false
+                        cell.progressBar.removeFromSuperview()
+                        cell.resendButton.removeFromSuperview()
+                        cell.blackView.removeFromSuperview()
+                        cell.deleteButton.removeFromSuperview()
                 })
             }
             
@@ -1195,11 +1196,7 @@ class TimelineController: UITableViewController,PlayerDelegate, FBSDKSharingDele
                 self.videoArray[row].isUploading = true
                 VideoUploadRequests[row].isFailed = false
                 cell.progressBar.progress =  0
-                cell.progressBar.hidden = false
-                cell.resendButton.hidden = true
-                cell.blackView.hidden = true
-                cell.deleteButton.hidden = true
-                cell.errorLabel.hidden = true
+  
                 cell.progressBar.removeFromSuperview()
                 cell.resendButton.removeFromSuperview()
                 cell.blackView.removeFromSuperview()
@@ -1228,29 +1225,25 @@ class TimelineController: UITableViewController,PlayerDelegate, FBSDKSharingDele
                 cell.resendButton.enabled = false
                 cell.deleteButton.enabled = false
              
-                    
-                    self.videoArray.removeAtIndex(0)
-            
-                    CaptionText = ""
-                    cell.resendButton.removeFromSuperview()
-                    cell.blackView.removeFromSuperview()
-                    cell.deleteButton.removeFromSuperview()
-                    cell.errorLabel.removeFromSuperview()
-                    cell.progressBar.hidden = true
+                let fileUrl = VideoUploadRequests[row].uploadRequest.body
+               
+                do {
+                    try NSFileManager.defaultManager().removeItemAtURL(VideoUploadRequests[row].uploadRequest.body)
+                }catch{
+                    print("Video Silinemedi")
+                }
 
-                    VideoUploadRequests.removeAtIndex(row)
-                    MyS3Uploads.removeAtIndex(row)
-                    MolocateVideo.encodeGlobalVideo()
-                    self.tableView.reloadData()
-                    if VideoUploadRequests.count == 0 {
-                        NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isStuck")
+                VideoUploadRequests.removeAtIndex(row)
+                MyS3Uploads.removeAtIndex(row)
+                self.videoArray.removeAtIndex(row)
+                self.tableView.reloadData()
+                MolocateVideo.encodeGlobalVideo()
+               
+                if VideoUploadRequests.count == 0 {
+                    NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isStuck")
                 }
             })
-            do {
-                try NSFileManager.defaultManager().removeItemAtURL(VideoUploadRequests[row].uploadRequest.body)
-            }catch{
-                print("Video Silinemedi")
-            }
+            
            
         }
         
